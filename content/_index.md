@@ -4,6 +4,7 @@ title = "Akira"
 [extra]
 # "Now": what you're working on. Each line shows with a live "running" status.
 now = [
+  "Building Service Monitor, a Rust uptime monitor, one tested checkpoint at a time.",
   "Building a Rust knowledge base with Claude Code, checked by exams the AI can’t see.",
   "Writing up each experiment here, including the parts that didn’t work.",
 ]
@@ -11,6 +12,13 @@ now = [
 # Projects, newest first. Copy a block to add one.
 # link: a web address, or "@/posts/<file>.md" for one of your posts.
 # status: one or two words, e.g. "live", "shipped", "write-up", "in progress".
+[[extra.projects]]
+name = "Service Monitor"
+about = "A self-hosted HTTP monitor in Rust that never shows green without evidence. Built in the open, one tested checkpoint at a time."
+link = "@/service-monitor.md"
+year = 2026
+status = "in progress"
+
 [[extra.projects]]
 name = "Teaching an AI Rust"
 about = "Claude studied the entire Rust Book, then took hidden-test exams with no compiler. 59/59 on a final test full of decoys."
