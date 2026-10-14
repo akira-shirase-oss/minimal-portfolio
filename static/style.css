@@ -494,6 +494,37 @@ img {
   font-size: 0.85rem;
 }
 
+/* "At a glance" under an entry's subtitle: label | value rows, like the home page log. */
+.glance {
+  margin: 1.5rem 0 0;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.glance div {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1rem;
+  align-items: baseline; /* the mono label sits on the value's first line */
+  padding: 0.3rem 0;
+}
+
+.glance dt {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.glance dd {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
 /* An entry's place in its log, on the line above the date. */
 .post-header .series-line {
   margin-bottom: 0.35rem;
@@ -669,6 +700,12 @@ pre code {
 
   .log .when .tag {
     margin-top: 0;
+  }
+
+  /* The glance card stacks its labels above the values, like the log rows. */
+  .glance div {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
   }
 
   /* Previous and next stack, both left-aligned. */

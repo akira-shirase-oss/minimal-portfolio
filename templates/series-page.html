@@ -12,6 +12,22 @@
 </p>
 {% endblock series_line %}
 
+{% block after_subtitle %}
+{#- "At a glance": the same four lines on every entry, from `[extra.summary]`.
+    `code` is optional (day 0 had none). #}
+{%- if page.extra.summary %}
+{%- set summary = page.extra.summary %}
+<dl class="glance">
+  <div><dt>Goal</dt><dd>{{ summary.goal }}</dd></div>
+  <div><dt>Built</dt><dd>{{ summary.built }}</dd></div>
+  <div><dt>Proof</dt><dd>{{ summary.proof | join(sep=" · ") }}</dd></div>
+  {%- if summary.code %}
+  <div><dt>Code</dt><dd><code>{{ summary.code }}</code></dd></div>
+  {%- endif %}
+</dl>
+{%- endif %}
+{% endblock after_subtitle %}
+
 {% block after_article %}
 {%- set log = get_section(path=page.ancestors[-1], metadata_only=true) %}
 <nav class="series-nav" aria-label="More from this build log">

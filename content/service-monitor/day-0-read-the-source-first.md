@@ -10,6 +10,10 @@ kind = "experiment"
 milestone = "M0"
 step = "day 0"
 short_title = "I read the libraries' source first. It found 4 traps."
+[extra.summary]
+goal = "Check every assumption in the plan against the real library source before writing code."
+built = "A knowledge base for the project, and a list of traps, each with its fix."
+proof = ["4 traps found in reqwest, hyper-util, tokio and SQLite", "every number in the plan checked by script"]
 +++
 
 A monitor has one job: tell the truth about whether something is up.

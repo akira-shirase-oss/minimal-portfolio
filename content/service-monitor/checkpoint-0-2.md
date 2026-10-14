@@ -10,6 +10,11 @@ kind = "experiment"
 milestone = "M0"
 step = "0.2"
 short_title = "Rust types that can't hold bad data"
+[extra.summary]
+goal = "Make bad configuration impossible to hold, not just unlikely."
+built = "Typed IDs, length-limited text, a status-code bitset, a validated config and a three-way check outcome."
+proof = ["20 tests", "2/2 deliberate breakages caught", "0 clippy warnings"]
+code = "4326b30"
 +++
 
 Most config bugs come from the same place: a value gets checked in one spot, then copied, changed or trusted somewhere else.

@@ -10,6 +10,11 @@ kind = "experiment"
 milestone = "M0"
 step = "0.3"
 short_title = "127.0.0.1 has a lot of disguises"
+[extra.summary]
+goal = "Stop the monitor from being turned against your own network."
+built = "A URL validator, a network policy with an IANA address table, and a local-only dev profile."
+proof = ["35 tests", "3/3 attacks caught", "0 clippy warnings"]
+code = "6d549d1"
 +++
 
 Every one of these means "this machine":

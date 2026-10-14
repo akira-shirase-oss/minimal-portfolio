@@ -16,6 +16,8 @@
     {%- if page.description %}
     <p class="subtitle">{{ page.description }}</p>
     {%- endif %}
+    {#- Filled by series-page.html with an "at a glance" card; empty for normal posts. #}
+    {%- block after_subtitle %}{% endblock after_subtitle %}
   </header>
 
   <div class="post-body">

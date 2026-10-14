@@ -10,6 +10,11 @@ kind = "experiment"
 milestone = "M0"
 step = "0.1"
 short_title = "Deleting a retry path at compile time"
+[extra.summary]
+goal = "An empty project with the right shape and the right rules."
+built = "The crate, its nine modules, two locked dependencies, and lint rules the compiler enforces."
+proof = ["0 clippy warnings", "no HTTP/2 or OpenSSL in the dependency tree"]
+code = "aca3990"
 +++
 
 ## How I'm building this

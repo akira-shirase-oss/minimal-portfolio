@@ -20,7 +20,7 @@ milestones = [
   { id = "M5", name = "independent operation", about = "A separate status host, backups, a 24-hour soak test." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "M0", step = "0.4", title = "A Rust test server that fails on purpose" }
+up_next = { milestone = "M0", step = "0.5", title = "The probe: one bounded check" }
 +++
 
 **Service Monitor** watches the health URLs of your services. When repeated checks fail, you get one alert with the evidence. When they recover, you get one recovery alert. It's the first infrastructure piece of a bigger plan: tools for running AI applications reliably.
