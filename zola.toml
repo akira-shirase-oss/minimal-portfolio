@@ -1,8 +1,8 @@
 # Site settings. Built with Zola 0.23.6 (https://www.getzola.org).
 
-# The live address (Cloudflare Pages project `akira-shirase-oss`; see README "Publishing").
+# The live address: the custom domain on Cloudflare Pages project `akira-shirase-oss` (see README "Publishing").
 # `zola serve` ignores it and uses http://127.0.0.1:1111 for local previews.
-base_url = "https://akira-shirase-oss.pages.dev"
+base_url = "https://404human.dev"
 
 title = "404human"
 description = "Building Rust runtimes, reliable background jobs, and AI infrastructure. Sharing the experiments, failures, and releases."

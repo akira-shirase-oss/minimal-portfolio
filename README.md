@@ -85,7 +85,7 @@ Elsewhere:
 
 ## Publishing
 
-The site lives at https://akira-shirase-oss.pages.dev/ on Cloudflare Pages (project `akira-shirase-oss`). The source is the `main` branch of https://github.com/akira-shirase-oss/minimal-portfolio. Pushing to GitHub does **not** publish anything: the site is built here with Zola 0.23.6 (the same version as the local preview) and uploaded with Cloudflare's `wrangler` CLI, so what goes live is exactly what you checked.
+The site lives at **https://404human.dev/** (also `www.404human.dev`), on Cloudflare Pages (project `akira-shirase-oss`, whose own address https://akira-shirase-oss.pages.dev/ serves the same site). The source is the `main` branch of https://github.com/akira-shirase-oss/minimal-portfolio. Pushing to GitHub does **not** publish anything: the site is built here with Zola 0.23.6 (the same version as the local preview) and uploaded with Cloudflare's `wrangler` CLI, so what goes live is exactly what you checked.
 
 To publish a new post:
 
@@ -97,7 +97,7 @@ zola build
 wrangler pages deploy public --project-name akira-shirase-oss --branch main --commit-hash "$(git rev-parse HEAD)" --commit-message "$(git log -1 --format=%s)"
 ```
 
-The upload takes a few seconds, then open the page on https://akira-shirase-oss.pages.dev/ to check it's live.
+The upload takes a few seconds, then open the page on https://404human.dev/ to check it's live.
 
 One-time setup on a new machine: `npm install -g wrangler@4.148.0`, then `wrangler login`. The project already exists. Don't pass `--force` to any command: it was only needed once, to create the project as a classic Pages project.
 
