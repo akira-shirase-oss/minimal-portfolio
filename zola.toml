@@ -4,12 +4,12 @@
 # `zola serve` ignores it and uses http://127.0.0.1:1111 for local previews.
 base_url = "https://akira-shirase-oss.pages.dev"
 
-title = "Akira"
+title = "404human"
 description = "Building Rust runtimes, reliable background jobs, and AI infrastructure. Sharing the experiments, failures, and releases."
 default_language = "en"
 
 # The default author of every post (footer and RSS feed).
-author = "Akira"
+author = "404human"
 
 # An RSS feed at /rss.xml so people can follow new posts (linked in the page head for feed readers).
 generate_feeds = true

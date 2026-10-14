@@ -7,6 +7,10 @@
     {%- set doc_title = page.title %}
     {%- set doc_description = page.description | default(value=config.description) %}
     {%- set doc_type = "article" %}
+  {%- elif section is defined and section.title and section.title != config.title %}
+    {%- set doc_title = section.title %}
+    {%- set doc_description = section.description | default(value=config.description) %}
+    {%- set doc_type = "website" %}
   {%- else %}
     {%- set doc_title = config.title %}
     {%- set doc_description = config.description %}
@@ -71,6 +75,7 @@
   <header class="site-header">
     <a class="site-title" href="{{ get_url(path='@/_index.md') }}">{{ config.title }}</a>
     <nav>
+      <a href="{{ get_url(path='@/_index.md') }}#build-log">Build log</a>
       <a href="{{ get_url(path='@/_index.md') }}#writing">Writing</a>
       <button class="theme-toggle" type="button" aria-label="Switch theme" hidden>
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>

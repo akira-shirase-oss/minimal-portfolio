@@ -2,13 +2,15 @@
 title = "Checkpoint 0.3: 127.0.0.1 has a lot of disguises"
 description = "Stopping a monitor from being turned against your own network, using address ranges from IANA instead of memory, and three attacks the tests had to catch."
 date = 2026-10-14T12:30:00Z
+aliases = ["/posts/service-monitor-checkpoint-0-3/"]
 
 [extra]
 # experiment, failure or release
 kind = "experiment"
+milestone = "M0"
+step = "0.3"
+short_title = "127.0.0.1 has a lot of disguises"
 +++
-
-Part of [the Service Monitor build log](@/service-monitor.md). Previous: [Checkpoint 0.2](@/posts/service-monitor-checkpoint-0-2.md).
 
 Every one of these means "this machine":
 
@@ -83,5 +85,3 @@ The fix: this site now lives on Cloudflare Pages. I build it on my own machine w
 
 - **35** tests (15 new), **0** clippy warnings.
 - **3/3** deliberate security regressions caught.
-
-Next: a Rust test server that can fail on purpose (Checkpoint 0.4).

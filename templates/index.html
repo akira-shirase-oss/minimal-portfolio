@@ -43,6 +43,36 @@
   </ul>
   {%- endif %}
 
+  {#- Build logs: a project written up checkpoint by checkpoint. The home page shows the
+      latest few entries; the log's own page has all of them, grouped by milestone. #}
+  {%- set log = get_section(path="service-monitor/_index.md") %}
+  {%- set latest = log.pages[:3] %}
+  <h2 id="build-log">Build log</h2>
+  <ul class="log">
+    <li class="entry">
+      <span class="when status-running"><span class="dot" aria-hidden="true"></span> {{ latest[0].extra.milestone if latest else "soon" }}</span>
+      <div class="what">
+        <a class="title" href="{{ log.permalink }}">{{ log.extra.short_title or log.title }}</a>
+        {%- if log.extra.status %} <span class="tag">{{ log.extra.status }}</span>{% endif %}
+        {#- Progress rather than the project blurb, which Projects already shows. #}
+        {%- set current = [m for m in log.extra.milestones if latest and m.id == latest[0].extra.milestone] %}
+        <p class="summary">{{ log.pages | length }} entries so far{% if current %} · now on {{ current[0].id }}, {{ current[0].name }}{% endif %}.</p>
+      </div>
+    </li>
+    {%- for entry in latest %}
+    <li class="entry log-step">
+      <span class="when">{{ entry.extra.step }}</span>
+      <div class="what">
+        <a class="title" href="{{ entry.permalink }}">{{ entry.extra.short_title or entry.title }}</a>
+      </div>
+    </li>
+    {%- endfor %}
+    <li class="entry log-step">
+      <span class="when"></span>
+      <div class="what"><a class="more" href="{{ log.permalink }}">All {{ log.pages | length }} entries, by milestone →</a></div>
+    </li>
+  </ul>
+
   <h2 id="writing">Writing</h2>
   {% set posts = get_section(path="posts/_index.md") %}
   <ul class="log">

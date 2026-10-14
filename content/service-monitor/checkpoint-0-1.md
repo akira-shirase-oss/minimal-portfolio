@@ -2,13 +2,15 @@
 title = "Checkpoint 0.1: deleting a retry path at compile time"
 description = "The empty Rust project for my monitor, the rules the compiler now enforces, and why HTTP/2 isn't in it."
 date = 2026-10-14T12:10:00Z
+aliases = ["/posts/service-monitor-checkpoint-0-1/"]
 
 [extra]
 # experiment, failure or release
 kind = "experiment"
+milestone = "M0"
+step = "0.1"
+short_title = "Deleting a retry path at compile time"
 +++
-
-Part of [the Service Monitor build log](@/service-monitor.md). Previous: [the 4 traps found by reading the source](@/posts/service-monitor-read-the-source-first.md).
 
 ## How I'm building this
 
@@ -28,7 +30,7 @@ Checkpoint 0.1 is the smallest possible one: an empty project with the right sha
 
 ## The trick: belt and braces
 
-In the [last post](@/posts/service-monitor-read-the-source-first.md), we found that reqwest retries certain HTTP/2 errors by default. You *can* turn that off with one builder call, and we will.
+In the [last post](@/service-monitor/day-0-read-the-source-first.md), we found that reqwest retries certain HTTP/2 errors by default. You *can* turn that off with one builder call, and we will.
 
 But a forgotten builder call is exactly the kind of bug I'm trying to avoid. So HTTP/2 isn't compiled in at all:
 
@@ -66,5 +68,3 @@ One more deliberate choice: release builds keep `panic = "unwind"`. If one check
 ## The honest part
 
 Nothing runs yet. This checkpoint proves the shape of the project and what's (not) in the dependency tree. That's all.
-
-Next: [Checkpoint 0.2, Rust types that can't hold bad data](@/posts/service-monitor-checkpoint-0-2.md).

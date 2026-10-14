@@ -5,6 +5,8 @@
 {% block content %}
 <article>
   <header class="post-header">
+    {#- Filled by series-page.html for build-log entries; empty for normal posts. #}
+    {%- block series_line %}{% endblock series_line %}
     <p class="meta">
       <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
       · {{ page.reading_time }} min read
@@ -20,6 +22,7 @@
     {{ page.content | safe }}
   </div>
 </article>
+{%- block after_article %}{% endblock after_article %}
 
 <p class="back"><a href="{{ get_url(path='@/_index.md') }}#writing">← All writing</a></p>
 {% endblock content %}

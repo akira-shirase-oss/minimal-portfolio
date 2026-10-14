@@ -1,5 +1,5 @@
 +++
-title = "Akira"
+title = "404human"
 
 [extra]
 # "Now": what you're working on. Each line shows with a live "running" status.
@@ -15,7 +15,7 @@ now = [
 [[extra.projects]]
 name = "Service Monitor"
 about = "A self-hosted HTTP monitor in Rust that never shows green without evidence. Built in the open, one tested checkpoint at a time."
-link = "@/service-monitor.md"
+link = "@/service-monitor/_index.md"
 year = 2026
 status = "in progress"
 
@@ -34,6 +34,6 @@ year = 2026
 status = "live"
 +++
 
-# Hi, I'm Akira.
+# Hi, I’m 404human.
 
 Building Rust runtimes, reliable background jobs, and AI infrastructure. Sharing the experiments, failures, and releases.

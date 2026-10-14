@@ -1,4 +1,4 @@
-/* Akira: a text-only portfolio styled like a calm job log.
+/* 404human: a text-only portfolio styled like a calm job log.
    Light by default. Dark when the system asks for it, unless the toggle picked light,
    or whenever the toggle picked dark. `color-scheme` also drives the code colours. */
 
@@ -478,6 +478,96 @@ img {
   font-size: 0.9rem;
 }
 
+/* Build logs: a project written up checkpoint by checkpoint. */
+
+/* Home: the latest entries sit under the log's own row, tighter and lighter. */
+.log .log-step {
+  padding: 0.3rem 0;
+}
+
+.log .log-step .title {
+  font-weight: 500;
+}
+
+.log .more {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+/* An entry's place in its log, on the line above the date. */
+.post-header .series-line {
+  margin-bottom: 0.35rem;
+}
+
+/* A build log's page: entries grouped under milestones. */
+.milestone h2 {
+  display: flex;
+  align-items: baseline; /* the mono id and the name share one text baseline */
+  gap: 0.6rem;
+}
+
+.milestone-id {
+  font-family: var(--mono);
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.milestone-about {
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.milestone.is-upcoming h2,
+.milestone.is-upcoming .milestone-id {
+  color: var(--muted);
+}
+
+/* Previous / next entry, under a build-log entry. */
+.series-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.series-nav a {
+  display: block;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.series-dir {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+}
+
+.series-title {
+  font-weight: 650;
+  line-height: 1.4;
+  transition: color 0.15s ease;
+}
+
+.series-nav a:hover .series-title,
+.series-nav a:focus-visible .series-title {
+  color: var(--accent);
+}
+
+/* "Next" stays on the right even when there is no "previous". */
+.series-next {
+  grid-column: 2;
+  text-align: right;
+}
+
+.series-nav + .back {
+  margin-top: 2rem;
+}
+
 /* Code */
 code {
   font-family: var(--mono);
@@ -580,6 +670,17 @@ pre code {
   .log .when .tag {
     margin-top: 0;
   }
+
+  /* Previous and next stack, both left-aligned. */
+  .series-nav {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .series-next {
+    grid-column: auto;
+    text-align: left;
+  }
 }
 
 /* No blinking or pulsing for readers who turn motion off. */
@@ -589,7 +690,8 @@ pre code {
     animation: none;
   }
 
-  .log a.title {
+  .log a.title,
+  .series-title {
     transition: none;
   }
 }

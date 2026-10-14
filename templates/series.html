@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{#- A build log: one section whose pages are its entries. Entries are grouped under the
+    milestones listed in the section's `extra.milestones`, oldest first, so it reads in order. #}
+
+{% block body_class %}post{% endblock body_class %}
+
+{% block content %}
+<article>
+  <header class="post-header">
+    <p class="meta">
+      build log · {{ section.pages | length }} entries
+      {%- if section.extra.status %} · <span class="tag">{{ section.extra.status }}</span>{% endif %}
+    </p>
+    <h1>{{ section.title }}</h1>
+    {%- if section.description %}
+    <p class="subtitle">{{ section.description }}</p>
+    {%- endif %}
+  </header>
+
+  <div class="post-body">
+    {{ section.content | safe }}
+  </div>
+
+  {%- set up_next = section.extra.up_next %}
+  {%- for milestone in section.extra.milestones %}
+  {%- set entries = [p for p in section.pages if p.extra.milestone == milestone.id] | reverse %}
+  {%- set has_next = up_next and up_next.milestone == milestone.id %}
+  <section class="milestone{% if not entries and not has_next %} is-upcoming{% endif %}" aria-labelledby="{{ milestone.id | lower }}">
+    <h2 id="{{ milestone.id | lower }}"><span class="milestone-id">{{ milestone.id }}</span> {{ milestone.name }}</h2>
+    <p class="milestone-about">{{ milestone.about }}</p>
+    {%- if entries or has_next %}
+    <ul class="log">
+      {%- for entry in entries %}
+      <li class="entry">
+        <div class="when">
+          {{ entry.extra.step }}
+          {%- if entry.extra.kind %}
+          <span class="tag kind-{{ entry.extra.kind }}">{{ entry.extra.kind }}</span>
+          {%- endif %}
+        </div>
+        <div class="what">
+          <a class="title" href="{{ entry.permalink }}">{{ entry.extra.short_title or entry.title }}</a>
+          {%- if entry.description %}
+          <p class="summary">{{ entry.description }}</p>
+          {%- endif %}
+        </div>
+      </li>
+      {%- endfor %}
+      {%- if has_next %}
+      <li class="entry">
+        <span class="when status-running"><span class="dot" aria-hidden="true"></span> {{ up_next.step }}</span>
+        <div class="what">
+          <span class="title">{{ up_next.title }}</span>
+          <p class="summary">Being built now.</p>
+        </div>
+      </li>
+      {%- endif %}
+    </ul>
+    {%- endif %}
+  </section>
+  {%- endfor %}
+</article>
+
+<p class="back"><a href="{{ get_url(path='@/_index.md') }}#build-log">← Home</a></p>
+{% endblock content %}

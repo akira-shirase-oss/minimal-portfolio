@@ -2,13 +2,15 @@
 title = "Checkpoint 0.2: Rust types that can't hold bad data"
 description = "Validation that happens exactly once, memory sizes checked by tests, and the shell pipeline that lied to me."
 date = 2026-10-14T12:20:00Z
+aliases = ["/posts/service-monitor-checkpoint-0-2/"]
 
 [extra]
 # experiment, failure or release
 kind = "experiment"
+milestone = "M0"
+step = "0.2"
+short_title = "Rust types that can't hold bad data"
 +++
-
-Part of [the Service Monitor build log](@/service-monitor.md). Previous: [Checkpoint 0.1](@/posts/service-monitor-checkpoint-0-1.md).
 
 Most config bugs come from the same place: a value gets checked in one spot, then copied, changed or trusted somewhere else.
 
@@ -89,5 +91,3 @@ Fix: run the check on its own, or use `set -o pipefail`. Small thing, but it's e
 ## The honest part
 
 The URL is only length-checked so far. Blocking private and internal addresses, including tricky spellings like `2130706433` (that's `127.0.0.1`), is the next checkpoint.
-
-Next: [Checkpoint 0.3, 127.0.0.1 has a lot of disguises](@/posts/service-monitor-checkpoint-0-3.md).

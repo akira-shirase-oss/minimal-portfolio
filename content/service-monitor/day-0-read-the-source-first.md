@@ -2,10 +2,14 @@
 title = "Before writing my Rust monitor, I read the libraries' source. It found 4 traps."
 description = "An IP address that skips your DNS check, two hidden retry layers, a clock that stops while you sleep, and a typo SQLite won't tell you about."
 date = 2026-10-14T12:00:00Z
+aliases = ["/posts/service-monitor-read-the-source-first/"]
 
 [extra]
 # experiment, failure or release
 kind = "experiment"
+milestone = "M0"
+step = "day 0"
+short_title = "I read the libraries' source first. It found 4 traps."
 +++
 
 A monitor has one job: tell the truth about whether something is up.
@@ -18,7 +22,7 @@ I'm building one anyway.
 
 **Service Monitor** is a small, self-hosted HTTP monitor written in Rust. You register a health URL; when repeated checks fail, you get one alert with the evidence, then one recovery alert. No retry storms, and it never shows green without fresh evidence.
 
-I'm building it with Claude Code, in the open, one tested checkpoint at a time. This is the first entry in [the build log](@/service-monitor.md).
+I'm building it with Claude Code, in the open, one tested checkpoint at a time. This is the first entry in [the build log](@/service-monitor/_index.md).
 
 ## The rule: never code from memory
 
@@ -76,5 +80,3 @@ The plan had a lot of numbers in it, so we checked them all with a script. They 
 The libraries were right. My assumptions were wrong.
 
 Reading the source turned four "it probably works like this" into four tests I'll write before the code that needs them.
-
-Next up: [Checkpoint 0.1](@/posts/service-monitor-checkpoint-0-1.md).
