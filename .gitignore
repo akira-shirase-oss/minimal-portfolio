@@ -1,2 +1,4 @@
 # Built site (made locally by `zola build`, then uploaded to Cloudflare Pages)
 public/
+# Wrangler cache: holds the Cloudflare account id and name (private). Never commit.
+.wrangler/

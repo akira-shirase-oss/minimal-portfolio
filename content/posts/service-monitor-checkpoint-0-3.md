@@ -70,7 +70,9 @@ When I published the first build-log posts, both deploy runs went green, and eve
 
 GitHub Pages was still set to "deploy from a branch". So every push started two deploys: my Zola build, and GitHub's old default build, which renders the README. They race. The first time, mine finished 3 seconds later and won. This time, theirs finished 10 seconds later.
 
-Lesson: a green workflow isn't a working site. Check the live pages after every push. The fix is one setting, and a race that went your way once is still a race.
+Lesson: a green workflow isn't a working site. Check the live pages after every push, because a race that went your way once is still a race.
+
+The fix: this site now lives on Cloudflare Pages. I build it on my own machine with the same Zola version I preview with, and upload exactly that. There's one deploy, and it's the one I checked.
 
 ## The honest part
 
