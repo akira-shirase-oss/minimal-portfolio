@@ -26,6 +26,30 @@ A text-only portfolio and blog built with [Zola](https://www.getzola.org) 0.23.6
 
 Code blocks get colours when you name the language, e.g. ```` ```rust ````. A typo in the language name stops the build, so you'll see it straight away.
 
+## Add a build-log entry (Service Monitor)
+
+Build-log entries live in `content/service-monitor/`, not in `posts/`. The home page shows the latest 3 under **Build log**, and `/service-monitor/` groups all of them under their milestone. Previous/next links and the "Service Monitor build log › M0 · 0.4" line above the title are added automatically.
+
+1. Create `content/service-monitor/checkpoint-0-4.md` with this header:
+
+   ```
+   +++
+   title = "Checkpoint 0.4: Your title"
+   description = "One line for the subtitle and link previews."
+   date = 2026-10-15T12:00:00Z
+
+   [extra]
+   kind = "experiment"
+   milestone = "M0"
+   step = "0.4"
+   short_title = "Your title"
+   +++
+   ```
+
+   The time in `date` keeps entries from the same day in order. It isn't shown.
+2. In `content/service-monitor/_index.md`, move `up_next` to the checkpoint after this one (or delete the line when nothing is in progress). A new milestone only needs a line in `milestones`.
+3. Publish as below.
+
 ## Preview on your computer
 
 ```
