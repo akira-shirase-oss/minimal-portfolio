@@ -20,7 +20,7 @@ milestones = [
   { id = "M5", name = "running on its own", about = "Its own server, backups, and a 24-hour stress test." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "M0", step = "0.6", title = "A command you can run" }
+up_next = { milestone = "M0", step = "0.7", title = "Aggressive testing: letting tools attack the code" }
 +++
 
 **Service Monitor** keeps an eye on your websites and services. Every minute, it checks that they answer properly. When one stops answering, you get one alert, with the evidence. When it's back, you get one "all good". No alert storms.
