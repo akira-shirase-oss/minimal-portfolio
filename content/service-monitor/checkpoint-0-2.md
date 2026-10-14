@@ -1,6 +1,6 @@
 +++
-title = "Checkpoint 0.2: Rust types that can't hold bad data"
-description = "Validation that happens exactly once, memory sizes checked by tests, and the shell pipeline that lied to me."
+title = "Checkpoint 0.2: making bad settings impossible"
+description = "Instead of checking settings everywhere they're used, check them once at the door, then make them impossible to change."
 date = 2026-10-14T12:20:00Z
 aliases = ["/posts/service-monitor-checkpoint-0-2/"]
 
@@ -9,90 +9,84 @@ aliases = ["/posts/service-monitor-checkpoint-0-2/"]
 kind = "experiment"
 milestone = "M0"
 step = "0.2"
-short_title = "Rust types that can't hold bad data"
+short_title = "Making bad settings impossible"
+
 [extra.summary]
-goal = "Make bad configuration impossible to hold, not just unlikely."
-built = "Typed IDs, length-limited text, a status-code bitset, a validated config and a three-way check outcome."
-proof = ["20 tests", "2/2 deliberate breakages caught", "0 clippy warnings"]
+goal = "Make it impossible for a bad setting to get into the monitor."
+built = "A front door for settings: they only get in if every rule passes, and can't change after."
+proof = ["20 tests", "2/2 deliberate bugs caught", "0 warnings"]
 code = "4326b30"
 +++
 
-Most config bugs come from the same place: a value gets checked in one spot, then copied, changed or trusted somewhere else.
+Most settings bugs come from the same place: a value gets checked in one spot, then copied, changed or trusted somewhere else.
 
-So this checkpoint makes bad config **impossible to hold**, not just unlikely.
+Think of a bouncer at a club. Checking IDs at every table inside is slow, and someone always gets missed. Check once at the door, and everyone inside is fine.
 
-## One way in
+## What I built
 
-A monitor's settings arrive as a `RawConfig`: plain data from the API or CLI that nothing trusts yet. There is exactly one way to turn it into a `ValidatedConfig`:
+A front door for the monitor's settings.
+
+Settings arrive as **raw** settings: whatever you typed, trusted by nobody. There's exactly one way to turn them into **validated** settings, and that's passing every rule:
+
+- check every 30 seconds to 1 hour,
+- give up on a slow site after 1 to 15 seconds,
+- a name of 1 to 80 characters,
+- and a few more.
+
+Once settings are through the door:
+
+- **They can't change.** Editing creates a new version instead.
+- **They can't be copied by accident.** They'll be shared, not duplicated.
+
+And the door reports **every** problem at once, like a form that highlights all the wrong fields instead of making you fix them one at a time.
+
+## How Rust helps (the short version)
+
+In Rust, every value has exactly one owner. When the raw settings walk through the door, their text *moves* into the validated version instead of being copied. Nothing is duplicated, and nothing is left behind to go stale.
+
+The whole door is one line wherever settings come in:
 
 ```rust
 let config = ValidatedConfig::try_from(raw)?;
 ```
 
-That call checks every rule from the design. The interval must be 30 s to 1 h. The deadline must be 1–15 s. The name must be 1–80 characters. HEAD requests can't have a body check. And so on.
+That reads as: "try to turn the raw settings into validated ones, and stop here if any rule fails."
 
-After that:
+## Small things, measured
 
-- The fields are **private**, with no setters. Once a config is valid, it stays valid for as long as it lives. An edit creates a new version instead of changing this one.
-- It's deliberately **not `Clone`**. It'll be shared across tasks through an `Arc`, so nobody can deep-copy it by accident.
+I like knowing exactly how much memory things take, so these sizes are checked by tests. If a later change makes them bigger, a test fails:
 
-## Ownership doing the work
+- **8 bytes** for an "ID, or nothing". Normally it would be 16. But ID numbers start at 1, so Rust uses 0 to mean "nothing" for free.
+- **16 bytes** of bookkeeping for a name, instead of the usual 24. Text that never grows doesn't need room to grow.
+- **56 bytes** for the list of "good" HTTP status codes, and checking a code is a single step.
 
-`try_from` takes the raw config **by value**, so the strings inside are *moved* into the validated config instead of copied.
-
-It also reports **every** problem at once, not just the first. That's what an API form needs. Each rule turns into an `Option`, and only when all of them are `Some` does a config come out:
-
-```rust
-match (name, url, expected_statuses, body_assertion, timing) {
-    (Some(name), Some(url), Some(expected_statuses), Some(body_assertion), Some(timing)) => {
-        Ok(Self { name, url, method, expected_statuses, body_assertion, timing })
-    }
-    _ => Err(ConfigError { field_errors: errors }),
-}
-```
-
-A small helper borrows the error list mutably (`&mut Vec`) for one call at a time and records each failure. The borrow checker makes sure nothing else touches that list in the meantime.
-
-## Memory: measured, not assumed
-
-These sizes are checked by tests, so if a change grows them, a test fails:
-
-- **8 bytes** for an optional monitor ID, not 16. IDs wrap `NonZero` (database ids start at 1), so `None` hides in the zero bit pattern.
-- **16 bytes** for a fixed-limit name, against 24 for a `String`. It's a `Box<str>`: text that never grows doesn't need a capacity field.
-- **56 bytes** for the set of expected HTTP status codes. It's a bitset on the stack: no allocation, and checking a code is one shift and one mask.
-
-Limits count **characters, not bytes**, so "é" counts as 1 although it takes 2 bytes. There's a test for that too.
+Also, limits count **characters, not bytes**. "é" counts as one character, even though it takes two bytes.
 
 ## A rule that can never fire
 
-The design says the deadline must be at most half the interval. But with its own ranges (interval ≥ 30 s, deadline ≤ 15 s), that can never be broken.
+The plan says the timeout must be at most half the check interval. But with the plan's own limits (interval at least 30 s, timeout at most 15 s), that's always true.
 
-We kept the check anyway, and test it directly. If someone changes either range later, it won't fail silently.
+I kept the check anyway and tested it directly. If someone changes a limit later, it won't quietly break.
 
-## Do the tests have teeth?
+## Does it actually work?
 
-20 tests passed on the first run. That proves less than it sounds: a test that would also pass on broken code is worthless.
+All 20 tests passed on the first run. That proves less than it sounds: a test that would also pass on broken code is useless.
 
 So I broke two rules on purpose:
 
-- Turned off "HEAD can't have a body check": **1 test failed**.
-- Turned off "no control characters in names": **2 tests failed**.
+- Turned off "a HEAD request can't check the page's content": **1 test failed**.
+- Turned off "no hidden control characters in names": **2 tests failed**.
 
-Then I restored the originals and compared them byte for byte.
+Then I put the code back exactly as it was. Good: the tests notice.
 
-## My mistake
+## Where I messed up
 
-I checked formatting with `cargo fmt --check | head && echo clean`. It printed **clean**, while rustfmt was listing differences right above it.
+I checked the code's formatting with a one-line command that printed **"clean"**, while the formatter was complaining right above it.
 
-A shell pipeline returns the exit status of its *last* command, which was `head`, and `head` was perfectly happy. The failure was swallowed.
+The reason: when you chain commands with a pipe (`|`), the shell reports how the *last* command went. The last one was perfectly happy.
 
-Fix: run the check on its own, or use `set -o pipefail`. Small thing, but it's exactly how a CI script ends up lying to you.
+Lesson: run checks on their own, especially the ones you trust.
 
-## Numbers
+## What it doesn't do yet
 
-- **20** tests, **0** clippy warnings.
-- **2/2** deliberate breakages caught.
-
-## The honest part
-
-The URL is only length-checked so far. Blocking private and internal addresses, including tricky spellings like `2130706433` (that's `127.0.0.1`), is the next checkpoint.
+The web address is only checked for length so far. Making sure it can't point at your private network comes next.

@@ -1,6 +1,6 @@
 +++
 title = "Checkpoint 0.3: 127.0.0.1 has a lot of disguises"
-description = "Stopping a monitor from being turned against your own network, using address ranges from IANA instead of memory, and three attacks the tests had to catch."
+description = "How I stopped my monitor from being tricked into poking around a private network, and three attacks the tests had to catch."
 date = 2026-10-14T12:30:00Z
 aliases = ["/posts/service-monitor-checkpoint-0-3/"]
 
@@ -10,14 +10,15 @@ kind = "experiment"
 milestone = "M0"
 step = "0.3"
 short_title = "127.0.0.1 has a lot of disguises"
+
 [extra.summary]
-goal = "Stop the monitor from being turned against your own network."
-built = "A URL validator, a network policy with an IANA address table, and a local-only dev profile."
-proof = ["35 tests", "3/3 attacks caught", "0 clippy warnings"]
+goal = "Stop the monitor from being tricked into reaching your private network."
+built = "An address checker, plus a list of off-limits addresses taken from the official registry."
+proof = ["35 tests", "3/3 attacks caught", "0 warnings"]
 code = "6d549d1"
 +++
 
-Every one of these means "this machine":
+Every one of these means "this computer":
 
 - `http://127.0.0.1/`
 - `http://2130706433/`
@@ -27,66 +28,58 @@ Every one of these means "this machine":
 - `http://[::ffff:127.0.0.1]/`
 - `http://[64:ff9b::7f00:1]/`
 
-A monitor fetches whatever URL you give it. That makes it a door into the network it runs on. The classic target is `169.254.169.254`, the cloud metadata service, which will happily hand out credentials to anything that asks from inside. This attack has a name: **SSRF**, server-side request forgery.
+A monitor visits whatever address you give it. That makes it a bit like a delivery driver who'll go to any address on the label. Handy, until someone writes the address of your private office on it.
+
+The classic target is `169.254.169.254`, a special address inside cloud servers that hands out passwords to anything asking from the inside. This trick even has a name: SSRF.
 
 This checkpoint is the first lock on that door.
 
-## Two questions, two layers
+## What I built
 
-**What does the URL say?** `TargetUrl` accepts only `http` and `https`, with no user name or password, no `#fragment`, no secret-looking query parameters such as `token`, and at most 2,048 characters. Secrets belong in a header, not in a URL that ends up in logs.
+Two checks:
 
-**Where may it go?** `NetworkPolicy` allows only addresses that are reachable on the public internet, on ports 80 and 443.
+- **Is the address safe to write down?** Only `http` and `https`. No username or password in it. Nothing that looks like a secret, such as `?token=`. At most 2,048 characters. Secrets belong in a separate header, not in an address that ends up in logs.
+- **Is it safe to go there?** Only addresses on the public internet, on the normal web ports (80 and 443).
 
-The URL library does a lot of the work. It normalizes all of the IPv4 disguises above to plain `127.0.0.1` *before* our policy looks, so there's one canonical address to judge.
+Good news: the library that reads web addresses turns all those disguises into plain `127.0.0.1` *before* my check even looks. One address to judge, not seven.
 
 ## Not from memory
 
-"Which addresses are private?" sounds like something everyone knows. It isn't a short list. So the blocked ranges come straight from IANA's official special-purpose address registries, fetched the same day: 26 IPv4 entries and 25 IPv6 entries, each marked whether it's globally reachable.
+"Which addresses are private?" sounds like common knowledge. It's a surprisingly long list.
 
-Each table line keeps the registry's own text next to the numbers:
+So I took it straight from the official registry (IANA) the same day: 26 special IPv4 ranges and 25 IPv6 ranges, each marked whether it's reachable from the public internet. A test checks every line of my list against the registry's own text, so a typo breaks the build.
 
-```rust
-v4(169, 254, 0, 0, 16, "169.254.0.0/16", "link-local, incl. cloud metadata"),
-```
+## The sneaky IPv6 ones
 
-A test parses that text and checks it matches the numbers. Mistype a prefix and the build fails.
-
-## The IPv6 tricks
-
-- **An allow-list, not a block-list.** For IPv6 we only allow global unicast (`2000::/3`), minus the special blocks inside it. Anything unassigned is refused automatically.
-- **NAT64:** `64:ff9b::7f00:1` is `127.0.0.1` wearing an IPv6 costume. Some networks use these addresses legitimately to reach IPv4 sites, so instead of blocking the whole range, we look at the IPv4 address inside it and judge *that*.
-- **Mapped addresses:** Rust's standard library says `::ffff:127.0.0.1` is *not* loopback until you call `to_canonical()` on it. We do that first.
+- **For IPv6, I flipped it around.** Instead of listing what's banned, only the normal public range is allowed. Anything new or unusual is refused by default.
+- **`64:ff9b::7f00:1` is `127.0.0.1` wearing an IPv6 costume.** Some networks use these addresses legitimately to reach older ones, so I don't ban them all. I look at the address inside and judge that.
+- **Rust's own check says `::ffff:127.0.0.1` is *not* "this computer"** until you convert it. So I convert first, every time.
 
 ## The one exception
 
-For local testing there's a dev profile that allows **exactly** `127.0.0.1` on one chosen port. That's not `::1`, not `127.0.0.2`, and not the mapped spelling. Only the command line can switch it on, never the API.
+For testing on my laptop, there's a developer mode that allows **exactly** `127.0.0.1` on one chosen port. Not `::1`, not `127.0.0.2`. And only the command line can switch it on, never the web API.
 
-## Do the tests have teeth?
+## Does it actually work?
 
 I broke the three defences an attacker would go after, one at a time:
 
-- **Skip the check for IP addresses written in the URL:** 3 tests failed.
-- **Remove the IPv4-mapped canonicalization:** 1 test failed. The address was *still blocked*, by a backstop entry for mapped addresses. Only the test that checks the exact reason noticed. Two layers, and the tests can see both.
-- **Shrink the metadata range from `/16` to `/32`:** 5 tests failed.
+- **Skipped the check for addresses written as numbers:** 3 tests failed.
+- **Removed the step that converts the IPv6 costume:** 1 test failed. The interesting part: the address was *still blocked*, by a backup rule. Only the test that checks the exact reason noticed. Two layers, and the tests can see both.
+- **Shrank the cloud-password range:** 5 tests failed.
 
-Then I put the original back and compared it byte for byte.
+Then I put the original code back and compared it byte for byte.
 
-## Meanwhile, I broke this website
+## Where I messed up: I broke this website
 
-When I published the first build-log posts, both deploy runs went green, and every post on this site turned into a 404.
+When I first published this build log, every deploy said "success", and every post on this site turned into "404 not found".
 
-GitHub Pages was still set to "deploy from a branch". So every push started two deploys: my Zola build, and GitHub's old default build, which renders the README. They race. The first time, mine finished 3 seconds later and won. This time, theirs finished 10 seconds later.
+The old hosting ran two competing deploys on every update, and the wrong one happened to finish last.
 
-Lesson: a green workflow isn't a working site. Check the live pages after every push, because a race that went your way once is still a race.
+Lesson: a green checkmark isn't a working site. Open the page.
 
-The fix: this site now lives on Cloudflare Pages. I build it on my own machine with the same Zola version I preview with, and upload exactly that. There's one deploy, and it's the one I checked.
+The fix: this site now lives on Cloudflare Pages. I build it on my own machine and upload exactly that, so there's one deploy, and it's the one I checked.
 
-## The honest part
+## What it doesn't do yet
 
-- This is **layer 1**. Domain names are resolved by DNS, and every address that comes back gets checked in Checkpoint 0.5. A name that resolves to a *mix* of public and private addresses will be rejected outright, since that's a classic DNS-rebinding trick.
-- An app-level check is not a firewall. The plan also calls for network egress rules as a second boundary.
-
-## Numbers
-
-- **35** tests (15 new), **0** clippy warnings.
-- **3/3** deliberate security regressions caught.
+- This is the first layer. Names like `example.com` get turned into addresses later, and every one of those addresses gets checked too (Checkpoint 0.5). A name that points to a mix of public and private addresses will be refused outright, because that's a known trick.
+- An app checking addresses isn't a firewall. The plan adds network rules as a second layer later.

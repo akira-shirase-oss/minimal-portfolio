@@ -20,7 +20,7 @@
 <dl class="glance">
   <div><dt>Goal</dt><dd>{{ summary.goal }}</dd></div>
   <div><dt>Built</dt><dd>{{ summary.built }}</dd></div>
-  <div><dt>Proof</dt><dd>{{ summary.proof | join(sep=" · ") }}</dd></div>
+  <div><dt>Result</dt><dd>{{ summary.proof | join(sep=" · ") }}</dd></div>
   {%- if summary.code %}
   <div><dt>Code</dt><dd><code>{{ summary.code }}</code></dd></div>
   {%- endif %}

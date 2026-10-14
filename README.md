@@ -26,6 +26,17 @@ A text-only portfolio and blog built with [Zola](https://www.getzola.org) 0.23.6
 
 Code blocks get colours when you name the language, e.g. ```` ```rust ````. A typo in the language name stops the build, so you'll see it straight away.
 
+## How posts should sound
+
+Human first, casual and easy to read. The Rust Book post is the model.
+
+- **Open with a human moment, not the technology:** "You can't test a smoke alarm without smoke."
+- **Explain every technical term in everyday words the first time,** or leave it out. An analogy beats jargon (a bouncer at the door, a delivery driver).
+- **Keep paragraphs short:** 1 to 3 sentences, one idea each.
+- **Show code only when it's the point,** keep it short, and say in plain words what it does.
+- **Keep numbers exact and caveats honest.** Say "I", and a little humour is welcome.
+- **Build-log entries use these headings, in order:** What I built · How it works (the short version) · Does it actually work? · Where I messed up · What it doesn't do yet · Up next.
+
 ## Add a build-log entry (Service Monitor)
 
 Build-log entries live in `content/service-monitor/`, not in `posts/`. The home page shows the latest 3 under **Build log**, and `/service-monitor/` groups all of them under their milestone. Previous/next links and the "Service Monitor build log › M0 · 0.4" line above the title are added automatically.

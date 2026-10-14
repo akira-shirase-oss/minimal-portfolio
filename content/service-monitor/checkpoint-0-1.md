@@ -1,6 +1,6 @@
 +++
-title = "Checkpoint 0.1: deleting a retry path at compile time"
-description = "The empty Rust project for my monitor, the rules the compiler now enforces, and why HTTP/2 isn't in it."
+title = "Checkpoint 0.1: rules first, code second"
+description = "An empty project sounds boring. It's also the cheapest moment to decide what the compiler should never let me do."
 date = 2026-10-14T12:10:00Z
 aliases = ["/posts/service-monitor-checkpoint-0-1/"]
 
@@ -9,67 +9,54 @@ aliases = ["/posts/service-monitor-checkpoint-0-1/"]
 kind = "experiment"
 milestone = "M0"
 step = "0.1"
-short_title = "Deleting a retry path at compile time"
+short_title = "Rules first, code second"
+
 [extra.summary]
-goal = "An empty project with the right shape and the right rules."
-built = "The crate, its nine modules, two locked dependencies, and lint rules the compiler enforces."
-proof = ["0 clippy warnings", "no HTTP/2 or OpenSSL in the dependency tree"]
+goal = "Set up the project, and the rules, before writing any real code."
+built = "An empty project in nine parts, two pinned libraries, and rules the compiler enforces."
+proof = ["0 warnings", "unwanted code left out of the build entirely"]
 code = "aca3990"
 +++
 
+Nobody gets excited about an empty project.
+
+But it's the cheapest moment to decide which mistakes you'll never allow, because there's no old code to clean up yet.
+
 ## How I'm building this
 
-Every milestone is split into small **checkpoints**. A checkpoint is only done when:
+Every milestone is cut into small **checkpoints**. A checkpoint only counts when:
 
 - its tests pass,
-- `cargo clippy` reports **0 warnings**,
-- it's committed,
+- Rust's strict code reviewer (a tool called clippy) has **zero** complaints,
+- it's saved in git,
 - and it's written up here, mistakes included.
 
-Checkpoint 0.1 is the smallest possible one: an empty project with the right shape. Boring on purpose. Everything after builds on it.
+## What I built
 
-## What got built
+- **An empty Rust project, split into nine parts:** checking, scheduling, storage, alerts and so on. Each part has one sentence saying what it does, and what it must never touch.
+- **Two libraries, pinned to exact versions:** tokio, the engine that lets a program do many things at once, and reqwest, for making web requests.
 
-- A Rust crate (edition 2024, Rust 1.99) with the nine modules from the design: `domain`, `probe`, `scheduler`, `storage`, `incidents`, `notifications`, `api`, `status`, `telemetry`. Each has one line saying what it's responsible for, and what it must never touch.
-- Two dependencies, with exact versions locked: **tokio 1.53.3** and **reqwest 0.13.5**.
+## The trick: leaving a feature out
 
-## The trick: belt and braces
+On [day 0](@/service-monitor/day-0-read-the-source-first.md) I found that the web library retries some failed requests by itself. There's a setting to turn that off, and I'll use it.
 
-In the [last post](@/service-monitor/day-0-read-the-source-first.md), we found that reqwest retries certain HTTP/2 errors by default. You *can* turn that off with one builder call, and we will.
+But settings get forgotten. So I also left out the part of the library where those retries live (HTTP/2, which a simple health check doesn't need).
 
-But a forgotten builder call is exactly the kind of bug I'm trying to avoid. So HTTP/2 isn't compiled in at all:
-
-```toml
-reqwest = { version = "0.13.5", default-features = false, features = ["rustls"] }
-```
-
-No default features means no HTTP/2, no system proxy lookup, and TLS via rustls only. `cargo tree` confirms the `h2` crate isn't in the build, so that retry path doesn't exist in the binary. A health check only needs HTTP/1.1.
+I checked the build afterwards: that code isn't in there at all. It can't misbehave if it doesn't exist.
 
 ## Rules the compiler now enforces
 
-These live in `Cargo.toml`, so they apply to every file:
+- **No `unsafe` code.** Rust's safety checks stay switched on everywhere in my code.
+- **No `unwrap()` outside tests.** That's Rust's "assume this worked, and crash if it didn't". A monitor should report a problem, not fall over.
+- **A name-clash check.** From [my AI Rust exams](@/posts/i-made-an-ai-read-the-rust-book.md): give a helper the same name as a built-in method, and Rust can quietly call the wrong one.
 
-```toml
-[lints.rust]
-unsafe_code = "forbid"
-
-[lints.clippy]
-same_name_method = "warn"
-unwrap_used = "warn"
-expect_used = "warn"
-```
-
-- **No `unsafe`** anywhere in our code. The two C libraries we depend on (SQLite and the TLS crypto) sit behind safe Rust APIs.
-- **No `unwrap` or `expect`** outside tests. On bad input, a monitor must report an error, not crash.
-- **`same_name_method`** catches a trap from [my AI Rust exams](@/posts/i-made-an-ai-read-the-rust-book.md): a helper named like a trait method can be silently shadowed, so the wrong method runs.
-
-One more deliberate choice: release builds keep `panic = "unwind"`. If one check panics, it should show up as a recorded gap, not take the whole monitor down with it.
+And one more choice: if a single check crashes, the monitor writes it down as a gap instead of taking the whole thing down with it.
 
 ## Numbers
 
-- reqwest 0.13.5 with its default TLS library (aws-lc) built here in **16 s** with plain gcc. No cmake, no clang.
-- **0** clippy warnings. **0** tests, because there's nothing to test yet.
+- **16 seconds** to build the web library and its encryption code, using just the standard compiler on this laptop.
+- **0** warnings. **0** tests, because there's nothing to test yet.
 
-## The honest part
+## What it doesn't do yet
 
-Nothing runs yet. This checkpoint proves the shape of the project and what's (not) in the dependency tree. That's all.
+Nothing runs. This checkpoint is the foundation, and nothing more.

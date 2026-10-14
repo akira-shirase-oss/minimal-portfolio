@@ -14,7 +14,7 @@ now = [
 # status: one or two words, e.g. "live", "shipped", "write-up", "in progress".
 [[extra.projects]]
 name = "Service Monitor"
-about = "A self-hosted HTTP monitor in Rust that never shows green without evidence. Built in the open, one tested checkpoint at a time."
+about = "Keeps an eye on your websites and tells you, honestly, when something breaks. Written in Rust, built in the open, one tested step at a time."
 link = "@/service-monitor/_index.md"
 year = 2026
 status = "in progress"

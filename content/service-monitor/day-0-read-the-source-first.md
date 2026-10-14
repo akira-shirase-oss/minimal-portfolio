@@ -1,6 +1,6 @@
 +++
-title = "Before writing my Rust monitor, I read the libraries' source. It found 4 traps."
-description = "An IP address that skips your DNS check, two hidden retry layers, a clock that stops while you sleep, and a typo SQLite won't tell you about."
+title = "I read the code before writing the code. It found 4 traps."
+description = "Before building my uptime monitor, I checked how its libraries really behave. Four surprises, any of which would have quietly broken it."
 date = 2026-10-14T12:00:00Z
 aliases = ["/posts/service-monitor-read-the-source-first/"]
 
@@ -9,78 +9,76 @@ aliases = ["/posts/service-monitor-read-the-source-first/"]
 kind = "experiment"
 milestone = "M0"
 step = "day 0"
-short_title = "I read the libraries' source first. It found 4 traps."
+short_title = "I read the code first. It found 4 traps."
+
 [extra.summary]
-goal = "Check every assumption in the plan against the real library source before writing code."
-built = "A knowledge base for the project, and a list of traps, each with its fix."
-proof = ["4 traps found in reqwest, hyper-util, tokio and SQLite", "every number in the plan checked by script"]
+goal = "Find out how the libraries really behave before trusting them with a monitor."
+built = "A knowledge base for the project, and a list of traps with a fix for each."
+proof = ["4 traps found before writing any code", "every number in the plan double-checked"]
 +++
 
-A monitor has one job: tell the truth about whether something is up.
+Have you ever had a website go down and found out from an angry customer instead of your own alerts?
 
-The scary bugs in a monitor aren't the crashes. They're the quiet ones. A check that secretly retries until it passes. A gap in the data that shows up as green. A safety check that a clever URL walks straight past.
+That's the job of an uptime monitor. It checks your site every minute and tells you when something breaks. Simple idea.
 
-I'm building one anyway.
+But a monitor has one job: telling the truth. And the dangerous bugs in a monitor aren't the ones that crash it. They're the quiet ones: a check that secretly retries until it passes, or a gap in the data that shows up as green.
 
-## What I'm building
+I'm building one anyway. It's called **Service Monitor**, it's written in Rust, and I'm building it with Claude Code, in the open. This is the first entry in [the build log](@/service-monitor/_index.md).
 
-**Service Monitor** is a small, self-hosted HTTP monitor written in Rust. You register a health URL; when repeated checks fail, you get one alert with the evidence, then one recovery alert. No retry storms, and it never shows green without fresh evidence.
+## The rule: don't trust memory
 
-I'm building it with Claude Code, in the open, one tested checkpoint at a time. This is the first entry in [the build log](@/service-monitor/_index.md).
+Programmers (and AIs) often write code from memory of how a library works. But libraries change, and memory is optimistic.
 
-## The rule: never code from memory
+So before writing any monitor code, Claude read the actual source code of the exact library versions we'd use, and ran tiny experiments to confirm what it found.
 
-Before writing a single line of monitor code, Claude read the actual source of the exact library versions we'd use (reqwest 0.13.5, hyper-util 0.1.21, tokio 1.53.3, rusqlite 0.40.2), and ran tiny probe programs against local servers to confirm what it read.
+Four things surprised us.
 
-Four things came back that would have turned into silent bugs.
+## Trap 1: an IP address skips the safety check
 
-## Trap 1: an IP address skips your DNS safety check
+A monitor visits whatever web address you give it. That's handy, and also a little risky. Someone could point it at things inside your private network, like the special address on cloud servers that hands out passwords to anything that asks from inside. (Security folks call this SSRF.)
 
-A URL checker is also a way into your internal network. The standard defence is a custom DNS resolver that refuses private addresses like `127.0.0.1` or the cloud metadata service.
+The usual guard checks every address when a name like `example.com` gets looked up. But when the address is already a number, like `http://[::ffff:127.0.0.1]/`, there's nothing to look up, so the guard never runs.
 
-But when the URL already contains an IP address, hyper-util connects straight to it and never calls the resolver. It's intended, and there's a comment in the code saying so. In the probe, `http://[::ffff:127.0.0.1]/` reached a local server, and our resolver was called **0 times**.
+In our test, that address reached a private test server, and the guard was called **0 times**.
 
-One more wrinkle: Rust's standard library says `::ffff:127.0.0.1` is *not* loopback until you call `to_canonical()` on it.
+**Fix:** check addresses written as numbers directly, before anything goes out.
 
-**Fix:** the URL validator checks IP addresses itself, before any request goes out.
+## Trap 2: hidden retries
 
-## Trap 2: two hidden retry layers
+My rule is "one check, one try". If a service is flaky, I want to see it. If it's struggling, I don't want to pile on.
 
-My monitor's contract is "one check = one attempt". Retries hide flaky services and pile load onto ones that are already struggling.
+It turns out the web library quietly retries some requests: up to **2 extra attempts** for certain errors. And a layer underneath it retries too, with no setting to turn it off.
 
-- reqwest's default policy adds **up to 2 extra attempts** on certain HTTP/2 errors.
-- hyper-util quietly retries canceled requests on reused connections, and has no setting for it.
+**Fix:** switch off the first, avoid the conditions that trigger the second, and leave out the feature they live in.
 
-**Fix:** turn off reqwest's retries, turn off connection reuse (which removes the second one), and don't compile HTTP/2 in at all. A health check doesn't need it.
+## Trap 3: the clock that sleeps with your laptop
 
-## Trap 3: the clock stops while the laptop sleeps
+Rust's usual stopwatch stops counting while a laptop is asleep. On my machine it said **17,240 seconds** since startup, while the clock that also counts sleep said **62,115**. That's about 12.5 hours of sleep it never noticed.
 
-Rust's `Instant` on Linux follows a clock that pauses during suspend. On this laptop it read **17,240 s** while the boot clock read **62,115 s**: about 12.5 hours of sleep it never noticed.
+For a monitor, that means checks missed while the laptop slept would simply vanish, instead of showing up as "we weren't watching".
 
-Tokio's `MissedTickBehavior::Skip` has its own surprise: after a missed tick it still fires once, immediately, late.
+**Fix:** work out every check time from the real clock, and record missed checks as gaps.
 
-For a monitor, that means checks missed while asleep would just… disappear.
+## Trap 4: the database that doesn't mention typos
 
-**Fix:** our own scheduler works out every slot from wall-clock time. A missed slot is recorded as a *gap*, never quietly skipped and never counted as a pass.
+SQLite silently ignores a setting it doesn't recognise. Mistype the one that makes writes crash-safe, and you get no error, just a less safe database.
 
-## Trap 4: SQLite won't tell you about a typo
+**Fix:** read every setting back at startup, and refuse to start if one doesn't match.
 
-A misspelled `PRAGMA` runs without an error and does nothing. Get `synchronous = FULL` slightly wrong, and your database is quietly less durable than you think.
+## Bonus: checking the maths
 
-**Fix:** every setting is read back at startup, and the monitor refuses to start if any doesn't match. (Good news too: the bundled SQLite, 3.53.2, already includes the fix for a WAL corruption bug that was patched in 3.51.3.)
+The plan was full of numbers, so we checked every one with a script. All correct.
 
-## Bonus: the maths in the plan
+One limit nobody had written down: with the default settings, only **12 monitors** can point at the same server before the monitor starts saying no. That's the first wall a real user would hit.
 
-The plan had a lot of numbers in it, so we checked them all with a script. They held up. One limit wasn't written anywhere: with the default settings, only **12 monitors fit on one host** (one scheme + host + port) before admission control says no. That's the first wall a real pilot would hit.
+## What it doesn't mean
 
-## The honest part
-
-- None of these are bugs in reqwest, hyper-util, tokio or SQLite. They're sensible defaults for a general-purpose client, just wrong for a monitor.
-- These facts are for the versions above. They get re-checked on every upgrade.
-- At this point the monitor had zero lines of code. This was all reading.
+- None of these are bugs in those libraries. They're sensible choices for general use, just wrong for a monitor.
+- These facts are for these exact versions, and they get re-checked on every upgrade.
+- At this point there was zero monitor code. This was all reading.
 
 ## The takeaway
 
-The libraries were right. My assumptions were wrong.
+The libraries were fine. My assumptions weren't.
 
-Reading the source turned four "it probably works like this" into four tests I'll write before the code that needs them.
+Reading first turned four "it probably works like this" into four tests to write before the code that needs them.
