@@ -61,14 +61,20 @@ Elsewhere:
 
 ## Publishing
 
-The site lives at https://akira-shirase-oss.github.io/minimal-portfolio/ and is built from the `main` branch of https://github.com/akira-shirase-oss/minimal-portfolio.
+The site lives at https://akira-shirase-oss.pages.dev/ on Cloudflare Pages (project `akira-shirase-oss`). The source is the `main` branch of https://github.com/akira-shirase-oss/minimal-portfolio. Pushing to GitHub does **not** publish anything: the site is built here with Zola 0.23.6 (the same version as the local preview) and uploaded with Cloudflare's `wrangler` CLI, so what goes live is exactly what you checked.
 
-Every push to `main` publishes the site: GitHub Actions (`.github/workflows/deploy.yml`) builds it with Zola 0.23.6, the same version as the local preview, and deploys it to GitHub Pages. To publish a new post:
+To publish a new post:
 
 ```
 git add -A
 git commit -m "Add post: <title>"
 git push
+zola build
+wrangler pages deploy public --project-name akira-shirase-oss --branch main --commit-hash "$(git rev-parse HEAD)" --commit-message "$(git log -1 --format=%s)"
 ```
 
-The build takes about a minute; the Actions tab of the repo shows its progress. One-time setting (already needed before the first deploy): repo Settings → Pages → Source: "GitHub Actions".
+The upload takes a few seconds, then open the page on https://akira-shirase-oss.pages.dev/ to check it's live.
+
+One-time setup on a new machine: `npm install -g wrangler@4.148.0`, then `wrangler login`. The project already exists. Don't pass `--force` to any command: it was only needed once, to create the project as a classic Pages project.
+
+The site moved here from GitHub Pages on 2026-10-14. GitHub Pages started two competing deploys on every push, and the wrong one won.

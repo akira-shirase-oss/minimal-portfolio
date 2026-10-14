@@ -1,8 +1,8 @@
 # Site settings. Built with Zola 0.23.6 (https://www.getzola.org).
 
-# The live address (GitHub Pages for the minimal-portfolio repo).
+# The live address (Cloudflare Pages project `akira-shirase-oss`; see README "Publishing").
 # `zola serve` ignores it and uses http://127.0.0.1:1111 for local previews.
-base_url = "https://akira-shirase-oss.github.io/minimal-portfolio"
+base_url = "https://akira-shirase-oss.pages.dev"
 
 title = "Akira"
 description = "Building Rust runtimes, reliable background jobs, and AI infrastructure. Sharing the experiments, failures, and releases."

@@ -1,2 +1,2 @@
-# Built site (GitHub Actions builds its own copy)
+# Built site (made locally by `zola build`, then uploaded to Cloudflare Pages)
 public/
