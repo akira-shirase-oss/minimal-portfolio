@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="home">
+  <section class="hero">
+    {{ section.content | safe }}
+  </section>
+
+  {%- if section.extra.now %}
+  <h2 id="now">Now</h2>
+  <ul class="log">
+    {%- for item in section.extra.now %}
+    <li class="entry">
+      <span class="when status-running"><span class="dot" aria-hidden="true"></span> running</span>
+      <div class="what"><p>{{ item }}</p></div>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+
+  {%- if section.extra.projects %}
+  <h2 id="projects">Projects</h2>
+  <ul class="log">
+    {%- for project in section.extra.projects %}
+    <li class="entry">
+      <span class="when">{{ project.year | default(value="") }}</span>
+      <div class="what">
+        {%- if project.link %}
+          {%- if project.link is starting_with(pat="@/") %}
+            {%- set href = get_url(path=project.link) %}
+          {%- else %}
+            {%- set href = project.link %}
+          {%- endif %}
+        <a class="title" href="{{ href }}">{{ project.name }}</a>
+        {%- else %}
+        <span class="title">{{ project.name }}</span>
+        {%- endif %}
+        {%- if project.status %} <span class="tag">{{ project.status }}</span>{% endif %}
+        <p class="summary">{{ project.about }}</p>
+      </div>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+
+  <h2 id="writing">Writing</h2>
+  {% set posts = get_section(path="posts/_index.md") %}
+  <ul class="log">
+    {%- for post in posts.pages %}
+    <li class="entry">
+      <div class="when">
+        <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d") }}</time>
+        {%- if post.extra.kind %}
+        <span class="tag kind-{{ post.extra.kind }}">{{ post.extra.kind }}</span>
+        {%- endif %}
+      </div>
+      <div class="what">
+        <a class="title" href="{{ post.permalink }}">{{ post.title }}</a>
+        {%- if post.description %}
+        <p class="summary">{{ post.description }}</p>
+        {%- endif %}
+      </div>
+    </li>
+    {%- else %}
+    <li class="entry"><span class="when"></span><div class="what"><p>No posts yet.</p></div></li>
+    {%- endfor %}
+  </ul>
+
+  {%- set x = config.extra.x_handle %}
+  {%- set gh = config.extra.github %}
+  {%- set mail = config.extra.email %}
+  {%- if x or gh or mail %}
+  <h2 id="contact">Contact</h2>
+  <ul class="log">
+    {%- if x %}<li class="entry"><span class="when">x</span><div class="what"><a href="https://x.com/{{ x }}">@{{ x }}</a></div></li>{% endif %}
+    {%- if gh %}<li class="entry"><span class="when">github</span><div class="what"><a href="https://github.com/{{ gh }}">{{ gh }}</a></div></li>{% endif %}
+    {%- if mail %}<li class="entry"><span class="when">email</span><div class="what"><a href="mailto:{{ mail }}">{{ mail }}</a></div></li>{% endif %}
+  </ul>
+  {%- endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,42 @@
+# Site settings. Built with Zola 0.23.6 (https://www.getzola.org).
+
+# The live address (GitHub Pages for the minimal-portfolio repo).
+# `zola serve` ignores it and uses http://127.0.0.1:1111 for local previews.
+base_url = "https://akira-shirase-oss.github.io/minimal-portfolio"
+
+title = "Akira"
+description = "Building Rust runtimes, reliable background jobs, and AI infrastructure. Sharing the experiments, failures, and releases."
+default_language = "en"
+
+# The default author of every post (footer and RSS feed).
+author = "Akira"
+
+# An RSS feed at /rss.xml so people can follow new posts (linked in the page head for feed readers).
+generate_feeds = true
+feed_filenames = ["rss.xml"]
+
+# /sitemap.xml lists every page for search engines, and /robots.txt points them to it.
+generate_sitemap = true
+generate_robots_txt = true
+
+[markdown]
+# Curly quotes and proper dashes in posts (code is left alone).
+smart_punctuation = true
+
+[markdown.highlighting]
+# Code colours follow the reader's light or dark mode.
+light_theme = "github-light"
+dark_theme = "github-dark"
+# Fail the build on a typo in a code block's language name.
+error_on_missing_language = true
+# Let code colours follow the page's light/dark setting (so the toggle switches them too).
+add_color_scheme = false
+
+[extra]
+# Contact links on the home page. Fill in the ones you want; empty ones are hidden.
+# X handle without the @ (also used for link previews on X).
+x_handle = ""
+# GitHub username.
+github = ""
+# Email address (shown on the page, so use one you're happy to make public).
+email = ""

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- if page is defined and page.title %}
+    {%- set doc_title = page.title %}
+    {%- set doc_description = page.description | default(value=config.description) %}
+    {%- set doc_type = "article" %}
+  {%- else %}
+    {%- set doc_title = config.title %}
+    {%- set doc_description = config.description %}
+    {%- set doc_type = "website" %}
+  {%- endif %}
+  <title>{% if doc_title != config.title %}{{ doc_title }} · {% endif %}{{ config.title }}</title>
+  <meta name="description" content="{{ doc_description }}">
+
+  <!-- Link previews on X and other sites -->
+  <meta property="og:site_name" content="{{ config.title }}">
+  <meta property="og:title" content="{{ doc_title }}">
+  <meta property="og:description" content="{{ doc_description }}">
+  <meta property="og:type" content="{{ doc_type }}">
+  {%- if current_url is defined %}
+  <meta property="og:url" content="{{ current_url }}">
+  {%- endif %}
+  <meta name="twitter:card" content="summary">
+  {%- if config.extra.x_handle %}
+  <meta name="twitter:site" content="@{{ config.extra.x_handle }}">
+  {%- endif %}
+
+  <script>
+    // Light/dark toggle. Runs before the page is drawn, so a saved choice never flashes the wrong theme.
+    // With no saved choice the site follows the system setting.
+    (function () {
+      var root = document.documentElement;
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+      } catch (e) {}
+
+      var systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+      function isDark() {
+        return root.dataset.theme ? root.dataset.theme === "dark" : systemDark.matches;
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var button = document.querySelector(".theme-toggle");
+        if (!button) return;
+        function updateLabel() {
+          var text = isDark() ? "Switch to light mode" : "Switch to dark mode";
+          button.setAttribute("aria-label", text);
+          button.title = text;
+        }
+        button.addEventListener("click", function () {
+          var next = isDark() ? "light" : "dark";
+          root.dataset.theme = next;
+          try { localStorage.setItem("theme", next); } catch (e) {}
+          updateLabel();
+        });
+        systemDark.addEventListener("change", updateLabel);
+        updateLabel();
+        button.hidden = false;
+      });
+    })();
+  </script>
+  <link rel="stylesheet" href="{{ get_url(path='style.css', cachebust=true) }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
+</head>
+<body class="{% block body_class %}{% endblock body_class %}">
+  <div class="top-bar" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="site-title" href="{{ get_url(path='@/_index.md') }}">{{ config.title }}</a>
+    <nav>
+      <a href="{{ get_url(path='@/_index.md') }}#writing">Writing</a>
+      <button class="theme-toggle" type="button" aria-label="Switch theme" hidden>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock content %}
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <span class="nowrap">© {{ now() | date(format="%Y") }}{% if config.author %} {{ config.author }}{% endif %}</span>
+      {%- if config.extra.x_handle %} · <a class="nowrap" href="https://x.com/{{ config.extra.x_handle }}">@{{ config.extra.x_handle }}</a>{% endif %}
+      · <span class="nowrap">built with Zola, in Rust</span> · <span class="nowrap">no tracking</span>
+    </p>
+  </footer>
+</body>
+</html>

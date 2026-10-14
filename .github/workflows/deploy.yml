@@ -1,0 +1,42 @@
+# Builds the site with Zola and publishes it to GitHub Pages on every push to main.
+# Based on the official action's README: https://github.com/getzola/github-pages
+# One-time setup: repo Settings → Pages → Source: "GitHub Actions".
+name: Build and deploy site
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # also allows a manual run from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6.0.1
+
+      - name: Build Zola + upload Pages artifact
+        uses: getzola/github-pages@066755243e69f508fd1a74739fbf1a65f656c790
+        with:
+          # Same version as the local install, so the live site matches the preview.
+          zola_version: v0.23.6
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

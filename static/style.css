@@ -1,0 +1,595 @@
+/* Akira: a text-only portfolio styled like a calm job log.
+   Light by default. Dark when the system asks for it, unless the toggle picked light,
+   or whenever the toggle picked dark. `color-scheme` also drives the code colours. */
+
+:root {
+  color-scheme: light;
+  --bg: #fdfdfc;
+  --text: #1f2328;
+  --muted: #656d76;
+  --line: #e5e7eb;
+  --accent: #b7410e; /* rust */
+  --ok: #1a7f37; /* running / release */
+  --fail: #cf222e; /* failure */
+  --code-bg: #f4f4f2;
+  --max: 42rem;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #141414;
+    --text: #e6e6e6;
+    --muted: #9a9a9a;
+    --line: #2b2b2b;
+    --accent: #f08a5d;
+    --ok: #3fb950;
+    --fail: #f85149;
+    --code-bg: #1d1d1d;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #141414;
+  --text: #e6e6e6;
+  --muted: #9a9a9a;
+  --line: #2b2b2b;
+  --accent: #f08a5d;
+  --ok: #3fb950;
+  --fail: #f85149;
+  --code-bg: #1d1d1d;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.site-header,
+main,
+.site-footer {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* A thin rust line across the top. On posts it fills up as you read. */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 10;
+}
+
+.post .top-bar {
+  background: var(--line);
+}
+
+.post .top-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform-origin: 0 50%;
+}
+
+@supports (animation-timeline: scroll()) {
+  .post .top-bar::after {
+    animation: read-progress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes read-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.site-title {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: lowercase;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-title::before {
+  content: "~/";
+  color: var(--accent);
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.site-header nav a {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Light/dark toggle: shows the moon in light mode and the sun in dark mode. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.theme-toggle[hidden] {
+  display: none; /* stays hidden if JavaScript is off */
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+.theme-toggle:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.theme-toggle svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.theme-toggle .icon-sun,
+:root[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun {
+    display: block;
+  }
+
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon {
+    display: none;
+  }
+}
+
+/* Text */
+a {
+  color: var(--accent);
+  text-underline-offset: 0.15em;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: 2.1rem;
+  margin: 0 0 0.75rem;
+}
+
+h2 {
+  font-size: 1.45rem;
+  margin: 2.5rem 0 0.75rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin: 2rem 0 0.5rem;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 1.25rem;
+}
+
+li + li {
+  margin-top: 0.35rem;
+}
+
+strong {
+  font-weight: 650;
+}
+
+blockquote {
+  margin: 0 0 1.25rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--line);
+  color: var(--muted);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.5rem 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.meta,
+.subtitle {
+  color: var(--muted);
+}
+
+.meta {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  margin: 0;
+}
+
+/* Tags: post kinds and project statuses */
+.tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  /* Tags are all capitals, so the space a line keeps for descenders (g, p, y) would sit
+     empty under the letters. Fallback: a little extra padding on top to even it out. */
+  line-height: 1.38;
+  padding: 0.19em 0.4rem 0;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--muted);
+  vertical-align: middle; /* centred on the text beside it */
+  white-space: nowrap;
+}
+
+/* Where supported (Chrome, Safari), trim the box to exactly the capitals' height,
+   so equal padding gives equal space above and below. */
+@supports (text-box: trim-both cap alphabetic) {
+  .tag {
+    line-height: 1;
+    padding: 0.42em 0.4rem;
+    text-box: trim-both cap alphabetic;
+  }
+}
+
+.kind-experiment {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.kind-failure {
+  color: var(--fail);
+  border-color: color-mix(in srgb, var(--fail) 45%, transparent);
+}
+
+.kind-release {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 45%, transparent);
+}
+
+/* Home page */
+.hero h1 {
+  font-size: 2.6rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+}
+
+/* A terminal cursor after the name. */
+.hero h1::after {
+  content: "";
+  display: inline-block;
+  width: 0.5ch;
+  height: 0.85em;
+  margin-left: 0.15em;
+  vertical-align: -0.05em;
+  background: var(--accent);
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.hero p {
+  font-size: 1.3rem;
+  line-height: 1.55;
+  max-width: 34rem;
+  margin: 0;
+}
+
+/* Section labels with a hairline: NOW ────── */
+.home h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin: 3.5rem 0 0.5rem;
+}
+
+.home h2::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--line);
+}
+
+/* Log rows: a narrow mono column (status, year or date), then the entry. */
+.log {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.log .entry {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1rem;
+  align-items: baseline; /* the left label sits on the same line as the title's first line */
+  padding: 0.8rem 0;
+  margin: 0;
+}
+
+.log .when {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* A post's kind sits under its date, so the title starts cleanly and wraps neatly. */
+.log .when .tag {
+  display: block;
+  width: fit-content;
+  margin-top: 0.45rem;
+}
+
+.log .what p {
+  margin: 0;
+}
+
+.log .title {
+  font-weight: 650;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Linked titles turn rust and get an underline on hover; nothing shifts. */
+.log a.title {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.log a.title:hover,
+.log a.title:focus-visible {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+.log .summary {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}
+
+/* "running" with a pulsing dot (inline, so "running" keeps its text baseline) */
+.log .when.status-running {
+  color: var(--ok);
+}
+
+.dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  vertical-align: middle;
+  border-radius: 50%;
+  background: var(--ok);
+  animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 55%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 0.45rem transparent;
+  }
+}
+
+/* Post page */
+.post-header {
+  margin-bottom: 2.5rem;
+}
+
+.post-header .meta {
+  margin-bottom: 0.75rem;
+}
+
+.post-header .subtitle {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin: 0;
+}
+
+.back {
+  margin-top: 3rem;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+}
+
+/* Code */
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+}
+
+:not(pre) > code {
+  background: var(--code-bg);
+  padding: 0.12em 0.35em;
+  border-radius: 4px;
+}
+
+pre {
+  background: var(--code-bg) !important; /* one background in both modes, whatever the theme sets */
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  margin: 0 0 1.5rem;
+  overflow-x: auto; /* long lines scroll instead of breaking the layout on phones */
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+pre code {
+  font-size: inherit;
+}
+
+/* Required by Zola's code highlighter (Giallo). */
+.giallo-l {
+  display: inline-block;
+  min-height: 1lh;
+  width: 100%;
+  vertical-align: top; /* keeps blank lines in code the same height as other lines */
+}
+
+.giallo-ln {
+  display: inline-block;
+  user-select: none;
+  margin-right: 0.4em;
+  padding: 0.4em;
+  min-width: 3ch;
+  text-align: right;
+  opacity: 0.8;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: 4.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 3rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+
+.site-footer a {
+  color: var(--muted);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  body {
+    font-size: 1.0625rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .hero h1 {
+    font-size: 2.1rem;
+  }
+
+  .hero p {
+    font-size: 1.15rem;
+  }
+
+  .site-header {
+    padding-top: 1.25rem;
+    padding-bottom: 2rem;
+  }
+
+  .log .entry {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  /* On phones the label goes above the entry, with date and kind side by side. */
+  .log .when {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .log .when .tag {
+    margin-top: 0;
+  }
+}
+
+/* No blinking or pulsing for readers who turn motion off. */
+@media (prefers-reduced-motion: reduce) {
+  .hero h1::after,
+  .dot {
+    animation: none;
+  }
+
+  .log a.title {
+    transition: none;
+  }
+}
