@@ -89,3 +89,5 @@ Fix: run the check on its own, or use `set -o pipefail`. Small thing, but it's e
 ## The honest part
 
 The URL is only length-checked so far. Blocking private and internal addresses, including tricky spellings like `2130706433` (that's `127.0.0.1`), is the next checkpoint.
+
+Next: [Checkpoint 0.3, 127.0.0.1 has a lot of disguises](@/posts/service-monitor-checkpoint-0-3.md).

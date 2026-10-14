@@ -30,7 +30,8 @@ I'm building it in Rust with Claude Code, and writing up every checkpoint here, 
 - **Day 0:** [Before writing my Rust monitor, I read the libraries' source. It found 4 traps.](@/posts/service-monitor-read-the-source-first.md)
 - **0.1:** [Deleting a retry path at compile time](@/posts/service-monitor-checkpoint-0-1.md). The scaffold. 0 clippy warnings.
 - **0.2:** [Rust types that can't hold bad data](@/posts/service-monitor-checkpoint-0-2.md). 20 tests, 2/2 deliberate breakages caught.
-- **0.3:** URL safety policy. *Next.*
+- **0.3:** [127.0.0.1 has a lot of disguises](@/posts/service-monitor-checkpoint-0-3.md). The URL safety policy. 35 tests, 3/3 attacks caught.
+- **0.4:** A Rust test server that fails on purpose. *Next.*
 
 ## Status
 
