@@ -61,7 +61,7 @@ Build-log entries live in `content/service-monitor/`, not in `posts/`. The home 
 
    The time in `date` keeps entries from the same day in order. It isn't shown. `tests` is
    the real count from that checkpoint's test run; leave it out for an entry with no code.
-2. In `content/service-monitor/_index.md`, move `up_next` to the checkpoint after this one (or delete the line when nothing is in progress). A new milestone only needs a line in `milestones`.
+2. In `content/service-monitor/_index.md`, move `up_next` to the checkpoint after this one (or delete the line when nothing is in progress). A new milestone only needs a line in `milestones`. The `[[extra.planned]]` tables at the end list what's still ahead, shown faded under each milestone: a step disappears from the page by itself once its entry is published or while it's `up_next`, so the list only changes when a plan changes. Steps of a milestone that isn't planned yet have no `step` and show as "planned"; give them numbers when that milestone's checkpoints are agreed.
 3. Publish as below.
 
 ## How the site looks, and why (the "control room")

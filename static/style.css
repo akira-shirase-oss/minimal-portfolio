@@ -635,6 +635,25 @@ figure.shot figcaption {
   color: var(--muted);
 }
 
+/* The milestone being built: a small green "in progress" beside its name. */
+.milestone-now {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--ok);
+  white-space: nowrap;
+}
+
+/* Steps still ahead: faded (muted, not bold), but easy to read. */
+.log .entry.is-planned {
+  padding: 0.45rem 0;
+}
+
+.log .entry.is-planned .title {
+  font-weight: 400;
+  color: var(--muted);
+}
+
 /* Previous / next entry, under a build-log entry. */
 .series-nav {
   display: grid;

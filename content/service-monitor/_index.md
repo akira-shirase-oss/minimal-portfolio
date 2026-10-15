@@ -21,6 +21,77 @@ milestones = [
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
 up_next = { milestone = "M2", step = "2.5", title = "Restarts that don't lie" }
+
+# What's still ahead, shown faded under each milestone. A step leaves this list on
+# its own once its entry is published (or while it's `up_next`). Steps get numbers
+# when their milestone is planned; until then they show as "planned".
+# (Arrays of tables last: a bare key after them would belong to the last one.)
+[[extra.planned]]
+milestone = "M2"
+step = "2.6"
+title = "Keeping a week, summing up the rest"
+
+[[extra.planned]]
+milestone = "M2"
+step = "2.7"
+title = "Disk limits and backups"
+
+[[extra.planned]]
+milestone = "M2"
+step = "2.8"
+title = "Telling certificate problems apart"
+
+[[extra.planned]]
+milestone = "M3"
+title = "Every alert saved with its incident"
+
+[[extra.planned]]
+milestone = "M3"
+title = "Signed webhooks"
+
+[[extra.planned]]
+milestone = "M3"
+title = "One email adapter"
+
+[[extra.planned]]
+milestone = "M3"
+title = "Retries that know when to stop"
+
+[[extra.planned]]
+milestone = "M3"
+title = "Testing a channel before you need it"
+
+[[extra.planned]]
+milestone = "M4"
+title = "Logging in"
+
+[[extra.planned]]
+milestone = "M4"
+title = "Adding and editing monitors from the dashboard"
+
+[[extra.planned]]
+milestone = "M4"
+title = "Maintenance windows"
+
+[[extra.planned]]
+milestone = "M4"
+title = "A public status page"
+
+[[extra.planned]]
+milestone = "M5"
+title = "A status page that lives somewhere else"
+
+[[extra.planned]]
+milestone = "M5"
+title = "Upgrades and rollbacks"
+
+[[extra.planned]]
+milestone = "M5"
+title = "A 24-hour stress test"
+
+[[extra.planned]]
+milestone = "M5"
+title = "A first real pilot"
 +++
 
 **Service Monitor** keeps an eye on your websites and services. Every minute, it checks that they answer properly. When one stops answering, you get one alert, with the evidence. When it's back, you get one "all good". No alert storms.

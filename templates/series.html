@@ -32,13 +32,17 @@
   </div>
 
   {%- set up_next = section.extra.up_next %}
+  {%- set all_planned = section.extra.planned | default(value=[]) %}
+  {%- set published = [p.extra.step for p in section.pages] %}
   {%- for milestone in section.extra.milestones %}
   {%- set entries = [p for p in section.pages if p.extra.milestone == milestone.id] | reverse %}
   {%- set has_next = up_next and up_next.milestone == milestone.id %}
+  {#- What's still ahead: a step leaves the list once it's published or being built. #}
+  {%- set planned = [p for p in all_planned if p.milestone == milestone.id and not (p.step and (p.step in published or (has_next and p.step == up_next.step)))] %}
   <section class="milestone m-{{ milestone.id | lower }}{% if not entries and not has_next %} is-upcoming{% endif %}" aria-labelledby="{{ milestone.id | lower }}">
-    <h2 id="{{ milestone.id | lower }}"><span class="milestone-id">{{ milestone.id }}</span> {{ milestone.name }}</h2>
+    <h2 id="{{ milestone.id | lower }}"><span class="milestone-id">{{ milestone.id }}</span> {{ milestone.name }}{% if has_next %} <span class="milestone-now"><span class="dot" aria-hidden="true"></span> in progress</span>{% endif %}</h2>
     <p class="milestone-about">{{ milestone.about }}</p>
-    {%- if entries or has_next %}
+    {%- if entries or has_next or planned %}
     <ul class="log">
       {%- for entry in entries %}
       <li class="entry">
@@ -65,6 +69,12 @@
         </div>
       </li>
       {%- endif %}
+      {%- for step in planned %}
+      <li class="entry is-planned">
+        <span class="when">{{ step.step | default(value="planned") }}</span>
+        <div class="what"><span class="title">{{ step.title }}</span></div>
+      </li>
+      {%- endfor %}
     </ul>
     {%- endif %}
   </section>
