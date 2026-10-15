@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M2"
 step = "2.2"
 short_title = "A dashboard that explains itself"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 235
 
 [extra.summary]
 goal = "Anyone can read the dashboard without asking me what anything means."

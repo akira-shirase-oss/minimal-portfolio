@@ -54,12 +54,38 @@ Build-log entries live in `content/service-monitor/`, not in `posts/`. The home 
    milestone = "M0"
    step = "0.4"
    short_title = "Your title"
+   # Rust tests in the workspace at this checkpoint (drawn as the home page's sparkline).
+   tests = 49
    +++
    ```
 
-   The time in `date` keeps entries from the same day in order. It isn't shown.
+   The time in `date` keeps entries from the same day in order. It isn't shown. `tests` is
+   the real count from that checkpoint's test run; leave it out for an entry with no code.
 2. In `content/service-monitor/_index.md`, move `up_next` to the checkpoint after this one (or delete the line when nothing is in progress). A new milestone only needs a line in `milestones`.
 3. Publish as below.
+
+## How the site looks, and why (the "control room")
+
+Redesigned on 2026-10-15 at Akira's request ("interactive, colourful, not just black"):
+the control room (real data drawn like a monitor) blended with a warmer, playful style.
+
+- **Every number on the home page comes from the posts**, never typed in: the build-log
+  strip (one bar per entry, coloured by milestone), the milestone track, the test
+  sparkline (`tests` in each entry), the orbit (rings are milestones, dots are entries,
+  the planet is `up_next`), the ticker's numbers and the status rows.
+  `templates/partials/log-panel.html` and `templates/partials/orbit.html` draw them.
+- **Words you can edit** are in `content/_index.md`: the intro (the `*word*` in the
+  heading is the coloured italic one), `ticker` (the rules after the live numbers),
+  `now` (the status rows) and `projects` (the cards).
+- **Colours**: cream light mode, deep navy dark mode; milestone colours `--m0`…`--m5`;
+  blue, lime and coral accents. Every text/background pair passes WCAG contrast
+  (checked 2026-10-15 in both themes).
+- **Type**: system sans for text, mono for labels, and Instrument Serif (SIL OFL 1.1,
+  `static/fonts/OFL.txt`) for headlines and titles.
+- **Motion and JavaScript are extras.** `static/site.js` (under 4 KB) types the name, ticks
+  the clock, fills the readouts and slides sections in. With JavaScript off, or with
+  "reduce motion" on, every page is complete and still. The home page is 66rem wide;
+  posts stay at 42rem for reading.
 
 ## Preview on your computer
 

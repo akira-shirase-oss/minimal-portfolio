@@ -10,6 +10,8 @@ kind = "experiment"
 milestone = "M0"
 step = "0.3"
 short_title = "127.0.0.1 has a lot of disguises"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 35
 
 [extra.summary]
 goal = "Stop the monitor from being tricked into reaching your private network."

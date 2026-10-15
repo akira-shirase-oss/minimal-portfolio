@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M0"
 step = "0.4"
 short_title = "A test server that fails on purpose"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 49
 
 [extra.summary]
 goal = "Give the monitor something real to fail against: slow, broken, silent or rude, on demand."

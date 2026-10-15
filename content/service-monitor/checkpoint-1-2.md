@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M1"
 step = "1.2"
 short_title = "Three strikes and it's down"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 133
 
 [extra.summary]
 goal = "Check on a schedule, and only call something down when the evidence agrees."

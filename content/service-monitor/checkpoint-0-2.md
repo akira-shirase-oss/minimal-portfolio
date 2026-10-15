@@ -10,6 +10,8 @@ kind = "experiment"
 milestone = "M0"
 step = "0.2"
 short_title = "Making bad settings impossible"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 20
 
 [extra.summary]
 goal = "Make it impossible for a bad setting to get into the monitor."

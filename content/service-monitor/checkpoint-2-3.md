@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M2"
 step = "2.3"
 short_title = "Remembering who's who"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 253
 
 [extra.summary]
 goal = "The same website is the same monitor after every restart, with its history attached."

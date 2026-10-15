@@ -68,6 +68,7 @@
     })();
   </script>
   <link rel="stylesheet" href="{{ get_url(path='style.css', cachebust=true) }}">
+  <script src="{{ get_url(path='site.js', cachebust=true) }}" defer></script>
   <link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
 </head>
 <body class="{% block body_class %}{% endblock body_class %}">

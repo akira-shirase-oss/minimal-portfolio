@@ -10,6 +10,8 @@ kind = "experiment"
 milestone = "M0"
 step = "0.1"
 short_title = "Rules first, code second"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 0
 
 [extra.summary]
 goal = "Set up the project, and the rules, before writing any real code."

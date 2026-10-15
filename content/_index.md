@@ -2,12 +2,34 @@
 title = "404human"
 
 [extra]
-# "Now": what you're working on. Each line shows with a live "running" status.
-now = [
-  "Building Service Monitor, a Rust uptime monitor, one tested checkpoint at a time.",
-  "Building a Rust knowledge base with Claude Code, checked by exams the AI can’t see.",
-  "Writing up each experiment here, including the parts that didn’t work.",
+# The ticker under the intro: after the live numbers, the rules the work lives by.
+ticker = [
+  "no green without proof",
+  "one check, one try",
+  "everything has a limit",
+  "measured, not guessed",
+  "every mistake written up",
 ]
+
+# "Status": what's running now, drawn as live processes on the home page.
+# `log = true` fills in the Service Monitor build log's step and test count by
+# itself; `writing = true` counts the write-ups. `detail` is shown as written.
+[[extra.now]]
+process = "service-monitor"
+what = "A Rust uptime monitor that tells the truth, built one tested checkpoint at a time."
+link = "@/service-monitor/_index.md"
+log = true
+
+[[extra.now]]
+process = "rust-knowledge-base"
+what = "Claude Code studying the whole Rust Book, checked by exams the AI can’t see."
+link = "@/posts/i-made-an-ai-read-the-rust-book.md"
+detail = "final exam 59/59"
+
+[[extra.now]]
+process = "writing"
+what = "Every experiment written up here, including the parts that didn’t work."
+writing = true
 
 # Projects, newest first. Copy a block to add one.
 # link: a web address, or "@/posts/<file>.md" for one of your posts.
@@ -28,12 +50,12 @@ status = "write-up"
 
 [[extra.projects]]
 name = "This site"
-about = "A text-only portfolio and blog built with Zola. No theme, no tracking."
+about = "This portfolio and build log: built with Zola, drawn like a small control room, with real numbers from the posts. No tracking."
 link = "https://github.com/akira-shirase-oss/minimal-portfolio"
 year = 2026
 status = "live"
 +++
 
-# Hi, I’m 404human.
+# Hi, I’m *404human.*
 
 Building Rust runtimes, reliable background jobs, and AI infrastructure. Sharing the experiments, failures, and releases.

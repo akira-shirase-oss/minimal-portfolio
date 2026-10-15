@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M0"
 step = "0.6"
 short_title = "A command you can actually run"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 73
 
 [extra.summary]
 goal = "Turn the check into something you can run from a terminal, and that scripts can trust."

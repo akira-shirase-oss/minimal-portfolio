@@ -1,17 +1,48 @@
-/* 404human: a text-only portfolio styled like a calm job log.
-   Light by default. Dark when the system asks for it, unless the toggle picked light,
-   or whenever the toggle picked dark. `color-scheme` also drives the code colours. */
+/* 404human: a portfolio drawn like a small, colourful control room.
+   Light by default (warm cream). Dark when the system asks for it, unless the toggle
+   picked light, or whenever the toggle picked dark (deep navy, not black).
+   `color-scheme` also drives the code colours. */
+
+/* The headline face: Instrument Serif (SIL OFL 1.1, see /fonts/OFL.txt), latin only. */
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/InstrumentSerif-Regular-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/InstrumentSerif-Italic-latin.woff2") format("woff2");
+}
 
 :root {
   color-scheme: light;
-  --bg: #fdfdfc;
-  --text: #1f2328;
-  --muted: #656d76;
-  --line: #e5e7eb;
+  --bg: #f5f2ea;
+  --text: #1c2120;
+  --muted: #5f6662;
+  --line: #e0dbcf;
   --accent: #b7410e; /* rust */
   --ok: #1a7f37; /* running / release */
   --fail: #cf222e; /* failure */
-  --code-bg: #f4f4f2;
+  --code-bg: #ece8de;
+  /* Milestone colours, also used for the build log's bars. */
+  --m0: #3346d3;
+  --m1: #df5a3b;
+  --m2: #6e9a1f;
+  --m3: #8a4fd8;
+  --m4: #17917f;
+  --m5: #c2860f;
+  --blue: #2f40c9;
+  --lime: #d8ec5e;
+  --coral: #ee6a4f;
+  --serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+  /* The coloured word in the headline. */
+  --em: #2f40c9;
   --max: 42rem;
   --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
@@ -20,27 +51,43 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #141414;
-    --text: #e6e6e6;
-    --muted: #9a9a9a;
-    --line: #2b2b2b;
+    --bg: #11142b;
+    --text: #ebeaf2;
+    --muted: #a4a7bf;
+    --line: #272b4d;
     --accent: #f08a5d;
     --ok: #3fb950;
     --fail: #f85149;
-    --code-bg: #1d1d1d;
+    --code-bg: #181c3a;
+    --m0: #7d8bff;
+    --m1: #ff8562;
+    --m2: #b6dc4f;
+    --m3: #b78cff;
+    --m4: #4fd1bd;
+    --m5: #f2be4c;
+    --blue: #3a4be0;
+    --em: #d8ec5e;
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #141414;
-  --text: #e6e6e6;
-  --muted: #9a9a9a;
-  --line: #2b2b2b;
+  --bg: #11142b;
+  --text: #ebeaf2;
+  --muted: #a4a7bf;
+  --line: #272b4d;
   --accent: #f08a5d;
   --ok: #3fb950;
   --fail: #f85149;
-  --code-bg: #1d1d1d;
+  --code-bg: #181c3a;
+  --m0: #7d8bff;
+  --m1: #ff8562;
+  --m2: #b6dc4f;
+  --m3: #b78cff;
+  --m4: #4fd1bd;
+  --m5: #f2be4c;
+  --blue: #3a4be0;
+  --em: #d8ec5e;
 }
 
 *,
@@ -114,10 +161,11 @@ main,
   }
 }
 
-/* Header */
+/* Header: the name and the links share one baseline; the round theme
+   button is centred on them. */
 .site-header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
   padding-top: 2rem;
@@ -140,7 +188,7 @@ main,
 
 .site-header nav {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 1.1rem;
 }
 
@@ -153,6 +201,7 @@ main,
 /* Light/dark toggle: shows the moon in light mode and the sun in dark mode. */
 .theme-toggle {
   display: inline-flex;
+  align-self: center;
   align-items: center;
   justify-content: center;
   width: 2rem;
@@ -481,6 +530,15 @@ figure.shot figcaption {
   margin-bottom: 2.5rem;
 }
 
+/* Titles share the home page's headline serif. */
+.post-header h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 2.75rem;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
 .post-header .meta {
   margin-bottom: 0.75rem;
 }
@@ -560,7 +618,7 @@ figure.shot figcaption {
   font-family: var(--mono);
   font-size: 0.8em;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--mc, var(--accent));
 }
 
 .milestone-about {
@@ -682,6 +740,884 @@ pre code {
   white-space: nowrap;
 }
 
+/* ---------- The control room: the home page and the build log ----------
+   Panels, a terminal intro, live status rows, the build log as a status strip,
+   milestones and a test-count sparkline. Every number comes from the posts. */
+
+:root {
+  --panel: #fbfaf6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --panel: #171b37;
+  }
+}
+
+:root[data-theme="dark"] {
+  --panel: #171b37;
+}
+
+/* Lists that are laid out as rows or bars don't take the text spacing. */
+.procs li + li,
+.strip li + li,
+.track li + li {
+  margin-top: 0;
+}
+
+/* The intro as a terminal window. */
+.term {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  overflow: hidden;
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.term-lights {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.term-lights i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--fail) 70%, var(--panel));
+}
+
+.term-lights i:nth-child(2) {
+  background: color-mix(in srgb, #d4a72c 75%, var(--panel));
+}
+
+.term-lights i:nth-child(3) {
+  background: color-mix(in srgb, var(--ok) 70%, var(--panel));
+}
+
+.term-body {
+  padding: 1.4rem 1.5rem 1.6rem;
+}
+
+.prompt {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+}
+
+.ps1 {
+  color: var(--accent);
+}
+
+/* While the name types itself (site.js), the cursor follows the typed
+   letters instead of sitting at the end. */
+.hero h1.typing::after {
+  display: none;
+}
+
+/* Section labels can carry a value on the right: STATUS ──── 14:05:33 UTC */
+.home h2::after {
+  order: 1;
+}
+
+.clock {
+  order: 2;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* Live status: one row per running thing, like a process list. */
+.procs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+.proc {
+  display: grid;
+  grid-template-columns: 12.5rem minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.8rem 1rem;
+  margin: 0;
+}
+
+.proc + .proc {
+  border-top: 1px solid var(--line);
+}
+
+.proc-name {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.proc-name a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.proc-name a:hover,
+.proc-name a:focus-visible {
+  color: var(--accent);
+}
+
+.led {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.6rem;
+  border-radius: 50%;
+  background: var(--ok);
+  vertical-align: 0.05em;
+}
+
+.proc-what {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.proc-stat {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ok);
+  white-space: nowrap;
+}
+
+/* A panel: the build log at a glance. */
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  padding: 1rem 1rem 0.4rem;
+}
+
+.panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.panel-title {
+  font-weight: 650;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.panel-title:hover,
+.panel-title:focus-visible {
+  color: var(--accent);
+}
+
+.panel-meta {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* The build log as a status strip: one bar per entry, oldest on the left. */
+.strip {
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  height: 2.25rem;
+  margin: 0;
+  padding: 0;
+}
+
+.strip li {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.strip li.starts-milestone {
+  margin-left: 10px;
+}
+
+.bar {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--mc, var(--accent));
+  transform-origin: 50% 100%;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+/* Each milestone has its colour (bars, track, orbit). A failure or release
+   entry adds a mark along the bar's top. */
+.m-m0 { --mc: var(--m0); }
+.m-m1 { --mc: var(--m1); }
+.m-m2 { --mc: var(--m2); }
+.m-m3 { --mc: var(--m3); }
+.m-m4 { --mc: var(--m4); }
+.m-m5 { --mc: var(--m5); }
+
+.bar.kind-failure {
+  box-shadow: inset 0 3px 0 var(--fail);
+}
+
+.bar.kind-release {
+  box-shadow: inset 0 3px 0 var(--ok);
+}
+
+a.bar:hover,
+a.bar:focus-visible {
+  transform: scaleY(1.15);
+  filter: brightness(1.12);
+}
+
+/* What's being built now: an outline still waiting to be filled. */
+.bar.is-next {
+  background: transparent;
+  border: 1.5px dashed color-mix(in srgb, var(--accent) 80%, transparent);
+}
+
+.readout {
+  margin: 0.55rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Milestones: done, the current one, and what's next. */
+.track {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 4px;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.track-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin: 0;
+  padding: 0.45rem 0 0;
+  border-top: 3px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.track-step.is-done,
+.track-step.is-current {
+  border-top-color: var(--mc);
+}
+
+.track-id {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.track-step.is-upcoming .track-id {
+  color: var(--muted);
+}
+
+/* Names wrap to at most two lines, and every step keeps two lines' room, so
+   the counts under them line up across the row. */
+.track-name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  min-height: calc(2em * 1.35);
+}
+
+/* Tests at every checkpoint. */
+.spark {
+  margin: 1.1rem 0 0.4rem;
+}
+
+.spark-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.spark-now {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.spark-now strong {
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.spark svg {
+  display: block;
+  width: 100%;
+  height: 64px;
+  margin-top: 0.35rem;
+  overflow: visible;
+}
+
+.spark-line {
+  fill: none;
+  stroke: var(--m0);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.spark-area {
+  fill: color-mix(in srgb, var(--m0) 16%, transparent);
+}
+
+.spark-axis {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.25rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+/* The latest entries, under the panel's charts. */
+.panel .latest {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.4rem;
+}
+
+/* The home page is wider than a post: room for the intro and the orbit side
+   by side. Long lines of text still stop at a readable width. */
+.home-page .site-header,
+.home-page main,
+.home-page .site-footer {
+  max-width: 66rem;
+}
+
+.home .log .summary,
+.home .proc-what {
+  max-width: 46rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero .term-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* The headline: a serif with one coloured, italic word. */
+.hero h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 5.6vw, 4.3rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+.hero h1 em {
+  color: var(--em);
+}
+
+/* Under the intro: the newest build-log line, as if tailing a log file. */
+.term-tail {
+  margin-top: 1.75rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed var(--line);
+}
+
+.tail-line {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+}
+
+.tail-step {
+  color: var(--ok);
+  margin-right: 0.5ch;
+}
+
+/* The orbit: milestones as rings, checkpoints as dots, the next one circling. */
+.orbit {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border-radius: 12px;
+  background: var(--blue);
+  color: #fff;
+  overflow: hidden;
+}
+
+.orbit svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  flex: 1;
+  padding: 1.6rem 0.5rem 0.4rem;
+}
+
+.orbit-corners span {
+  position: absolute;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgb(255 255 255 / 85%);
+}
+
+.orbit-corners .tl { top: 0.9rem; left: 1rem; }
+.orbit-corners .tr { top: 0.9rem; right: 1rem; }
+.orbit-corners .bl { bottom: 2.75rem; left: 1rem; }
+.orbit-corners .br { bottom: 2.75rem; right: 1rem; }
+
+.orbit-readout {
+  margin: 0;
+  padding: 0.55rem 1rem 0.6rem;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: rgb(255 255 255 / 88%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ring {
+  fill: none;
+  stroke: rgb(255 255 255 / 55%);
+  stroke-width: 1.2;
+}
+
+.ring.is-upcoming {
+  stroke: rgb(255 255 255 / 30%);
+  stroke-dasharray: 2 6;
+}
+
+.ring.is-current {
+  stroke: var(--lime);
+  stroke-width: 1.6;
+  stroke-dasharray: 7 6;
+}
+
+/* Each dot is drawn at the top of its ring, then turned into place. */
+.stop,
+.planet {
+  transform-box: view-box;
+  transform-origin: 200px 200px;
+}
+
+.stop {
+  transform: rotate(var(--turn));
+  outline: none;
+}
+
+.stop-hit {
+  fill: transparent;
+}
+
+.stop-dot {
+  fill: #fff;
+  transition: fill 0.15s ease, r 0.15s ease;
+}
+
+.stop:hover .stop-dot,
+.stop:focus-visible .stop-dot {
+  fill: var(--lime);
+  r: 7;
+}
+
+.stop:focus-visible .stop-dot {
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.planet circle {
+  fill: var(--coral);
+}
+
+.core {
+  fill: var(--lime);
+}
+
+.core-id {
+  font-family: var(--serif);
+  font-size: 40px;
+  fill: #10132b;
+}
+
+.core-name {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: #10132b;
+}
+
+.spark-plus {
+  stroke: var(--lime);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* A ticker of real facts, in a lime band under the intro. It stays inside the
+   content column: a band stretched to 100vw would include the scrollbar's
+   width and make the page scroll sideways. */
+.ticker {
+  margin: 1.25rem 0 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--lime);
+  color: #1c2120;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+}
+
+.ticker-items {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0.7rem 0;
+}
+
+.ticker-items li {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding-right: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.ticker-items li::before {
+  content: "+";
+  margin-right: 1.5rem;
+  color: #c4472c;
+  font-weight: 700;
+}
+
+/* Projects as cards, each with its colour; the whole card is the link. */
+.cards {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.cards li + li {
+  margin-top: 0;
+}
+
+.card {
+  position: relative;
+  margin: 0;
+  padding: 1.15rem 1.15rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--card);
+}
+
+.tint-0 { --card: var(--m0); }
+.tint-1 { --card: var(--m1); }
+.tint-2 { --card: var(--m2); }
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--card) 45%, var(--line));
+  box-shadow: 0 14px 28px -18px color-mix(in srgb, var(--card) 80%, transparent);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.card-title {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  line-height: 1.1;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* The title's link covers the whole card. */
+a.card-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.card-arrow {
+  display: inline-block;
+  margin-left: 0.35rem;
+  font-family: var(--sans);
+  font-size: 1.1rem;
+  color: var(--card);
+  transition: transform 0.2s ease;
+}
+
+.card:hover .card-arrow {
+  transform: translate(3px, -3px);
+}
+
+.card-about {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* Sections slide in as they scroll into view (site.js adds the classes, so
+   without JavaScript everything is simply there). */
+.will-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.will-reveal.revealed {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Printing never waits for a scroll. */
+@media print {
+  .will-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* While the headline types itself, untyped letters keep their place. */
+.hero h1.typing .ch {
+  visibility: hidden;
+}
+
+.hero h1.typing .ch.on {
+  visibility: visible;
+}
+
+.hero h1.typing .ch.at {
+  position: relative;
+}
+
+.hero h1.typing .ch.at::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 0.12em;
+  width: 0.5ch;
+  height: 0.85em;
+  margin-left: 0.12em;
+  background: var(--accent);
+}
+
+@media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .orbit {
+    max-width: 28rem;
+    width: 100%;
+    justify-self: center;
+  }
+
+  .orbit-readout {
+    font-size: 0.68rem;
+  }
+}
+
+/* On the build log's own page, the panel sits between the title and the intro. */
+.log-glance {
+  margin: 0 0 2.5rem;
+  padding-bottom: 0.6rem;
+}
+
+/* A little life, only for readers who allow motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .bar {
+    animation: bar-in 0.45s ease-out backwards;
+    animation-delay: calc(var(--i) * 35ms);
+  }
+
+  .bar.is-next {
+    animation: bar-in 0.45s ease-out backwards, waiting 1.6s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 35ms), 1s;
+  }
+
+  .led {
+    animation: pulse 2s ease-out infinite;
+  }
+
+  .spark svg {
+    animation: draw 1.1s ease-out 0.3s backwards;
+  }
+
+  /* Only the current milestone's line pulses, never its text. */
+  .track-step.is-current {
+    animation: line-waiting 1.6s ease-in-out infinite;
+  }
+
+  .planet {
+    animation: orbit 16s linear infinite;
+  }
+
+  .ring.is-current {
+    animation: ring-flow 24s linear infinite;
+  }
+
+  .ticker-track {
+    animation: ticker 45s linear infinite;
+  }
+
+  /* Hold the ticker still while it's being read. */
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ring-flow {
+  to {
+    stroke-dashoffset: -130;
+  }
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes line-waiting {
+  50% {
+    border-top-color: color-mix(in srgb, var(--mc) 30%, var(--line));
+  }
+}
+
+@keyframes bar-in {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes waiting {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes draw {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Narrower screens: status rows put their description underneath. */
+@media (max-width: 640px) {
+  .proc {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.25rem 1rem;
+  }
+
+  .proc-what {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 0.75rem;
+  }
+
+  .strip {
+    gap: 3px;
+  }
+
+  .strip li.starts-milestone {
+    margin-left: 7px;
+  }
+
+  /* The entry count goes under the title instead of alone on the right. */
+  .panel-meta {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}
+
 /* Phones */
 @media (max-width: 480px) {
   body {
@@ -690,6 +1626,10 @@ pre code {
 
   h1 {
     font-size: 1.75rem;
+  }
+
+  .post-header h1 {
+    font-size: 2.2rem;
   }
 
   .hero h1 {

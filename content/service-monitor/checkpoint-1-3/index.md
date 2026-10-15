@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M1"
 step = "1.3"
 short_title = "A dashboard that admits when it doesn't know"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 168
 
 [extra.summary]
 goal = "Watch the monitor work in a browser, and never show a state the evidence doesn't support."

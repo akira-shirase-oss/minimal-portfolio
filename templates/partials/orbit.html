@@ -1,0 +1,44 @@
+{#- The orbit: Service Monitor's milestones as rings around the one being built
+    now. Each published checkpoint is a dot on its milestone's ring (click it to
+    open the entry); the coral planet circling the current ring is the checkpoint
+    being built. Needs `log` and `entries` (oldest first). Every mark comes from
+    the posts. -#}
+{%- set up_next = log.extra.up_next %}
+{%- set latest = entries[-1] %}
+{%- set current_id = up_next.milestone if up_next else latest.extra.milestone %}
+{%- set current = [m for m in log.extra.milestones if m.id == current_id] %}
+<figure class="orbit" aria-label="Service Monitor's milestones as orbits">
+  <div class="orbit-corners" aria-hidden="true">
+    <span class="tl">Service Monitor</span>
+    <span class="tr">live build</span>
+    <span class="bl">{{ entries | length }} entries{% if latest.extra.tests is defined %} · {{ latest.extra.tests }} tests{% endif %}</span>
+    <span class="br">{{ latest.extra.milestone }} · {{ latest.extra.step }}</span>
+  </div>
+  <svg viewBox="0 0 400 400" role="group" aria-label="{{ log.extra.milestones | length }} milestones; the current one is {{ current_id }}">
+    {%- for milestone in log.extra.milestones %}
+    {%- set r = 66 + loop.index0 * 22 %}
+    {%- set mine = [p for p in entries if p.extra.milestone == milestone.id] %}
+    {%- set state = "current" if milestone.id == current_id else ("done" if mine else "upcoming") %}
+    <circle class="ring is-{{ state }}" cx="200" cy="200" r="{{ r }}" style="--i: {{ loop.index0 }}"/>
+    {%- for entry in mine %}
+    {%- set label = entry.extra.milestone ~ " · " ~ entry.extra.step ~ ": " ~ (entry.extra.short_title or entry.title) %}
+    <a class="stop" href="{{ entry.permalink }}" aria-label="{{ label }}" data-label="{{ label }}" style="--turn: {{ (loop.index0 * 360 / (mine | length)) | round(precision=2) }}deg; --i: {{ loop.index0 }}">
+      <title>{{ label }}</title>
+      <circle class="stop-hit" cx="200" cy="{{ 200 - r }}" r="10"/>
+      <circle class="stop-dot" cx="200" cy="{{ 200 - r }}" r="4.5"/>
+    </a>
+    {%- endfor %}
+    {%- if state == "current" and up_next %}
+    <g class="planet" style="--r: {{ r }}"><title>Up next · {{ up_next.step }}: {{ up_next.title }}</title><circle cx="200" cy="{{ 200 - r }}" r="9"/></g>
+    {%- endif %}
+    {%- endfor %}
+    <circle class="core" cx="200" cy="200" r="48"/>
+    <text class="core-id" x="200" y="205" text-anchor="middle">{{ current_id }}</text>
+    {%- if current %}
+    <text class="core-name" x="200" y="226" text-anchor="middle">{{ current[0].name }}</text>
+    {%- endif %}
+    <path class="spark-plus" d="M330 70 v14 M323 77 h14"/>
+    <path class="spark-plus" d="M68 318 v12 M62 324 h12"/>
+  </svg>
+  <figcaption class="orbit-readout" data-readout data-default="Rings: milestones · dots: entries · planet: next">Rings: milestones · dots: entries · planet: next</figcaption>
+</figure>

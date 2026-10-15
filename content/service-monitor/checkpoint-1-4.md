@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M1"
 step = "1.4"
 short_title = "A fair queue for checks"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 201
 
 [extra.summary]
 goal = "Never pile onto a struggling website, and never let one slow site make the others wait."

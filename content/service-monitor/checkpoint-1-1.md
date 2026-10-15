@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M1"
 step = "1.1"
 short_title = "I pushed a real app until it broke, and watched"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 102
 
 [extra.summary]
 goal = "Stop testing against a fake server. Watch a real app fail under real load."

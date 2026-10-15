@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M2"
 step = "2.1"
 short_title = "Giving the monitor a memory"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 225
 
 [extra.summary]
 goal = "Give the monitor somewhere safe to remember things, before it remembers anything."

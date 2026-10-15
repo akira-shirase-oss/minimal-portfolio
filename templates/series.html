@@ -18,6 +18,15 @@
     {%- endif %}
   </header>
 
+  {#- The whole log at a glance first, drawn the same way as on the home page. #}
+  {%- set log = section %}
+  {%- set entries = section.pages | reverse %}
+  {%- if entries %}
+  <section class="panel log-glance" aria-label="The build log at a glance">
+    {% include "partials/log-panel.html" %}
+  </section>
+  {%- endif %}
+
   <div class="post-body">
     {{ section.content | safe }}
   </div>
@@ -26,7 +35,7 @@
   {%- for milestone in section.extra.milestones %}
   {%- set entries = [p for p in section.pages if p.extra.milestone == milestone.id] | reverse %}
   {%- set has_next = up_next and up_next.milestone == milestone.id %}
-  <section class="milestone{% if not entries and not has_next %} is-upcoming{% endif %}" aria-labelledby="{{ milestone.id | lower }}">
+  <section class="milestone m-{{ milestone.id | lower }}{% if not entries and not has_next %} is-upcoming{% endif %}" aria-labelledby="{{ milestone.id | lower }}">
     <h2 id="{{ milestone.id | lower }}"><span class="milestone-id">{{ milestone.id }}</span> {{ milestone.name }}</h2>
     <p class="milestone-about">{{ milestone.about }}</p>
     {%- if entries or has_next %}

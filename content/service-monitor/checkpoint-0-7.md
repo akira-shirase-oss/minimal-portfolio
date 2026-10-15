@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M0"
 step = "0.7"
 short_title = "I let a tool attack my code. It found 19 holes."
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 102
 
 [extra.summary]
 goal = "Stop trusting tests I picked myself: let tools attack the code, and fix every hole they find."

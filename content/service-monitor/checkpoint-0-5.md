@@ -9,6 +9,8 @@ kind = "experiment"
 milestone = "M0"
 step = "0.5"
 short_title = "The first real check"
+# Rust tests in the workspace at this checkpoint (the home page draws them as a sparkline).
+tests = 67
 
 [extra.summary]
 goal = "The monitor's real job: check a website once, and tell the truth about what happened."
