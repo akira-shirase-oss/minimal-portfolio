@@ -13,14 +13,14 @@ short_title = "Service Monitor"
 # to (`milestone`), its step label (`step`) and a short title for lists (`short_title`).
 milestones = [
   { id = "M0", name = "one check", about = "A single check, tested against four kinds of failure." },
-  { id = "M1", name = "checking on repeat", about = "Checks every minute with no overlaps, watches a real Node.js app under load, and gets its first dashboard." },
+  { id = "M1", name = "checking on repeat", about = "Checks every minute with no overlaps, watches a real Node.js app under load, gets its first dashboard, and takes turns so it never piles onto a struggling site." },
   { id = "M2", name = "remembering", about = "Saves everything, so a restart never loses track of an outage." },
   { id = "M3", name = "alerts", about = "Tells you when something breaks: first by webhook, then by email." },
   { id = "M4", name = "a real dashboard", about = "A dashboard, maintenance windows and a public status page." },
   { id = "M5", name = "running on its own", about = "Its own server, backups, and a 24-hour stress test." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "M1", step = "1.4", title = "A fair queue for checks" }
+up_next = { milestone = "M2", step = "2.1", title = "Saving every result" }
 +++
 
 **Service Monitor** keeps an eye on your websites and services. Every minute, it checks that they answer properly. When one stops answering, you get one alert, with the evidence. When it's back, you get one "all good". No alert storms.
