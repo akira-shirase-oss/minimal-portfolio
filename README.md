@@ -66,26 +66,22 @@ Build-log entries live in `content/service-monitor/`, not in `posts/`. The home 
 
 ## How the site looks, and why (the "control room")
 
-Redesigned on 2026-10-15 at Akira's request ("interactive, colourful, not just black"):
-the control room (real data drawn like a monitor) blended with a warmer, playful style.
+Redesigned on 2026-10-15: the home page draws the work like a small control room.
+(A colourful variant borrowing from another portfolio was tried the same day and
+reverted at Akira's request: "keep your interactive version, without the reference".)
 
-- **Every number on the home page comes from the posts**, never typed in: the build-log
-  strip (one bar per entry, coloured by milestone), the milestone track, the test
-  sparkline (`tests` in each entry), the orbit (rings are milestones, dots are entries,
-  the planet is `up_next`), the ticker's numbers and the status rows.
-  `templates/partials/log-panel.html` and `templates/partials/orbit.html` draw them.
-- **Words you can edit** are in `content/_index.md`: the intro (the `*word*` in the
-  heading is the coloured italic one), `ticker` (the rules after the live numbers),
-  `now` (the status rows) and `projects` (the cards).
-- **Colours**: cream light mode, deep navy dark mode; milestone colours `--m0`…`--m5`;
-  blue, lime and coral accents. Every text/background pair passes WCAG contrast
-  (checked 2026-10-15 in both themes).
-- **Type**: system sans for text, mono for labels, and Instrument Serif (SIL OFL 1.1,
-  `static/fonts/OFL.txt`) for headlines and titles.
-- **Motion and JavaScript are extras.** `static/site.js` (under 4 KB) types the name, ticks
-  the clock, fills the readouts and slides sections in. With JavaScript off, or with
-  "reduce motion" on, every page is complete and still. The home page is 66rem wide;
-  posts stay at 42rem for reading.
+- **Every number on the home page comes from the posts**, never typed in: the status
+  rows, the build-log strip (one bar per entry; hover or focus names it in the readout),
+  the milestone track and the test sparkline (`tests` in each entry).
+  `templates/partials/log-panel.html` draws the strip, track and sparkline, on the home
+  page and on the build log's own page.
+- **Words you can edit** are in `content/_index.md`: the intro (the headline types itself
+  after `$ whoami`), `now` (the status rows) and `projects`.
+- **Motion and JavaScript are extras.** `static/site.js` (under 4 KB) types the headline,
+  ticks the clock and fills the strip's readout. With JavaScript off, or with "reduce
+  motion" on, every page is complete and still.
+- **Checked in headless Chrome** at 390 and 1280 px, light and dark: no sideways scroll,
+  rows and labels on one baseline (measured 0.00 px).
 
 ## Preview on your computer
 

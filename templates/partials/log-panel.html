@@ -16,7 +16,7 @@
     {%- endfor %}
     {%- if up_next %}
     {%- set label = "Up next · " ~ up_next.step ~ ": " ~ up_next.title %}
-    <li><span class="bar is-next" title="{{ label }}" aria-label="{{ label }}" data-label="{{ label }}" style="--i: {{ entries | length }}"></span></li>
+    <li><span class="bar is-next m-{{ up_next.milestone | lower }}" title="{{ label }}" aria-label="{{ label }}" data-label="{{ label }}" style="--i: {{ entries | length }}"></span></li>
     {%- endif %}
   </ol>
   <p class="readout" data-readout data-default="Latest · {{ latest.extra.milestone }} · {{ latest.extra.step }}: {{ latest.extra.short_title or latest.title }}">Latest · {{ latest.extra.milestone }} · {{ latest.extra.step }}: {{ latest.extra.short_title or latest.title }}</p>
@@ -46,6 +46,17 @@
     <span class="spark-now"><strong>{{ last.extra.tests }}</strong> at {{ last.extra.step }}</span>
   </figcaption>
   <svg viewBox="0 0 600 64" preserveAspectRatio="none" role="img" aria-label="Rust tests at each checkpoint, from {{ first.extra.tests }} at {{ first.extra.step }} to {{ last.extra.tests }} at {{ last.extra.step }}">
+    <defs>
+      <linearGradient id="spark-stroke" x1="0" x2="1" y1="0" y2="0">
+        <stop class="spark-stop-a" offset="0"/>
+        <stop class="spark-stop-b" offset="0.55"/>
+        <stop class="spark-stop-c" offset="1"/>
+      </linearGradient>
+      <linearGradient id="spark-fill" x1="0" x2="0" y1="0" y2="1">
+        <stop class="spark-stop-b" offset="0" stop-opacity="0.22"/>
+        <stop class="spark-stop-b" offset="1" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
     <polyline class="spark-area" points="0,64 {% for p in tested %}{{ (loop.index0 * 600 / (n - 1)) | round(precision=1) }},{{ (60 - p.extra.tests * 56 / top) | round(precision=1) }} {% endfor %}600,64"/>
     <polyline class="spark-line" points="{% for p in tested %}{{ (loop.index0 * 600 / (n - 1)) | round(precision=1) }},{{ (60 - p.extra.tests * 56 / top) | round(precision=1) }} {% endfor %}"/>
   </svg>

@@ -2,15 +2,6 @@
 title = "404human"
 
 [extra]
-# The ticker under the intro: after the live numbers, the rules the work lives by.
-ticker = [
-  "no green without proof",
-  "one check, one try",
-  "everything has a limit",
-  "measured, not guessed",
-  "every mistake written up",
-]
-
 # "Status": what's running now, drawn as live processes on the home page.
 # `log = true` fills in the Service Monitor build log's step and test count by
 # itself; `writing = true` counts the write-ups. `detail` is shown as written.
@@ -56,6 +47,6 @@ year = 2026
 status = "live"
 +++
 
-# Hi, I’m *404human.*
+# hey, I *break* things.
 
-Building Rust runtimes, reliable background jobs, and AI infrastructure. Sharing the experiments, failures, and releases.
+Then I fix them, and write down what I learned. Mostly Rust: runtimes, background jobs, AI tools. All in public, mistakes included.

@@ -10,7 +10,7 @@
   <header class="post-header">
     <p class="meta">
       build log · {{ section.pages | length }} entries
-      {%- if section.extra.status %} · <span class="tag">{{ section.extra.status }}</span>{% endif %}
+      {%- if section.extra.status %} · <span class="tag status-{{ section.extra.status | slugify }}">{{ section.extra.status }}</span>{% endif %}
     </p>
     <h1>{{ section.title }}</h1>
     {%- if section.description %}

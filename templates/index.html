@@ -8,50 +8,26 @@
 {%- set entries = log.pages | reverse %}
 {%- set posts = get_section(path="posts/_index.md") %}
 <div class="home">
-  {#- The intro, as a terminal: `$ whoami`, then the name types itself out
+  {#- The intro, as a terminal: `$ whoami`, then the headline types itself out
       (site.js; without JavaScript, or with reduced motion, it's simply there). #}
-  <div class="hero-grid">
-    <section class="hero term">
-      <div class="term-bar" aria-hidden="true">
-        <span class="term-lights"><i></i><i></i><i></i></span>
-        <span class="term-title">~/404human</span>
-      </div>
-      <div class="term-body">
-        <p class="prompt" aria-hidden="true"><span class="ps1">$</span> whoami</p>
-        {{ section.content | safe }}
-        {%- if entries %}
-        {#- The newest build-log line, like tailing a log file. #}
-        {%- set newest = entries[-1] %}
-        <div class="term-tail">
-          <p class="prompt" aria-hidden="true"><span class="ps1">$</span> tail -1 build.log</p>
-          <p class="tail-line"><span class="tail-step">{{ newest.extra.milestone }} · {{ newest.extra.step }}</span> <a href="{{ newest.permalink }}">{{ newest.extra.short_title or newest.title }}</a></p>
-        </div>
-        {%- endif %}
-      </div>
-    </section>
-    {%- if entries %}
-    {% include "partials/orbit.html" %}
-    {%- endif %}
-  </div>
-
-  {#- A ticker of real facts: live numbers from the posts, then the rules the
-      work lives by (`ticker` in content/_index.md). The second copy makes the
-      loop seamless and is hidden from screen readers. #}
-  {%- if entries %}
-  {%- set latest_entry = entries[-1] %}
-  <div class="ticker" role="marquee" aria-label="At a glance">
-    <div class="ticker-track">
-      {%- for copy in [1, 2] %}
-      <ul class="ticker-items"{% if copy == 2 %} aria-hidden="true"{% endif %}>
-        {%- if latest_entry.extra.tests is defined %}<li>{{ latest_entry.extra.tests }} tests</li>{% endif %}
-        <li>{{ entries | length }} build-log entries</li>
-        <li>now: {{ latest_entry.extra.milestone }} · {{ latest_entry.extra.step }}</li>
-        {%- for line in section.extra.ticker | default(value=[]) %}<li>{{ line }}</li>{% endfor %}
-      </ul>
-      {%- endfor %}
+  <section class="hero term">
+    <div class="term-bar" aria-hidden="true">
+      <span class="term-lights"><i></i><i></i><i></i></span>
+      <span class="term-title">~/404human</span>
     </div>
-  </div>
-  {%- endif %}
+    <div class="term-body">
+      <p class="prompt" aria-hidden="true"><span class="ps1">$</span> <span class="cmd">whoami</span></p>
+      {{ section.content | safe }}
+      {%- if entries %}
+      {#- The newest build-log line, like tailing a log file. #}
+      {%- set newest = entries[-1] %}
+      <div class="term-tail">
+        <p class="prompt" aria-hidden="true"><span class="ps1">$</span> <span class="cmd">tail</span> -1 build.log</p>
+        <p class="tail-line"><span class="tail-step">{{ newest.extra.milestone }} · {{ newest.extra.step }}</span> <a href="{{ newest.permalink }}">{{ newest.extra.short_title or newest.title }}</a></p>
+      </div>
+      {%- endif %}
+    </div>
+  </section>
 
   {%- if section.extra.now %}
   <h2 id="status">Status <span class="clock" data-clock hidden></span></h2>
@@ -62,7 +38,7 @@
     {%- else %}
       {%- set href = item.link | default(value="") %}
     {%- endif %}
-    <li class="proc">
+    <li class="proc tone-{{ loop.index0 % 5 }}">
       <span class="proc-name"><span class="led" aria-hidden="true"></span>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</span>
       <span class="proc-what">{{ item.what }}</span>
       <span class="proc-stat">
@@ -85,7 +61,7 @@
   <section class="panel" aria-labelledby="build-log-title">
     <div class="panel-head">
       <a class="panel-title" id="build-log-title" href="{{ log.permalink }}">{{ log.extra.short_title or log.title }}</a>
-      {%- if log.extra.status %} <span class="tag">{{ log.extra.status }}</span>{% endif %}
+      {%- if log.extra.status %} <span class="tag status-{{ log.extra.status | slugify }}">{{ log.extra.status }}</span>{% endif %}
       <span class="panel-meta">{{ entries | length }} entries</span>
     </div>
     {% include "partials/log-panel.html" %}
@@ -108,24 +84,24 @@
 
   {%- if section.extra.projects %}
   <h2 id="projects">Projects</h2>
-  <ul class="cards">
+  <ul class="log">
     {%- for project in section.extra.projects %}
-    {%- if project.link and project.link is starting_with(pat="@/") %}
-      {%- set href = get_url(path=project.link) %}
-    {%- else %}
-      {%- set href = project.link | default(value="") %}
-    {%- endif %}
-    <li class="card tint-{{ loop.index0 % 3 }}">
-      <div class="card-top">
-        <span class="card-year">{{ project.year | default(value="") }}</span>
-        {%- if project.status %}<span class="tag">{{ project.status }}</span>{% endif %}
+    <li class="entry">
+      <span class="when">{{ project.year | default(value="") }}</span>
+      <div class="what">
+        {%- if project.link %}
+          {%- if project.link is starting_with(pat="@/") %}
+            {%- set href = get_url(path=project.link) %}
+          {%- else %}
+            {%- set href = project.link %}
+          {%- endif %}
+        <a class="title" href="{{ href }}">{{ project.name }}</a>
+        {%- else %}
+        <span class="title">{{ project.name }}</span>
+        {%- endif %}
+        {%- if project.status %} <span class="tag status-{{ project.status | slugify }}">{{ project.status }}</span>{% endif %}
+        <p class="summary">{{ project.about }}</p>
       </div>
-      {%- if href %}
-      <a class="card-title" href="{{ href }}">{{ project.name }}<span class="card-arrow" aria-hidden="true">↗</span></a>
-      {%- else %}
-      <span class="card-title">{{ project.name }}</span>
-      {%- endif %}
-      <p class="card-about">{{ project.about }}</p>
     </li>
     {%- endfor %}
   </ul>

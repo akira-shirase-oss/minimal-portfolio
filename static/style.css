@@ -1,48 +1,24 @@
-/* 404human: a portfolio drawn like a small, colourful control room.
-   Light by default (warm cream). Dark when the system asks for it, unless the toggle
-   picked light, or whenever the toggle picked dark (deep navy, not black).
-   `color-scheme` also drives the code colours. */
-
-/* The headline face: Instrument Serif (SIL OFL 1.1, see /fonts/OFL.txt), latin only. */
-@font-face {
-  font-family: "Instrument Serif";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/InstrumentSerif-Regular-latin.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Instrument Serif";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/InstrumentSerif-Italic-latin.woff2") format("woff2");
-}
+/* 404human: a portfolio and build log drawn like a small control room.
+   Light by default. Dark when the system asks for it, unless the toggle picked light,
+   or whenever the toggle picked dark. `color-scheme` also drives the code colours. */
 
 :root {
   color-scheme: light;
-  --bg: #f5f2ea;
-  --text: #1c2120;
-  --muted: #5f6662;
-  --line: #e0dbcf;
+  --bg: #fdfdfc;
+  --text: #1f2328;
+  --muted: #656d76;
+  --line: #e5e7eb;
   --accent: #b7410e; /* rust */
   --ok: #1a7f37; /* running / release */
   --fail: #cf222e; /* failure */
-  --code-bg: #ece8de;
-  /* Milestone colours, also used for the build log's bars. */
-  --m0: #3346d3;
-  --m1: #df5a3b;
-  --m2: #6e9a1f;
-  --m3: #8a4fd8;
-  --m4: #17917f;
-  --m5: #c2860f;
-  --blue: #2f40c9;
-  --lime: #d8ec5e;
-  --coral: #ee6a4f;
-  --serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
-  /* The coloured word in the headline. */
-  --em: #2f40c9;
+  --code-bg: #f4f4f2;
+  /* Small colourful details: labels, tags, pills, the build log's milestones.
+     The backgrounds stay plain. */
+  --c-blue: #2563eb;
+  --c-violet: #7c3aed;
+  --c-teal: #0f766e;
+  --c-amber: #b45309;
+  --c-pink: #be185d;
   --max: 42rem;
   --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
@@ -51,43 +27,37 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #11142b;
-    --text: #ebeaf2;
-    --muted: #a4a7bf;
-    --line: #272b4d;
+    --bg: #141414;
+    --text: #e6e6e6;
+    --muted: #9a9a9a;
+    --line: #2b2b2b;
     --accent: #f08a5d;
     --ok: #3fb950;
     --fail: #f85149;
-    --code-bg: #181c3a;
-    --m0: #7d8bff;
-    --m1: #ff8562;
-    --m2: #b6dc4f;
-    --m3: #b78cff;
-    --m4: #4fd1bd;
-    --m5: #f2be4c;
-    --blue: #3a4be0;
-    --em: #d8ec5e;
+    --code-bg: #1d1d1d;
+    --c-blue: #60a5fa;
+    --c-violet: #a78bfa;
+    --c-teal: #2dd4bf;
+    --c-amber: #fbbf24;
+    --c-pink: #f472b6;
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #11142b;
-  --text: #ebeaf2;
-  --muted: #a4a7bf;
-  --line: #272b4d;
+  --bg: #141414;
+  --text: #e6e6e6;
+  --muted: #9a9a9a;
+  --line: #2b2b2b;
   --accent: #f08a5d;
   --ok: #3fb950;
   --fail: #f85149;
-  --code-bg: #181c3a;
-  --m0: #7d8bff;
-  --m1: #ff8562;
-  --m2: #b6dc4f;
-  --m3: #b78cff;
-  --m4: #4fd1bd;
-  --m5: #f2be4c;
-  --blue: #3a4be0;
-  --em: #d8ec5e;
+  --code-bg: #1d1d1d;
+  --c-blue: #60a5fa;
+  --c-violet: #a78bfa;
+  --c-teal: #2dd4bf;
+  --c-amber: #fbbf24;
+  --c-pink: #f472b6;
 }
 
 *,
@@ -111,7 +81,7 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 25%, transparent);
+  background: color-mix(in srgb, var(--c-violet) 25%, transparent);
 }
 
 .site-header,
@@ -129,8 +99,13 @@ main,
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--accent);
+  background: var(--rainbow);
   z-index: 10;
+}
+
+:root {
+  /* A thin line of every accent colour, for the top bar and progress. */
+  --rainbow: linear-gradient(90deg, var(--c-blue), var(--c-violet), var(--c-pink), var(--accent), var(--c-amber));
 }
 
 .post .top-bar {
@@ -141,7 +116,7 @@ main,
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--accent);
+  background: var(--rainbow);
   transform-origin: 0 50%;
 }
 
@@ -372,6 +347,23 @@ figure.shot figcaption {
   }
 }
 
+/* Project statuses, each with its colour. */
+.status-in-progress {
+  color: var(--c-amber);
+  border-color: color-mix(in srgb, var(--c-amber) 45%, transparent);
+}
+
+.status-write-up {
+  color: var(--c-violet);
+  border-color: color-mix(in srgb, var(--c-violet) 45%, transparent);
+}
+
+.status-live,
+.status-shipped {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 45%, transparent);
+}
+
 .kind-experiment {
   color: var(--accent);
   border-color: color-mix(in srgb, var(--accent) 45%, transparent);
@@ -438,6 +430,21 @@ figure.shot figcaption {
   flex: 1;
   border-top: 1px solid var(--line);
 }
+
+/* A small coloured marker in front of each section label. */
+.home h2::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 2px;
+  background: var(--marker, var(--accent));
+}
+
+.home h2#status { --marker: var(--ok); }
+.home h2#build-log { --marker: var(--accent); }
+.home h2#projects { --marker: var(--c-violet); }
+.home h2#writing { --marker: var(--c-blue); }
+.home h2#contact { --marker: var(--c-teal); }
 
 /* Log rows: a narrow mono column (status, year or date), then the entry. */
 .log {
@@ -530,15 +537,6 @@ figure.shot figcaption {
   margin-bottom: 2.5rem;
 }
 
-/* Titles share the home page's headline serif. */
-.post-header h1 {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 2.75rem;
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-}
-
 .post-header .meta {
   margin-bottom: 0.75rem;
 }
@@ -596,6 +594,12 @@ figure.shot figcaption {
   color: var(--muted);
 }
 
+/* Goal, built, result, code: one colour each. */
+.glance div:nth-child(1) dt { color: var(--c-blue); }
+.glance div:nth-child(2) dt { color: var(--c-violet); }
+.glance div:nth-child(3) dt { color: var(--ok); }
+.glance div:nth-child(4) dt { color: var(--c-amber); }
+
 .glance dd {
   margin: 0;
   font-size: 1rem;
@@ -651,7 +655,7 @@ figure.shot figcaption {
   display: block;
   font-family: var(--mono);
   font-size: 0.78rem;
-  color: var(--muted);
+  color: var(--c-violet);
   margin-bottom: 0.2rem;
 }
 
@@ -741,21 +745,21 @@ pre code {
 }
 
 /* ---------- The control room: the home page and the build log ----------
-   Panels, a terminal intro, live status rows, the build log as a status strip,
+   A terminal intro, live status rows, the build log as a status strip,
    milestones and a test-count sparkline. Every number comes from the posts. */
 
 :root {
-  --panel: #fbfaf6;
+  --panel: #f6f6f3;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --panel: #171b37;
+    --panel: #1b1b1b;
   }
 }
 
 :root[data-theme="dark"] {
-  --panel: #171b37;
+  --panel: #1b1b1b;
 }
 
 /* Lists that are laid out as rows or bars don't take the text spacing. */
@@ -819,10 +823,65 @@ pre code {
   color: var(--accent);
 }
 
-/* While the name types itself (site.js), the cursor follows the typed
-   letters instead of sitting at the end. */
+/* The command after the prompt, tinted like a shell's syntax colours. */
+.cmd {
+  color: var(--c-blue);
+}
+
+/* The one coloured word in the headline. */
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--c-violet), var(--c-pink), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* While the name types itself (site.js), untyped letters keep their place
+   and the cursor follows the typed letters instead of sitting at the end. */
 .hero h1.typing::after {
   display: none;
+}
+
+.hero h1.typing .ch {
+  visibility: hidden;
+}
+
+.hero h1.typing .ch.on {
+  visibility: visible;
+}
+
+.hero h1.typing .ch.at {
+  position: relative;
+}
+
+.hero h1.typing .ch.at::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 0.12em;
+  width: 0.5ch;
+  height: 0.85em;
+  margin-left: 0.15em;
+  background: var(--accent);
+}
+
+/* Under the intro: the newest build-log line, as if tailing a log file. */
+.term-tail {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--line);
+}
+
+.tail-line {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+}
+
+.tail-step {
+  color: var(--c-teal);
+  margin-right: 0.5ch;
 }
 
 /* Section labels can carry a value on the right: STATUS ──── 14:05:33 UTC */
@@ -893,10 +952,48 @@ pre code {
 }
 
 .proc-stat {
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
   font-family: var(--mono);
   font-size: 0.78rem;
-  color: var(--ok);
+  /* On a light page the tint behind the text lowers its contrast, so the text
+     is a shade darker there (WCAG 4.5:1 checked for every colour). */
+  color: var(--pill-ink, color-mix(in srgb, var(--tone) 75%, #000));
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
   white-space: nowrap;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .proc-stat {
+    --pill-ink: var(--tone);
+  }
+}
+
+:root[data-theme="dark"] .proc-stat {
+  --pill-ink: var(--tone);
+}
+
+/* Each running thing has its colour: its stat pill and a soft hover. */
+.proc.tone-0 { --tone: var(--c-blue); }
+.proc.tone-1 { --tone: var(--c-violet); }
+.proc.tone-2 { --tone: var(--c-teal); }
+.proc.tone-3 { --tone: var(--c-amber); }
+.proc.tone-4 { --tone: var(--c-pink); }
+
+.proc {
+  transition: background-color 0.15s ease;
+}
+
+.proc:hover {
+  background: color-mix(in srgb, var(--tone) 5%, transparent);
+}
+
+.proc:first-child {
+  border-radius: 11px 11px 0 0;
+}
+
+.proc:last-child {
+  border-radius: 0 0 11px 11px;
 }
 
 /* A panel: the build log at a glance. */
@@ -933,7 +1030,8 @@ pre code {
   color: var(--muted);
 }
 
-/* The build log as a status strip: one bar per entry, oldest on the left. */
+/* The build log as a status strip: one bar per entry, oldest on the left,
+   with a wider gap where a new milestone starts. */
 .strip {
   list-style: none;
   display: flex;
@@ -961,14 +1059,14 @@ pre code {
   transition: transform 0.15s ease, filter 0.15s ease;
 }
 
-/* Each milestone has its colour (bars, track, orbit). A failure or release
-   entry adds a mark along the bar's top. */
-.m-m0 { --mc: var(--m0); }
-.m-m1 { --mc: var(--m1); }
-.m-m2 { --mc: var(--m2); }
-.m-m3 { --mc: var(--m3); }
-.m-m4 { --mc: var(--m4); }
-.m-m5 { --mc: var(--m5); }
+/* Each milestone has its colour: bars, the track and the build log's headings.
+   A failure or release entry adds a mark along its bar's top. */
+.m-m0 { --mc: var(--c-blue); }
+.m-m1 { --mc: var(--c-violet); }
+.m-m2 { --mc: var(--c-teal); }
+.m-m3 { --mc: var(--c-amber); }
+.m-m4 { --mc: var(--c-pink); }
+.m-m5 { --mc: var(--ok); }
 
 .bar.kind-failure {
   box-shadow: inset 0 3px 0 var(--fail);
@@ -987,7 +1085,7 @@ a.bar:focus-visible {
 /* What's being built now: an outline still waiting to be filled. */
 .bar.is-next {
   background: transparent;
-  border: 1.5px dashed color-mix(in srgb, var(--accent) 80%, transparent);
+  border: 1.5px dashed color-mix(in srgb, var(--mc, var(--accent)) 80%, transparent);
 }
 
 .readout {
@@ -1025,7 +1123,12 @@ a.bar:focus-visible {
 
 .track-step.is-done,
 .track-step.is-current {
-  border-top-color: var(--mc);
+  border-top-color: var(--mc, var(--accent));
+}
+
+.track-step.is-done .track-id,
+.track-step.is-current .track-id {
+  color: var(--mc, var(--text));
 }
 
 .track-id {
@@ -1085,15 +1188,19 @@ a.bar:focus-visible {
 
 .spark-line {
   fill: none;
-  stroke: var(--m0);
+  stroke: url(#spark-stroke);
   stroke-width: 2;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
 
 .spark-area {
-  fill: color-mix(in srgb, var(--m0) 16%, transparent);
+  fill: url(#spark-fill);
 }
+
+.spark-stop-a { stop-color: var(--c-blue); }
+.spark-stop-b { stop-color: var(--c-violet); }
+.spark-stop-c { stop-color: var(--accent); }
 
 .spark-axis {
   display: flex;
@@ -1109,387 +1216,6 @@ a.bar:focus-visible {
   margin-top: 0.75rem;
   border-top: 1px solid var(--line);
   padding-top: 0.4rem;
-}
-
-/* The home page is wider than a post: room for the intro and the orbit side
-   by side. Long lines of text still stop at a readable width. */
-.home-page .site-header,
-.home-page main,
-.home-page .site-footer {
-  max-width: 66rem;
-}
-
-.home .log .summary,
-.home .proc-what {
-  max-width: 46rem;
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: 1.25rem;
-  align-items: stretch;
-}
-
-.hero {
-  display: flex;
-  flex-direction: column;
-}
-
-.hero .term-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* The headline: a serif with one coloured, italic word. */
-.hero h1 {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(2.8rem, 5.6vw, 4.3rem);
-  line-height: 1.02;
-  letter-spacing: -0.015em;
-}
-
-.hero h1 em {
-  color: var(--em);
-}
-
-/* Under the intro: the newest build-log line, as if tailing a log file. */
-.term-tail {
-  margin-top: 1.75rem;
-  padding-top: 1.1rem;
-  border-top: 1px dashed var(--line);
-}
-
-.tail-line {
-  margin: 0;
-  font-family: var(--mono);
-  font-size: 0.9rem;
-}
-
-.tail-step {
-  color: var(--ok);
-  margin-right: 0.5ch;
-}
-
-/* The orbit: milestones as rings, checkpoints as dots, the next one circling. */
-.orbit {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  border-radius: 12px;
-  background: var(--blue);
-  color: #fff;
-  overflow: hidden;
-}
-
-.orbit svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  flex: 1;
-  padding: 1.6rem 0.5rem 0.4rem;
-}
-
-.orbit-corners span {
-  position: absolute;
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgb(255 255 255 / 85%);
-}
-
-.orbit-corners .tl { top: 0.9rem; left: 1rem; }
-.orbit-corners .tr { top: 0.9rem; right: 1rem; }
-.orbit-corners .bl { bottom: 2.75rem; left: 1rem; }
-.orbit-corners .br { bottom: 2.75rem; right: 1rem; }
-
-.orbit-readout {
-  margin: 0;
-  padding: 0.55rem 1rem 0.6rem;
-  border-top: 1px solid rgb(255 255 255 / 18%);
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: rgb(255 255 255 / 88%);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.ring {
-  fill: none;
-  stroke: rgb(255 255 255 / 55%);
-  stroke-width: 1.2;
-}
-
-.ring.is-upcoming {
-  stroke: rgb(255 255 255 / 30%);
-  stroke-dasharray: 2 6;
-}
-
-.ring.is-current {
-  stroke: var(--lime);
-  stroke-width: 1.6;
-  stroke-dasharray: 7 6;
-}
-
-/* Each dot is drawn at the top of its ring, then turned into place. */
-.stop,
-.planet {
-  transform-box: view-box;
-  transform-origin: 200px 200px;
-}
-
-.stop {
-  transform: rotate(var(--turn));
-  outline: none;
-}
-
-.stop-hit {
-  fill: transparent;
-}
-
-.stop-dot {
-  fill: #fff;
-  transition: fill 0.15s ease, r 0.15s ease;
-}
-
-.stop:hover .stop-dot,
-.stop:focus-visible .stop-dot {
-  fill: var(--lime);
-  r: 7;
-}
-
-.stop:focus-visible .stop-dot {
-  stroke: #fff;
-  stroke-width: 2;
-}
-
-.planet circle {
-  fill: var(--coral);
-}
-
-.core {
-  fill: var(--lime);
-}
-
-.core-id {
-  font-family: var(--serif);
-  font-size: 40px;
-  fill: #10132b;
-}
-
-.core-name {
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  fill: #10132b;
-}
-
-.spark-plus {
-  stroke: var(--lime);
-  stroke-width: 2;
-  stroke-linecap: round;
-}
-
-/* A ticker of real facts, in a lime band under the intro. It stays inside the
-   content column: a band stretched to 100vw would include the scrollbar's
-   width and make the page scroll sideways. */
-.ticker {
-  margin: 1.25rem 0 0;
-  overflow: hidden;
-  border-radius: 10px;
-  background: var(--lime);
-  color: #1c2120;
-}
-
-.ticker-track {
-  display: flex;
-  width: max-content;
-}
-
-.ticker-items {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0.7rem 0;
-}
-
-.ticker-items li {
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding-right: 1.5rem;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-}
-
-.ticker-items li::before {
-  content: "+";
-  margin-right: 1.5rem;
-  color: #c4472c;
-  font-weight: 700;
-}
-
-/* Projects as cards, each with its colour; the whole card is the link. */
-.cards {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-}
-
-.cards li + li {
-  margin-top: 0;
-}
-
-.card {
-  position: relative;
-  margin: 0;
-  padding: 1.15rem 1.15rem 1.25rem;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--panel);
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 4px;
-  background: var(--card);
-}
-
-.tint-0 { --card: var(--m0); }
-.tint-1 { --card: var(--m1); }
-.tint-2 { --card: var(--m2); }
-
-.card:hover,
-.card:focus-within {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--card) 45%, var(--line));
-  box-shadow: 0 14px 28px -18px color-mix(in srgb, var(--card) 80%, transparent);
-}
-
-.card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.7rem;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--muted);
-}
-
-.card-title {
-  display: block;
-  font-family: var(--serif);
-  font-size: 1.75rem;
-  line-height: 1.1;
-  color: var(--text);
-  text-decoration: none;
-}
-
-/* The title's link covers the whole card. */
-a.card-title::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-
-.card-arrow {
-  display: inline-block;
-  margin-left: 0.35rem;
-  font-family: var(--sans);
-  font-size: 1.1rem;
-  color: var(--card);
-  transition: transform 0.2s ease;
-}
-
-.card:hover .card-arrow {
-  transform: translate(3px, -3px);
-}
-
-.card-about {
-  margin: 0.55rem 0 0;
-  color: var(--muted);
-  font-size: 0.95rem;
-  line-height: 1.55;
-}
-
-/* Sections slide in as they scroll into view (site.js adds the classes, so
-   without JavaScript everything is simply there). */
-.will-reveal {
-  opacity: 0;
-  transform: translateY(16px);
-}
-
-.will-reveal.revealed {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-/* Printing never waits for a scroll. */
-@media print {
-  .will-reveal {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* While the headline types itself, untyped letters keep their place. */
-.hero h1.typing .ch {
-  visibility: hidden;
-}
-
-.hero h1.typing .ch.on {
-  visibility: visible;
-}
-
-.hero h1.typing .ch.at {
-  position: relative;
-}
-
-.hero h1.typing .ch.at::after {
-  content: "";
-  position: absolute;
-  left: 100%;
-  top: 0.12em;
-  width: 0.5ch;
-  height: 0.85em;
-  margin-left: 0.12em;
-  background: var(--accent);
-}
-
-@media (max-width: 860px) {
-  .hero-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .orbit {
-    max-width: 28rem;
-    width: 100%;
-    justify-self: center;
-  }
-
-  .orbit-readout {
-    font-size: 0.68rem;
-  }
 }
 
 /* On the build log's own page, the panel sits between the title and the intro. */
@@ -1522,47 +1248,6 @@ a.card-title::after {
   .track-step.is-current {
     animation: line-waiting 1.6s ease-in-out infinite;
   }
-
-  .planet {
-    animation: orbit 16s linear infinite;
-  }
-
-  .ring.is-current {
-    animation: ring-flow 24s linear infinite;
-  }
-
-  .ticker-track {
-    animation: ticker 45s linear infinite;
-  }
-
-  /* Hold the ticker still while it's being read. */
-  .ticker:hover .ticker-track {
-    animation-play-state: paused;
-  }
-}
-
-@keyframes orbit {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes ring-flow {
-  to {
-    stroke-dashoffset: -130;
-  }
-}
-
-@keyframes ticker {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes line-waiting {
-  50% {
-    border-top-color: color-mix(in srgb, var(--mc) 30%, var(--line));
-  }
 }
 
 @keyframes bar-in {
@@ -1574,6 +1259,12 @@ a.card-title::after {
 @keyframes waiting {
   50% {
     opacity: 0.45;
+  }
+}
+
+@keyframes line-waiting {
+  50% {
+    border-top-color: color-mix(in srgb, var(--mc, var(--accent)) 30%, var(--line));
   }
 }
 
@@ -1626,10 +1317,6 @@ a.card-title::after {
 
   h1 {
     font-size: 1.75rem;
-  }
-
-  .post-header h1 {
-    font-size: 2.2rem;
   }
 
   .hero h1 {
