@@ -20,7 +20,7 @@ milestones = [
   { id = "M5", name = "running on its own", about = "Its own server, backups, and a 24-hour stress test." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "M2", step = "2.6", title = "Keeping a week, summing up the rest" }
+up_next = { milestone = "M2", step = "2.7", title = "Disk limits and backups" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`). Steps get numbers
@@ -42,24 +42,34 @@ step = "2.8"
 title = "Telling certificate problems apart"
 
 [[extra.planned]]
+milestone = "M2"
+step = "2.9"
+title = "Tested against a real backend, at scale"
+
+[[extra.planned]]
 milestone = "M3"
+step = "3.1"
 title = "Every alert saved with its incident"
 
 [[extra.planned]]
 milestone = "M3"
+step = "3.2"
 title = "Signed webhooks"
 
 [[extra.planned]]
 milestone = "M3"
-title = "One email adapter"
-
-[[extra.planned]]
-milestone = "M3"
+step = "3.3"
 title = "Retries that know when to stop"
 
 [[extra.planned]]
 milestone = "M3"
-title = "Testing a channel before you need it"
+step = "3.4"
+title = "One email adapter"
+
+[[extra.planned]]
+milestone = "M3"
+step = "3.5"
+title = "Testing a channel, and flapping"
 
 [[extra.planned]]
 milestone = "M4"
