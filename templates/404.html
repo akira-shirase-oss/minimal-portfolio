@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 
+{% block title %}Page not found · {{ config.title }}{% endblock title %}
+
+{#- A missing page is nothing to index. -#}
+{% block robots %}
+  <meta name="robots" content="noindex">
+{%- endblock robots %}
+
 {% block content %}
 {#- On a site called 404human, the error page is the joke's home: the human
     isn't found, but the clay one is, still thinking at his desk. #}
 <section class="lost">
   <picture class="lost-scene">
     <source type="image/webp" srcset="{{ get_url(path='img/desk-640.webp') }} 640w, {{ get_url(path='img/desk-1000.webp') }} 1000w" sizes="(max-width: 400px) 90vw, 340px">
-    <img src="{{ get_url(path='img/desk-640.jpg') }}" srcset="{{ get_url(path='img/desk-640.jpg') }} 640w, {{ get_url(path='img/desk-1000.jpg') }} 1000w" sizes="(max-width: 400px) 90vw, 340px" width="640" height="640" alt="A clay figure in a dark hoodie at a desk, chin on hand, thinking at a laptop, next to a mug that says Good Ideas Ship Things">
+    <img src="{{ get_url(path='img/desk-640.jpg') }}" srcset="{{ get_url(path='img/desk-640.jpg') }} 640w, {{ get_url(path='img/desk-1000.jpg') }} 1000w" sizes="(max-width: 400px) 90vw, 340px" width="640" height="640" fetchpriority="high" alt="A clay figure in a dark hoodie at a desk, chin on hand, thinking at a laptop, next to a mug that says Good Ideas Ship Things">
   </picture>
   <div class="lost-text">
     <p class="prompt" aria-hidden="true"><span class="ps1">$</span> <span class="cmd">find</span> / -name "this page"</p>

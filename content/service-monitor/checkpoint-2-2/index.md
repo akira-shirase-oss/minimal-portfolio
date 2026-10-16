@@ -39,7 +39,7 @@ Every one of those words means something precise. This step makes sure the dashb
     <source srcset="guide-phone-dark.webp" width="780" height="2256" media="(max-width: 600px) and (prefers-color-scheme: dark)">
     <source srcset="guide-phone-light.webp" width="780" height="2256" media="(max-width: 600px)">
     <source srcset="guide-desktop-dark.webp" width="1600" height="1344" media="(prefers-color-scheme: dark)">
-    <img src="guide-desktop-light.webp" width="1600" height="1344" alt="The dashboard's Guide page, titled 'How to read this dashboard'. Under 'What the states mean', each state's coloured badge sits next to one plain sentence: UP, the latest check passed; SUSPECT, a check failed but one failure isn't proof; DOWN, 3 checks in a row failed; RECOVERING, checks pass again but the incident stays open until 2 passes in a row; UNKNOWN, the monitor couldn't look; STALE, no fresh result for too long.">
+    <img src="guide-desktop-light.webp" loading="lazy" decoding="async" width="1600" height="1344" alt="The dashboard's Guide page, titled 'How to read this dashboard'. Under 'What the states mean', each state's coloured badge sits next to one plain sentence: UP, the latest check passed; SUSPECT, a check failed but one failure isn't proof; DOWN, 3 checks in a row failed; RECOVERING, checks pass again but the incident stays open until 2 passes in a row; UNKNOWN, the monitor couldn't look; STALE, no fresh result for too long.">
   </picture>
   <figcaption>The top of the Guide, from the dashboard's design preview.</figcaption>
 </figure>

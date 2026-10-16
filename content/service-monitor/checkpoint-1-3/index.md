@@ -54,7 +54,7 @@ Here it is, about 100 seconds into the hang:
     <source srcset="down-phone-dark.webp" width="780" height="1376" media="(max-width: 600px) and (prefers-color-scheme: dark)">
     <source srcset="down-phone-light.webp" width="780" height="1376" media="(max-width: 600px)">
     <source srcset="down-desktop-dark.webp" width="1640" height="1252" media="(prefers-color-scheme: dark)">
-    <img src="down-desktop-light.webp" width="1640" height="1252" alt="The dashboard with two monitors, both marked DOWN with a red edge. Each says when its incident opened and shows a strip of bars: green passes (three for /health, two for /ready), then three red failures. The last result for each: FAIL, no reply before the deadline, 2.00 s.">
+    <img src="down-desktop-light.webp" loading="lazy" decoding="async" width="1640" height="1252" alt="The dashboard with two monitors, both marked DOWN with a red edge. Each says when its incident opened and shows a strip of bars: green passes (three for /health, two for /ready), then three red failures. The last result for each: FAIL, no reply before the deadline, 2.00 s.">
   </picture>
   <figcaption>Both checks have failed three times in a row, so both incidents are open. Each bar is one check.</figcaption>
 </figure>
@@ -66,7 +66,7 @@ And here's `/ready`'s own page once it's all over. Read it from the bottom up: t
     <source srcset="history-phone-dark.webp" width="780" height="1928" media="(max-width: 600px) and (prefers-color-scheme: dark)">
     <source srcset="history-phone-light.webp" width="780" height="1928" media="(max-width: 600px)">
     <source srcset="history-desktop-dark.webp" width="1640" height="1626" media="(prefers-color-scheme: dark)">
-    <img src="history-desktop-light.webp" width="1640" height="1626" alt="The page for the /ready monitor: state UP, checks every 30 s, time limit 2 s, expects 200, 1 incident. Below, a table of recent results, newest first: a pass marked UP with 'incident resolved', a pass marked RECOVERING, two failures marked DOWN (the earlier one with 'incident opened'), two failures marked SUSPECT, and two passes marked UP.">
+    <img src="history-desktop-light.webp" loading="lazy" decoding="async" width="1640" height="1626" alt="The page for the /ready monitor: state UP, checks every 30 s, time limit 2 s, expects 200, 1 incident. Below, a table of recent results, newest first: a pass marked UP with 'incident resolved', a pass marked RECOVERING, two failures marked DOWN (the earlier one with 'incident opened'), two failures marked SUSPECT, and two passes marked UP.">
   </picture>
   <figcaption>The whole incident in one table, newest first.</figcaption>
 </figure>

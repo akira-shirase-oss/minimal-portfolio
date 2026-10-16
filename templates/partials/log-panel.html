@@ -6,17 +6,21 @@
 {%- set current_id = up_next.milestone if up_next else latest.extra.milestone %}
 {%- set tested = [p for p in entries if p.extra.tests is defined] %}
 
+{#- The strip is a picture of the log: hidden from screen readers and not in
+    the tab order, because the list right below links every entry (the same
+    destinations, as real links). With a mouse, a bar names its entry in the
+    readout and site.js opens it on click (`data-href`). -#}
 <div class="strip-wrap">
-  <ol class="strip" aria-label="Every build-log entry, oldest first">
+  <ol class="strip" aria-hidden="true">
     {%- for entry in entries %}
     {%- set label = entry.extra.milestone ~ " · " ~ entry.extra.step ~ ": " ~ (entry.extra.short_title or entry.title) %}
     {#- A wider gap where a new milestone starts, so the strip reads M0 | M1 | M2. #}
     {%- set starts = loop.index0 > 0 and entries[loop.index0 - 1].extra.milestone != entry.extra.milestone %}
-    <li{% if starts %} class="starts-milestone"{% endif %}><a class="bar m-{{ entry.extra.milestone | lower }} kind-{{ entry.extra.kind | default(value='experiment') }}" href="{{ entry.permalink }}" title="{{ label }}" aria-label="{{ label }}" data-label="{{ label }}" style="--i: {{ loop.index0 }}"></a></li>
+    <li{% if starts %} class="starts-milestone"{% endif %}><span class="bar m-{{ entry.extra.milestone | lower }} kind-{{ entry.extra.kind | default(value='experiment') }}" data-href="{{ entry.permalink }}" title="{{ label }}" data-label="{{ label }}" style="--i: {{ loop.index0 }}"></span></li>
     {%- endfor %}
     {%- if up_next %}
     {%- set label = "Up next · " ~ up_next.step ~ ": " ~ up_next.title %}
-    <li><span class="bar is-next m-{{ up_next.milestone | lower }}" title="{{ label }}" aria-label="{{ label }}" data-label="{{ label }}" style="--i: {{ entries | length }}"></span></li>
+    <li><span class="bar is-next m-{{ up_next.milestone | lower }}" title="{{ label }}" data-label="{{ label }}" style="--i: {{ entries | length }}"></span></li>
     {%- endif %}
   </ol>
   <p class="readout" data-readout data-default="Latest · {{ latest.extra.milestone }} · {{ latest.extra.step }}: {{ latest.extra.short_title or latest.title }}">Latest · {{ latest.extra.milestone }} · {{ latest.extra.step }}: {{ latest.extra.short_title or latest.title }}</p>

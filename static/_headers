@@ -1,0 +1,37 @@
+# Response headers on Cloudflare Pages (syntax:
+# https://developers.cloudflare.com/pages/configuration/headers/).
+# A request matching several rules gets all their headers.
+
+# Every page and file.
+/*
+  X-Content-Type-Options: nosniff
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+# The same site also answers on www. and on its pages.dev addresses. Keep
+# those out of search results, so 404human.dev is the one that's indexed
+# (every page also names it with <link rel="canonical">).
+https://www.404human.dev/*
+  X-Robots-Tag: noindex
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+# The stylesheet and script are always linked as ?h=<hash of their content>,
+# so a changed file gets a new address: browsers may keep them for a year.
+/style.css
+  Cache-Control: public, max-age=31536000, immutable
+/site.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# Pictures and icons change rarely (and keep their names when they do): a month.
+/img/*
+  Cache-Control: public, max-age=2592000
+/favicon.ico
+  Cache-Control: public, max-age=2592000
+/apple-touch-icon.png
+  Cache-Control: public, max-age=2592000
+/icon-192.png
+  Cache-Control: public, max-age=2592000
+/icon-512.png
+  Cache-Control: public, max-age=2592000

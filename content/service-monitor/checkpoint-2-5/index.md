@@ -49,7 +49,7 @@ The last step taught it to save everything. This step teaches it to **wake up ho
     <source srcset="restart-phone-dark.webp" width="780" height="1886" media="(max-width: 600px) and (prefers-color-scheme: dark)">
     <source srcset="restart-phone-light.webp" width="780" height="1886" media="(max-width: 600px)">
     <source srcset="restart-desktop-dark.webp" width="1600" height="1125" media="(prefers-color-scheme: dark)">
-    <img src="restart-desktop-light.webp" width="1600" height="1125" alt="The monitor page for /ready, ten seconds after the restart. Its badge says RECOVERING: 'Passing again: 1 of 2 passes in a row before the incident closes.' Recent results, newest first: 21:14:46 PASS 200 OK, then RECOVERING; 21:14:16 GAP missed 1 check while the monitor was stopped, then UNKNOWN; 21:13:46 FAIL expected 200, got 503 Service Unavailable, then DOWN, incident opened; 21:13:16 FAIL, then SUSPECT; 21:12:46 PASS, then UP.">
+    <img src="restart-desktop-light.webp" loading="lazy" decoding="async" width="1600" height="1125" alt="The monitor page for /ready, ten seconds after the restart. Its badge says RECOVERING: 'Passing again: 1 of 2 passes in a row before the incident closes.' Recent results, newest first: 21:14:46 PASS 200 OK, then RECOVERING; 21:14:16 GAP missed 1 check while the monitor was stopped, then UNKNOWN; 21:13:46 FAIL expected 200, got 503 Service Unavailable, then DOWN, incident opened; 21:13:16 FAIL, then SUSPECT; 21:12:46 PASS, then UP.">
   </picture>
   <figcaption>Ten seconds after the restart: the history from before the crash, the gap while it was down, and the first fresh pass. RECOVERING, not UP.</figcaption>
 </figure>

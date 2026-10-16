@@ -1,0 +1,15 @@
+# Permanent redirects on Cloudflare Pages (syntax:
+# https://developers.cloudflare.com/pages/configuration/redirects/).
+# The first build-log entries were posts before the build log had its own
+# section. Their old addresses (each page's `aliases` in its front matter)
+# answer with a real 301, which search engines follow and credit; Zola's
+# own redirect pages stay behind as a fallback. Pages doesn't document how
+# it treats a trailing slash, so each address is listed with and without.
+/posts/service-monitor-checkpoint-0-1/ /service-monitor/checkpoint-0-1/ 301
+/posts/service-monitor-checkpoint-0-1 /service-monitor/checkpoint-0-1/ 301
+/posts/service-monitor-checkpoint-0-2/ /service-monitor/checkpoint-0-2/ 301
+/posts/service-monitor-checkpoint-0-2 /service-monitor/checkpoint-0-2/ 301
+/posts/service-monitor-checkpoint-0-3/ /service-monitor/checkpoint-0-3/ 301
+/posts/service-monitor-checkpoint-0-3 /service-monitor/checkpoint-0-3/ 301
+/posts/service-monitor-read-the-source-first/ /service-monitor/day-0-read-the-source-first/ 301
+/posts/service-monitor-read-the-source-first /service-monitor/day-0-read-the-source-first/ 301

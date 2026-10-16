@@ -116,6 +116,24 @@ Elsewhere:
 - **Site name, description and author:** the top of `zola.toml`.
 - **Colours, fonts and spacing:** `static/style.css`.
 
+## Search engines, link previews and AI assistants
+
+Most of this runs by itself on every build:
+
+- **Structured data.** Every page carries a small JSON-LD block (`templates/partials/json-ld.html`) saying who writes here, what the page is (a post, the build log, the home page), when it was written and where it sits (breadcrumbs). Google and AI answer engines read it to credit and date posts correctly.
+- **`/llms.txt`**, a plain-text guide to the site for AI assistants: what the site is, every post with its one-line description, and the main pages. Zola builds it like a feed (`feed_filenames` in `zola.toml`, template `templates/llms.txt`), so a new post shows up in it automatically.
+- **Sitemap and feed.** `/sitemap.xml` dates every page (`templates/sitemap.xml`); the RSS feed carries every post in full.
+- **One address.** Every page names its address on 404human.dev as the canonical one, and `static/_headers` tells search engines not to index the copies on `www.` and `pages.dev`.
+- **Link previews.** One card for every page: `static/img/social-card.jpg` (1,200 × 630). Its text is described in `card_alt` in `zola.toml`.
+
+Three things are done by hand:
+
+- **Pictures.** Every picture the site serves (the avatar, the 404 scene, the link-preview card, the favicons) comes from `art/desk-source.jpg`. After changing that picture or the card's words, run `python3 tools/make_images.py` (it needs Pillow and the Noto Sans fonts), check the results, and commit them.
+- **Pictures in posts.** Give every `<img>` its `width`, `height` and `alt`, plus `loading="lazy" decoding="async"` unless it's at the very top of the post: the page then never jumps while pictures load, and pictures further down only load when someone scrolls to them.
+- **Old addresses.** If a page moves, give it `aliases = ["/old/address/"]` in its front matter *and* add the old address to `static/_redirects`, so it answers with a real permanent redirect (301) instead of Zola's redirect page.
+
+`static/_headers` also sets caching: a year for the stylesheet and script (their links change whenever their content does), a month for pictures and icons.
+
 ## Publishing
 
 The site lives at **https://404human.dev/** (also `www.404human.dev`), on Cloudflare Pages (project `akira-shirase-oss`, whose own address https://akira-shirase-oss.pages.dev/ serves the same site). The source is the `main` branch of https://github.com/akira-shirase-oss/minimal-portfolio. Pushing to GitHub does **not** publish anything: the site is built here with Zola 0.23.6 (the same version as the local preview) and uploaded with Cloudflare's `wrangler` CLI, so what goes live is exactly what you checked.

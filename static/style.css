@@ -189,8 +189,12 @@ main,
   cursor: pointer;
 }
 
+/* Hidden until the script wires it up (without JavaScript it would do
+   nothing), but its space is kept: shown later, it used to make the header
+   taller and push the page down (a 0.056 layout shift on phones). */
 .theme-toggle[hidden] {
-  display: none; /* stays hidden if JavaScript is off */
+  display: inline-flex;
+  visibility: hidden;
 }
 
 .theme-toggle:hover {
@@ -1139,10 +1143,15 @@ pre code {
   box-shadow: inset 0 3px 0 var(--ok);
 }
 
-a.bar:hover,
-a.bar:focus-visible {
+.bar[data-href]:hover {
   transform: scaleY(1.15);
   filter: brightness(1.12);
+}
+
+/* Clickable once site.js has added the click (pages work without it: the
+   list below links every entry). */
+.strip-live .bar[data-href] {
+  cursor: pointer;
 }
 
 /* What's being built now: an outline still waiting to be filled. */

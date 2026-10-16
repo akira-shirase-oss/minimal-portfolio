@@ -11,9 +11,10 @@ default_language = "en"
 # The default author of every post (footer and RSS feed).
 author = "404human"
 
-# An RSS feed at /rss.xml so people can follow new posts (linked in the page head for feed readers).
+# An RSS feed at /rss.xml so people can follow new posts (linked in the page head for feed readers),
+# and /llms.txt, the site in brief for AI assistants (templates/llms.txt), built the same way.
 generate_feeds = true
-feed_filenames = ["rss.xml"]
+feed_filenames = ["rss.xml", "llms.txt"]
 
 # /sitemap.xml lists every page for search engines, and /robots.txt points them to it.
 generate_sitemap = true
@@ -33,6 +34,10 @@ error_on_missing_language = true
 add_color_scheme = false
 
 [extra]
+# The home page's title in search results and tabs: "404human · <tagline>" (60 characters at most).
+tagline = "Rust runtimes, background jobs, AI infrastructure"
+# Describes the link-preview image (static/img/social-card.jpg) for people who can't see it.
+card_alt = "404human: hey, I break things. A clay figure thinking at a laptop."
 # Contact links on the home page. Fill in the ones you want; empty ones are hidden.
 # X handle without the @ (also used for link previews on X).
 x_handle = ""

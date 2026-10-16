@@ -1,0 +1,13 @@
+{
+  "name": "404human",
+  "short_name": "404human",
+  "description": "Building Rust runtimes, reliable background jobs, and AI infrastructure. Sharing the experiments, failures, and releases.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#fdfdfc",
+  "theme_color": "#fdfdfc",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

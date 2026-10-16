@@ -102,9 +102,19 @@
     window.setInterval(tick, 1000);
   }
 
-  // 4. The strip's readout names the entry under the pointer or the keyboard
-  //    focus, and goes back to the latest entry after.
+  // 4. The strip's readout names the entry under the pointer, and goes back
+  //    to the latest entry after.
+  //    A click on a bar opens its entry (Ctrl/Cmd+click: in a new tab). The
+  //    bars are a picture, not links: keyboards and screen readers use the
+  //    list of entries below, which links the same pages.
   document.querySelectorAll(".strip-wrap").forEach(function (scope) {
+    scope.classList.add("strip-live");
+    scope.addEventListener("click", function (event) {
+      var bar = event.target.closest("[data-href]");
+      if (!bar) return;
+      if (event.ctrlKey || event.metaKey) window.open(bar.dataset.href, "_blank", "noopener");
+      else window.location.assign(bar.dataset.href);
+    });
     var readout = scope.querySelector("[data-readout]");
     if (!readout) return;
     var show = function (event) {
@@ -113,9 +123,7 @@
     };
     var reset = function () { readout.textContent = readout.dataset.default; };
     scope.addEventListener("pointerover", show);
-    scope.addEventListener("focusin", show);
     scope.addEventListener("pointerleave", reset);
-    scope.addEventListener("focusout", reset);
   });
 
 })();
