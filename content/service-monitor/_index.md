@@ -20,7 +20,7 @@ milestones = [
   { id = "M5", name = "running on its own", about = "Its own server, backups, and a 24-hour stress test." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "M2", step = "2.7", title = "Disk limits and backups" }
+up_next = { milestone = "M2", step = "2.8", title = "Telling certificate problems apart" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`). Steps get numbers
