@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Page not found</h1>
-<p>That page doesn't exist. <a href="{{ get_url(path='@/_index.md') }}">Go to the home page</a>.</p>
+{#- On a site called 404human, the error page is the joke's home: the human
+    isn't found, but the clay one is, still thinking at his desk. #}
+<section class="lost">
+  <picture class="lost-scene">
+    <source type="image/webp" srcset="{{ get_url(path='img/desk-640.webp') }} 640w, {{ get_url(path='img/desk-1000.webp') }} 1000w" sizes="(max-width: 400px) 90vw, 340px">
+    <img src="{{ get_url(path='img/desk-640.jpg') }}" srcset="{{ get_url(path='img/desk-640.jpg') }} 640w, {{ get_url(path='img/desk-1000.jpg') }} 1000w" sizes="(max-width: 400px) 90vw, 340px" width="640" height="640" alt="A clay figure in a dark hoodie at a desk, chin on hand, thinking at a laptop, next to a mug that says Good Ideas Ship Things">
+  </picture>
+  <div class="lost-text">
+    <p class="prompt" aria-hidden="true"><span class="ps1">$</span> <span class="cmd">find</span> / -name "this page"</p>
+    <h1>404: human not found.</h1>
+    <p>The clay one is here, though, still thinking about where that page went. It doesn't exist, or I broke it.</p>
+    <p class="lost-links"><a href="{{ get_url(path='@/_index.md') }}">Go to the home page</a> <span aria-hidden="true">·</span> <a href="{{ get_url(path='@/service-monitor/_index.md') }}">Read the build log</a></p>
+  </div>
+</section>
 {% endblock content %}

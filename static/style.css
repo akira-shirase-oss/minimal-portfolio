@@ -831,6 +831,50 @@ pre code {
   padding: 1.4rem 1.5rem 1.6rem;
 }
 
+/* The clay me, part of the headline: "hey, (face) I break things." Drawn
+   by CSS into an empty span in the Markdown, so the words stay plain text.
+   The picture's off-white background makes a light circle in both themes
+   (dark hair on a dark page would vanish otherwise).
+
+   It turns toward the pointer: site.js sets --turn-x/--turn-y (-1 to 1, how
+   far the pointer is to each side). The circle rotates in perspective like
+   a head turning, and the picture inside slides the other way, so it reads
+   as depth rather than a flat card tilting. */
+.hello-face {
+  display: inline-block;
+  position: relative;
+  width: 1.15em;
+  height: 1.15em;
+  margin: 0 0.04em;
+  vertical-align: -0.214em;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fdfdfd;
+  box-shadow: 0 0 0 1px var(--line);
+  transform:
+    perspective(9em)
+    translate(calc(var(--turn-x, 0) * 0.08em), calc(var(--turn-y, 0) * 0.06em))
+    rotateY(calc(var(--turn-x, 0) * 32deg))
+    rotateX(calc(var(--turn-y, 0) * -24deg))
+    rotate(calc(var(--turn-x, 0) * 6deg))
+    scale(var(--pop, 1));
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hello-face::before {
+  content: "";
+  position: absolute;
+  inset: -7%;
+  background: url("img/avatar-192.jpg") center / cover no-repeat;
+  background-image: image-set(url("img/avatar-192.webp") type("image/webp"), url("img/avatar-192.jpg") type("image/jpeg"));
+  transform: translate(calc(var(--turn-x, 0) * 6%), calc(var(--turn-y, 0) * 3.5%));
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hello-face:hover {
+  --pop: 1.15;
+}
+
 .prompt {
   font-family: var(--mono);
   font-size: 0.9rem;
@@ -1326,6 +1370,36 @@ a.bar:focus-visible {
     margin-left: 0;
     flex-basis: 100%;
   }
+}
+
+/* 404: the clay me at his desk above the words (the column is too narrow
+   for both side by side). The picture is framed like a photo on purpose:
+   its off-white background is a card in both themes, never an edge that
+   almost matches the page. */
+.lost-scene {
+  display: block;
+  max-width: 340px;
+  margin-bottom: 1.75rem;
+}
+
+.lost-scene img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.lost-text h1 {
+  margin: 0 0 0.75rem;
+}
+
+.lost-text p {
+  margin: 0 0 1rem;
+}
+
+.lost-text .lost-links {
+  margin-bottom: 0;
 }
 
 /* Phones */

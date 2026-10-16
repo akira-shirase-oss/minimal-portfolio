@@ -47,6 +47,6 @@ year = 2026
 status = "live"
 +++
 
-# hey, I *break* things.
+# hey, <span class="hello-face" aria-hidden="true"></span> I *break* things.
 
 Then I fix them, and write down what I learned. Mostly Rust: runtimes, background jobs, AI tools. All in public, mistakes included.
