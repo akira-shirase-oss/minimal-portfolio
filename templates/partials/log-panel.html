@@ -26,7 +26,8 @@
   <p class="readout" data-readout data-default="Latest · {{ latest.extra.milestone }} · {{ latest.extra.step }}: {{ latest.extra.short_title or latest.title }}">Latest · {{ latest.extra.milestone }} · {{ latest.extra.step }}: {{ latest.extra.short_title or latest.title }}</p>
 </div>
 
-<ol class="track" aria-label="Milestones">
+{#- Six columns by default; a log with more milestones sets `track_columns`. #}
+<ol class="track" aria-label="Milestones"{% if log.extra.track_columns %} style="--track-columns: {{ log.extra.track_columns }}"{% endif %}>
   {%- for milestone in log.extra.milestones %}
   {%- set count = [p for p in entries if p.extra.milestone == milestone.id] | length %}
   {%- set state = "current" if milestone.id == current_id else ("done" if count > 0 else "upcoming") %}

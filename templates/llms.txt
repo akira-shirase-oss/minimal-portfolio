@@ -3,22 +3,23 @@
     `pages` is every dated page, newest first, and the list can never go stale.
     A text template: nothing is HTML-escaped. -#}
 {%- set home = get_section(path="_index.md", metadata_only=true) -%}
-{%- set log = get_section(path="service-monitor/_index.md", metadata_only=true) -%}
-{%- set entries = [p for p in pages if p.path is starting_with(pat="/service-monitor/")] | reverse -%}
-{%- set posts = [p for p in pages if not p.path is starting_with(pat="/service-monitor/")] -%}
+{%- set logs = home.extra.logs | default(value=[]) -%}
+{%- set posts = [p for p in pages if p.path is starting_with(pat="/posts/")] -%}
 # {{ config.title }}
 
 > {{ config.description }}
 
 {{ config.title }} is a personal site and build log: experiments, failures and releases, written up in plain words with exact numbers. Every post is complete as server-rendered HTML; the RSS feed carries every post in full.
-
+{% for log_path in logs %}
+{%- set log = get_section(path=log_path) %}
 ## {{ log.title }}
 
 {{ log.description }} Entries are in build order, oldest first.
 
-{% for page in entries -%}
+{% for page in log.pages | reverse -%}
 - [{{ page.title }}]({{ page.permalink }}): {{ page.description }}
 {% endfor %}
+{%- endfor %}
 ## Writing
 
 {% for page in posts -%}
@@ -27,7 +28,10 @@
 ## Pages
 
 - [Home]({{ get_url(path="@/_index.md") }}): who writes here, what's running now, the build log at a glance, and every post.
+{%- for log_path in logs %}
+{%- set log = get_section(path=log_path, metadata_only=true) %}
 - [{{ log.title }}]({{ log.permalink }}): every entry, grouped by milestone, with what's planned next.
+{%- endfor %}
 - [RSS feed]({{ get_url(path="rss.xml", trailing_slash=false) }}): every post in full, newest first.
 
 ## Optional

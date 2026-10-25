@@ -3,10 +3,20 @@
 {% block body_class %}home-page{% endblock body_class %}
 
 {% block content %}
-{%- set log = get_section(path="service-monitor/_index.md") %}
-{#- Oldest first, the way a log reads. #}
-{%- set entries = log.pages | reverse %}
+{#- Every build log listed in content/_index.md (`logs`), main project first.
+    Tera 2 can't join lists, so the totals are gathered with set_global. #}
+{%- set logs = section.extra.logs | default(value=[]) %}
 {%- set posts = get_section(path="posts/_index.md") %}
+{%- set newest = "" %}
+{%- set log_entries = 0 %}
+{%- for log_path in logs %}
+  {%- set one_log = get_section(path=log_path) %}
+  {%- set_global log_entries = log_entries + (one_log.pages | length) %}
+  {%- if one_log.pages %}
+    {%- set top = one_log.pages[0] %}
+    {%- if not newest or top.date > newest.date %}{% set_global newest = top %}{% endif %}
+  {%- endif %}
+{%- endfor %}
 <div class="home">
   {#- The intro, as a terminal: `$ whoami`, then the headline types itself out
       (site.js; without JavaScript, or with reduced motion, it's simply there). #}
@@ -18,12 +28,12 @@
     <div class="term-body">
       <p class="prompt" aria-hidden="true"><span class="ps1">$</span> <span class="cmd">whoami</span></p>
       {{ section.content | safe }}
-      {%- if entries %}
-      {#- The newest build-log line, like tailing a log file. #}
-      {%- set newest = entries[-1] %}
+      {%- if newest %}
+      {#- The newest line across every build log, like tailing a log file. #}
+      {%- set newest_log = get_section(path=newest.ancestors | last, metadata_only=true) %}
       <div class="term-tail">
         <p class="prompt" aria-hidden="true"><span class="ps1">$</span> <span class="cmd">tail</span> -1 build.log</p>
-        <p class="tail-line"><span class="tail-step">{{ newest.extra.milestone }} · {{ newest.extra.step }}</span> <a href="{{ newest.permalink }}">{{ newest.extra.short_title or newest.title }}</a></p>
+        <p class="tail-line"><span class="tail-step">{{ newest_log.extra.short_title or newest_log.title }} · {{ newest.extra.milestone }} · {{ newest.extra.step }}</span> <a href="{{ newest.permalink }}">{{ newest.extra.short_title or newest.title }}</a></p>
       </div>
       {%- endif %}
     </div>
@@ -42,11 +52,17 @@
       <span class="proc-name"><span class="led" aria-hidden="true"></span>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</span>
       <span class="proc-what">{{ item.what }}</span>
       <span class="proc-stat">
-        {%- if item.log and entries %}
-          {%- set now_on = entries[-1] %}
+        {%- if item.log %}
+          {#- `log` names the build log's section, e.g. "colophon/_index.md". #}
+          {%- set item_log = get_section(path=item.log) %}
+          {%- if item_log.pages %}
+          {%- set now_on = item_log.pages[0] %}
           {{ now_on.extra.milestone }} · {{ now_on.extra.step }}{% if now_on.extra.tests is defined %} · {{ now_on.extra.tests }} tests{% endif %}
+          {%- else %}
+          {{ item.detail | default(value="running") }}
+          {%- endif %}
         {%- elif item.writing %}
-          {{ (entries | length) + (posts.pages | length) }} write-ups
+          {{ log_entries + (posts.pages | length) }} write-ups
         {%- else %}
           {{ item.detail | default(value="running") }}
         {%- endif -%}
@@ -56,11 +72,18 @@
   </ul>
   {%- endif %}
 
-  {%- if entries %}
+  {%- if log_entries > 0 %}
   <h2 id="build-log">Build log</h2>
-  <section class="panel" aria-labelledby="build-log-title">
+  {%- for log_path in logs %}
+  {%- set log = get_section(path=log_path) %}
+  {#- Oldest first, the way a log reads. #}
+  {%- set entries = log.pages | reverse %}
+  {%- if entries %}
+  {%- set log_name = log.extra.short_title or log.title %}
+  {%- set panel_id = "build-log-" ~ (log_name | slugify) %}
+  <section class="panel" aria-labelledby="{{ panel_id }}">
     <div class="panel-head">
-      <a class="panel-title" id="build-log-title" href="{{ log.permalink }}">{{ log.extra.short_title or log.title }}</a>
+      <a class="panel-title" id="{{ panel_id }}" href="{{ log.permalink }}">{{ log_name }}</a>
       {%- if log.extra.status %} <span class="tag status-{{ log.extra.status | slugify }}">{{ log.extra.status }}</span>{% endif %}
       <span class="panel-meta">{{ entries | length }} entries</span>
     </div>
@@ -80,6 +103,8 @@
       </li>
     </ul>
   </section>
+  {%- endif %}
+  {%- endfor %}
   {%- endif %}
 
   {%- if section.extra.projects %}
