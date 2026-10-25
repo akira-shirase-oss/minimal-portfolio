@@ -24,7 +24,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P0", step = "0.7", title = "Material 3 colours and the first screen" }
+up_next = { milestone = "P1", step = "1.1", title = "Signing in, and projects that can't see each other" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -66,18 +66,22 @@ title = "Material 3 colours and the first screen"
 
 [[extra.planned]]
 milestone = "P1"
+step = "1.1"
 title = "Signing in, and projects that can't see each other"
 
 [[extra.planned]]
 milestone = "P1"
+step = "1.2"
 title = "A draft that can't be lost"
 
 [[extra.planned]]
 milestone = "P1"
+step = "1.3"
 title = "Two editors, one article"
 
 [[extra.planned]]
 milestone = "P1"
+step = "1.4"
 title = "The first simulator run"
 
 [[extra.planned]]
