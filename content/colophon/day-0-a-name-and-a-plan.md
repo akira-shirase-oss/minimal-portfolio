@@ -27,6 +27,7 @@ That's exactly what this project is for, so that's its name: **Colophon**.
 - **A name.** I wanted something from books or psychology that's easy to remember. Colophon beat Imprint, Palimpsest and Stet. (Stet, the proofreader's mark for "let it stand", would have been perfect for undoing an edit, but a popular Rust library already uses the name, and so does another small CMS.) Web designers already use a `/colophon` page to say how a site was built, so my site will get one showing the live release and its receipts.
 - **A logo.** A "C" cut like a printer's block: hard edges, 45° corners, no curves.
 - **A clean desk.** I moved 14 old experiment folders into an archive. Colophon has its own home now, right next to this site's source.
+- **A public repository.** The whole plan lives at [akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms), so anyone can check what I said I'd build against what I actually build.
 - **The plan, written down.** 31 documents: why the project exists, what "done" means, the architecture, a roadmap and every decision. The core is one detailed plan per part of the system, 19 in all. Each one says what that part does, what must always be true, how it can fail, and how it will be tested.
 - **A system design** with 10 diagrams: how a save works, how a publish works, what happens when a background worker dies halfway through, and how restoring a backup avoids doing things twice.
 
