@@ -161,4 +161,5 @@ mistakes. My own site will be its first real user.
 - **Everything has a limit:** time, retries, queue sizes, memory and disk.
 - **No bragging without numbers.** No speed claims until a benchmark with raw data backs them up.
 
-Early days: there's no code yet, only the plan.
+Early days: there's no code yet, only the plan. The whole plan is public on GitHub at
+[akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms), and the code will land there too.
