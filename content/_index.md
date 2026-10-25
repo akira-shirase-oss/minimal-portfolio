@@ -40,7 +40,7 @@ name = "Colophon CMS"
 about = "A content management system that can prove what it published and survives being killed at any moment. Rust and Svelte, open source, every step logged here."
 link = "@/colophon/_index.md"
 year = 2026
-status = "design"
+status = "in progress"
 
 [[extra.projects]]
 name = "Service Monitor"

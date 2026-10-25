@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "design"
+status = "in progress"
 # How lists elsewhere on the site name this build log.
 short_title = "Colophon"
 # Eight milestones: draw the track as two rows of four.
@@ -24,7 +24,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P0", step = "0.1", title = "Pinned tools and an empty workspace that passes its checks" }
+up_next = { milestone = "P0", step = "0.2", title = "The local stack: Postgres, cache, file storage, sign-in" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -161,5 +161,5 @@ mistakes. My own site will be its first real user.
 - **Everything has a limit:** time, retries, queue sizes, memory and disk.
 - **No bragging without numbers.** No speed claims until a benchmark with raw data backs them up.
 
-Early days: there's no code yet, only the plan. The whole plan is public on GitHub at
-[akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms), and the code will land there too.
+Early days: the plan is done and the foundation is going in, but nothing here is a working CMS yet. The plan and the
+code are public on GitHub at [akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms).
