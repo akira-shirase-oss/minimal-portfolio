@@ -24,7 +24,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P0", step = "0.6", title = "The renderer: one document, drawn the same everywhere" }
+up_next = { milestone = "P0", step = "0.7", title = "Material 3 colours and the first screen" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
