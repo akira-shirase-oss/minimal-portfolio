@@ -37,9 +37,13 @@ Human first, casual and easy to read. The Rust Book post is the model.
 - **Keep numbers exact and caveats honest.** Say "I", and a little humour is welcome.
 - **Build-log entries use these headings, in order:** What I built · How it works (the short version) · Does it actually work? · Where I messed up · What it doesn't do yet · Up next.
 
-## Add a build-log entry (Service Monitor)
+## Add a build-log entry (Colophon CMS, Service Monitor)
 
-Build-log entries live in `content/service-monitor/`, not in `posts/`. The home page shows the latest 3 under **Build log**, and `/service-monitor/` groups all of them under their milestone. Previous/next links and the "Service Monitor build log › M0 · 0.4" line above the title are added automatically.
+There are two build logs: `content/colophon/` (the main project: milestones D, then P0–P6) and `content/service-monitor/` (M0–M5). Entries live in their log's folder, not in `posts/`. The home page draws one panel per log, in the order of `logs` in `content/_index.md`, each with its latest 3 entries; the terminal's `tail` line shows the newest entry of any log. `/colophon/` and `/service-monitor/` group every entry under its milestone. Previous/next links and the "Service Monitor build log › M0 · 0.4" line above the title are added automatically.
+
+**A new build log** is a folder with an `_index.md` using `template = "series.html"` and `page_template = "series-page.html"` (copy `content/colophon/_index.md`), plus a line in `logs` and a `[[extra.now]]` block with `log = "<folder>/_index.md"` in `content/_index.md`. Give its milestone IDs colours in `static/style.css` (the `.m-…` rules), and set `track_columns` when it has more than six milestones.
+
+The Colophon entries follow the same steps below, in `content/colophon/`, with `milestone = "P0"` and so on.
 
 1. Create `content/service-monitor/checkpoint-0-4.md` with this header:
 
@@ -86,7 +90,7 @@ reverted at Akira's request: "keep your interactive version, without the referen
 ## Preview on your computer
 
 ```
-cd ~/Desktop/learning/blog
+cd ~/Desktop/Learning/akira-shirase-oss/minimal-portfolio
 zola serve
 ```
 
