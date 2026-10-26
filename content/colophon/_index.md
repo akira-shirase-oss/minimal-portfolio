@@ -126,15 +126,28 @@ title = "Killing it on purpose: the first crash loop"
 
 [[extra.planned]]
 milestone = "P3"
+step = "3.1"
 title = "A cache that can't serve the wrong thing"
 
 [[extra.planned]]
 milestone = "P3"
+step = "3.2"
+title = "Taking it back: unpublishing that sticks"
+
+[[extra.planned]]
+milestone = "P3"
+step = "3.3"
 title = "A receipt for every publish"
 
 [[extra.planned]]
 milestone = "P3"
+step = "3.4"
 title = "My own site, running on Colophon"
+
+[[extra.planned]]
+milestone = "P3"
+step = "3.5"
+title = "The first public demo"
 
 [[extra.planned]]
 milestone = "P4"
@@ -194,5 +207,9 @@ mistakes. My own site will be its first real user.
 - **Everything has a limit:** time, retries, queue sizes, memory and disk.
 - **No bragging without numbers.** No speed claims until a benchmark with raw data backs them up.
 
-Early days: the plan is done and the foundation is going in, but nothing here is a working CMS yet. The plan and the
-code are public on GitHub at [akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms).
+Where it stands: the foundation (P0) and the editing core (P1) are done, and publishing (P2) is down to its last
+step. Colophon can sign people in, keep each project's content apart, save drafts that can't be lost, handle two
+people editing the same article, review the exact change, and publish it as one numbered release, with background
+work that survives a crash. It isn't a CMS you can use yet: there's no proof that a publish reached a site, and
+nothing runs anywhere but my laptop and CI. The plan and the code are public on GitHub at
+[akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms).
