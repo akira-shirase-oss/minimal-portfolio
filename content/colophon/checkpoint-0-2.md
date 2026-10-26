@@ -1,7 +1,7 @@
 +++
 title = "Checkpoint 0.2: healthy is not the same as working"
 description = "Colophon's local stack: a database, a cache, file storage and sign-in, all started with one command. Docker said every service was healthy, so I broke one on purpose to see whether anyone would notice."
-date = 2026-10-25T22:00:00Z
+date = 2026-10-25T18:20:04Z
 
 [extra]
 # experiment, failure or release

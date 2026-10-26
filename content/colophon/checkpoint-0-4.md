@@ -1,7 +1,7 @@
 +++
 title = "Checkpoint 0.4: an editor that would rather refuse than lose a word"
 description = "Colophon's writing editor and the format behind it. The editor opens a document only if it can give it back byte for byte, because the library underneath quietly throws away whatever it doesn't understand."
-date = 2026-10-26T01:00:00Z
+date = 2026-10-25T20:31:38Z
 
 [extra]
 kind = "experiment"

@@ -1,7 +1,7 @@
 +++
 title = "Checkpoint 0.3: five million requests, and the bug they didn't find"
 description = "Colophon learned to say when something's wrong: one error format, honest health checks, a separate frontend that tests it, and load tests in the millions. The millions found nothing. The frontend found a bug on day one."
-date = 2026-10-25T23:00:00Z
+date = 2026-10-25T19:22:40Z
 
 [extra]
 kind = "experiment"

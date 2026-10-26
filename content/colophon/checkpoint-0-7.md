@@ -1,7 +1,7 @@
 +++
 title = "Checkpoint 0.7: colours that pass the test, and the end of the foundation"
 description = "Colophon's design system: Material 3 colours generated from one blue, checked for contrast in every theme by CI, and an accessibility scanner that found two real problems on its first run. With this, the foundation milestone is done."
-date = 2026-10-26T07:00:00Z
+date = 2026-10-25T21:32:26Z
 
 [extra]
 kind = "release"

@@ -1,7 +1,7 @@
 +++
 title = "Checkpoint 0.5: the guard at the only door"
 description = "The editor keeps honest writers honest. The server has to stop everyone else. Colophon's validator refuses all 34 bad test documents with exactly the right error and location, and checks 71,000 documents a second."
-date = 2026-10-26T03:00:00Z
+date = 2026-10-25T20:52:30Z
 
 [extra]
 kind = "experiment"

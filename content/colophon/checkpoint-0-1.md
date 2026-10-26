@@ -1,7 +1,7 @@
 +++
 title = "Checkpoint 0.1: the compiler that ignored my instructions"
 description = "Pinning a Rust version takes one small file. On my laptop, that file was being silently ignored. So Colophon's first check makes sure its checks are real."
-date = 2026-10-25T21:00:00Z
+date = 2026-10-25T18:02:19Z
 
 [extra]
 # experiment, failure or release
