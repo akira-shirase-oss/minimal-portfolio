@@ -129,6 +129,15 @@ Most of this runs by itself on every build:
 - **Sitemap and feed.** `/sitemap.xml` dates every page (`templates/sitemap.xml`); the RSS feed carries every post in full.
 - **One address.** Every page names its address on 404human.dev as the canonical one, and `static/_headers` tells search engines not to index the copies on `www.` and `pages.dev`.
 - **Link previews.** One card for every page: `static/img/social-card.jpg` (1,200 × 630). Its text is described in `card_alt` in `zola.toml`.
+  A post can have its own card: write it as a 1,200 × 630 HTML page in `art/cards/<slug>.html`, render it with
+  `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --screenshot=card.png file://$PWD/art/cards/<slug>.html`,
+  convert it with `sips -s format jpeg -s formatOptions 88 card.png --out static/img/cards/<slug>.jpg`, and set
+  `card = "img/cards/<slug>.jpg"` and `card_alt` under the post's `[extra]`.
+- **Telling search engines about a new page.** `static/88793c8c28db63d8c932b12a31586101.txt` is the site's
+  [IndexNow](https://www.indexnow.org) key (Bing, Yandex and others; Google reads `sitemap.xml` instead). After
+  deploying a new post, send its address:
+  `curl -s -o /dev/null -w '%{http_code}\n' "https://api.indexnow.org/indexnow?url=https://404human.dev/posts/<slug>/&key=88793c8c28db63d8c932b12a31586101"`
+  (200 or 202 means it was accepted).
 
 Three things are done by hand:
 
