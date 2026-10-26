@@ -1,7 +1,7 @@
 +++
 title = "Checkpoint 0.6: the moment text becomes a web page"
 description = "Colophon's renderer turns a stored article into the page readers see. There's one of it, it refuses rather than guesses, and a test reads back everything it produces to make sure nothing in it can run."
-date = 2026-10-26T05:00:00Z
+date = 2026-10-25T21:02:42Z
 
 [extra]
 kind = "experiment"
