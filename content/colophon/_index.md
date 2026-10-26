@@ -24,7 +24,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P3", step = "3.4", title = "My own site, running on Colophon" }
+up_next = { milestone = "P3", step = "3.5", title = "The Studio, designed" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -147,7 +147,17 @@ title = "My own site, running on Colophon"
 [[extra.planned]]
 milestone = "P3"
 step = "3.5"
-title = "The first public demo"
+title = "The Studio, designed"
+
+[[extra.planned]]
+milestone = "P3"
+step = "3.6"
+title = "Editing that's complete: statuses, search, review with diffs"
+
+[[extra.planned]]
+milestone = "P3"
+step = "3.7"
+title = "My site goes live, and the first public demo"
 
 [[extra.planned]]
 milestone = "P4"
@@ -208,9 +218,9 @@ mistakes. My own site will be its first real user.
 - **No bragging without numbers.** No speed claims until a benchmark with raw data backs them up.
 
 Where it stands: the foundation (P0), the editing core (P1) and publishing (P2) are done, and P3, proving a publish
-reached the site, is under way: a cache that can't serve an old release, unpublishing that reaches CDNs, and a receipt
-for every publish. Colophon can sign people in, keep each project's content apart, save drafts that can't be lost,
+reached the site, is under way: a cache that can't serve an old release, unpublishing that reaches CDNs, a receipt
+for every publish, and a site built from one release, running locally. Colophon can sign people in, keep each project's content apart, save drafts that can't be lost,
 handle two people editing the same article, review the exact change, and publish it as one numbered release, with
 background work that survives a crash. It isn't a CMS you can use yet: nothing runs anywhere but my laptop and CI, and
-the site it will run is still being built. The plan and the code are public on GitHub at
+the Studio is getting designed properly before anything goes public. The plan and the code are public on GitHub at
 [akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms).
