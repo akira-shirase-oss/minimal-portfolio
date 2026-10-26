@@ -1,7 +1,7 @@
 {#- Structured data (JSON-LD) for search engines and AI answer engines: who
     writes here, what each page is, when it was written, and where it sits.
-    Uses base.html's `doc_type`, `doc_description`, `is_home` and the page or
-    section in context. Every value goes through json_encode, and each "<"
+    Uses base.html's `doc_type`, `doc_description`, `is_home`, `card` and the
+    page or section in context. Every value goes through json_encode, and each "<"
     becomes the JSON escape \u003c (written "\\u003c" below: Tera 2 has no
     \u escapes of its own), so no text can ever close the script tag. A
     title "</script>" was tried: it reads back exactly, and the page holds no
@@ -10,7 +10,6 @@
 {%- set person_id = site ~ "#person" %}
 {%- set website_id = site ~ "#website" %}
 {%- set avatar = get_url(path="img/avatar-288.jpg") %}
-{%- set card = get_url(path="img/social-card.jpg") %}
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@graph": [
   {"@type": "Person", "@id": {{ person_id | json_encode | safe }}, "name": {{ config.author | json_encode | replace(from="<", to="\\u003c") | safe }}, "url": {{ site | json_encode | safe }}, "image": {{ avatar | json_encode | safe }}
