@@ -24,7 +24,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P3", step = "3.2", title = "Taking it back: unpublishing that sticks" }
+up_next = { milestone = "P3", step = "3.3", title = "A receipt for every publish" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -208,7 +208,8 @@ mistakes. My own site will be its first real user.
 - **No bragging without numbers.** No speed claims until a benchmark with raw data backs them up.
 
 Where it stands: the foundation (P0), the editing core (P1) and publishing (P2) are done, and P3, proving a publish
-reached the site, has started with a cache that can't serve an old release. Colophon can sign people in, keep each
+reached the site, is under way: a cache that can't serve an old release, and unpublishing that reaches CDNs. Colophon
+can sign people in, keep each
 project's content apart, save drafts that can't be lost, handle two people editing the same article, review the exact
 change, and publish it as one numbered release, with background work that survives a crash. It isn't a CMS you can use
 yet: there's no proof that a publish reached a site, and nothing runs anywhere but my laptop and CI. The plan and the
