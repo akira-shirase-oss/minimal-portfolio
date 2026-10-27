@@ -9,22 +9,27 @@ page_template = "series-page.html"
 status = "in progress"
 # How lists elsewhere on the site name this build log.
 short_title = "Colophon"
-# Eight milestones: draw the track as two rows of four.
+# Twelve milestones: draw the track as three rows of four.
 track_columns = 4
-# The roadmap, in build order. D is the design work before any code; P0–P6 are the
-# milestones from the project's ROADMAP.md, each named after what it proves.
+# The roadmap, in build order. D is the design work before any code; the rest are the
+# milestones from the project's ROADMAP.md, each named after what it proves. The roadmap
+# calls developer parity "D"; here it's DX, because D is already the design work.
 milestones = [
   { id = "D", name = "design", about = "Reading a 41-section spec, cutting it down to four promises, naming it, and writing the whole plan down before any code." },
   { id = "P0", name = "foundation", about = "Pinned tools, an empty workspace that passes its checks, the local stack, and an editor whose output Rust can verify." },
   { id = "P1", name = "never lose an edit", about = "Saves that either succeed or clearly fail, safe conflicts between two editors, and projects that can't see each other." },
   { id = "P2", name = "publish exactly once", about = "Reviewed changes become one numbered release, and background work survives being killed halfway." },
   { id = "P3", name = "prove it reached the site", about = "Caching that can't serve the wrong thing, and a receipt for every publish. The first public demo." },
+  { id = "R", name = "roles you define", about = "Owners decide exactly who may do what, down to a field, and every path checks it the same way." },
+  { id = "M", name = "content you can shape", about = "References, reusable groups, lists and page builders, as Strapi and Sanity offer them, kept valid as they change." },
   { id = "P4", name = "time travel", about = "Browse the site as it was at any release, roll back safely, and upload images without risk." },
+  { id = "E", name = "editorial parity", about = "Everything an editorial team does in Strapi or Sanity: languages, schedules, review stages, comments, live updates." },
+  { id = "DX", name = "developer parity", about = "Queries, GraphQL, a typed SDK, webhooks and imports from Strapi and Sanity, through the same permissions." },
   { id = "P5", name = "safe automation", about = "Scripts and AI agents can help at a limited scale, and can never skip review." },
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P3", step = "3.5", title = "The Studio, designed" }
+up_next = { milestone = "P3", step = "3.6", title = "Content types you can change" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -152,12 +157,45 @@ title = "The Studio, designed"
 [[extra.planned]]
 milestone = "P3"
 step = "3.6"
-title = "Editing that's complete: statuses, search, review with diffs"
+title = "Content types you can change"
 
 [[extra.planned]]
 milestone = "P3"
 step = "3.7"
+title = "Plain words, and publishing in one click"
+
+[[extra.planned]]
+milestone = "P3"
+step = "3.8"
 title = "My site goes live, and the first public demo"
+
+[[extra.planned]]
+milestone = "R"
+step = "R.1"
+title = "Roles stored as data, and nothing else changes"
+
+[[extra.planned]]
+milestone = "R"
+step = "R.2"
+title = "Roles you define, in the Studio"
+
+[[extra.planned]]
+milestone = "R"
+step = "R.3"
+title = "Permissions down to a field, and “only their own”"
+
+[[extra.planned]]
+milestone = "R"
+step = "R.4"
+title = "API tokens and an audit log"
+
+[[extra.planned]]
+milestone = "M"
+title = "References, reusable groups, lists and page builders"
+
+[[extra.planned]]
+milestone = "M"
+title = "Migrations you can dry-run and approve"
 
 [[extra.planned]]
 milestone = "P4"
@@ -170,6 +208,26 @@ title = "Rollback is just a new release"
 [[extra.planned]]
 milestone = "P4"
 title = "Image uploads that can't hurt anyone"
+
+[[extra.planned]]
+milestone = "E"
+title = "Every language its own version"
+
+[[extra.planned]]
+milestone = "E"
+title = "Review stages, comments and tasks"
+
+[[extra.planned]]
+milestone = "E"
+title = "Lists that update as others edit"
+
+[[extra.planned]]
+milestone = "DX"
+title = "A query API, GraphQL and a typed SDK"
+
+[[extra.planned]]
+milestone = "DX"
+title = "Import from Strapi and Sanity"
 
 [[extra.planned]]
 milestone = "P5"
@@ -218,9 +276,13 @@ mistakes. My own site will be its first real user.
 - **No bragging without numbers.** No speed claims until a benchmark with raw data backs them up.
 
 Where it stands: the foundation (P0), the editing core (P1) and publishing (P2) are done, and P3, proving a publish
-reached the site, is under way: a cache that can't serve an old release, unpublishing that reaches CDNs, a receipt
-for every publish, and a site built from one release, running locally. Colophon can sign people in, keep each project's content apart, save drafts that can't be lost,
-handle two people editing the same article, review the exact change, and publish it as one numbered release, with
-background work that survives a crash. It isn't a CMS you can use yet: nothing runs anywhere but my laptop and CI, and
-the Studio is getting designed properly before anything goes public. The plan and the code are public on GitHub at
+reached the site, is nearly there: a cache that can't serve an old release, unpublishing that reaches CDNs, a receipt
+for every publish, a site built from one release, and a Studio with a design of its own. Colophon can sign people in,
+keep each project's content apart, save drafts that can't be lost, handle two people editing the same article, review
+the exact change, and publish it as one numbered release, with background work that survives a crash. Content types
+and URL names are being finished now, and roles are becoming something owners define.
+
+The goal got bigger in October: every feature Strapi and Sanity offer, a proper role and permission system, and a
+Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
+months of work. It isn't a CMS you can use yet: nothing runs anywhere but my laptop and CI. The plan and the code are public on GitHub at
 [akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms).

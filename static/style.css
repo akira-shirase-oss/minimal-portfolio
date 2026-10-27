@@ -1134,13 +1134,17 @@ pre code {
 .m-m3 { --mc: var(--c-amber); }
 .m-m4 { --mc: var(--c-pink); }
 .m-m5 { --mc: var(--ok); }
-/* Colophon CMS: D (design), then P0–P6. */
+/* Colophon CMS: D (design), then the roadmap's milestones in build order; neighbours differ. */
 .m-d { --mc: var(--c-pink); }
 .m-p0 { --mc: var(--c-blue); }
 .m-p1 { --mc: var(--c-violet); }
 .m-p2 { --mc: var(--c-teal); }
 .m-p3 { --mc: var(--c-amber); }
-.m-p4 { --mc: var(--c-pink); }
+.m-r { --mc: var(--c-pink); }
+.m-m { --mc: var(--c-blue); }
+.m-p4 { --mc: var(--c-violet); }
+.m-e { --mc: var(--c-teal); }
+.m-dx { --mc: var(--c-amber); }
 .m-p5 { --mc: var(--c-blue); }
 .m-p6 { --mc: var(--ok); }
 
