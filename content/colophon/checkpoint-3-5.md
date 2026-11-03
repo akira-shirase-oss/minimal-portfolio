@@ -78,5 +78,5 @@ place where I write has to be somewhere I want to be.
 against what's actually stored, naming the entries in its way. Then **plain words and one-click publishing** (3.7),
 then my site goes live (3.8).
 
-The bigger change: the goal is now every feature Strapi and Sanity offer, plus a proper role and permission system,
+The bigger change: the goal is now every feature a serious CMS offers, plus a proper role and permission system,
 built to the same standard of proof. That's about 9 to 12 months of work, and the plan is in the roadmap.
