@@ -30,7 +30,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P4", step = "slider", title = "The release slider in the Studio" }
+up_next = { milestone = "M", step = "migrations", title = "Schema migrations you can dry-run and approve" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -199,14 +199,6 @@ milestone = "M"
 title = "Migrations you can dry-run and approve"
 
 [[extra.planned]]
-milestone = "P4"
-title = "The release slider"
-
-[[extra.planned]]
-milestone = "P4"
-title = "Media retention and cleanup"
-
-[[extra.planned]]
 milestone = "E"
 title = "Every language its own version"
 
@@ -281,9 +273,11 @@ atomic-promotion machinery builds and publishes them. And the media pipeline is 
 quarantined and proved by decode before they can be used, asset fields name them in content, a release refuses to
 publish one that isn't usable, the Studio's picker uploads and chooses with real thumbnails, and a public media
 origin serves verified objects and fixed-width renditions to anyone — all immutable, all through one existence-as-proof
-store. Time travel is half done too: every public read can pin a release, and rolling back to one is an ordinary
-reviewed changeset that becomes a new generation — never a path around review. Now building: the Studio's release
-slider, then media retention.
+store. Time travel is done: every public read can pin a release, the Studio steps through them with a slider,
+rolling back builds an ordinary reviewed changeset that becomes a new generation — never a path around review —
+and publishing re-checks any pin a later type change left behind. Media is done too: uploads delete in stages
+(request, lock, recheck, then bytes — never while content still names them), and a retention sweep collects what
+nothing references. Now building: schema migrations you can dry-run and approve.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
