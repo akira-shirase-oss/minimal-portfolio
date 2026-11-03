@@ -30,7 +30,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P4", step = "M.2", title = "A media picker in the Studio" }
+up_next = { milestone = "P4", step = "rollback", title = "The release slider and rollback" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -208,7 +208,7 @@ title = "Rollback is just a new release"
 
 [[extra.planned]]
 milestone = "P4"
-title = "Image derivatives and retention"
+title = "Media retention and cleanup"
 
 [[extra.planned]]
 milestone = "E"
@@ -281,10 +281,11 @@ Where it stands: the foundation (P0), the editing core (P1), publishing (P2) and
 groups, email-and-password accounts, mirrored references, import and export, and the field-order type builder all
 ported forward and proved on the newer codebase. Sites are now real: pages, a menu and a theme are ordinary content,
 the fixed section library and design tokens turn them into websites — no arbitrary CSS — and the same pinned-release,
-atomic-promotion machinery builds and publishes them. And the media pipeline's first two steps are in: uploads are
+atomic-promotion machinery builds and publishes them. And the media pipeline is finished end to end: uploads are
 quarantined and proved by decode before they can be used, asset fields name them in content, a release refuses to
-publish one that isn't usable, and a public media origin serves verified objects to anyone. Now building: the
-Studio's media picker, then image derivatives and retention.
+publish one that isn't usable, the Studio's picker uploads and chooses with real thumbnails, and a public media
+origin serves verified objects and fixed-width renditions to anyone — all immutable, all through one existence-as-proof
+store. Now building: the release slider and rollback, the other half of P4's promise.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
