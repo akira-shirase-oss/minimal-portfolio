@@ -21,15 +21,16 @@ milestones = [
   { id = "P2", name = "publish exactly once", about = "Reviewed changes become one numbered release, and background work survives being killed halfway." },
   { id = "P3", name = "prove it reached the site", about = "Caching that can't serve the wrong thing, and a receipt for every publish. The first public demo." },
   { id = "R", name = "roles you define", about = "Owners decide exactly who may do what, down to a field, and every path checks it the same way." },
-  { id = "M", name = "content you can shape", about = "References, reusable groups, lists and page builders, as Strapi and Sanity offer them, kept valid as they change." },
+  { id = "M", name = "content you can shape", about = "References, reusable groups, lists and page builders, kept valid as they change." },
+  { id = "W", name = "sites from content", about = "Ordinary content composed into websites: pages, a menu and a theme from a fixed section library and design tokens — no arbitrary CSS — built from one pinned release." },
   { id = "P4", name = "time travel", about = "Browse the site as it was at any release, roll back safely, and upload images without risk." },
-  { id = "E", name = "editorial parity", about = "Everything an editorial team does in Strapi or Sanity: languages, schedules, review stages, comments, live updates." },
-  { id = "DX", name = "developer parity", about = "Queries, GraphQL, a typed SDK, webhooks and imports from Strapi and Sanity, through the same permissions." },
+  { id = "E", name = "editorial parity", about = "Everything an editorial team expects of a serious CMS: languages, schedules, review stages, comments, live updates." },
+  { id = "DX", name = "developer parity", about = "Queries, GraphQL, a typed SDK, webhooks and imports from other CMSs, through the same permissions." },
   { id = "P5", name = "safe automation", about = "Scripts and AI agents can help at a limited scale, and can never skip review." },
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P3", step = "3.6", title = "Content types you can change" }
+up_next = { milestone = "P4", step = "M.2", title = "A media picker in the Studio" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -207,7 +208,7 @@ title = "Rollback is just a new release"
 
 [[extra.planned]]
 milestone = "P4"
-title = "Image uploads that can't hurt anyone"
+title = "Image derivatives and retention"
 
 [[extra.planned]]
 milestone = "E"
@@ -227,7 +228,7 @@ title = "A query API, GraphQL and a typed SDK"
 
 [[extra.planned]]
 milestone = "DX"
-title = "Import from Strapi and Sanity"
+title = "Import from other CMSs"
 
 [[extra.planned]]
 milestone = "P5"
@@ -275,14 +276,17 @@ mistakes. My own site will be its first real user.
 - **Everything has a limit:** time, retries, queue sizes, memory and disk.
 - **No bragging without numbers.** No speed claims until a benchmark with raw data backs them up.
 
-Where it stands: the foundation (P0), the editing core (P1) and publishing (P2) are done, and P3, proving a publish
-reached the site, is nearly there: a cache that can't serve an old release, unpublishing that reaches CDNs, a receipt
-for every publish, a site built from one release, and a Studio with a design of its own. Colophon can sign people in,
-keep each project's content apart, save drafts that can't be lost, handle two people editing the same article, review
-the exact change, and publish it as one numbered release, with background work that survives a crash. Content types
-and URL names are being finished now, and roles are becoming something owners define.
+Where it stands: the foundation (P0), the editing core (P1), publishing (P2) and proving a publish reached the site
+(P3) are done. On top of them the work has split into three arcs. Content itself got richer: locales and localization
+groups, email-and-password accounts, mirrored references, import and export, and the field-order type builder all
+ported forward and proved on the newer codebase. Sites are now real: pages, a menu and a theme are ordinary content,
+the fixed section library and design tokens turn them into websites — no arbitrary CSS — and the same pinned-release,
+atomic-promotion machinery builds and publishes them. And the media pipeline's first two steps are in: uploads are
+quarantined and proved by decode before they can be used, asset fields name them in content, a release refuses to
+publish one that isn't usable, and a public media origin serves verified objects to anyone. Now building: the
+Studio's media picker, then image derivatives and retention.
 
-The goal got bigger in October: every feature Strapi and Sanity offer, a proper role and permission system, and a
+The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
 months of work. It isn't a CMS you can use yet: nothing runs anywhere but my laptop and CI. The plan and the code are public on GitHub at
 [akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms).

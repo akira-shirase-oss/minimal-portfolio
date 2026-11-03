@@ -70,5 +70,5 @@ or a rebuild might have failed halfway. So my own site is the hard case, and thi
 
 ## Up next
 
-**Designing the Studio:** a design system of its own on Tailwind and shadcn, informed by Strapi, Sanity and Convex
-running side by side, and the missing pieces of the editing experience.
+**Designing the Studio:** a design system of its own on Tailwind and shadcn, informed by the dashboards of
+established CMSs running side by side, and the missing pieces of the editing experience.
