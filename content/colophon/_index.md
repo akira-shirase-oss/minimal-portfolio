@@ -30,7 +30,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P6", step = "rest", title = "The remaining load variants and a 24-hour soak" }
+up_next = { milestone = "P6", step = "v01", title = "The 24-hour soak, then version 0.1" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -192,7 +192,7 @@ title = "API tokens and an audit log"
 
 [[extra.planned]]
 milestone = "P6"
-title = "The rest of the load matrix and fault gaps"
+title = "The usability gate and an independent install"
 
 [[extra.planned]]
 milestone = "P6"
@@ -270,8 +270,13 @@ exports off-host and replays idempotently, and a six-stage restore on clean infr
 dependency failure fails honestly: cache down falls back, database down refuses writes loudly, a refusing purge
 endpoint backs off.
 
-**Now building (P6):** the remaining load variants and fault gaps, observability runbooks, the 24-hour stress run —
-then version 0.1.
+**The matrix is nearly closed (P6):** every load case now has stored evidence — 540,063 requests over 30 minutes at
+300/s with zero failures on the warm baseline, stampedes coalesced, spikes shaped, a true 10,000-record import —
+with only the 24-hour soak outstanding. Backups run on a verified schedule with retention that only prunes
+what it can prove, upgrades rehearse an explicit gate, and every log line carries the build's version and commit.
+The committed benchmark report names every run and what its numbers don't prove.
+
+**Now building (P6):** the 24-hour stress run, the usability gate and an independent install — then version 0.1.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
