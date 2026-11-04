@@ -4,11 +4,11 @@ description = "Colophon's concurrency tests caught a real FOR SHARE to UPDATE up
 date = 2026-11-05T08:00:00Z
 +++
 
-Colophon's publish path reads a counter and then writes it. That pattern lives in thousands of codebases, and it's a deadlock waiting for exactly the right timing — which is why the test suite spends real money making that timing happen.
+Here's a pattern that lives in thousands of codebases: read a counter, then write it back. It looks safe. It isn't — and Colophon's publish path just proved it the hard way.
 
 ## The pattern
 
-Publishing a release updates the environment's generation counter. The safe way to do that in one transaction looks innocent:
+Publishing a release updates the environment's generation counter. The innocent version:
 
 ```sql
 SELECT generation FROM environments WHERE id = $1 FOR SHARE;
@@ -16,36 +16,44 @@ SELECT generation FROM environments WHERE id = $1 FOR SHARE;
 UPDATE environments SET generation = $2 WHERE id = $1;
 ```
 
-`FOR SHARE` says "I'm going to read this row and I don't want it changing under me." Other transactions can hold the same share lock at once — that's the point of it.
+`FOR SHARE` means "don't let this row change while I read it." Several transactions can hold it at once — that's the point.
 
 Now run two publishes on the same environment at once:
 
 ```
 T1: SELECT ... FOR SHARE        -- holds share lock
 T2: SELECT ... FOR SHARE        -- also holds share lock (they coexist)
-T1: UPDATE ...                  -- wants a row lock; blocked by T2's share lock
-T2: UPDATE ...                  -- wants a row lock; blocked by T1's share lock
+T1: UPDATE ...                  -- needs a write lock; T2's share lock blocks it
+T2: UPDATE ...                  -- needs a write lock; T1's share lock blocks it
                                 -- deadlock. Postgres shoots one.
 ```
 
-Each transaction asked for a read lock, then tried to upgrade it to a write lock while the other's read lock was still held. Neither can ever proceed. Postgres detects the cycle and kills one — the request fails, and which one fails is luck.
+Each transaction took a read lock, then tried to upgrade to a write lock while the other's read lock was still held. Neither can ever move. Postgres spots the cycle and kills one — and which one dies is luck.
 
-The race is narrow: it needs two publishes on the *same* environment within the same few milliseconds. Code review reads it as correct. Unit tests with one transaction never see it. The only way to find it is to actually run two publishes at once — so the test does, in a loop, on a real Postgres.
+## Why it survives review
+
+The race is narrow: two publishes on the *same* environment inside the same few milliseconds.
+
+Code review reads it as correct. Every single-threaded test passes. The only way to find it is to actually run two publishes at once — so the test does exactly that, in a loop, against a real Postgres.
+
+That's where it fired.
 
 ## The fix
 
-`FOR NO KEY UPDATE` takes a stronger lock from the start:
+Take the stronger lock from the start:
 
 ```sql
 SELECT generation FROM environments WHERE id = $1 FOR NO KEY UPDATE;
 ```
 
-It blocks other writers immediately — the second transaction waits at the `SELECT` instead of deadlocking at the `UPDATE`. Since the code *always* updates the row it locks, asking for the weaker lock bought nothing anyway. The discipline is one sentence: **if the transaction will write the row, take the write lock when you read it.**
+Now the second transaction waits politely at the `SELECT` instead of deadlocking at the `UPDATE`. And it costs nothing — the code was always going to write that row anyway.
 
-`FOR NO KEY UPDATE` rather than plain `FOR UPDATE` because it's the weakest lock that still blocks another `FOR NO KEY UPDATE` — foreign-key checks and `FOR SHARE` readers elsewhere keep working.
+The rule is one sentence: **if you're going to write the row, take the write lock when you read it.**
+
+Why `FOR NO KEY UPDATE` and not plain `FOR UPDATE`? It's the weakest lock that still blocks another writer — so foreign-key checks and `FOR SHARE` readers elsewhere keep working.
 
 ## Why this counts
 
-This is the kind of bug that ships. It reads correctly, it's right in every single-threaded run, and it only explodes in production at the worst possible moment — two editors hitting publish on the same release train. It exists in the codebase for exactly as long as nobody runs two writes at once.
+This bug was always going to ship. It reads correctly, it works in every single-threaded run, and it explodes in production at the worst moment — two editors hitting publish on the same release train.
 
-The test that caught it isn't clever: it publishes concurrently until the deadlock fires, then asserts it can't fire again. What made it worth writing is the rule the project keeps — a concurrency claim you haven't raced isn't a claim, it's a hope.
+The test that caught it isn't clever. It publishes concurrently until the deadlock fires, then asserts it can't fire again. What makes it worth having is the rule behind it: a concurrency claim you haven't raced isn't a claim. It's a hope.

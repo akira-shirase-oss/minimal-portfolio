@@ -30,7 +30,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P5", step = "tail", title = "Provider budgets and CLI import/export" }
+up_next = { milestone = "P6", step = "backups", title = "Backups, a ledger, and a real restore" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -224,44 +224,48 @@ mistakes. My own site will be its first real user.
 - **Everything has a limit:** time, retries, queue sizes, memory and disk.
 - **No bragging without numbers.** No speed claims until a benchmark with raw data backs them up.
 
-Where it stands: the foundation (P0), the editing core (P1), publishing (P2) and proving a publish reached the site
-(P3) are done. On top of them the work has split into three arcs. Content itself got richer: locales and localization
-groups, email-and-password accounts, mirrored references, import and export, and the field-order type builder all
-ported forward and proved on the newer codebase. Sites are now real: pages, a menu and a theme are ordinary content,
-the fixed section library and design tokens turn them into websites — no arbitrary CSS — and the same pinned-release,
-atomic-promotion machinery builds and publishes them. And the media pipeline is finished end to end: uploads are
-quarantined and proved by decode before they can be used, asset fields name them in content, a release refuses to
-publish one that isn't usable, the Studio's picker uploads and chooses with real thumbnails, and a public media
-origin serves verified objects and fixed-width renditions to anyone — all immutable, all through one existence-as-proof
-store. Time travel is done: every public read can pin a release, the Studio steps through them with a slider,
-rolling back builds an ordinary reviewed changeset that becomes a new generation — never a path around review —
-and publishing re-checks any pin a later type change left behind. Media is done too: uploads delete in stages
-(request, lock, recheck, then bytes — never while content still names them), and a retention sweep collects what
-nothing references. Schema migrations are done too: a refused type change becomes a dry-run plan of
-every entry in the way, approval names the plan's hash, and a worker rewrites each entry in its own
-transaction — crash-tested — while the Studio drives the whole flow. Editorial collaboration has
-begun: comments pinned to the exact revision they were written on, tasks with an honest
-unassign, and named review stages that gate publishing — ordered, per environment, with
-stage-bound approvals and a one-click publish that names what's blocking it. The developer
-query API is live end to end: a bounded canonical query language with hash-bound cursors
-executes on drafts and on release-pinned delivery, and `depth` populates references level by
-level without an N+1 — narrowed by the caller's own read permission. The CLI and the MCP
-server reached parity with the API surface: queries, releases, migrations, comments and
-tasks, all authorization-bound, dangerous actions still refused by design. Lists now update
-as PostgreSQL commits land — triggers hand a small hint to a bounded SSE fan-out, no polling —
-and the developer program is finished: queries that refuse to leak fields a role can't read,
-an OpenAPI document emitted from the route table itself so it can't drift, a drift-checked
-TypeScript SDK, imports that dry-run against Strapi and Sanity shapes, and a per-collection
-GraphQL that compiles to the same bounded query document REST runs. The automation
-milestone's enforcement landed too: a token can never approve token-submitted work, budgets
-reserve in Postgres before a write may commit, bulk jobs survive a worker crash without
-duplicating an item, an adversarial eval gates at zero unauthorized actions with a stored
-run, per-token request quotas throttle a noisy agent inside its own auth lookup, the measured
-proof shows editors hold their latency beside a throttled agent at 600 refused requests a
-second, the CLI speaks one versioned JSON contract with `colophon mcp` in-process, and the
-same MCP surface now answers over the network — API tokens only, sessions minted and
-bounded, every call dispatched under its own credential. Now building: provider budgets
-and CLI import/export to close P5, then backups, restore and the 24-hour stress run.
+## Where it stands
+
+The foundation (P0), the editing core (P1), publishing (P2) and proving a publish reached the site (P3) are done.
+On top of them the work has split into arcs.
+
+**Content itself is richer.** Locales and localization groups, email-and-password accounts, mirrored references,
+import and export, and the type builder all ported forward and proved on the newer codebase.
+
+**Sites are real.** Pages, a menu and a theme are ordinary content. A fixed section library and design tokens turn
+them into websites — no arbitrary CSS — and the same pinned-release machinery builds and publishes them.
+
+**Media is finished end to end.** Uploads are quarantined and proved by decode before they can be used, a release
+refuses to publish an unusable asset, and a public media origin serves verified objects and fixed-width renditions —
+all immutable, all through one existence-as-proof store. Deletes happen in stages, and a retention sweep collects
+what nothing references.
+
+**Time travel works.** Every public read can pin a release, the Studio steps through them with a slider, and rolling
+back builds an ordinary reviewed changeset — never a path around review.
+
+**Schema migrations run.** A refused type change becomes a dry-run plan of every entry in the way, approval names
+the plan's hash, and a crash-tested worker rewrites each entry in its own transaction.
+
+**Collaboration has begun.** Comments pin to the exact revision they were written on, tasks unassign honestly, and
+named review stages gate publishing — ordered, per environment.
+
+**The developer program is finished.** A bounded query language with hash-bound cursors, an OpenAPI document emitted
+from the route table itself so it can't drift, a drift-checked TypeScript SDK, imports that dry-run against Strapi
+and Sanity shapes, a per-collection GraphQL that compiles to the same bounded document REST runs — and lists that
+update live as PostgreSQL commits land, no polling. The CLI and MCP server reached parity with the API: every
+capability, same authorization, dangerous actions refused by design.
+
+**Safe automation is closed (P5).** A token can never approve token-submitted work. Budgets reserve in Postgres
+before a write may commit — including per-day provider token and cost ceilings. Bulk jobs survive a worker crash
+without duplicating an item. An adversarial eval gates at zero unauthorized actions, with a stored run. Per-token
+request quotas throttle a noisy agent inside its own auth lookup — and the measured proof shows editors holding
+their latency beside 600 refused requests a second. The CLI speaks one versioned JSON contract, with `colophon mcp`
+in-process and the same MCP surface now answering over the network — API tokens only, sessions minted and bounded,
+every call dispatched under its own credential. And the CLI round-trips content: `content export` streams JSONL out,
+`content import` checks and lands it back.
+
+**Now building (P6):** encrypted backups and WAL archiving, the deletion ledger a restore replays, a restore drill
+on clean infrastructure, the 24-hour stress run — then version 0.1.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
