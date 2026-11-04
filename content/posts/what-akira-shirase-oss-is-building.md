@@ -23,7 +23,7 @@ Most portfolios show finished things. This one shows the work while it's happeni
 - You can see the whole site as it was at any release.
 - "Published" only means published; the site update shows as pending until it's actually seen.
 
-Rust on the server, Svelte for the editor, PostgreSQL as the only source of truth. Right now it's a written plan with a name and a logo: design is done, and the foundation (P0) is next. The plan is public at [akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms).
+Rust on the server, Svelte for the editor, PostgreSQL as the only source of truth. When this was written it was a written plan; it's since grown through milestones P0 to P6. The editing, publishing, time travel and safe-automation machinery is built and proven, and the current work is backups, restores and a 24-hour stress test. The plan and the code are public at [akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms), and the [build log](@/colophon/_index.md) records every step.
 
 **[Service Monitor](@/service-monitor/_index.md)** keeps an eye on websites and tells you, honestly, when something breaks. It's in its third milestone ("remembering"), at checkpoint 2.8 with 441 tests, and it says "unknown" instead of guessing.
 
