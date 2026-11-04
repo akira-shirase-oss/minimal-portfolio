@@ -1012,27 +1012,17 @@ pre code {
   vertical-align: 0.05em;
 }
 
-/* The description and its stat share one row: the text takes the width, the
-   pill rides at the row's right edge and drops under the text only when the
-   row is genuinely tight. */
-.proc-body {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem 1rem;
-  flex-wrap: wrap;
-}
-
+/* The description and its stat share one row: the pill floats at the
+   description's top-right, the text wraps the full width around it. */
 .proc-what {
-  flex: 1 1 18rem;
-  min-width: 0;
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.55;
 }
 
 .proc-stat {
-  margin-left: auto;
-  flex-shrink: 0;
+  float: right;
+  margin: 0.15rem 0 0.4rem 0.75rem;
   padding: 0.1rem 0.5rem;
   border-radius: 999px;
   font-family: var(--mono);

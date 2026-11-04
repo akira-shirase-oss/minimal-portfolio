@@ -13,9 +13,9 @@ tests = 699
 
 [extra.summary]
 goal = "Make the agent surface safe enough to expose: least-privilege tokens that can never self-approve, budgets counted where Postgres can prove them, mass work that survives crashes, and a gate that fails if any unauthorized action ever executes."
-built = "agent_self_review refusal on any token→token approval path; api_token_limits + budget_reservations ledger with held/settled/uncertain states and a reconciling sweep; bulk_jobs/bulk_items manifests with per-item idempotent outcomes, worker advisory-lock drive and crash-safe resume; evals.rs — 10 adversarial cases against the real API and a real MCP stdio session; requests_per_minute enforced by a GCRA cell keyed per token, read inside the token's own locked row; CLI output contract v2 with --jsonl streaming and colophon mcp."
-proof = ["UNAUTHORIZED: 0 across 10 cases × 3 trials — stored artifact perf/results/2026-11-04T141109.623685Z-evals.json", "F06 crash test caught a real resume bug (job stuck running when all items resolved before the crash) — fixed and re-proven", "k6 bulk: 10,011 req, 1,186/s, p99 112 ms vs 250 ms budget, zero failed", "k6 quotas: 20,010 req, 1,552/s — throttled arm 100% 429+Retry-After, under-quota arm 100% 200s, p99 79 ms", "FOR SHARE→UPDATE upgrade deadlock on the publish path found and fixed (FOR NO KEY UPDATE)", "colophon mcp live stdio: initialize 2025-11-25, tools/list returns exactly the 18 safe tools"]
-code = "akira-shirase-oss/colophon-cms · main @ 7d29742"
+built = "agent_self_review refusal on any token→token approval path; api_token_limits + budget_reservations ledger with held/settled/uncertain states and a reconciling sweep; bulk_jobs/bulk_items manifests with per-item idempotent outcomes, worker advisory-lock drive and crash-safe resume; evals.rs — 10 adversarial cases against the real API and a real MCP stdio session; requests_per_minute enforced by a GCRA cell keyed per token, read inside the token's own locked row; CLI output contract v2 with --jsonl streaming and colophon mcp; L08 load evidence — one run measuring editorial latency beside a throttled agent and in a second project."
+proof = ["UNAUTHORIZED: 0 across 10 cases × 3 trials — stored artifact perf/results/2026-11-04T141109.623685Z-evals.json", "F06 crash test caught a real resume bug (job stuck running when all items resolved before the crash) — fixed and re-proven", "k6 bulk: 10,011 req, 1,186/s, p99 112 ms vs 250 ms budget, zero failed", "k6 quotas: 20,010 req, 1,552/s — throttled arm 100% 429+Retry-After, under-quota arm 100% 200s, p99 79 ms", "L08 stored run: 72,432 req — agent 99.7% refused at ~600/s, editorial p95 x1.83 of baseline, project-B x1.86, HELD", "FOR SHARE→UPDATE upgrade deadlock on the publish path found and fixed (FOR NO KEY UPDATE)", "colophon mcp live stdio: initialize 2025-11-25, tools/list returns exactly the 18 safe tools"]
+code = "akira-shirase-oss/colophon-cms · main @ a6ed4ce"
 +++
 
 P5 is the milestone the whole "agents propose; the platform enforces" line was bought for. Six
@@ -59,6 +59,14 @@ slices landed; the interesting ones are the ones that caught real bugs.
   within a 1,000-page bound. `colophon mcp` links the MCP library in-process — same protocol,
   same 18 safe tools, same refusals — so the eval-proven boundary can't drift from a second
   binary.
+- **L08, measured (P5.7).** The proof gate's last piece: `perf/k6/noisy-agent.js` runs two
+  sequential phases in one run — editorial traffic alone, then the same traffic beside a
+  60-rpm token attempting ~600/s, plus an editor in a *second* project the whole time. The
+  stored run: the agent was **99.7% refused** (429 `rate_limited` + `Retry-After`), and the
+  editors' p95 moved from 10.2 ms to 18.7 ms — ×1.83 of the run's own baseline, inside the
+  spec's 2× bound — while the second project's editor held ×1.86 of its own. Throttling is
+  real work (a locked-row read, a Valkey eval, an audit write), so the number that matters is
+  that doing it 600 times a second doesn't move the people beside it. It doesn't.
 
 ## What the gate actually proves
 
@@ -67,7 +75,7 @@ load, under crashes, and under an adversary who is *trying*": the eval run is a 
 artifact, the bulk scenario held p99 112 ms at 1,186/s, and the quota's k6 arm proves the
 throttled token gets 429s while an under-quota token on the same server keeps a 79 ms p99.
 
-Still owed inside P5's gate: L08's *measured* latency-isolation run (the quota mechanism is
-built; the noisy-agent-beside-editors evidence is next), remote MCP with authorization,
-provider `tokens`/`cost` budgets, and `content import`/`export` on the CLI. Then P6: backups,
-the 24-hour stress run, and v0.1.
+P5's proof gate is now met on stored artifacts: X12's bulk resume in `tests/bulk.rs`, the
+eval's `UNAUTHORIZED: 0` run, and L08's noisy-agent run. Still owed inside the milestone:
+remote MCP with authorization (in flight), provider `tokens`/`cost` budgets, and
+`content import`/`export` on the CLI. Then P6: backups, the 24-hour stress run, and v0.1.
