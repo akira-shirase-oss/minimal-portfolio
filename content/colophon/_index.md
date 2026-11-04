@@ -30,7 +30,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P5", step = "remote-mcp", title = "MCP over the network, safely" }
+up_next = { milestone = "P5", step = "tail", title = "Provider budgets and CLI import/export" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -258,8 +258,10 @@ reserve in Postgres before a write may commit, bulk jobs survive a worker crash 
 duplicating an item, an adversarial eval gates at zero unauthorized actions with a stored
 run, per-token request quotas throttle a noisy agent inside its own auth lookup, the measured
 proof shows editors hold their latency beside a throttled agent at 600 refused requests a
-second, and the CLI speaks one versioned JSON contract with `colophon mcp` in-process. Now
-building: remote MCP with authorization, then backups, restore and the 24-hour stress run.
+second, the CLI speaks one versioned JSON contract with `colophon mcp` in-process, and the
+same MCP surface now answers over the network — API tokens only, sessions minted and
+bounded, every call dispatched under its own credential. Now building: provider budgets
+and CLI import/export to close P5, then backups, restore and the 24-hour stress run.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
