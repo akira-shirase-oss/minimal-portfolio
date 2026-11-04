@@ -30,7 +30,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P6", step = "backups", title = "Backups, a ledger, and a real restore" }
+up_next = { milestone = "P6", step = "rest", title = "The remaining load variants and a 24-hour soak" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -192,7 +192,7 @@ title = "API tokens and an audit log"
 
 [[extra.planned]]
 milestone = "P6"
-title = "Backups, and a restore that actually works"
+title = "The rest of the load matrix and fault gaps"
 
 [[extra.planned]]
 milestone = "P6"
@@ -264,8 +264,14 @@ in-process and the same MCP surface now answering over the network — API token
 every call dispatched under its own credential. And the CLI round-trips content: `content export` streams JSONL out,
 `content import` checks and lands it back.
 
-**Now building (P6):** encrypted backups and WAL archiving, the deletion ledger a restore replays, a restore drill
-on clean infrastructure, the 24-hour stress run — then version 0.1.
+**Recovery is proven (P6):** encrypted backups and WAL archiving run continuously, an append-only deletion ledger
+exports off-host and replays idempotently, and a six-stage restore on clean infrastructure verified a real drill —
+400 seconds from capture to serving, a new epoch registered before anything read. The load evidence shows each
+dependency failure fails honestly: cache down falls back, database down refuses writes loudly, a refusing purge
+endpoint backs off.
+
+**Now building (P6):** the remaining load variants and fault gaps, observability runbooks, the 24-hour stress run —
+then version 0.1.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
