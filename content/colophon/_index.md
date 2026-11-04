@@ -30,7 +30,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "DX", step = "query", title = "The query API: SQL, routes and perspectives" }
+up_next = { milestone = "E", step = "live-lists", title = "Lists that update as others edit" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -200,10 +200,6 @@ title = "Every language its own version"
 
 [[extra.planned]]
 milestone = "E"
-title = "Review stages, comments and tasks"
-
-[[extra.planned]]
-milestone = "E"
 title = "Lists that update as others edit"
 
 [[extra.planned]]
@@ -276,9 +272,16 @@ and publishing re-checks any pin a later type change left behind. Media is done 
 nothing references. Schema migrations are done too: a refused type change becomes a dry-run plan of
 every entry in the way, approval names the plan's hash, and a worker rewrites each entry in its own
 transaction — crash-tested — while the Studio drives the whole flow. Editorial collaboration has
-begun: comments pinned to the exact revision they were written on, and tasks with an honest
-unassign. Now building: the developer query API — the bounded, hashable query language and its
-cursors are already in.
+begun: comments pinned to the exact revision they were written on, tasks with an honest
+unassign, and named review stages that gate publishing — ordered, per environment, with
+stage-bound approvals and a one-click publish that names what's blocking it. The developer
+query API is live end to end: a bounded canonical query language with hash-bound cursors
+executes on drafts and on release-pinned delivery, and `depth` populates references level by
+level without an N+1 — narrowed by the caller's own read permission. The CLI and the MCP
+server reached parity with the API surface: queries, releases, migrations, comments and
+tasks, all authorization-bound, dangerous actions still refused by design. Now building:
+lists that update as PostgreSQL commits, and the rest of the developer program — field
+narrowing, OpenAPI, a typed SDK.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
