@@ -974,7 +974,7 @@ pre code {
 
 .proc {
   display: grid;
-  grid-template-columns: 12.5rem minmax(0, 1fr) auto;
+  grid-template-columns: 12.5rem minmax(0, 1fr);
   gap: 1rem;
   align-items: baseline;
   padding: 0.8rem 1rem;
@@ -1012,13 +1012,27 @@ pre code {
   vertical-align: 0.05em;
 }
 
+/* The description and its stat share one row: the text takes the width, the
+   pill rides at the row's right edge and drops under the text only when the
+   row is genuinely tight. */
+.proc-body {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem 1rem;
+  flex-wrap: wrap;
+}
+
 .proc-what {
+  flex: 1 1 18rem;
+  min-width: 0;
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.55;
 }
 
 .proc-stat {
+  margin-left: auto;
+  flex-shrink: 0;
   padding: 0.1rem 0.5rem;
   border-radius: 999px;
   font-family: var(--mono);
@@ -1365,16 +1379,16 @@ pre code {
   }
 }
 
-/* Narrower screens: status rows put their description underneath. */
+/* Narrower screens: the name goes on top, the description + stat row takes
+   the full width underneath, and the pill wraps under the text when tight. */
 @media (max-width: 640px) {
   .proc {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.25rem 1rem;
   }
 
-  .proc-what {
+  .proc-body {
     grid-column: 1 / -1;
-    grid-row: 2;
   }
 
   .track {

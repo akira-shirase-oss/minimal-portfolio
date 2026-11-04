@@ -50,23 +50,25 @@
     {%- endif %}
     <li class="proc tone-{{ loop.index0 % 5 }}">
       <span class="proc-name"><span class="led" aria-hidden="true"></span>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</span>
-      <span class="proc-what">{{ item.what }}</span>
-      <span class="proc-stat">
-        {%- if item.log %}
-          {#- `log` names the build log's section, e.g. "colophon/_index.md". #}
-          {%- set item_log = get_section(path=item.log) %}
-          {%- if item_log.pages %}
-          {%- set now_on = item_log.pages[0] %}
-          {{ now_on.extra.milestone }} · {{ now_on.extra.step }}{% if now_on.extra.tests is defined %} · {{ now_on.extra.tests }} tests{% endif %}
+      <div class="proc-body">
+        <span class="proc-what">{{ item.what }}</span>
+        <span class="proc-stat">
+          {%- if item.log %}
+            {#- `log` names the build log's section, e.g. "colophon/_index.md". #}
+            {%- set item_log = get_section(path=item.log) %}
+            {%- if item_log.pages %}
+            {%- set now_on = item_log.pages[0] %}
+            {{ now_on.extra.milestone }} · {{ now_on.extra.step }}{% if now_on.extra.tests is defined %} · {{ now_on.extra.tests }} tests{% endif %}
+            {%- else %}
+            {{ item.detail | default(value="running") }}
+            {%- endif %}
+          {%- elif item.writing %}
+            {{ log_entries + (posts.pages | length) }} write-ups
           {%- else %}
-          {{ item.detail | default(value="running") }}
-          {%- endif %}
-        {%- elif item.writing %}
-          {{ log_entries + (posts.pages | length) }} write-ups
-        {%- else %}
-          {{ item.detail | default(value="running") }}
-        {%- endif -%}
-      </span>
+            {{ item.detail | default(value="running") }}
+          {%- endif -%}
+        </span>
+      </div>
     </li>
     {%- endfor %}
   </ul>

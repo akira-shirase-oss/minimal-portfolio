@@ -30,7 +30,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "E", step = "live-lists", title = "Lists that update as others edit" }
+up_next = { milestone = "P5", step = "l08", title = "A noisy agent throttled while editors keep typing" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -191,38 +191,6 @@ step = "R.4"
 title = "API tokens and an audit log"
 
 [[extra.planned]]
-milestone = "M"
-title = "References, reusable groups, lists and page builders"
-
-[[extra.planned]]
-milestone = "E"
-title = "Every language its own version"
-
-[[extra.planned]]
-milestone = "E"
-title = "Lists that update as others edit"
-
-[[extra.planned]]
-milestone = "DX"
-title = "A query API, GraphQL and a typed SDK"
-
-[[extra.planned]]
-milestone = "DX"
-title = "Import from other CMSs"
-
-[[extra.planned]]
-milestone = "P5"
-title = "Tokens with limits"
-
-[[extra.planned]]
-milestone = "P5"
-title = "An agent that can't approve its own work"
-
-[[extra.planned]]
-milestone = "P5"
-title = "Bulk edits that survive being interrupted"
-
-[[extra.planned]]
 milestone = "P6"
 title = "Backups, and a restore that actually works"
 
@@ -279,9 +247,19 @@ query API is live end to end: a bounded canonical query language with hash-bound
 executes on drafts and on release-pinned delivery, and `depth` populates references level by
 level without an N+1 — narrowed by the caller's own read permission. The CLI and the MCP
 server reached parity with the API surface: queries, releases, migrations, comments and
-tasks, all authorization-bound, dangerous actions still refused by design. Now building:
-lists that update as PostgreSQL commits, and the rest of the developer program — field
-narrowing, OpenAPI, a typed SDK.
+tasks, all authorization-bound, dangerous actions still refused by design. Lists now update
+as PostgreSQL commits land — triggers hand a small hint to a bounded SSE fan-out, no polling —
+and the developer program is finished: queries that refuse to leak fields a role can't read,
+an OpenAPI document emitted from the route table itself so it can't drift, a drift-checked
+TypeScript SDK, imports that dry-run against Strapi and Sanity shapes, and a per-collection
+GraphQL that compiles to the same bounded query document REST runs. The automation
+milestone's enforcement landed too: a token can never approve token-submitted work, budgets
+reserve in Postgres before a write may commit, bulk jobs survive a worker crash without
+duplicating an item, an adversarial eval gates at zero unauthorized actions with a stored
+run, per-token request quotas throttle a noisy agent inside its own auth lookup, and the CLI
+speaks one versioned JSON contract with `colophon mcp` in-process. Now building: the
+noisy-agent latency proof beside editors (L08), then backups, restore and the 24-hour stress
+run.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
