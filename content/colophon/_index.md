@@ -30,7 +30,7 @@ milestones = [
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "M", step = "migrations", title = "Schema migrations you can dry-run and approve" }
+up_next = { milestone = "DX", step = "query", title = "The query API: SQL, routes and perspectives" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -195,10 +195,6 @@ milestone = "M"
 title = "References, reusable groups, lists and page builders"
 
 [[extra.planned]]
-milestone = "M"
-title = "Migrations you can dry-run and approve"
-
-[[extra.planned]]
 milestone = "E"
 title = "Every language its own version"
 
@@ -277,7 +273,12 @@ store. Time travel is done: every public read can pin a release, the Studio step
 rolling back builds an ordinary reviewed changeset that becomes a new generation — never a path around review —
 and publishing re-checks any pin a later type change left behind. Media is done too: uploads delete in stages
 (request, lock, recheck, then bytes — never while content still names them), and a retention sweep collects what
-nothing references. Now building: schema migrations you can dry-run and approve.
+nothing references. Schema migrations are done too: a refused type change becomes a dry-run plan of
+every entry in the way, approval names the plan's hash, and a worker rewrites each entry in its own
+transaction — crash-tested — while the Studio drives the whole flow. Editorial collaboration has
+begun: comments pinned to the exact revision they were written on, and tasks with an honest
+unassign. Now building: the developer query API — the bounded, hashable query language and its
+cursors are already in.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
