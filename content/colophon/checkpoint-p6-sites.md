@@ -6,7 +6,7 @@ date = 2026-11-04T23:45:00Z
 [extra]
 kind = "release"
 milestone = "P6"
-step = "demo sites, work bound, fault matrix"
+step = "sites + bounds"
 short_title = "Five Astro sites; the work bound (F09)"
 tests = 711
 

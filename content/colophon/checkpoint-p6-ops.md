@@ -6,7 +6,7 @@ date = 2026-11-04T22:30:00Z
 [extra]
 kind = "release"
 milestone = "P6"
-step = "load matrix, ops, upgrade, observability"
+step = "load + ops"
 short_title = "Nine load cases, scheduled backups, upgrade path"
 tests = 708
 

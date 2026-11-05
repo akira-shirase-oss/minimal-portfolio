@@ -471,6 +471,10 @@ figure.shot figcaption {
   font-size: 0.82rem;
   color: var(--muted);
   white-space: nowrap;
+  /* A step label longer than the column is cut with an ellipsis, never run under the title. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 /* A post's kind sits under its date, so the title starts cleanly and wraps neatly. */

@@ -6,7 +6,7 @@ date = 2026-11-04T20:30:00Z
 [extra]
 kind = "release"
 milestone = "P6"
-step = "backups, deletion ledger, restore, fault load"
+step = "recovery"
 short_title = "Encrypted backups, deletion ledger, six-stage restore"
 # Rust tests in the workspace at this checkpoint (drawn as the home page's sparkline).
 tests = 708
