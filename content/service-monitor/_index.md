@@ -16,22 +16,7 @@ milestones = [
   { id = "M4", name = "operate", about = "Retention, disk guardrails, backup and restore, and running on its own host." },
   { id = "M5", name = "ship", about = "Auth, the rest of the SSRF hardening, load runs, and a release someone else can install." },
 ]
-up_next = { milestone = "M4", step = "4.1", title = "Keeping a week of evidence, summing up the rest" }
-
-[[extra.planned]]
-milestone = "M4"
-step = "4.1"
-title = "Keeping a week of evidence, summing up the rest"
-
-[[extra.planned]]
-milestone = "M4"
-step = "4.2"
-title = "Disk limits and log rotation — pressure fails safe, never corrupts"
-
-[[extra.planned]]
-milestone = "M4"
-step = "4.3"
-title = "A backup-and-restore drill that actually gets run"
+up_next = { milestone = "M4", step = "4.4", title = "Deploying it off the laptop" }
 
 [[extra.planned]]
 milestone = "M4"
