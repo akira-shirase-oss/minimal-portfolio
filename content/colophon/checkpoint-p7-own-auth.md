@@ -50,6 +50,11 @@ worker's budget events already used), because `audit_events.actor_id` references
 user is not one. The write runs after the auth commits, best-effort by contract: auth correctness never
 depends on the log, and the log never becomes a second auth path.
 
-Still open: a real mail sender for production magic links, a Studio Audience page surfacing users and this
-log, social/OAuth providers for visitors, and billing/subscription entitlements (deliberately deferred —
-roles are labels, not plans).
+And the log has a home: the Studio's new **Audience** page sits next to Members — a different credential
+kind, a different page. It lists the project's site visitors (role, last sign-in, disabled state), lets a
+role holder change roles or disable an account, shows the audience roles, and surfaces a "Sign-in activity"
+panel that filters the same `/audit` feed to `audience.*`. Members are staff; the Audience are your readers
+— the Studio now shows both.
+
+Still open: a real mail sender for production magic links, social/OAuth providers for visitors, and
+billing/subscription entitlements (deliberately deferred — roles are labels, not plans).
