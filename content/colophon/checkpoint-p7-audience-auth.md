@@ -82,6 +82,22 @@ authorized to do is read published content. This checkpoint adds that fourth cre
   slices landed first; it ships as migration 0052/D-137. Numbers are cheap; collisions in a shared ordering
   are not.
 
+## Publishing now rebuilds the sites
+
+The gap between "published" and "readers see it" used to be a manual step: publish in the Studio,
+then remember to rebuild the demo sites by hand. That gap is closed with the product's own
+machinery. A **website connection** — the project's webhook destination — points at a small build
+hook that answers each release announcement `202` at once, builds the newest announced generation,
+and leaves the running sites untouched when a build fails. Publishing in the Studio now updates
+all five sites without anyone running anything: verified end to end, a real changeset published as
+release 3 reached the hook eleven seconds later and all five sites rebuilt to generation 3 with
+the new post served.
+
+The same slice made The Draft a multi-collection site: it renders `posts` for the running argument
+and `articles` for the longer pieces, both through the same delivery API from the same pinned
+release. Release 4 (two articles) was published and the sites rebuilt themselves to generation 4
+with the new section live.
+
 ## What is next
 
 P7 continues on the strength this lands: the remaining performance work from the five-site load picture, the
