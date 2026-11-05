@@ -98,6 +98,28 @@ and `articles` for the longer pieces, both through the same delivery API from th
 release. Release 4 (two articles) was published and the sites rebuilt themselves to generation 4
 with the new section live.
 
+## Live updates: publishing reaches an open browser with no rebuild
+
+The rebuild hook closed the publish-to-site gap, but a static site still has to be rebuilt. The
+stronger model, the one Convex made familiar, is push: the server tells clients what changed and
+they re-read. Colophon already had the two ingredients, a monotonic release generation and a
+commit-fed hint bus, so the delivery side got its own stream.
+
+`GET /content/v1/{project}/{environment}/events` is an anonymous server-sent-events stream that
+says only that published content changed. It carries no ids, no kinds and no collections, so a
+gated entry's existence cannot leak through it; a reader only ever learns to re-read what its own
+credentials already cover. Only release hints are forwarded (draft saves and delivery-job churn
+stay off it), a burst coalesces into one frame, and the stream is bounded by the same per-project
+and per-server caps as the staff bus.
+
+The Draft now renders its public pages per request and keeps one upstream connection, fanned out
+to every open tab through its own `/api/live`. One CMS stream serves every visitor of the site,
+not one per visitor. Verified end to end: a real release published, the open stream pushed
+generation 7 then 8 within a second, and the page served the new post at 200 with no rebuild
+anywhere in the path. The other four sites stay prerendered and keep the webhook rebuild, so the
+demo now shows both delivery models honestly side by side: a static site pins one release, a live
+site renders the current one.
+
 ## What is next
 
 P7 continues on the strength this lands: the remaining performance work from the five-site load picture, the
