@@ -28,9 +28,10 @@ milestones = [
   { id = "DX", name = "developer parity", about = "Queries, GraphQL, a typed SDK, webhooks and imports from other CMSs, through the same permissions." },
   { id = "P5", name = "safe automation", about = "Scripts and AI agents can help at a limited scale, and can never skip review." },
   { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
+  { id = "P7", name = "audience and speed", about = "Site visitors with real sign-in and per-project roles, content gated by row-level security, and the five demo sites driving the performance hunt." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P6", step = "v01", title = "The 24-hour soak, then version 0.1" }
+up_next = { milestone = "P7", step = "v01", title = "The 24-hour soak, then version 0.1" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -274,9 +275,19 @@ endpoint backs off.
 300/s with zero failures on the warm baseline, stampedes coalesced, spikes shaped, a true 10,000-record import —
 with only the 24-hour soak outstanding. Backups run on a verified schedule with retention that only prunes
 what it can prove, upgrades rehearse an explicit gate, and every log line carries the build's version and commit.
-The committed benchmark report names every run and what its numbers don't prove.
+The committed benchmark report names every run and what its numbers don't prove. Tables stay bounded: an hourly
+retention sweep clears dead state in batches and a 1 GiB ceiling refuses oversized queued payloads. And media
+now keeps its history — every verified upload lands content-addressed, immutable versions pin by digest, and a
+replace that fails verification leaves the current version serving.
 
-**Now building (P6):** the 24-hour stress run, the usability gate and an independent install — then version 0.1.
+**Audience auth is a product (P7).** Site visitors sign up and in through the CMS itself — Argon2id passwords,
+opaque sessions with expiry, idle death and revocation — and hold per-project audience roles staff manage.
+Published content carries a visibility gate: public, signed-in members, or a named role, decided by PostgreSQL
+row-level security inside the delivery read rather than application filtering. Member reads always bypass the
+shared cache, so a gated row can never be served to or stored for a stranger. The Draft demo site runs the
+members flow live; the other four demo sites can only ever see public rows.
+
+**Now building (P7):** the 24-hour stress run, the usability gate and an independent install — then version 0.1.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
