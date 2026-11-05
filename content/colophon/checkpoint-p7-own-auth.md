@@ -56,5 +56,12 @@ role holder change roles or disable an account, shows the audience roles, and su
 panel that filters the same `/audit` feed to `audience.*`. Members are staff; the Audience are your readers
 — the Studio now shows both.
 
+A usability pass followed (D-144): the sidebar's catch-all "Project" group became **People** (Members,
+Audience — the staff/visitor split is taught by position now, not by a subtitle) and **Structure** (Content
+types, Migrations, Settings). "All projects" caps at 24 and asks you to search, because the dev database's
+hundreds of test projects proved an unbounded grid is where projects go to hide. Zero-count badges went
+quiet, "Last published" admits "Never", and the browser suite asserts the cap by finding its project through
+search — the intended behaviour, not a workaround.
+
 Still open: a real mail sender for production magic links, social/OAuth providers for visitors, and
 billing/subscription entitlements (deliberately deferred — roles are labels, not plans).
