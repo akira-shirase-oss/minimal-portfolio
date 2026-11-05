@@ -63,5 +63,19 @@ hundreds of test projects proved an unbounded grid is where projects go to hide.
 quiet, "Last published" admits "Never", and the browser suite asserts the cap by finding its project through
 search — the intended behaviour, not a workaround.
 
-Still open: a real mail sender for production magic links, social/OAuth providers for visitors, and
+Then the last gap closed (D-145): **magic links now reach a real inbox.** `Services.mail` holds an
+optional `Arc<dyn Mail>` — a provider seam rather than a hardcoded sender — and
+`COLOPHON_MAIL_PROVIDER=resend` + `COLOPHON_MAIL_FROM` + `COLOPHON_RESEND_API_KEY` builds the first
+adapter: one POST to Resend's emails endpoint under a bearer key and a ten-second deadline, with
+`COLOPHON_RESEND_ENDPOINT` to move the address for relays or tests. The send is best-effort after the
+link row commits: a refused send warns in the server log but can never change the 202 (the response
+stays enumeration-proof) or undo the recorded link — asking again delivers a fresh one. Config is
+all-or-none like `COLOPHON_S3_*`: a partial setup, an unknown provider, or a stray endpoint fails at
+boot, not silently. The end-to-end proof runs the real server against a local receiver and asserts the
+whole provider call — bearer, sender, recipient, subject, the link in both bodies — then spends the
+emailed token into a real session, and a scripted provider-500 still answers `sent`. `dev_mail` still
+wins when both are set, so development needs no provider at all. SMTP and operator-managed providers
+land on the same seam when needed.
+
+Still open: SMTP as a second provider, social/OAuth sign-in for visitors, and
 billing/subscription entitlements (deliberately deferred — roles are labels, not plans).
