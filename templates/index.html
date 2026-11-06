@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% block body_class %}home-page{% endblock body_class %}
-
 {% block content %}
 {#- Every build log listed in content/_index.md (`logs`), main project first.
     Tera 2 can't join lists, so the totals are gathered with set_global. #}
@@ -17,155 +15,191 @@
     {%- if not newest or top.date > newest.date %}{% set_global newest = top %}{% endif %}
   {%- endif %}
 {%- endfor %}
-<div class="home">
-  {#- The intro, as a terminal: `$ whoami`, then the headline types itself out
-      (site.js; without JavaScript, or with reduced motion, it's simply there). #}
-  <section class="hero term">
-    <div class="term-bar" aria-hidden="true">
-      <span class="term-lights"><i></i><i></i><i></i></span>
-      <span class="term-title">~/404human</span>
-    </div>
-    <div class="term-body">
-      <p class="prompt" aria-hidden="true"><span class="ps1">$</span> <span class="cmd">whoami</span></p>
-      {{ section.content | safe }}
-      {%- if newest %}
-      {#- The newest line across every build log, like tailing a log file. #}
-      {%- set newest_log = get_section(path=newest.ancestors | last, metadata_only=true) %}
-      <div class="term-tail">
-        <p class="prompt" aria-hidden="true"><span class="ps1">$</span> <span class="cmd">tail</span> -1 build.log</p>
-        <p class="tail-line"><span class="tail-step">{{ newest_log.extra.short_title or newest_log.title }} · {{ newest.extra.milestone }} · {{ newest.extra.step }}</span> <a href="{{ newest.permalink }}">{{ newest.extra.short_title or newest.title }}</a></p>
-      </div>
-      {%- endif %}
-    </div>
-  </section>
 
-  {%- if section.extra.now %}
-  <h2 id="status">Status <span class="clock" data-clock hidden></span></h2>
-  <ul class="procs">
+<!-- The hero is the markdown itself — the masthead table gives it a mark
+     on the left and the words on the right, no terminal chrome needed. -->
+<table cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td valign="middle">
+<pre>  ┌─ 404human ─────────┐
+  │  $ whoami          │
+  └────────────────────┘</pre>
+    </td>
+    <td width="28"></td>
+    <td valign="middle">{{ section.content | safe }}</td>
+  </tr>
+</table>
+
+{%- if newest %}
+{%- set newest_log = get_section(path=newest.ancestors | last, metadata_only=true) %}
+<p><small>$ tail -1 build.log —
+  <code>{{ newest_log.extra.short_title or newest_log.title }} · {{ newest.extra.milestone }} · {{ newest.extra.step }}</code>
+  <a href="{{ newest.permalink }}">{{ newest.extra.short_title or newest.title }}</a></small></p>
+{%- endif %}
+
+<marquee scrollamount="4" behavior="scroll">status ● {{ log_entries + (posts.pages | length) }} write-ups on file
+  {%- for log_path in logs %}
+    {%- set one_log = get_section(path=log_path) %}
+    {%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}
+  {%- endfor %}
+   &nbsp;●&nbsp; experiments, failures and releases &nbsp;●</marquee>
+
+<hr>
+
+{%- if section.extra.now %}
+<section id="status">
+  <h2>Running now</h2>
+  <p>What's actually in flight — drawn the way it's thought about: as live processes, not as a bio.</p>
+  <pre>$ ps aux | grep -v idle</pre>
+  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+    <thead>
+      <tr><th width="70">PID</th><th width="180">PROCESS</th><th width="110">STATE</th><th>WHAT</th></tr>
+    </thead>
+    <tbody>
     {%- for item in section.extra.now %}
     {%- if item.link and item.link is starting_with(pat="@/") %}
       {%- set href = get_url(path=item.link) %}
     {%- else %}
       {%- set href = item.link | default(value="") %}
     {%- endif %}
-    <li class="proc tone-{{ loop.index0 % 5 }}">
-      <span class="proc-name"><span class="led" aria-hidden="true"></span>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</span>
-      <div class="proc-body">
-        <span class="proc-stat">
+      <tr>
+        <td><code>1{{ loop.index }}0{{ loop.index }}</code></td>
+        <td>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</td>
+        <td>{{ "always" if item.writing else ("running" if item.log else "complete") }}</td>
+        <td>
+          {{ item.what }}
           {%- if item.log %}
-            {#- `log` names the build log's section, e.g. "colophon/_index.md". #}
             {%- set item_log = get_section(path=item.log) %}
             {%- if item_log.pages %}
             {%- set now_on = item_log.pages[0] %}
-            {{ now_on.extra.milestone }} · {{ now_on.extra.step }}{% if now_on.extra.tests is defined %} · {{ now_on.extra.tests }} tests{% endif %}
-            {%- else %}
-            {{ item.detail | default(value="running") }}
+            — now at {{ now_on.extra.milestone }} · {{ now_on.extra.step }}{% if now_on.extra.tests is defined %} · {{ now_on.extra.tests }} tests{% endif %}
             {%- endif %}
           {%- elif item.writing %}
-            {{ log_entries + (posts.pages | length) }} write-ups
-          {%- else %}
-            {{ item.detail | default(value="running") }}
-          {%- endif -%}
-        </span>
-        <span class="proc-what">{{ item.what }}</span>
-      </div>
-    </li>
+            — {{ log_entries + (posts.pages | length) }} write-ups
+          {%- elif item.detail %}
+            — {{ item.detail }}
+          {%- endif %}
+        </td>
+      </tr>
     {%- endfor %}
-  </ul>
-  {%- endif %}
+    </tbody>
+  </table>
+</section>
 
-  {%- if log_entries > 0 %}
-  <h2 id="build-log">Build log</h2>
+<hr>
+{%- endif %}
+
+{%- if log_entries > 0 %}
+<section id="build-log">
+  <h2>Build log</h2>
+  <p>{{ log_entries }} tested steps across {{ logs | length }} projects — every one of them written up.</p>
   {%- for log_path in logs %}
   {%- set log = get_section(path=log_path) %}
   {#- Oldest first, the way a log reads. #}
   {%- set entries = log.pages | reverse %}
   {%- if entries %}
   {%- set log_name = log.extra.short_title or log.title %}
-  {%- set panel_id = "build-log-" ~ (log_name | slugify) %}
-  <section class="panel" aria-labelledby="{{ panel_id }}">
-    <div class="panel-head">
-      <a class="panel-title" id="{{ panel_id }}" href="{{ log.permalink }}">{{ log_name }}</a>
-      {%- if log.extra.status %} <span class="tag status-{{ log.extra.status | slugify }}">{{ log.extra.status }}</span>{% endif %}
-      <span class="panel-meta">{{ entries | length }} entries</span>
-    </div>
-    {% include "partials/log-panel.html" %}
-    <ul class="log latest">
+  <h3><a href="{{ log.permalink }}">{{ log_name }}</a>
+    {%- if log.extra.status %} <small>· {{ log.extra.status }}</small>{% endif %}
+    <small>· {{ entries | length }} entries</small></h3>
+  {% include "partials/log-panel.html" %}
+  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+    <tbody>
       {%- for entry in entries | reverse %}
       {%- if loop.index0 < 3 %}
-      <li class="entry log-step">
-        <span class="when">{{ entry.extra.step }}</span>
-        <div class="what"><a class="title" href="{{ entry.permalink }}">{{ entry.extra.short_title or entry.title }}</a></div>
-      </li>
+      <tr>
+        <td width="90"><code>{{ entry.extra.step }}</code></td>
+        <td><details><summary>{{ entry.extra.short_title or entry.title }}</summary>
+          {%- if entry.description %}<p>{{ entry.description }}</p>{% endif %}
+          <p><a href="{{ entry.permalink }}">Read the full entry →</a></p>
+        </details></td>
+        <td width="90" align="right"><time datetime="{{ entry.date }}">{{ entry.date | date(format="%Y-%m-%d") }}</time></td>
+      </tr>
       {%- endif %}
       {%- endfor %}
-      <li class="entry log-step">
-        <span class="when"></span>
-        <div class="what"><a class="more" href="{{ log.permalink }}">All {{ entries | length }} entries, by milestone →</a></div>
-      </li>
-    </ul>
-  </section>
+      <tr>
+        <td></td>
+        <td colspan="2"><a href="{{ log.permalink }}">All {{ entries | length }} entries, by milestone →</a></td>
+      </tr>
+    </tbody>
+  </table>
   {%- endif %}
   {%- endfor %}
-  {%- endif %}
+</section>
 
-  {%- if section.extra.projects %}
-  <h2 id="projects">Projects</h2>
-  <ul class="log">
+<hr>
+{%- endif %}
+
+{%- if section.extra.projects %}
+<section id="projects">
+  <h2>Projects</h2>
+  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+    <thead>
+      <tr><th width="70">Year</th><th width="240">Project</th><th>What it is</th></tr>
+    </thead>
+    <tbody>
     {%- for project in section.extra.projects %}
-    <li class="entry">
-      <span class="when">{{ project.year | default(value="") }}</span>
-      <div class="what">
+      <tr>
+        <td><code>{{ project.year | default(value="") }}</code></td>
+        <td>
         {%- if project.link %}
           {%- if project.link is starting_with(pat="@/") %}
             {%- set href = get_url(path=project.link) %}
           {%- else %}
             {%- set href = project.link %}
           {%- endif %}
-        <a class="title" href="{{ href }}">{{ project.name }}</a>
+          <a href="{{ href }}"><b>{{ project.name }}</b></a>
         {%- else %}
-        <span class="title">{{ project.name }}</span>
+          <b>{{ project.name }}</b>
         {%- endif %}
-        {%- if project.status %} <span class="tag status-{{ project.status | slugify }}">{{ project.status }}</span>{% endif %}
-        <p class="summary">{{ project.about }}</p>
-      </div>
-    </li>
+        {%- if project.status %} <br><small>{{ project.status }}</small>{% endif %}
+        </td>
+        <td>{{ project.about }}</td>
+      </tr>
     {%- endfor %}
-  </ul>
-  {%- endif %}
+    </tbody>
+  </table>
+</section>
 
-  <h2 id="writing">Writing</h2>
-  <ul class="log">
+<hr>
+{%- endif %}
+
+<section id="writing">
+  <h2>Writing</h2>
+  <p>Every experiment written up, including the parts that didn't work — newest first.</p>
+  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+    <thead>
+      <tr><th width="110">Date</th><th>Post</th><th width="110">Kind</th></tr>
+    </thead>
+    <tbody>
     {%- for post in posts.pages %}
-    <li class="entry">
-      <div class="when">
-        <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d") }}</time>
-        {%- if post.extra.kind %}
-        <span class="tag kind-{{ post.extra.kind }}">{{ post.extra.kind }}</span>
-        {%- endif %}
-      </div>
-      <div class="what">
-        <a class="title" href="{{ post.permalink }}">{{ post.title }}</a>
-        {%- if post.description %}
-        <p class="summary">{{ post.description }}</p>
-        {%- endif %}
-      </div>
-    </li>
+      <tr>
+        <td><time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d") }}</time></td>
+        <td><a href="{{ post.permalink }}"><b>{{ post.title }}</b></a>
+          {%- if post.description %}<br><small>{{ post.description }}</small>{% endif %}</td>
+        <td><code>{{ post.extra.kind | default(value="—") }}</code></td>
+      </tr>
     {%- else %}
-    <li class="entry"><span class="when"></span><div class="what"><p>No posts yet.</p></div></li>
+      <tr><td colspan="3">No posts yet.</td></tr>
     {%- endfor %}
-  </ul>
+    </tbody>
+  </table>
+</section>
 
-  {%- set x = config.extra.x_handle %}
-  {%- set gh = config.extra.github %}
-  {%- set mail = config.extra.email %}
-  {%- if x or gh or mail %}
-  <h2 id="contact">Contact</h2>
-  <ul class="log">
-    {%- if x %}<li class="entry"><span class="when">x</span><div class="what"><a href="https://x.com/{{ x }}">@{{ x }}</a></div></li>{% endif %}
-    {%- if gh %}<li class="entry"><span class="when">github</span><div class="what"><a href="https://github.com/{{ gh }}">{{ gh }}</a></div></li>{% endif %}
-    {%- if mail %}<li class="entry"><span class="when">email</span><div class="what"><a href="mailto:{{ mail }}">{{ mail }}</a></div></li>{% endif %}
-  </ul>
-  {%- endif %}
-</div>
+{%- set x = config.extra.x_handle %}
+{%- set gh = config.extra.github %}
+{%- set mail = config.extra.email %}
+{%- if x or gh or mail %}
+<hr>
+<section id="contact">
+  <h2>Find me</h2>
+  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+    <tbody>
+    {%- if x %}<tr><td width="140"><code>x</code></td><td><a href="https://x.com/{{ x }}">@{{ x }}</a></td></tr>{% endif %}
+    {%- if gh %}<tr><td><code>github</code></td><td><a href="https://github.com/{{ gh }}">{{ gh }}</a></td></tr>{% endif %}
+    {%- if mail %}<tr><td><code>email</code></td><td><a href="mailto:{{ mail }}">{{ mail }}</a></td></tr>{% endif %}
+    </tbody>
+  </table>
+</section>
+{%- endif %}
 {% endblock content %}

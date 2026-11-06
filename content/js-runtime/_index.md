@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "early build — million-scale load evidence landed (90k rps, zero errors, saturation found); hour soak running; then the roadmap is done"
+status = "roadmap complete — M0–M7 all shipped with committed evidence: a capability-gated runtime that survives its own drill and its own million-request load"
 short_title = "jsrt"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, pinned deno_core + V8, the rt.* namespace, an error taxonomy where every way a run ends has its own exit code, and an isolate watchdog that can actually kill a CPU-bound script." },
@@ -18,11 +18,5 @@ milestones = [
   { id = "M6", name = "operate a real app", about = "rt.serve — a capability-gated HTTP listener; then the guide's ship gate verbatim: a small webhook processor deployed on jsrt, updated, broken, inspected, rolled back — every step committed evidence." },
   { id = "M7", name = "load and ship", about = "The workspace load standard applied to the runtime itself: cold start on 1,000 scripts, 1,000,000 op calls, 1,000,000+ HTTP requests through rt.serve, a one-hour soak — committed results with machine and commit; misses kept, laptop numbers stay lab numbers." },
 ]
-up_next = { milestone = "M7", step = "7.3", title = "The soak — one hour of timers/fetch churn; retained handles and RSS drift written up, failures included" }
-
-# M7 — load and ship
-[[extra.planned]]
-milestone = "M7"
-step = "7.3"
-title = "The soak — one hour of timers/network workload; retained handles and RSS drift written up, failures included"
+up_next = { milestone = "done", step = "—", title = "M0–M7 complete — every step shipped with committed evidence" }
 +++

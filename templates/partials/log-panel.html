@@ -1,70 +1,37 @@
-{#- The build log at a glance, drawn like a status dashboard. Needs `log` (the
-    build log's section) and `entries` (its pages, oldest first). Every number
-    comes from the posts: nothing here is typed in by hand. -#}
+{#- The build log at a glance, drawn the house way: a milestone table with
+    native progress bars, and an ASCII sparkline inside <details>. Needs `log`
+    (the build log's section) and `entries` (its pages, oldest first). Every
+    number comes from the posts: nothing here is typed in by hand. -#}
 {%- set up_next = log.extra.up_next %}
 {%- set latest = entries[-1] %}
 {%- set current_id = up_next.milestone if up_next else latest.extra.milestone %}
 {%- set tested = [p for p in entries if p.extra.tests is defined] %}
 
-{#- The strip is a picture of the log: hidden from screen readers and not in
-    the tab order, because the list right below links every entry (the same
-    destinations, as real links). With a mouse, a bar names its entry in the
-    readout and site.js opens it on click (`data-href`). -#}
-<div class="strip-wrap">
-  <ol class="strip" aria-hidden="true">
-    {%- for entry in entries %}
-    {%- set label = entry.extra.milestone ~ " · " ~ entry.extra.step ~ ": " ~ (entry.extra.short_title or entry.title) %}
-    {#- A wider gap where a new milestone starts, so the strip reads M0 | M1 | M2. #}
-    {%- set starts = loop.index0 > 0 and entries[loop.index0 - 1].extra.milestone != entry.extra.milestone %}
-    <li{% if starts %} class="starts-milestone"{% endif %}><span class="bar m-{{ entry.extra.milestone | lower }} kind-{{ entry.extra.kind | default(value='experiment') }}" data-href="{{ entry.permalink }}" title="{{ label }}" data-label="{{ label }}" style="--i: {{ loop.index0 }}"></span></li>
-    {%- endfor %}
-    {%- if up_next %}
-    {%- set label = "Up next · " ~ up_next.step ~ ": " ~ up_next.title %}
-    <li><span class="bar is-next m-{{ up_next.milestone | lower }}" title="{{ label }}" data-label="{{ label }}" style="--i: {{ entries | length }}"></span></li>
-    {%- endif %}
-  </ol>
-  <p class="readout" data-readout data-default="Latest · {{ latest.extra.milestone }} · {{ latest.extra.step }}: {{ latest.extra.short_title or latest.title }}">Latest · {{ latest.extra.milestone }} · {{ latest.extra.step }}: {{ latest.extra.short_title or latest.title }}</p>
-</div>
-
-{#- Six columns by default; a log with more milestones sets `track_columns`. #}
-<ol class="track" aria-label="Milestones"{% if log.extra.track_columns %} style="--track-columns: {{ log.extra.track_columns }}"{% endif %}>
+<table border="1" cellpadding="6" cellspacing="0" width="100%">
+  <thead>
+    <tr><th>Milestone</th><th>Name</th><th width="170">Entries</th><th width="140">State</th></tr>
+  </thead>
+  <tbody>
   {%- for milestone in log.extra.milestones %}
   {%- set count = [p for p in entries if p.extra.milestone == milestone.id] | length %}
   {%- set state = "current" if milestone.id == current_id else ("done" if count > 0 else "upcoming") %}
-  <li class="track-step m-{{ milestone.id | lower }} is-{{ state }}"{% if state == "current" %} aria-current="step"{% endif %}>
-    <span class="track-id">{{ milestone.id }}</span>
-    <span class="track-name">{{ milestone.name }}</span>
-    <span class="track-count">{% if state == "upcoming" %}next{% else %}{{ count }} {{ "entry" if count == 1 else "entries" }}{% endif %}</span>
-  </li>
+    <tr>
+      <td><code>{{ milestone.id }}</code></td>
+      <td>{{ milestone.name }}</td>
+      <td nowrap><progress value="{{ count }}" max="{{ entries | length }}"></progress> {% if state == "upcoming" %}next{% else %}{{ count }}{% endif %}</td>
+      <td nowrap>{{ "● in progress" if state == "current" else ("done" if state == "done" else "upcoming") }}</td>
+    </tr>
   {%- endfor %}
-</ol>
+  </tbody>
+</table>
+
+<p><small>Latest · <code>{{ latest.extra.milestone }}</code> · {{ latest.extra.step }}: <a href="{{ latest.permalink }}">{{ latest.extra.short_title or latest.title }}</a></small></p>
 
 {%- if tested | length > 1 %}
-{%- set counts = [p.extra.tests for p in tested] %}
-{%- set top = counts | sort | last %}
-{%- set n = tested | length %}
-{%- set first = tested[0] %}
-{%- set last = tested[-1] %}
-<figure class="spark">
-  <figcaption class="spark-label">
-    <span>tests</span>
-    <span class="spark-now"><strong>{{ last.extra.tests }}</strong> at {{ last.extra.step }}</span>
-  </figcaption>
-  <svg viewBox="0 0 600 64" preserveAspectRatio="none" role="img" aria-label="Rust tests at each checkpoint, from {{ first.extra.tests }} at {{ first.extra.step }} to {{ last.extra.tests }} at {{ last.extra.step }}">
-    <defs>
-      <linearGradient id="spark-stroke" x1="0" x2="1" y1="0" y2="0">
-        <stop class="spark-stop-a" offset="0"/>
-        <stop class="spark-stop-b" offset="0.55"/>
-        <stop class="spark-stop-c" offset="1"/>
-      </linearGradient>
-      <linearGradient id="spark-fill" x1="0" x2="0" y1="0" y2="1">
-        <stop class="spark-stop-b" offset="0" stop-opacity="0.22"/>
-        <stop class="spark-stop-b" offset="1" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <polyline class="spark-area" points="0,64 {% for p in tested %}{{ (loop.index0 * 600 / (n - 1)) | round(precision=1) }},{{ (60 - p.extra.tests * 56 / top) | round(precision=1) }} {% endfor %}600,64"/>
-    <polyline class="spark-line" points="{% for p in tested %}{{ (loop.index0 * 600 / (n - 1)) | round(precision=1) }},{{ (60 - p.extra.tests * 56 / top) | round(precision=1) }} {% endfor %}"/>
-  </svg>
-  <p class="spark-axis"><span>{{ first.extra.step }}</span><span>{{ last.extra.step }}</span></p>
-</figure>
+{%- set top = [p.extra.tests for p in tested] | sort | last %}
+<details>
+  <summary>tests per entry — {{ tested[0].extra.tests }} at {{ tested[0].extra.step }} → <b>{{ tested[-1].extra.tests }}</b> at {{ tested[-1].extra.step }}</summary>
+<pre>{% for p in tested %}{{ p.extra.step }}{% set pad = 6 - (p.extra.step | length) %}{% if pad > 0 %}{% for i in range(end=pad) %} {% endfor %}{% endif %}{% set bar = (p.extra.tests * 40 / top) | round + 1 %}{% for i in range(end=bar) %}█{% endfor %} {{ p.extra.tests }}
+{% endfor %}</pre>
+</details>
 {%- endif %}

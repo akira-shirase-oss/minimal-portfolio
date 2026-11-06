@@ -6,47 +6,51 @@
 
 {% block series_line %}
 {%- set log = get_section(path=page.ancestors[-1], metadata_only=true) %}
-<p class="meta series-line">
+<p><small>
   <a href="{{ log.permalink }}">{{ log.extra.short_title or log.title }} build log</a>
-  <span aria-hidden="true">›</span> {{ page.extra.milestone }} · {{ page.extra.step }}
-</p>
+  <span aria-hidden="true">›</span> <code>{{ page.extra.milestone }} · {{ page.extra.step }}</code>
+</small></p>
 {% endblock series_line %}
 
 {% block after_subtitle %}
 {#- "At a glance": the same four lines on every entry, from `[extra.summary]`.
-    `code` is optional (day 0 had none). #}
+    `code` is optional (day 0 had none). Drawn in a fieldset — the house box. #}
 {%- if page.extra.summary %}
 {%- set summary = page.extra.summary %}
-<dl class="glance">
-  <div><dt>Goal</dt><dd>{{ summary.goal }}</dd></div>
-  <div><dt>Built</dt><dd>{{ summary.built }}</dd></div>
-  <div><dt>Result</dt><dd>{{ summary.proof | join(sep=" · ") }}</dd></div>
-  {%- if summary.code %}
-  <div><dt>Code</dt><dd><code>{{ summary.code }}</code></dd></div>
-  {%- endif %}
-</dl>
+<fieldset>
+  <legend>at a glance</legend>
+  <dl>
+    <dt>Goal</dt><dd>{{ summary.goal }}</dd>
+    <dt>Built</dt><dd>{{ summary.built }}</dd>
+    <dt>Result</dt><dd>{{ summary.proof | join(sep=" · ") }}</dd>
+    {%- if summary.code %}
+    <dt>Code</dt><dd><code>{{ summary.code }}</code></dd>
+    {%- endif %}
+  </dl>
+</fieldset>
 {%- endif %}
 {% endblock after_subtitle %}
 
 {% block after_article %}
 {%- set log = get_section(path=page.ancestors[-1], metadata_only=true) %}
-<nav class="series-nav" aria-label="More from this build log">
-  {%- if page.higher %}
-  <a class="series-prev" href="{{ page.higher.permalink }}">
-    <span class="series-dir">← previous · {{ page.higher.extra.step }}</span>
-    <span class="series-title">{{ page.higher.extra.short_title or page.higher.title }}</span>
-  </a>
-  {%- endif %}
-  {%- if page.lower %}
-  <a class="series-next" href="{{ page.lower.permalink }}">
-    <span class="series-dir">next · {{ page.lower.extra.step }} →</span>
-    <span class="series-title">{{ page.lower.extra.short_title or page.lower.title }}</span>
-  </a>
-  {%- else %}
-  <a class="series-next" href="{{ log.permalink }}">
-    <span class="series-dir">latest entry</span>
-    <span class="series-title">See the whole build log →</span>
-  </a>
-  {%- endif %}
-</nav>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="left" valign="top">
+      {%- if page.higher %}
+      <small>← previous · {{ page.higher.extra.step }}</small><br>
+      <a href="{{ page.higher.permalink }}">{{ page.higher.extra.short_title or page.higher.title }}</a>
+      {%- endif %}
+    </td>
+    <td align="right" valign="top">
+      {%- if page.lower %}
+      <small>next · {{ page.lower.extra.step }} →</small><br>
+      <a href="{{ page.lower.permalink }}">{{ page.lower.extra.short_title or page.lower.title }}</a>
+      {%- else %}
+      <small>latest entry</small><br>
+      <a href="{{ log.permalink }}">See the whole build log →</a>
+      {%- endif %}
+    </td>
+  </tr>
+</table>
 {% endblock after_article %}

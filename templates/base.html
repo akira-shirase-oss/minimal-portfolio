@@ -75,69 +75,50 @@
   {%- endif %}
   {%- include "partials/json-ld.html" %}
 
-  <script>
-    // Light/dark toggle. Runs before the page is drawn, so a saved choice never flashes the wrong theme.
-    // With no saved choice the site follows the system setting.
-    (function () {
-      var root = document.documentElement;
-      try {
-        var saved = localStorage.getItem("theme");
-        if (saved === "light" || saved === "dark") root.dataset.theme = saved;
-      } catch (e) {}
-
-      var systemDark = window.matchMedia("(prefers-color-scheme: dark)");
-      function isDark() {
-        return root.dataset.theme ? root.dataset.theme === "dark" : systemDark.matches;
-      }
-
-      document.addEventListener("DOMContentLoaded", function () {
-        var button = document.querySelector(".theme-toggle");
-        if (!button) return;
-        function updateLabel() {
-          var text = isDark() ? "Switch to light mode" : "Switch to dark mode";
-          button.setAttribute("aria-label", text);
-          button.title = text;
-        }
-        button.addEventListener("click", function () {
-          var next = isDark() ? "light" : "dark";
-          root.dataset.theme = next;
-          try { localStorage.setItem("theme", next); } catch (e) {}
-          updateLabel();
-        });
-        systemDark.addEventListener("change", updateLabel);
-        updateLabel();
-        button.hidden = false;
-      });
-    })();
-  </script>
   <link rel="stylesheet" href="{{ get_url(path='style.css', cachebust=true) }}">
-  <script src="{{ get_url(path='site.js', cachebust=true) }}" defer></script>
   <link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
 </head>
-<body class="{% block body_class %}{% endblock body_class %}">
-  <div class="top-bar" aria-hidden="true"></div>
-  <header class="site-header">
-    <a class="site-title" href="{{ get_url(path='@/_index.md') }}">{{ config.title }}</a>
-    <nav>
-      <a href="{{ get_url(path='@/_index.md') }}#build-log">Build log</a>
-      <a href="{{ get_url(path='@/_index.md') }}#writing">Writing</a>
-      <button class="theme-toggle" type="button" aria-label="Switch theme" hidden>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-      </button>
-    </nav>
+<body>
+  <!-- The masthead is a table: an ASCII mark on the left, the name and nav
+       beside it. There is no logo file — there is a mark, in text. -->
+  <header>
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td valign="middle">
+<pre>  ┌─ 404human ─────────┐
+  │  $ whoami          │
+  └────────────────────┘</pre>
+        </td>
+        <td width="28"></td>
+        <td valign="middle">
+          <b><a href="{{ get_url(path='@/_index.md') }}">{{ config.title }}</a></b><br>
+          <small>{{ config.extra.tagline }}</small>
+        </td>
+      </tr>
+    </table>
+    <nav aria-label="Site"><p>
+      [ <a href="{{ get_url(path='@/_index.md') }}">Home</a> ]
+      [ <a href="{{ get_url(path='@/_index.md') }}#status">Running now</a> ]
+      [ <a href="{{ get_url(path='@/_index.md') }}#build-log">Build log</a> ]
+      [ <a href="{{ get_url(path='@/_index.md') }}#writing">Writing</a> ]
+    </p></nav>
   </header>
 
   <main>
+    {% block ticker %}{% endblock ticker %}
     {% block content %}{% endblock content %}
   </main>
 
-  <footer class="site-footer">
-    <p>
-      <span class="nowrap">© {{ now() | date(format="%Y") }}{% if config.author %} {{ config.author }}{% endif %}</span>
-      {%- if config.extra.x_handle %} · <a class="nowrap" href="https://x.com/{{ config.extra.x_handle }}">@{{ config.extra.x_handle }}</a>{% endif %}
-      · <span class="nowrap">built with Zola, in Rust</span> · <span class="nowrap">no tracking</span>
-    </p>
+  <hr>
+  <footer>
+    <p><small>
+      © {{ now() | date(format="%Y") }}{% if config.author %} {{ config.author }}{% endif %}
+      {%- if config.extra.x_handle %} · <a href="https://x.com/{{ config.extra.x_handle }}">@{{ config.extra.x_handle }}</a>{% endif %}
+      · built with Zola, in Rust · no tracking
+      · <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
+      · <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">rss</a>
+    </small></p>
+    <noscript><p><small>(JavaScript is off. You lost nothing — there was none.)</small></p></noscript>
   </footer>
 </body>
 </html>

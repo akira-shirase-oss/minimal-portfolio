@@ -3,33 +3,37 @@
 {#- A build log: one section whose pages are its entries. Entries are grouped under the
     milestones listed in the section's `extra.milestones`, oldest first, so it reads in order. #}
 
-{% block body_class %}post{% endblock body_class %}
+{% block ticker %}
+<marquee scrollamount="4" behavior="scroll">status ● {{ section.extra.short_title or section.title }} build log · {{ section.pages | length }} entries
+  {%- if section.extra.status %} &nbsp;●&nbsp; {{ section.extra.status }}{% endif %}
+  {%- if section.extra.up_next %} &nbsp;●&nbsp; next: {{ section.extra.up_next.step }} — {{ section.extra.up_next.title }}{% endif %}
+   &nbsp;●</marquee>
+<hr>
+{% endblock ticker %}
 
 {% block content %}
 <article>
-  <header class="post-header">
-    <p class="meta">
-      build log · {{ section.pages | length }} entries
-      {%- if section.extra.status %} · <span class="tag status-{{ section.extra.status | slugify }}">{{ section.extra.status }}</span>{% endif %}
-    </p>
-    <h1>{{ section.title }}</h1>
-    {%- if section.description %}
-    <p class="subtitle">{{ section.description }}</p>
-    {%- endif %}
-  </header>
+  <p><small>build log · {{ section.pages | length }} entries
+    {%- if section.extra.status %} · <code>{{ section.extra.status }}</code>{% endif %}</small></p>
+  <h1>{{ section.title }}</h1>
+  {%- if section.description %}
+  <p>{{ section.description }}</p>
+  {%- endif %}
 
   {#- The whole log at a glance first, drawn the same way as on the home page. #}
   {%- set log = section %}
   {%- set entries = section.pages | reverse %}
   {%- if entries %}
-  <section class="panel log-glance" aria-label="The build log at a glance">
+  <section aria-label="The build log at a glance">
     {% include "partials/log-panel.html" %}
   </section>
   {%- endif %}
 
+  <hr>
   <div class="post-body">
     {{ section.content | safe }}
   </div>
+  <hr>
 
   {%- set up_next = section.extra.up_next %}
   {%- set all_planned = section.extra.planned | default(value=[]) %}
@@ -39,47 +43,44 @@
   {%- set has_next = up_next and up_next.milestone == milestone.id %}
   {#- What's still ahead: a step leaves the list once it's published or being built. #}
   {%- set planned = [p for p in all_planned if p.milestone == milestone.id and not (p.step and (p.step in published or (has_next and p.step == up_next.step)))] %}
-  <section class="milestone m-{{ milestone.id | lower }}{% if not entries and not has_next %} is-upcoming{% endif %}" aria-labelledby="{{ milestone.id | lower }}">
-    <h2 id="{{ milestone.id | lower }}"><span class="milestone-id">{{ milestone.id }}</span> {{ milestone.name }}{% if has_next %} <span class="milestone-now"><span class="dot" aria-hidden="true"></span> in progress</span>{% endif %}</h2>
-    <p class="milestone-about">{{ milestone.about }}</p>
+  <section aria-labelledby="{{ milestone.id | lower }}">
+    <h2 id="{{ milestone.id | lower }}"><code>{{ milestone.id }}</code> · {{ milestone.name }}{% if has_next %} <small>● in progress</small>{% endif %}</h2>
+    <p>{{ milestone.about }}</p>
     {%- if entries or has_next or planned %}
-    <ul class="log">
+    <table border="1" cellpadding="6" cellspacing="0" width="100%">
+      <tbody>
       {%- for entry in entries %}
-      <li class="entry">
-        <div class="when">
-          {{ entry.extra.step }}
-          {%- if entry.extra.kind %}
-          <span class="tag kind-{{ entry.extra.kind }}">{{ entry.extra.kind }}</span>
-          {%- endif %}
-        </div>
-        <div class="what">
-          <a class="title" href="{{ entry.permalink }}">{{ entry.extra.short_title or entry.title }}</a>
-          {%- if entry.description %}
-          <p class="summary">{{ entry.description }}</p>
-          {%- endif %}
-        </div>
-      </li>
+        <tr>
+          <td width="90"><code>{{ entry.extra.step }}</code></td>
+          <td><details><summary>{{ entry.extra.short_title or entry.title }}</summary>
+            {%- if entry.description %}<p>{{ entry.description }}</p>{% endif %}
+            <p><a href="{{ entry.permalink }}">Read the full entry →</a></p>
+          </details></td>
+          <td width="90" align="right">{{ entry.extra.tests | default(value="") }}</td>
+          <td width="110" align="right"><time datetime="{{ entry.date }}">{{ entry.date | date(format="%Y-%m-%d") }}</time></td>
+        </tr>
       {%- endfor %}
       {%- if has_next %}
-      <li class="entry">
-        <span class="when status-running"><span class="dot" aria-hidden="true"></span> {{ up_next.step }}</span>
-        <div class="what">
-          <span class="title">{{ up_next.title }}</span>
-          <p class="summary">Being built now.</p>
-        </div>
-      </li>
+        <tr>
+          <td><code>{{ up_next.step }}</code></td>
+          <td>● {{ up_next.title }} <small>— being built now</small></td>
+          <td colspan="2"></td>
+        </tr>
       {%- endif %}
       {%- for step in planned %}
-      <li class="entry is-planned">
-        <span class="when">{{ step.step | default(value="planned") }}</span>
-        <div class="what"><span class="title">{{ step.title }}</span></div>
-      </li>
+        <tr>
+          <td><code>{{ step.step | default(value="planned") }}</code></td>
+          <td>{{ step.title }} <small>· planned</small></td>
+          <td colspan="2"></td>
+        </tr>
       {%- endfor %}
-    </ul>
+      </tbody>
+    </table>
     {%- endif %}
   </section>
+  <hr>
   {%- endfor %}
 </article>
 
-<p class="back"><a href="{{ get_url(path='@/_index.md') }}#build-log">← Home</a></p>
+<p><a href="{{ get_url(path='@/_index.md') }}#build-log">← Home</a></p>
 {% endblock content %}
