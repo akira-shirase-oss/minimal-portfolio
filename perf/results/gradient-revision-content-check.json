@@ -1,0 +1,15 @@
+{
+  "html_pages": 112,
+  "internal_links_and_anchors_checked": 1459,
+  "new_chapter": "gradient direction and overshooting; calculations marked planned",
+  "quick_revision_anchor": true,
+  "answer_disclosures": 1,
+  "previous_next_navigation": true,
+  "json_ld": "valid on every page",
+  "rss_sitemap_llms": true,
+  "arithmetic_cases_checked": 7,
+  "failures": [],
+  "source_commit": "9e8eeda80b885de6e92a38692f3a17852fe86806",
+  "checked_utc": "2026-11-06T20:59:52.237333+00:00",
+  "scope": "Built HTML and arithmetic validation; no new interactive browser verification."
+}
