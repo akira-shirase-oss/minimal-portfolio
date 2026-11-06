@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "early build — M4 (supervision) done; M5 stdlib next"
+status = "early build — M5.1 (rt.kv) done; rt.media next"
 short_title = "jsrt"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, pinned deno_core + V8, the rt.* namespace, an error taxonomy where every way a run ends has its own exit code, and an isolate watchdog that can actually kill a CPU-bound script." },
@@ -18,14 +18,9 @@ milestones = [
   { id = "M6", name = "operate a real app", about = "rt.serve — a capability-gated HTTP listener; then the guide's ship gate verbatim: a small webhook processor deployed on jsrt, updated, broken, inspected, rolled back — every step committed evidence." },
   { id = "M7", name = "load and ship", about = "Cold start on 1,000 scripts (p50/p95 + steady RSS), op overhead on 10,000 calls, a one-hour timers/network soak for retained handles — committed results with machine and commit; laptop numbers stay lab numbers." },
 ]
-up_next = { milestone = "M5", step = "5.1", title = "rt.kv — embedded KV, per-script namespace, quota'd; every KV op is a capability line like any other" }
+up_next = { milestone = "M5", step = "5.2", title = "rt.media — streamed content-addressed uploads (Bunny.net edge + local backend); a mid-upload failure says 'uncertain', never 'uploaded'" }
 
 # M5 — stdlib wave 1
-[[extra.planned]]
-milestone = "M5"
-step = "5.1"
-title = "rt.kv — embedded KV, per-script namespace, quota'd; every KV op is a capability line like any other"
-
 [[extra.planned]]
 milestone = "M5"
 step = "5.2"
