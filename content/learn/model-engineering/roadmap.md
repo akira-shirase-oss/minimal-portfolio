@@ -18,9 +18,9 @@ The plan has two practical parts. First, build tiny models whose calculations I 
 
 | Chapter | Question | Planned exercise |
 | --- | --- | --- |
-| [1. Weights, predictions, and loss](@/learn/model-engineering/weights-predictions-and-loss.md) | What changes when a model learns? | Work through one adjustable weight and its errors. The explanation is available; a code lab is still ahead. |
-| [2. Gradients and weight updates](@/learn/model-engineering/gradients-and-weight-updates.md) | How does the program choose a direction and size for an update? | Direction, overshooting, a numerical gradient estimate, and one learning-rate update are worked through. The direct derivative and training loop remain planned. |
-| 3. Our first training loop | How do repeated updates become training? | Write a small loop, record its predictions and loss, and save the learned numbers. |
+| [1. Weights, predictions, and loss](@/learn/model-engineering/weights-predictions-and-loss.md) | What changes when a model learns? | Work through one adjustable weight and its errors, then inspect them in chapter 3's lab. |
+| [2. Gradients and weight updates](@/learn/model-engineering/gradients-and-weight-updates.md) | How does the program choose a direction and size for an update? | Direction, overshooting, numerical gradients, and learning-rate updates are worked through. Direct derivatives remain ahead. |
+| [3. Our first training loop](@/learn/model-engineering/our-first-training-loop.md) | How do repeated updates become training? | Run a tiny local program, inspect its recorded weights and loss, and compare settings. Saving and resuming a learned model remain ahead. |
 | 4. How learning goes wrong | Did it learn a useful pattern or memorize examples? | Deliberately cause underfitting, overfitting, and unstable updates. |
 | 5. Data a model can learn from | How do raw records become trustworthy examples? | Clean and deduplicate a small dataset; separate training, validation, and test data before tuning. |
 | 6. From text to a tiny language model | How do text pieces become predictions? | Learn tokens, arrays of numbers, embeddings, attention, and a small transformer through code. |
@@ -31,7 +31,7 @@ The plan has two practical parts. First, build tiny models whose calculations I 
 | 11. Memory, speed, and scale | What do efficiency changes cost in quality? | Measure numerical precision, quantization, batching, latency, and memory tradeoffs. |
 | 12. Learning from preferences | Can examples of preferred answers improve behavior? | Build reviewed answer pairs and test whether preference training helps. |
 
-The first two chapter notes are available for revision. Their explanations are not completed code experiments or proof of mastery. The calculations still ahead are labelled in chapter 2; chapters 3–12 will get pages as we work through them.
+The first three chapter notes are available for revision, including a runnable one-weight example in chapter 3. Program behavior, learning on one training pair, and learner understanding are separate claims. The calculations still ahead are labelled; chapters 4–12 will get pages as we work through them.
 
 ## Math alongside the code
 

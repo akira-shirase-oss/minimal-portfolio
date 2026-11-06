@@ -1,5 +1,19 @@
 # Local Learning-section load scenario
 
+The first training-loop example also has numerical checks:
+
+```sh
+node tools/check-training-loop.mjs
+```
+
+This executes the complete code printed in chapter 3. It checks the known trace,
+fresh gradients, a frozen baseline, the zero-gradient case, smaller updates, and
+an oversized update that makes training loss worse. An optional local trainer
+path adds a parity check; the recorded first run used the learning workspace's
+`model-engineering/labs/one-weight.mjs`. Results are written to
+`perf/results/first-training-loop-experiment.json`. It is a program and training-
+example check, not an unseen-data evaluation or language-model benchmark.
+
 Run from the portfolio checkout, with Zola, Node, Python 3.12+, and ApacheBench
 (`ab`) available:
 
@@ -9,8 +23,8 @@ python3 perf/learning-load.py --baseline-ref 7193b0bd3ac6fd377664c24fe71aee20cdd
 
 The script serves the baseline source and current checkout on loopback using
 Zola's development server. It compares 50,000 homepage requests on each version,
-then makes **2,200,000 feature requests**: 1,000,000 on the homepage with its
-responsive descriptive rows, plus 200,000 each across the Learning index, track,
+then makes **3,200,000 feature requests**: 1,000,000 each on the homepage and
+the first-training-loop chapter, plus 200,000 each across the Learning index, track,
 two chapters, roadmap, and introductory blog. Concurrency ranges from 8 to 1,024.
 For later changes, choose the previous source revision as the baseline.
 

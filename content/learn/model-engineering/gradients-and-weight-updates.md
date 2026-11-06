@@ -8,7 +8,7 @@ weight = 2
 [extra]
 kind = "chapter"
 chapter = 2
-status = "gradient estimate and one worked update explained; training loop planned"
+status = "worked updates and fresh gradients explained; training loop in chapter 3"
 +++
 
 This chapter follows [weights, predictions, and loss](@/learn/model-engineering/weights-predictions-and-loss.md). We are still using small worked examples. No training program has been run for this lesson.
@@ -211,6 +211,6 @@ Try these before opening the answers:
 
 ## Still to work through
 
-The next step is to understand how repeated updates form a training loop, including evaluating loss and the gradient again at the new weight. The direct derivative calculation, automatic differentiation, and an executable training loop are still planned. This page will grow as those lessons happen.
+Repeated updates are now explored in [our first training loop](@/learn/model-engineering/our-first-training-loop.md), with the program and its recorded results. The direct derivative calculation and automatic differentiation remain planned. This page will grow as those lessons happen.
 
 The [learning roadmap](@/learn/model-engineering/roadmap.md) keeps the wider plan. [PyTorch's optimization tutorial](https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html) is a reference for the training loop we will eventually write.

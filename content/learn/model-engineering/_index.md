@@ -23,6 +23,7 @@ page = "@/learn/model-engineering/gradients-and-weight-updates.md"
 [[extra.chapters]]
 number = 3
 title = "Our first training loop"
+page = "@/learn/model-engineering/our-first-training-loop.md"
 
 [[extra.chapters]]
 number = 4
@@ -67,4 +68,4 @@ This track follows that question from the beginning. The goal is to understand t
 
 I am weak at math. I still want to understand it. The examples start small, explain every symbol, and connect the calculation to what the program is doing.
 
-**Where things stand:** two chapter notes cover weights, loss, gradient direction, overshooting, a numerical gradient estimate, and one worked learning-rate update. Chapter 2 includes a revision table and practice questions. The direct derivative calculation and our first executable training loop are still ahead.
+**Where things stand:** three chapter notes cover weights, loss, gradients, update size, and a first training loop. Chapter 3 keeps the program, worked results, and revision question as plain text and code. The direct derivative calculation, automatic differentiation, and unseen-data evaluation remain ahead.

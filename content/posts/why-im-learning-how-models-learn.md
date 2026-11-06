@@ -48,7 +48,7 @@ The [Learning section](@/learn/_index.md) will hold ordered chapters: explanatio
 
 The blog will hold the experience of doing it. When something fails, I want to write down what I expected, what actually happened, how we investigated it, and what the evidence supports.
 
-Right now, this is the start of the learning. I have a worked numerical example and a plan. A training program, a fine-tuned model, and measured results are still ahead.
+At that starting point, I had a worked numerical example and a plan. A training program, a fine-tuned model, and measured results were still ahead. The updates below record the next steps as they happened.
 
 The first chapter is [weights, predictions, and loss](@/learn/model-engineering/weights-predictions-and-loss.md). One adjustable number is enough to begin.
 
@@ -65,3 +65,11 @@ We have now estimated a gradient around weight 2 and used it in the update rule.
 The subtraction is worth writing out: **2 − (0.1 × −8) = 2 − (−0.8) = 2 + 0.8**. The negative gradient leads to a weight increase in this example. The learning rate scales the amount of the change.
 
 This is a worked calculation, not a completed training program. [The expanded chapter](@/learn/model-engineering/gradients-and-weight-updates.md#calculate-one-update) keeps the intermediate steps and the distinction between an estimated slope and a derivative. Repeating the process in a training loop is next.
+
+### The first small program
+
+The loop now runs locally. It uses the same input 2, target 6, starting weight 2, and learning rate 0.1. After three updates, the recorded weights are 2, 2.8, 2.96, and 2.992, counting the starting point. Loss falls from 4 to about 0.000256 on that one example.
+
+The useful part is seeing each result become the next starting point. The learning rate stays fixed while the fresh gradient gets smaller, so the updates shrink too. It is a small enough program to read from top to bottom.
+
+[Chapter 3](@/learn/model-engineering/our-first-training-loop.md) keeps the code, intermediate results, and the difference between a program check and evidence of a better model. The portfolio stays focused on text and learning notes. Unseen-data evaluation and training Qwen are still ahead.

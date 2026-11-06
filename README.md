@@ -63,6 +63,12 @@ and `learning-page.html` use the existing site style. Navigation, the home page,
   answers and assessment history in the private local checkpoint. Use `updated`
   dates for revised pages and publish through the existing Wrangler CLI workflow.
 
+Chapter 3, `our-first-training-loop.md`, keeps the first executable one-weight
+example as text, code, and recorded results. The user requested removing the
+interactive section: do not add the canvas lab, its controls, or its client
+script back without a new request. The small local trainer lives in the separate
+`model-engineering/labs/` learning folder; the chapter includes a runnable copy.
+
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
 and an honest `status`. Add its `page = "@/learn/<track>/<file>.md"` link to the
