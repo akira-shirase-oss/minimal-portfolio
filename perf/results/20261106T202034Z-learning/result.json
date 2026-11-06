@@ -1,0 +1,334 @@
+{
+  "started_utc": "20261106T202034Z",
+  "commit": "36990a37a20483ad363213c04e154500d3a762da",
+  "baseline_commit": "1ad0a09d2c3105d9c482f552e645c297c150ec10",
+  "source_sha256": "84c4677cf0ce1080ca681628ad2071f941e242e5fe4046360827a1730d8cd103",
+  "working_tree_status": [
+    "?? perf/results/"
+  ],
+  "machine": {
+    "platform": "darwin",
+    "release": "27.0.0",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368
+  },
+  "zola": "zola 0.23.6",
+  "scope": "Local Zola development server, HTTP/1.1 keepalive. Not Cloudflare capacity or production evidence.",
+  "thresholds": {
+    "failed_requests": 0,
+    "non_2xx_responses": 0,
+    "minimum_rps": 500,
+    "maximum_p99_ms": 1000,
+    "homepage_rps_ratio_min": 0.75,
+    "homepage_p99_ratio_max": 2,
+    "homepage_p99_allowance_ms": 25
+  },
+  "phases": [
+    {
+      "name": "baseline-home",
+      "path": "/",
+      "requests": 50000,
+      "concurrency": 32,
+      "exit_code": 0,
+      "completed": 50000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 134841.04,
+      "p95_ms": 0.0,
+      "p99_ms": 1.0,
+      "seconds": 0.371
+    },
+    {
+      "name": "candidate-home",
+      "path": "/",
+      "requests": 50000,
+      "concurrency": 32,
+      "exit_code": 0,
+      "completed": 50000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 138214.33,
+      "p95_ms": 0.0,
+      "p99_ms": 0.0,
+      "seconds": 0.362
+    },
+    {
+      "name": "learning-c8",
+      "path": "/learn/",
+      "requests": 200000,
+      "concurrency": 8,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 172498.85,
+      "p95_ms": 0.0,
+      "p99_ms": 0.0,
+      "seconds": 1.159
+    },
+    {
+      "name": "track-c64",
+      "path": "/learn/model-engineering/",
+      "requests": 200000,
+      "concurrency": 64,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 143754.38,
+      "p95_ms": 1.0,
+      "p99_ms": 1.0,
+      "seconds": 1.391
+    },
+    {
+      "name": "chapter-c256",
+      "path": "/learn/model-engineering/weights-predictions-and-loss/",
+      "requests": 200000,
+      "concurrency": 256,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 138081.78,
+      "p95_ms": 3.0,
+      "p99_ms": 3.0,
+      "seconds": 1.448
+    },
+    {
+      "name": "roadmap-c1024",
+      "path": "/learn/model-engineering/roadmap/",
+      "requests": 200000,
+      "concurrency": 1024,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 124376.41,
+      "p95_ms": 11.0,
+      "p99_ms": 11.0,
+      "seconds": 1.608
+    },
+    {
+      "name": "blog-c64",
+      "path": "/posts/why-im-learning-how-models-learn/",
+      "requests": 200000,
+      "concurrency": 64,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 151940.7,
+      "p95_ms": 1.0,
+      "p99_ms": 1.0,
+      "seconds": 1.316
+    }
+  ],
+  "checks": [
+    {
+      "name": "content /learn/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 7867
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 8936
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/roadmap/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 14288
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/weights-predictions-and-loss/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 17407
+      }
+    },
+    {
+      "name": "content /posts/why-im-learning-how-models-learn/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 10969
+      }
+    },
+    {
+      "name": "baseline-home",
+      "passed": true,
+      "detail": {
+        "name": "baseline-home",
+        "path": "/",
+        "requests": 50000,
+        "concurrency": 32,
+        "exit_code": 0,
+        "completed": 50000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 134841.04,
+        "p95_ms": 0.0,
+        "p99_ms": 1.0,
+        "seconds": 0.371
+      }
+    },
+    {
+      "name": "candidate-home",
+      "passed": true,
+      "detail": {
+        "name": "candidate-home",
+        "path": "/",
+        "requests": 50000,
+        "concurrency": 32,
+        "exit_code": 0,
+        "completed": 50000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 138214.33,
+        "p95_ms": 0.0,
+        "p99_ms": 0.0,
+        "seconds": 0.362
+      }
+    },
+    {
+      "name": "homepage regression",
+      "passed": true,
+      "detail": {
+        "baseline_rps": 134841.04,
+        "candidate_rps": 138214.33,
+        "baseline_p99_ms": 1.0,
+        "candidate_p99_ms": 0.0
+      }
+    },
+    {
+      "name": "learning-c8",
+      "passed": true,
+      "detail": {
+        "name": "learning-c8",
+        "path": "/learn/",
+        "requests": 200000,
+        "concurrency": 8,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 172498.85,
+        "p95_ms": 0.0,
+        "p99_ms": 0.0,
+        "seconds": 1.159
+      }
+    },
+    {
+      "name": "track-c64",
+      "passed": true,
+      "detail": {
+        "name": "track-c64",
+        "path": "/learn/model-engineering/",
+        "requests": 200000,
+        "concurrency": 64,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 143754.38,
+        "p95_ms": 1.0,
+        "p99_ms": 1.0,
+        "seconds": 1.391
+      }
+    },
+    {
+      "name": "chapter-c256",
+      "passed": true,
+      "detail": {
+        "name": "chapter-c256",
+        "path": "/learn/model-engineering/weights-predictions-and-loss/",
+        "requests": 200000,
+        "concurrency": 256,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 138081.78,
+        "p95_ms": 3.0,
+        "p99_ms": 3.0,
+        "seconds": 1.448
+      }
+    },
+    {
+      "name": "roadmap-c1024",
+      "passed": true,
+      "detail": {
+        "name": "roadmap-c1024",
+        "path": "/learn/model-engineering/roadmap/",
+        "requests": 200000,
+        "concurrency": 1024,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 124376.41,
+        "p95_ms": 11.0,
+        "p99_ms": 11.0,
+        "seconds": 1.608
+      }
+    },
+    {
+      "name": "blog-c64",
+      "passed": true,
+      "detail": {
+        "name": "blog-c64",
+        "path": "/posts/why-im-learning-how-models-learn/",
+        "requests": 200000,
+        "concurrency": 64,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 151940.7,
+        "p95_ms": 1.0,
+        "p99_ms": 1.0,
+        "seconds": 1.316
+      }
+    },
+    {
+      "name": "million-request feature run",
+      "passed": true,
+      "detail": "Five routes, 200,000 requests each; concurrency 8 through 1,024."
+    },
+    {
+      "name": "missing chapter",
+      "passed": true,
+      "detail": {
+        "status": 404
+      }
+    },
+    {
+      "name": "recovery after client disconnects",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "latency_ms": 0.226
+      }
+    }
+  ],
+  "passed": true,
+  "disconnect_attempts": {
+    "attempted": 512,
+    "connected_then_aborted": 512
+  },
+  "completed_feature_requests": 1000000.0,
+  "saturation_observation": "See per-phase throughput and latency at rising concurrency. Routes differ in size; this does not establish a saturation point or production overload capacity.",
+  "finished_utc": "2026-11-06T20:20:43.184876+00:00"
+}

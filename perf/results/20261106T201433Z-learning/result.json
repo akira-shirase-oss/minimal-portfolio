@@ -1,0 +1,345 @@
+{
+  "started_utc": "20261106T201433Z",
+  "commit": "1ad0a09d2c3105d9c482f552e645c297c150ec10",
+  "baseline_commit": "1ad0a09d2c3105d9c482f552e645c297c150ec10",
+  "source_sha256": "84c4677cf0ce1080ca681628ad2071f941e242e5fe4046360827a1730d8cd103",
+  "working_tree_status": [
+    " M README.md",
+    " M templates/base.html",
+    " M templates/index.html",
+    " M templates/llms.txt",
+    " M templates/page.html",
+    " M templates/partials/json-ld.html",
+    "?? content/learn/",
+    "?? content/posts/why-im-learning-how-models-learn.md",
+    "?? perf/",
+    "?? templates/learn.html",
+    "?? templates/learning-page.html",
+    "?? templates/learning-track.html"
+  ],
+  "machine": {
+    "platform": "darwin",
+    "release": "27.0.0",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368
+  },
+  "zola": "zola 0.23.6",
+  "scope": "Local Zola development server, HTTP/1.1 keepalive. Not Cloudflare capacity or production evidence.",
+  "thresholds": {
+    "failed_requests": 0,
+    "non_2xx_responses": 0,
+    "minimum_rps": 500,
+    "maximum_p99_ms": 1000,
+    "homepage_rps_ratio_min": 0.75,
+    "homepage_p99_ratio_max": 2,
+    "homepage_p99_allowance_ms": 25
+  },
+  "phases": [
+    {
+      "name": "baseline-home",
+      "path": "/",
+      "requests": 50000,
+      "concurrency": 32,
+      "exit_code": 0,
+      "completed": 50000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 93487.3,
+      "p95_ms": 0.0,
+      "p99_ms": 1.0,
+      "seconds": 0.535
+    },
+    {
+      "name": "candidate-home",
+      "path": "/",
+      "requests": 50000,
+      "concurrency": 32,
+      "exit_code": 0,
+      "completed": 50000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 95307.26,
+      "p95_ms": 0.0,
+      "p99_ms": 0.0,
+      "seconds": 0.525
+    },
+    {
+      "name": "learning-c8",
+      "path": "/learn/",
+      "requests": 200000,
+      "concurrency": 8,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 104528.98,
+      "p95_ms": 0.0,
+      "p99_ms": 0.0,
+      "seconds": 1.913
+    },
+    {
+      "name": "track-c64",
+      "path": "/learn/model-engineering/",
+      "requests": 200000,
+      "concurrency": 64,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 98935.21,
+      "p95_ms": 1.0,
+      "p99_ms": 1.0,
+      "seconds": 2.022
+    },
+    {
+      "name": "chapter-c256",
+      "path": "/learn/model-engineering/weights-predictions-and-loss/",
+      "requests": 200000,
+      "concurrency": 256,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 86224.18,
+      "p95_ms": 3.0,
+      "p99_ms": 3.0,
+      "seconds": 2.32
+    },
+    {
+      "name": "roadmap-c1024",
+      "path": "/learn/model-engineering/roadmap/",
+      "requests": 200000,
+      "concurrency": 1024,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 76411.56,
+      "p95_ms": 23.0,
+      "p99_ms": 43.0,
+      "seconds": 2.617
+    },
+    {
+      "name": "blog-c64",
+      "path": "/posts/why-im-learning-how-models-learn/",
+      "requests": 200000,
+      "concurrency": 64,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 80195.26,
+      "p95_ms": 1.0,
+      "p99_ms": 3.0,
+      "seconds": 2.494
+    }
+  ],
+  "checks": [
+    {
+      "name": "content /learn/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 7867
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 8936
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/roadmap/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 14288
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/weights-predictions-and-loss/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 17407
+      }
+    },
+    {
+      "name": "content /posts/why-im-learning-how-models-learn/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 10969
+      }
+    },
+    {
+      "name": "baseline-home",
+      "passed": true,
+      "detail": {
+        "name": "baseline-home",
+        "path": "/",
+        "requests": 50000,
+        "concurrency": 32,
+        "exit_code": 0,
+        "completed": 50000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 93487.3,
+        "p95_ms": 0.0,
+        "p99_ms": 1.0,
+        "seconds": 0.535
+      }
+    },
+    {
+      "name": "candidate-home",
+      "passed": true,
+      "detail": {
+        "name": "candidate-home",
+        "path": "/",
+        "requests": 50000,
+        "concurrency": 32,
+        "exit_code": 0,
+        "completed": 50000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 95307.26,
+        "p95_ms": 0.0,
+        "p99_ms": 0.0,
+        "seconds": 0.525
+      }
+    },
+    {
+      "name": "homepage regression",
+      "passed": true,
+      "detail": {
+        "baseline_rps": 93487.3,
+        "candidate_rps": 95307.26,
+        "baseline_p99_ms": 1.0,
+        "candidate_p99_ms": 0.0
+      }
+    },
+    {
+      "name": "learning-c8",
+      "passed": true,
+      "detail": {
+        "name": "learning-c8",
+        "path": "/learn/",
+        "requests": 200000,
+        "concurrency": 8,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 104528.98,
+        "p95_ms": 0.0,
+        "p99_ms": 0.0,
+        "seconds": 1.913
+      }
+    },
+    {
+      "name": "track-c64",
+      "passed": true,
+      "detail": {
+        "name": "track-c64",
+        "path": "/learn/model-engineering/",
+        "requests": 200000,
+        "concurrency": 64,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 98935.21,
+        "p95_ms": 1.0,
+        "p99_ms": 1.0,
+        "seconds": 2.022
+      }
+    },
+    {
+      "name": "chapter-c256",
+      "passed": true,
+      "detail": {
+        "name": "chapter-c256",
+        "path": "/learn/model-engineering/weights-predictions-and-loss/",
+        "requests": 200000,
+        "concurrency": 256,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 86224.18,
+        "p95_ms": 3.0,
+        "p99_ms": 3.0,
+        "seconds": 2.32
+      }
+    },
+    {
+      "name": "roadmap-c1024",
+      "passed": true,
+      "detail": {
+        "name": "roadmap-c1024",
+        "path": "/learn/model-engineering/roadmap/",
+        "requests": 200000,
+        "concurrency": 1024,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 76411.56,
+        "p95_ms": 23.0,
+        "p99_ms": 43.0,
+        "seconds": 2.617
+      }
+    },
+    {
+      "name": "blog-c64",
+      "passed": true,
+      "detail": {
+        "name": "blog-c64",
+        "path": "/posts/why-im-learning-how-models-learn/",
+        "requests": 200000,
+        "concurrency": 64,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 80195.26,
+        "p95_ms": 1.0,
+        "p99_ms": 3.0,
+        "seconds": 2.494
+      }
+    },
+    {
+      "name": "million-request feature run",
+      "passed": true,
+      "detail": "Five routes, 200,000 requests each; concurrency 8 through 1,024."
+    },
+    {
+      "name": "missing chapter",
+      "passed": true,
+      "detail": {
+        "status": 404
+      }
+    },
+    {
+      "name": "recovery after client disconnects",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "latency_ms": 0.323
+      }
+    }
+  ],
+  "passed": true,
+  "disconnect_attempts": {
+    "attempted": 512,
+    "connected_then_aborted": 512
+  },
+  "completed_feature_requests": 1000000.0,
+  "saturation_observation": "See per-phase throughput and latency at rising concurrency. Routes differ in size; this does not establish a saturation point or production overload capacity.",
+  "finished_utc": "2026-11-06T20:14:46.915302+00:00"
+}

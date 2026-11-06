@@ -1,0 +1,17 @@
+{
+  "html_pages": 111,
+  "internal_links_and_anchors_checked": 1439,
+  "existing_sitemap_urls_retained": 105,
+  "new_sitemap_urls": 5,
+  "dated_new_pages_in_rss": 3,
+  "chapter_answer_disclosures": 2,
+  "json_ld": "valid on every page; chapter is LearningResource",
+  "failures": [],
+  "source_commit": "36990a37a20483ad363213c04e154500d3a762da",
+  "checked_utc": "2026-11-06T20:20:59.134995+00:00",
+  "browser_verification": {
+    "homepage_accessibility_state": "Learning navigation, one available chapter note, and introductory post present",
+    "interactive_journey": "not completed: browser automation errors and an approval-review timeout",
+    "screenshots": "unavailable: browser screenshot API errors"
+  }
+}
