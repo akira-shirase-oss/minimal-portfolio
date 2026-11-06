@@ -19,7 +19,7 @@ The plan has two practical parts. First, build tiny models whose calculations I 
 | Chapter | Question | Planned exercise |
 | --- | --- | --- |
 | [1. Weights, predictions, and loss](@/learn/model-engineering/weights-predictions-and-loss.md) | What changes when a model learns? | Work through one adjustable weight and its errors. The explanation is available; a code lab is still ahead. |
-| [2. Gradients and weight updates](@/learn/model-engineering/gradients-and-weight-updates.md) | How does the program choose a direction and size for an update? | Direction, loss changes, and overshooting are explained. The gradient and learning-rate calculations remain planned. |
+| [2. Gradients and weight updates](@/learn/model-engineering/gradients-and-weight-updates.md) | How does the program choose a direction and size for an update? | Direction, overshooting, a numerical gradient estimate, and one learning-rate update are worked through. The direct derivative and training loop remain planned. |
 | 3. Our first training loop | How do repeated updates become training? | Write a small loop, record its predictions and loss, and save the learned numbers. |
 | 4. How learning goes wrong | Did it learn a useful pattern or memorize examples? | Deliberately cause underfitting, overfitting, and unstable updates. |
 | 5. Data a model can learn from | How do raw records become trustworthy examples? | Clean and deduplicate a small dataset; separate training, validation, and test data before tuning. |

@@ -8,7 +8,7 @@ weight = 2
 [extra]
 kind = "chapter"
 chapter = 2
-status = "direction and overshooting explained; gradient and learning-rate calculations planned"
+status = "gradient estimate and one worked update explained; training loop planned"
 +++
 
 This chapter follows [weights, predictions, and loss](@/learn/model-engineering/weights-predictions-and-loss.md). We are still using small worked examples. No training program has been run for this lesson.
@@ -24,7 +24,9 @@ This chapter follows [weights, predictions, and loss](@/learn/model-engineering/
 | Positive gradient | Increasing the weight a little makes loss rise nearby. |
 | Update direction | To reduce loss, a basic gradient-descent step moves opposite the gradient's sign. |
 | Overshooting | An update takes the prediction beyond the target. |
-| Learning rate | A setting that helps control update size. Its calculation is still ahead. |
+| Gradient magnitude | The size of the gradient's rate of change, ignoring its sign. |
+| Learning rate | A positive multiplier used with the gradient to control update size. |
+| Basic update rule | New weight = old weight − (learning rate × gradient). |
 
 The question behind the sign is always: **what happens to loss if the weight increases a little from its current value?**
 
@@ -53,7 +55,7 @@ An increasing prediction does not automatically mean an increasing mistake. Keep
 
 ## What the gradient's sign tells us
 
-A **gradient** describes how loss changes as a trainable parameter changes. For now, focus on its sign. We will calculate its numerical value later.
+A **gradient** describes how loss changes as a trainable parameter changes. Start with its sign; the numerical estimate is worked through below.
 
 At weight 2, increasing the weight a little moves the prediction toward 6 and makes loss fall. This is the **negative-gradient case**.
 
@@ -94,7 +96,79 @@ Weight **3** hits the target exactly. Weight **5** sends the prediction to 10, b
 
 These are hand-picked trial weights, not the output of a training run. They separate two decisions: **which direction to move**, and **how far to move**.
 
-Smaller updates can reduce the chance of a large overshoot. The **learning rate** helps control update size. It works with the gradient's numerical value; we have introduced the idea, but have not calculated that connection yet.
+Smaller updates can reduce the chance of a large overshoot. The **learning rate** helps control update size. It works with the gradient's numerical value, which we will now estimate.
+
+## Give the gradient a number
+
+We can estimate how rapidly loss changes around our current weight, **2**, by checking a value on either side:
+
+| Weight | Prediction | Squared-error loss |
+| ---: | ---: | ---: |
+| 1.5 | 3 | (3 − 6)² = 9 |
+| 2 | 4 | (4 − 6)² = 4 |
+| 2.5 | 5 | (5 − 6)² = 1 |
+
+Compare the lower and higher trial weights. In each subtraction, take the value at the higher weight minus the value at the lower weight:
+
+```text
+Change in weight = 2.5 − 1.5 = 1
+Change in loss   = 1 − 9     = −8
+```
+
+Divide the change in loss by the change in weight:
+
+**Estimated gradient = −8 ÷ 1 = −8**
+
+The minus sign describes loss falling as weight increases nearby. The **magnitude**, 8, describes the size of that rate of change.
+
+This is a numerical estimate using two sides of weight 2. For this particular squared-loss model, it matches the exact gradient at 2. In general, an average slope over an interval is only an estimate of a gradient at a point. We still need to learn how to calculate derivatives directly and how automatic differentiation works.
+
+## Calculate one update
+
+Return explicitly to starting weight **2**, gradient **−8**, input **2**, and target **6**. The **learning rate** is a positive multiplier that helps control how much we change the weight. Choose **0.1**, or one tenth, for this worked example.
+
+The basic gradient-descent update rule is:
+
+**New weight = old weight − (learning rate × gradient)**
+
+Substitute the numbers one operation at a time:
+
+```text
+New weight = 2 − (0.1 × −8)
+           = 2 − (−0.8)
+           = 2 + 0.8
+           = 2.8
+```
+
+**Subtracting a negative means adding.** Here, that makes the weight increase. The learning rate is 0.1, while the resulting weight change is 0.8; the rate is a multiplier, not the whole change by itself.
+
+Now calculate the prediction and loss using the new weight:
+
+```text
+New prediction = 2 × 2.8 = 5.6
+New loss       = (5.6 − 6)²
+               = (−0.4) × (−0.4)
+               = 0.16
+```
+
+| Quantity | Before | After this update |
+| --- | ---: | ---: |
+| Weight | 2 | 2.8 |
+| Prediction | 4 | 5.6 |
+| Loss | 4 | 0.16 |
+
+The prediction is closer to 6 and loss is smaller on this example. This is one worked update, with arithmetic checked by a script. It is not a completed training loop, a model benchmark, or a change to Qwen's weights.
+
+## What a smaller learning rate changes
+
+Hold the starting weight and gradient fixed. A smaller learning rate gives a smaller weight change in this basic update rule:
+
+| Learning rate | Gradient | Amount added to weight | New weight |
+| ---: | ---: | ---: | ---: |
+| 0.1 | −8 | 0.8 | 2.8 |
+| 0.01 | −8 | 0.08 | 2.08 |
+
+Both changes increase the weight, but the second is smaller. Direction and size remain separate. This comparison fixes the gradient to explain scaling; a training loop will need to evaluate the model again after an update.
 
 ## Check your understanding
 
@@ -105,6 +179,8 @@ Try these before opening the answers:
 3. With that negative gradient, which direction should a small weight update try?
 4. With input 2 and target 6, does weight 3 hit the target exactly or go beyond it? What about weight 5?
 5. Why do we need to control update size as well as direction?
+6. In the worked update, why does subtracting learning rate × gradient increase the weight?
+7. Keeping the gradient fixed, does a smaller learning rate make the weight change smaller or larger?
 
 <details>
 <summary>Check the answers</summary>
@@ -115,11 +191,13 @@ Try these before opening the answers:
 <li>Increase the weight a little. The update moves opposite the gradient's sign to reduce loss.</li>
 <li>Weight 3 gives 2 × 3 = 6, an exact match. Weight 5 gives 2 × 5 = 10, beyond the target.</li>
 <li>A move in a helpful direction can go too far. The weight-5 example produces a larger loss than we started with.</li>
+<li>0.1 × (−8) = −0.8. Subtracting that negative value adds 0.8, so 2 becomes 2.8.</li>
+<li>Smaller, for this basic gradient-descent rule. The rate multiplies the same gradient.</li>
 </ol>
 </details>
 
 ## Still to work through
 
-Next, we will calculate the gradient's numerical value, then use a learning rate to calculate one update. Derivatives, the update formula, and an executable training loop are planned material. This page will grow as those lessons happen.
+The next step is to understand how repeated updates form a training loop, including evaluating loss and the gradient again at the new weight. The direct derivative calculation, automatic differentiation, and an executable training loop are still planned. This page will grow as those lessons happen.
 
 The [learning roadmap](@/learn/model-engineering/roadmap.md) keeps the wider plan. [PyTorch's optimization tutorial](https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html) is a reference for the training loop we will eventually write.

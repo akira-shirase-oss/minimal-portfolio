@@ -67,4 +67,4 @@ This track follows that question from the beginning. The goal is to understand t
 
 I am weak at math. I still want to understand it. The examples start small, explain every symbol, and connect the calculation to what the program is doing.
 
-**Where things stand:** two chapter notes cover weights, loss, gradient direction, and overshooting. Chapter 2 opens with a quick revision table and ends with practice questions. Calculating the gradient, applying a learning rate, and running our first training program are still ahead.
+**Where things stand:** two chapter notes cover weights, loss, gradient direction, overshooting, a numerical gradient estimate, and one worked learning-rate update. Chapter 2 includes a revision table and practice questions. The direct derivative calculation and our first executable training loop are still ahead.

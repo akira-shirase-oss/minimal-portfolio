@@ -57,3 +57,11 @@ The first chapter is [weights, predictions, and loss](@/learn/model-engineering/
 We have now worked through loss rising and falling, the sign of a gradient, the direction of a small weight update, and overshooting. Weight and prediction can increase while loss decreases, because the prediction is getting closer to the target. Keeping those three quantities separate is part of the explanation we practised.
 
 Those examples are in [chapter 2: gradients and weight updates](@/learn/model-engineering/gradients-and-weight-updates.md), with a quick revision table and questions whose answers can be opened after trying them. The learning rate has been introduced as a way to help control update size; its calculation, the gradient's numerical value, and a training program are still ahead.
+
+### Later in the same lesson: one worked update
+
+We have now estimated a gradient around weight 2 and used it in the update rule. With gradient −8 and learning rate 0.1, the calculation changes the weight from 2 to 2.8. The prediction moves from 4 to 5.6, and squared-error loss falls from 4 to 0.16.
+
+The subtraction is worth writing out: **2 − (0.1 × −8) = 2 − (−0.8) = 2 + 0.8**. The negative gradient leads to a weight increase in this example. The learning rate scales the amount of the change.
+
+This is a worked calculation, not a completed training program. [The expanded chapter](@/learn/model-engineering/gradients-and-weight-updates.md#calculate-one-update) keeps the intermediate steps and the distinction between an estimated slope and a derivative. Repeating the process in a training loop is next.
