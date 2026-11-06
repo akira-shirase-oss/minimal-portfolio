@@ -6,30 +6,19 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "early build — M2 (async host) done; M3 capabilities next"
+status = "early build — M3 (capabilities) done; M4 supervision next"
 short_title = "jsrt"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, pinned deno_core + V8, the rt.* namespace, an error taxonomy where every way a run ends has its own exit code, and an isolate watchdog that can actually kill a CPU-bound script." },
   { id = "M1", name = "execute", about = "The run lifecycle proven end to end (every exit class reproducible, including uncaught CapabilityError → 7 and watchdog kill → 6); real module semantics — imports between files, honest load errors; the op boundary measured (cold-start p50/p95, 10k op calls) with numbers recorded, never oversold." },
   { id = "M2", name = "async host", about = "setTimeout/clearTimeout/setInterval over op_sleep with real cancellation; bounded fetch — stream-capped body, per-op deadline, classified stalls; and teardown that proves nothing outlives its runtime (promises, timers, handles)." },
-  { id = "M3", name = "capabilities", about = "The manifest is the law, read fresh in every op — declared read paths canonicalized, net destinations checked by authority, budgets per entry point; then the escape suite: .., symlinks, userinfo, port and scheme tricks, all refused." },
+  { id = "M3", name = "capabilities", about = "The manifest is the law — and now the loader is inside the fence too: JsrtModuleLoader gates every import at resolve()+load() through declared read paths plus the entry's own dir; then the escape suite found a real hole (the authority parser and reqwest disagreed on \\@), fixed so the checked host is the connected host." },
   { id = "M4", name = "supervise", about = "Isolates in worker processes with OS-enforced memory and CPU budgets — the hard boundary a timeout future can never be; a memory bomb dies classified 'terminated', not as a process abort." },
   { id = "M5", name = "stdlib wave 1", about = "First-party APIs as ops: rt.kv — an embedded, namespaced, quota'd key-value store; rt.media — streamed content-addressed uploads to Bunny.net or local disk, where a mid-upload failure reports 'uncertain', never 'uploaded'." },
   { id = "M6", name = "operate a real app", about = "rt.serve — a capability-gated HTTP listener; then the guide's ship gate verbatim: a small webhook processor deployed on jsrt, updated, broken, inspected, rolled back — every step committed evidence." },
   { id = "M7", name = "load and ship", about = "Cold start on 1,000 scripts (p50/p95 + steady RSS), op overhead on 10,000 calls, a one-hour timers/network soak for retained handles — committed results with machine and commit; laptop numbers stay lab numbers." },
 ]
-up_next = { milestone = "M3", step = "3.1", title = "The manifest completes — and a custom module loader that refuses imports outside declared read paths" }
-
-# M3 — capabilities
-[[extra.planned]]
-milestone = "M3"
-step = "3.1"
-title = "The manifest completes — paths, destinations, budgets; and a module loader that resolves imports only inside declared read paths (today's loader would import any file)"
-
-[[extra.planned]]
-milestone = "M3"
-step = "3.2"
-title = "The escape suite — .., symlinks, userinfo, port and scheme tricks; every documented bypass refused"
+up_next = { milestone = "M4", step = "4.1", title = "Worker processes — an isolate per process, supervised, with OS-enforced CPU and memory budgets" }
 
 # M4 — supervise
 [[extra.planned]]
