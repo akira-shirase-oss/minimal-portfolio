@@ -1,0 +1,107 @@
+{
+  "executed_utc": "2026-11-06T22:10:21.729Z",
+  "kind": "One-weight local training experiment and numerical checks; not a language-model benchmark",
+  "runtime": "v24.18.0",
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368
+  },
+  "dataset": [
+    {
+      "input": 2,
+      "target": 6
+    }
+  ],
+  "dataset_sha256": "5bf6452cb700dd0fa7aa1c5e23099009835ae216d66b81e3da448f139ec5e16a",
+  "source": "Complete JavaScript example in our-first-training-loop.md",
+  "source_sha256": "562c90a1fa4698002f1e5e5186f42f5d2bf23893b758a355b09fc1e2696de9ce",
+  "local_source_sha256": "68faf4d66011faa2aa361ac3c93167d2bd76d69e6f841527b28040de2d281b1e",
+  "settings": {
+    "starting_weight": 2,
+    "learning_rate": 0.1,
+    "updates": 3,
+    "gradient_probe_distance": 0.5
+  },
+  "criteria": {
+    "numerical_absolute_or_relative_tolerance": 1e-10,
+    "expected_trace": "four rows: weights 2, 2.8, 2.96, 2.992",
+    "default_loss_must_decrease_each_update": true
+  },
+  "history": [
+    {
+      "step": 0,
+      "weight": 2,
+      "prediction": 4,
+      "loss": 4,
+      "gradient": -8
+    },
+    {
+      "step": 1,
+      "weight": 2.8,
+      "prediction": 5.6,
+      "loss": 0.16000000000000028,
+      "gradient": -1.6000000000000014
+    },
+    {
+      "step": 2,
+      "weight": 2.96,
+      "prediction": 5.92,
+      "loss": 0.006400000000000012,
+      "gradient": -0.3200000000000003
+    },
+    {
+      "step": 3,
+      "weight": 2.992,
+      "prediction": 5.984,
+      "loss": 0.0002560000000000005,
+      "gradient": -0.06400000000000006
+    }
+  ],
+  "checks": [
+    {
+      "name": "three updates produce starting point plus three results",
+      "passed": true
+    },
+    {
+      "name": "fresh numerical gradients match the independently derived quadratic slope",
+      "passed": true
+    },
+    {
+      "name": "default training loss decreases on each of the three updates",
+      "passed": true
+    },
+    {
+      "name": "starting above the target decreases the weight",
+      "passed": true
+    },
+    {
+      "name": "exact-match zero gradient leaves the weight unchanged",
+      "passed": true
+    },
+    {
+      "name": "smaller rate gives the independently calculated first update",
+      "passed": true
+    },
+    {
+      "name": "oversized rate causes the expected training-loss regression",
+      "passed": true
+    },
+    {
+      "name": "zero rate is a frozen-weight baseline",
+      "passed": true
+    },
+    {
+      "name": "local learning file and published example produce identical traces",
+      "passed": true
+    }
+  ],
+  "conclusions": {
+    "program_checks": "PASS",
+    "training_loss_on_this_pair": "DECREASED",
+    "unseen_data_quality": "NOT_EVALUATED",
+    "qwen_weights_changed": false
+  }
+}

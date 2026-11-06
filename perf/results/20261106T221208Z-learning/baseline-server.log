@@ -1,0 +1,17 @@
+Building site...
+-> Creating 104 pages (0 orphan) and 7 sections
+Done in 46ms.
+
+Listening for changes in /private/var/folders/sb/mn20kb4x125493sdz6s5bbpr0000gn/T/404human-learning-load-ygsn0i47/baseline/{zola.toml,content,static,templates}
+Press Ctrl+C to stop
+
+Web server is available at http://127.0.0.1:1121 (bound to 127.0.0.1:1121)
+
+Change detected @ 2026-11-06 17:12:09
+-> Static file changed /private/var/folders/sb/mn20kb4x125493sdz6s5bbpr0000gn/T/404human-learning-load-ygsn0i47/baseline/static/88793c8c28db63d8c932b12a31586101.txt
+-> Static file changed /private/var/folders/sb/mn20kb4x125493sdz6s5bbpr0000gn/T/404human-learning-load-ygsn0i47/baseline/static/site.webmanifest
+-> Static file changed /private/var/folders/sb/mn20kb4x125493sdz6s5bbpr0000gn/T/404human-learning-load-ygsn0i47/baseline/static/site.js
+-> Static file changed /private/var/folders/sb/mn20kb4x125493sdz6s5bbpr0000gn/T/404human-learning-load-ygsn0i47/baseline/static/style.css
+-> Static file changed /private/var/folders/sb/mn20kb4x125493sdz6s5bbpr0000gn/T/404human-learning-load-ygsn0i47/baseline/static/icon-512.png
+Done in 0ms.
+

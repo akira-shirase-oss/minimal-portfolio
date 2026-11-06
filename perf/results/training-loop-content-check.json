@@ -1,0 +1,19 @@
+{
+  "checked_utc": "2026-11-06T22:11:39.219459+00:00",
+  "kind": "Generated-output checks; not a rendered layout audit",
+  "html_pages": 113,
+  "internal_links_and_anchors_checked": 1480,
+  "valid_jsonld_blocks": 113,
+  "broken_links": [],
+  "chapter_3": {
+    "canvas_count": 0,
+    "external_scripts": [],
+    "only_existing_theme_button": true,
+    "interactive_module_removed": true
+  },
+  "browser_verification": {
+    "status": "limited",
+    "detail": "Extension navigation fails with timeoutMs error. Native browser observation worked on the earlier local canvas version, but the user switched tabs during checking. Final text-only rendering has not been visually audited."
+  },
+  "passed": true
+}
