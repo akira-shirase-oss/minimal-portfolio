@@ -44,7 +44,7 @@
   {#- What's still ahead: a step leaves the list once it's published or being built. #}
   {%- set planned = [p for p in all_planned if p.milestone == milestone.id and not (p.step and (p.step in published or (has_next and p.step == up_next.step)))] %}
   <section aria-labelledby="{{ milestone.id | lower }}">
-    <h2 id="{{ milestone.id | lower }}"><code>{{ milestone.id }}</code> · {{ milestone.name }}{% if has_next %} <small>● in progress</small>{% endif %}</h2>
+    <h2 id="{{ milestone.id | lower }}"><code>{{ milestone.id }}</code> · {{ milestone.name }}{% if has_next %} <small><mark>● in progress</mark></small>{% endif %}</h2>
     <p>{{ milestone.about }}</p>
     {%- if entries or has_next or planned %}
     <table border="1" cellpadding="6" cellspacing="0" width="100%">

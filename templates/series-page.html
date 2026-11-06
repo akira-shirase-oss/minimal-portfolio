@@ -8,7 +8,7 @@
 {%- set log = get_section(path=page.ancestors[-1], metadata_only=true) %}
 <p><small>
   <a href="{{ log.permalink }}">{{ log.extra.short_title or log.title }} build log</a>
-  <span aria-hidden="true">›</span> <code>{{ page.extra.milestone }} · {{ page.extra.step }}</code>
+  <span aria-hidden="true">›</span> <mark><code>{{ page.extra.milestone }} · {{ page.extra.step }}</code></mark>
 </small></p>
 {% endblock series_line %}
 

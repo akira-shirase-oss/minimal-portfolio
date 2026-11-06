@@ -19,7 +19,7 @@
       <td><code>{{ milestone.id }}</code></td>
       <td>{{ milestone.name }}</td>
       <td nowrap><progress value="{{ count }}" max="{{ entries | length }}"></progress> {% if state == "upcoming" %}next{% else %}{{ count }}{% endif %}</td>
-      <td nowrap>{{ "● in progress" if state == "current" else ("done" if state == "done" else "upcoming") }}</td>
+      <td nowrap>{% if state == "current" %}<mark>● in progress</mark>{% else %}{{ "done" if state == "done" else "upcoming" }}{% endif %}</td>
     </tr>
   {%- endfor %}
   </tbody>

@@ -9,8 +9,8 @@ body              { max-width: 1180px; margin: 0 auto; padding: 0 24px;
                     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
                     font-size: 15px; line-height: 1.55; }
 :root             { color-scheme: light dark; }
-html[data-theme="dark"]  { color-scheme: dark; }
-html[data-theme="light"] { color-scheme: light; }
+html[data-theme="dark"]  { color-scheme: dark;  background: #141414; color: #e8e8e8; }
+html[data-theme="light"] { color-scheme: light; background: #fdfdfc; color: #1a1a1a; }
 /* The theme toggle is a button drawn as a text link — same size, same color. */
 button.link       { background: none; border: none; padding: 0; font: inherit;
                     color: LinkText; text-decoration: underline; cursor: pointer; }

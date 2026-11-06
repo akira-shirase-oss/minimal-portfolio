@@ -41,7 +41,7 @@
   {%- set latest = log.pages[0] %}
 <section>
   <fieldset>
-    <legend><b>{{ log.extra.short_title or log.title }}</b></legend>
+    <legend><b><mark>{{ log.extra.short_title or log.title }}</mark></b></legend>
     <p><b>{{ log.description }}</b></p>
     <p>
       <kbd>{{ log.pages | length }} entries</kbd>
