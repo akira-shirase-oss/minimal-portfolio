@@ -140,6 +140,7 @@ def main():
             candidate = phase("candidate-home", candidate_url, "/", 50000, 32)
             check("homepage regression", candidate["rps"] >= base["rps"] * 0.75 and candidate["p99_ms"] <= max(base["p99_ms"] * 2, 25), {"baseline_rps": base["rps"], "candidate_rps": candidate["rps"], "baseline_p99_ms": base["p99_ms"], "candidate_p99_ms": candidate["p99_ms"]})
             for label, route, concurrency in (
+                ("homepage-records-c256", "/", 256),
                 ("learning-c8", "/learn/", 8),
                 ("track-c64", "/learn/model-engineering/", 64),
                 ("chapter-c256", "/learn/model-engineering/weights-predictions-and-loss/", 256),
@@ -147,8 +148,8 @@ def main():
                 ("roadmap-c1024", "/learn/model-engineering/roadmap/", 1024),
                 ("blog-c64", "/posts/why-im-learning-how-models-learn/", 64),
             ):
-                phase(label, candidate_url, route, 200000, concurrency)
-            check("million-request feature run", sum(p["completed"] for p in result["phases"][2:]) >= 1000000, "Six routes, 200,000 requests each; concurrency 8 through 1,024.")
+                phase(label, candidate_url, route, 1000000 if route == "/" else 200000, concurrency)
+            check("million-request feature run", sum(p["completed"] for p in result["phases"][2:]) >= 2200000, "Homepage: 1,000,000 requests; six learning routes: 200,000 each; concurrency 8 through 1,024.")
             try:
                 get(candidate_url + "/learn/model-engineering/planned-chapter-does-not-exist/")
                 check("missing chapter", False, "unexpected success")

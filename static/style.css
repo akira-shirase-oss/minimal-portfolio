@@ -37,6 +37,8 @@ h3                { margin-top: 40px; }
 .post-body table th, .post-body table td { border: 1px solid; }
 .post-body pre      { padding: 12px 14px; }
 img                 { max-width: 100%; height: auto; }
+.mobile-label       { display: none; }
+fieldset            { min-inline-size: 0; }
 
 /* Phones and small tablets: tables scroll sideways instead of shrinking their
    cells into wraps; the masthead's two cells stack on the narrowest screens. */
@@ -45,10 +47,23 @@ img                 { max-width: 100%; height: auto; }
   section, article { margin: 40px 0; }
   table            { display: block; overflow-x: auto; }
   th, td           { padding: 6px 10px; }
-  /* First column pins while the rest scrolls: the row label (step code,
-     milestone, project name) never leaves the screen. */
-  td:first-child, th:first-child { position: sticky; left: 0; }
-  td:first-child { background: Canvas; }
+  th, td           { vertical-align: top; }
+  /* Keep comparison columns readable; wide tables scroll inside the page.
+     A pinned prose column used to cover neighbouring cells while scrolling. */
+  .post-body th, .post-body td { min-width: 8ch; }
+}
+/* Descriptive homepage rows need the phone's full width. Keep the real column
+   headers available to assistive technology and repeat visible labels per row.
+   No script or second copy of the data is needed. */
+@media (max-width: 680px) {
+  .mobile-records, .mobile-records tbody, .mobile-records tr,
+  .mobile-records td { display: block; width: auto; }
+  .mobile-records { border: 0; overflow: visible; }
+  .mobile-records thead { position: absolute; width: 1px; height: 1px;
+                         padding: 0; overflow: hidden; clip-path: inset(50%); }
+  .mobile-records tr { margin-bottom: 14px; border: 1px solid; }
+  .mobile-records td { border: 0; text-align: left; overflow-wrap: anywhere; }
+  .mobile-records .mobile-label { display: inline; font-weight: bold; }
 }
 @media (max-width: 560px) {
   header table, header tbody, header tr, header td { display: block; }

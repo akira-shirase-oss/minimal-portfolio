@@ -27,6 +27,7 @@ This chapter follows [weights, predictions, and loss](@/learn/model-engineering/
 | Gradient magnitude | The size of the gradient's rate of change, ignoring its sign. |
 | Learning rate | A positive multiplier used with the gradient to control update size. |
 | Basic update rule | New weight = old weight − (learning rate × gradient). |
+| Fresh gradient | Recalculate at the current weight before the next update. The learning rate can stay fixed. |
 
 The question behind the sign is always: **what happens to loss if the weight increases a little from its current value?**
 
@@ -170,6 +171,16 @@ Hold the starting weight and gradient fixed. A smaller learning rate gives a sma
 
 Both changes increase the weight, but the second is smaller. Direction and size remain separate. This comparison fixes the gradient to explain scaling; a training loop will need to evaluate the model again after an update.
 
+## Recalculate at the new weight
+
+The gradient describes the loss around the **current weight**. After changing that weight, calculate a fresh gradient before the next update.
+
+In this example, the gradient is **−8 at weight 2**, but **−1.6 at weight 2.8**. We have moved closer to the best weight, 3, and the loss curve is less steep there. The smaller gradient would give a smaller next update even if the learning rate stays at **0.1**.
+
+The gradient comes from the model, data, and loss at the current weights. The learning rate is a setting we choose; it can stay fixed across steps. Later we can explore schedules that deliberately change it.
+
+Recalculation is the rule. Different weights do not guarantee different gradient values for every possible loss function; these two values belong to our particular squared-error example. No repeated training loop has been run yet.
+
 ## Check your understanding
 
 Try these before opening the answers:
@@ -181,6 +192,7 @@ Try these before opening the answers:
 5. Why do we need to control update size as well as direction?
 6. In the worked update, why does subtracting learning rate × gradient increase the weight?
 7. Keeping the gradient fixed, does a smaller learning rate make the weight change smaller or larger?
+8. After the weight changes, should the next update use a fresh gradient or automatically reuse −8? Must the learning rate change too?
 
 <details>
 <summary>Check the answers</summary>
@@ -193,6 +205,7 @@ Try these before opening the answers:
 <li>A move in a helpful direction can go too far. The weight-5 example produces a larger loss than we started with.</li>
 <li>0.1 × (−8) = −0.8. Subtracting that negative value adds 0.8, so 2 becomes 2.8.</li>
 <li>Smaller, for this basic gradient-descent rule. The rate multiplies the same gradient.</li>
+<li>Calculate a fresh gradient at the current weight. The learning rate can stay fixed.</li>
 </ol>
 </details>
 

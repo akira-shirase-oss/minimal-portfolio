@@ -130,6 +130,12 @@ reverted at Akira's request: "keep your interactive version, without the referen
 
 ## Preview on your computer
 
+The homepage's Running now, Projects, and Numbers tables keep their columns on
+desktop and become labelled rows at widths of 680px or less. The same values are
+rendered once, with no JavaScript needed for this layout. Real column headers
+remain available to assistive technology. Other wide tables scroll within the
+page; their first column is no longer pinned over neighbouring text.
+
 ```
 cd ~/Desktop/Learning/akira-shirase-oss/minimal-portfolio
 zola serve
