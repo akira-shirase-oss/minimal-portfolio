@@ -1,0 +1,25 @@
+{
+  "html_pages": 112,
+  "internal_links_and_anchors_checked": 1460,
+  "json_ld": "valid on every page",
+  "new_revision_anchors": true,
+  "gradient_estimate": "-8",
+  "learning_rate_cases": [
+    {
+      "rate": "0.1",
+      "weight": "2.8",
+      "prediction": "5.6",
+      "loss": "0.16"
+    },
+    {
+      "rate": "0.01",
+      "weight": "2.08",
+      "prediction": "4.16",
+      "loss": "3.3856"
+    }
+  ],
+  "failures": [],
+  "scope": "Built content and worked arithmetic; not a training benchmark or interactive browser test",
+  "source_commit": "feaf8905f39b0c0f01faa0dd0d2d076356b868ad",
+  "checked_utc": "2026-11-06T21:23:56.512741+00:00"
+}
