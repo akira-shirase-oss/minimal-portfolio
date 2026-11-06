@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "early build — M5 stdlib done; M6 (a real app) next"
+status = "early build — M6.1 (rt.serve) done; the webhook app next"
 short_title = "jsrt"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, pinned deno_core + V8, the rt.* namespace, an error taxonomy where every way a run ends has its own exit code, and an isolate watchdog that can actually kill a CPU-bound script." },
@@ -18,14 +18,9 @@ milestones = [
   { id = "M6", name = "operate a real app", about = "rt.serve — a capability-gated HTTP listener; then the guide's ship gate verbatim: a small webhook processor deployed on jsrt, updated, broken, inspected, rolled back — every step committed evidence." },
   { id = "M7", name = "load and ship", about = "Cold start on 1,000 scripts (p50/p95 + steady RSS), op overhead on 10,000 calls, a one-hour timers/network soak for retained handles — committed results with machine and commit; laptop numbers stay lab numbers." },
 ]
-up_next = { milestone = "M6", step = "6.1", title = "rt.serve — a capability-gated HTTP listener; a crashing handler can't take the host down" }
+up_next = { milestone = "M6", step = "6.2", title = "The webhook app — deployed on jsrt, updated, broken, inspected, rolled back; the guide's ship gate verbatim" }
 
 # M6 — operate a real app
-[[extra.planned]]
-milestone = "M6"
-step = "6.1"
-title = "rt.serve — a capability-gated HTTP listener; a crashing handler can't take the host down"
-
 [[extra.planned]]
 milestone = "M6"
 step = "6.2"
