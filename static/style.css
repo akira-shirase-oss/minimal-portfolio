@@ -37,3 +37,16 @@ h3                { margin-top: 40px; }
 .post-body table th, .post-body table td { border: 1px solid; }
 .post-body pre      { padding: 12px 14px; }
 img                 { max-width: 100%; height: auto; }
+
+/* Phones and small tablets: tables scroll sideways instead of shrinking their
+   cells into wraps; the masthead's two cells stack on the narrowest screens. */
+@media (max-width: 860px) {
+  body             { padding: 0 14px; }
+  section, article { margin: 40px 0; }
+  table            { display: block; overflow-x: auto; }
+  th, td           { padding: 6px 10px; }
+}
+@media (max-width: 560px) {
+  header table, header tbody, header tr, header td { display: block; }
+  h1               { font-size: 1.6em; }
+}
