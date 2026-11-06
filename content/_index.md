@@ -4,7 +4,7 @@ title = "404human"
 [extra]
 # The build logs, main project first. Each is a section using series.html. The home
 # page draws one panel per log; the terminal's `tail` shows the newest entry of any.
-logs = ["colophon/_index.md", "service-monitor/_index.md"]
+logs = ["colophon/_index.md", "service-monitor/_index.md", "js-runtime/_index.md"]
 
 # "Status": what's running now, drawn as live processes on the home page.
 # `log = "<section>/_index.md"` fills in that build log's step and test count by
@@ -22,6 +22,12 @@ link = "@/service-monitor/_index.md"
 log = "service-monitor/_index.md"
 
 [[extra.now]]
+process = "js-runtime"
+what = "A purpose-built JavaScript host in Rust — V8 through deno_core; the engine borrowed, the capabilities and lifecycle ours."
+link = "@/js-runtime/_index.md"
+log = "js-runtime/_index.md"
+
+[[extra.now]]
 process = "rust-knowledge-base"
 what = "Claude Code studying the whole Rust Book, checked by exams the AI can’t see."
 link = "@/posts/i-made-an-ai-read-the-rust-book.md"
@@ -35,6 +41,13 @@ writing = true
 # Projects, newest first. Copy a block to add one.
 # link: a web address, or "@/posts/<file>.md" for one of your posts.
 # status: one or two words, e.g. "live", "shipped", "write-up", "in progress".
+[[extra.projects]]
+name = "jsrt"
+about = "A JavaScript runtime that is a host, not an engine: V8 through Deno's own deno_core, Rust owning capabilities, the lifecycle, and honest errors. Built to operate a real app, one proven milestone at a time."
+link = "@/js-runtime/_index.md"
+year = 2026
+status = "in progress"
+
 [[extra.projects]]
 name = "Colophon CMS"
 about = "A content management system that can prove what it published and survives being killed at any moment. Rust and Svelte, open source, every step logged here."
