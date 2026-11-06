@@ -1,0 +1,38 @@
+{
+  "checked_utc": "2026-11-06T21:33:05.408475+00:00",
+  "kind": "Static generated-output checks; not rendered browser verification",
+  "html_pages": 112,
+  "internal_links_and_anchors_checked": 1460,
+  "valid_jsonld_blocks": 112,
+  "homepage_tables": [
+    {
+      "table": "Running now",
+      "columns": 4,
+      "rows": 5,
+      "labels_present": true,
+      "column_headers_preserved": true
+    },
+    {
+      "table": "Projects",
+      "columns": 4,
+      "rows": 5,
+      "labels_present": true,
+      "column_headers_preserved": true
+    },
+    {
+      "table": "Measured results",
+      "columns": 3,
+      "rows": 6,
+      "labels_present": true,
+      "column_headers_preserved": true
+    }
+  ],
+  "fresh_gradient_revision_present": true,
+  "broken_links": [],
+  "visual_qa": {
+    "status": "blocked",
+    "reason": "CUA browser navigation, DOM snapshots and screenshots fail with timeoutMs error, including after runtime reset; native Chrome binding also unavailable. User supplied the before screenshot.",
+    "tested_viewport_widths": []
+  },
+  "passed": true
+}

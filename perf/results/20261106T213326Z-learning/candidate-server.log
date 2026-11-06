@@ -1,0 +1,9 @@
+Building site...
+-> Creating 104 pages (0 orphan) and 7 sections
+Done in 45ms.
+
+Listening for changes in /Users/vinaysandhu/Desktop/Learning/akira-shirase-oss/minimal-portfolio/{zola.toml,content,static,templates}
+Press Ctrl+C to stop
+
+Web server is available at http://127.0.0.1:1122 (bound to 127.0.0.1:1122)
+
