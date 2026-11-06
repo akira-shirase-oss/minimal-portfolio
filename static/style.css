@@ -45,8 +45,15 @@ img                 { max-width: 100%; height: auto; }
   section, article { margin: 40px 0; }
   table            { display: block; overflow-x: auto; }
   th, td           { padding: 6px 10px; }
+  /* First column pins while the rest scrolls: the row label (step code,
+     milestone, project name) never leaves the screen. */
+  td:first-child, th:first-child { position: sticky; left: 0; }
+  td:first-child { background: Canvas; }
 }
 @media (max-width: 560px) {
   header table, header tbody, header tr, header td { display: block; }
+  header td        { position: static; }
   h1               { font-size: 1.6em; }
+  /* Multi-word step codes wrap on phones; dates still never break. */
+  td > code        { white-space: normal; }
 }
