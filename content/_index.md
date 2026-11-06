@@ -46,7 +46,7 @@ name = "jsrt"
 about = "A JavaScript runtime that is a host, not an engine: V8 through Deno's own deno_core, Rust owning capabilities, the lifecycle, and honest errors. Built to operate a real app, one proven milestone at a time."
 link = "@/js-runtime/_index.md"
 year = 2026
-status = "in progress"
+status = "roadmap done"
 
 [[extra.projects]]
 name = "Colophon CMS"
