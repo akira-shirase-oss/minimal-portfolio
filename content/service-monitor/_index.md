@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "in progress"
+status = "shipped v1 (24h soak still owed)"
 short_title = "Service Monitor"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, contract-first domain types, the honest-states dashboard shell." },
@@ -16,30 +16,10 @@ milestones = [
   { id = "M4", name = "operate", about = "Retention, disk guardrails, backup and restore, and running on its own host." },
   { id = "M5", name = "ship", about = "Auth, the rest of the SSRF hardening, load runs, and a release someone else can install." },
 ]
-up_next = { milestone = "M4", step = "4.4", title = "Deploying it off the laptop" }
-
-[[extra.planned]]
-milestone = "M4"
-step = "4.4"
-title = "Deploying it off the laptop"
+up_next = { milestone = "M5", step = "soak", title = "The 24-hour soak — the one run still owed" }
 
 [[extra.planned]]
 milestone = "M5"
-step = "5.1"
-title = "Management auth — denied means denied"
-
-[[extra.planned]]
-milestone = "M5"
-step = "5.2"
-title = "The rest of SSRF: redirects and DNS"
-
-[[extra.planned]]
-milestone = "M5"
-step = "5.3"
-title = "Load runs and a day-long soak"
-
-[[extra.planned]]
-milestone = "M5"
-step = "5.4"
-title = "A release another developer can install"
+step = "soak"
+title = "The 24-hour soak — the one run still owed"
 +++
