@@ -75,12 +75,41 @@
   {%- endif %}
   {%- include "partials/json-ld.html" %}
 
+  <script>
+    // Text light/dark toggle — the only script on the site. Runs before paint so a
+    // saved choice never flashes; with no saved choice the system setting wins.
+    (function () {
+      var root = document.documentElement;
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+      } catch (e) {}
+      document.addEventListener("DOMContentLoaded", function () {
+        var b = document.getElementById("theme-toggle");
+        if (!b) return;
+        function isDark() {
+          return root.dataset.theme ? root.dataset.theme === "dark"
+            : matchMedia("(prefers-color-scheme: dark)").matches;
+        }
+        function show() { b.textContent = isDark() ? "light" : "dark"; }
+        b.addEventListener("click", function () {
+          root.dataset.theme = isDark() ? "light" : "dark";
+          try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+          show();
+        });
+        b.hidden = false;
+        show();
+      });
+    })();
+  </script>
   <link rel="stylesheet" href="{{ get_url(path='style.css', cachebust=true) }}">
   <link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
 </head>
 <body>
   <!-- The masthead is a table: an ASCII mark on the left, the name and nav
-       beside it. There is no logo file — there is a mark, in text. -->
+       beside it. There is no logo file — there is a mark, in text.
+       The home page overrides this block with the full hero masthead. -->
+  {% block header %}
   <header>
     <table cellpadding="0" cellspacing="0" border="0">
       <tr>
@@ -98,11 +127,13 @@
     </table>
     <nav aria-label="Site"><p>
       [ <a href="{{ get_url(path='@/_index.md') }}">Home</a> ]
-      [ <a href="{{ get_url(path='@/_index.md') }}#status">Running now</a> ]
-      [ <a href="{{ get_url(path='@/_index.md') }}#build-log">Build log</a> ]
+      [ <a href="{{ get_url(path='@/_index.md') }}#running">Running now</a> ]
+      [ <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a> ]
       [ <a href="{{ get_url(path='@/_index.md') }}#writing">Writing</a> ]
+      [ <button id="theme-toggle" class="link" type="button" hidden>dark</button> ]
     </p></nav>
   </header>
+  {% endblock header %}
 
   <main>
     {% block ticker %}{% endblock ticker %}
@@ -118,7 +149,7 @@
       · <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
       · <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">rss</a>
     </small></p>
-    <noscript><p><small>(JavaScript is off. You lost nothing — there was none.)</small></p></noscript>
+    <noscript><p><small>(JavaScript is off. You lost the theme toggle — the only script on the site. Everything else works.)</small></p></noscript>
   </footer>
 </body>
 </html>

@@ -1,5 +1,33 @@
 {% extends "base.html" %}
 
+{#- The home page is its own masthead: the ASCII mark on the left, the words
+    from _index.md on the right, the nav underneath — one block, no chrome. #}
+{% block header %}
+<header>
+  <table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td valign="middle">
+<pre>  ┌─ 404human ─────────┐
+  │  $ whoami          │
+  └────────────────────┘</pre>
+      </td>
+      <td width="28"></td>
+      <td valign="middle">{{ section.content | safe }}</td>
+    </tr>
+  </table>
+  <nav aria-label="Site"><p>
+    [ <a href="#running">Running now</a> ]
+    [ <a href="#projects">Projects</a> ]
+    [ <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a> ]
+    [ <a href="#numbers">Numbers</a> ]
+    [ <a href="#how">How I work</a> ]
+    [ <a href="#writing">Writing</a> ]
+    [ <a href="#find">Find me</a> ]
+    [ <button id="theme-toggle" class="link" type="button" hidden>dark</button> ]
+  </p></nav>
+</header>
+{% endblock header %}
+
 {% block content %}
 {#- Every build log listed in content/_index.md (`logs`), main project first.
     Tera 2 can't join lists, so the totals are gathered with set_global. #}
@@ -16,27 +44,6 @@
   {%- endif %}
 {%- endfor %}
 
-<!-- The hero is the markdown itself — the masthead table gives it a mark
-     on the left and the words on the right, no terminal chrome needed. -->
-<table cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td valign="middle">
-<pre>  ┌─ 404human ─────────┐
-  │  $ whoami          │
-  └────────────────────┘</pre>
-    </td>
-    <td width="28"></td>
-    <td valign="middle">{{ section.content | safe }}</td>
-  </tr>
-</table>
-
-{%- if newest %}
-{%- set newest_log = get_section(path=newest.ancestors | last, metadata_only=true) %}
-<p><small>$ tail -1 build.log —
-  <code>{{ newest_log.extra.short_title or newest_log.title }} · {{ newest.extra.milestone }} · {{ newest.extra.step }}</code>
-  <a href="{{ newest.permalink }}">{{ newest.extra.short_title or newest.title }}</a></small></p>
-{%- endif %}
-
 <marquee scrollamount="4" behavior="scroll">status ● {{ log_entries + (posts.pages | length) }} write-ups on file
   {%- for log_path in logs %}
     {%- set one_log = get_section(path=log_path) %}
@@ -46,14 +53,15 @@
 
 <hr>
 
+<!-- ======================= RUNNING NOW ======================= -->
 {%- if section.extra.now %}
-<section id="status">
+<section id="running">
   <h2>Running now</h2>
-  <p>What's actually in flight — drawn the way it's thought about: as live processes, not as a bio.</p>
-  <pre>$ ps aux | grep -v idle</pre>
-  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+  <p>What’s actually in flight — drawn the way it’s thought about: as live processes, not as a bio.</p>
+  <p><code>$ ps aux | grep -v idle</code></p>
+  <table border="1" width="100%">
     <thead>
-      <tr><th width="70">PID</th><th width="180">PROCESS</th><th width="110">STATE</th><th>WHAT</th></tr>
+      <tr><th width="60">PID</th><th width="160">PROCESS</th><th width="110">STATE</th><th>WHAT</th></tr>
     </thead>
     <tbody>
     {%- for item in section.extra.now %}
@@ -63,8 +71,8 @@
       {%- set href = item.link | default(value="") %}
     {%- endif %}
       <tr>
-        <td><code>1{{ loop.index }}0{{ loop.index }}</code></td>
-        <td>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</td>
+        <td><code>10{{ loop.index }}</code></td>
+        <td><b>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</b></td>
         <td>{{ "always" if item.writing else ("running" if item.log else "complete") }}</td>
         <td>
           {{ item.what }}
@@ -72,10 +80,10 @@
             {%- set item_log = get_section(path=item.log) %}
             {%- if item_log.pages %}
             {%- set now_on = item_log.pages[0] %}
-            — now at {{ now_on.extra.milestone }} · {{ now_on.extra.step }}{% if now_on.extra.tests is defined %} · {{ now_on.extra.tests }} tests{% endif %}
+            — {{ now_on.extra.milestone }} · {{ now_on.extra.step }}{% if now_on.extra.tests is defined %}, {{ now_on.extra.tests }} tests{% endif %}
             {%- endif %}
           {%- elif item.writing %}
-            — {{ log_entries + (posts.pages | length) }} write-ups
+            — {{ log_entries + (posts.pages | length) }} write-ups on file
           {%- elif item.detail %}
             — {{ item.detail }}
           {%- endif %}
@@ -89,58 +97,17 @@
 <hr>
 {%- endif %}
 
-{%- if log_entries > 0 %}
-<section id="build-log">
-  <h2>Build log</h2>
-  <p>{{ log_entries }} tested steps across {{ logs | length }} projects — every one of them written up.</p>
-  {%- for log_path in logs %}
-  {%- set log = get_section(path=log_path) %}
-  {#- Oldest first, the way a log reads. #}
-  {%- set entries = log.pages | reverse %}
-  {%- if entries %}
-  {%- set log_name = log.extra.short_title or log.title %}
-  <h3><a href="{{ log.permalink }}">{{ log_name }}</a>
-    {%- if log.extra.status %} <small>· {{ log.extra.status }}</small>{% endif %}
-    <small>· {{ entries | length }} entries</small></h3>
-  {% include "partials/log-panel.html" %}
-  <table border="1" cellpadding="6" cellspacing="0" width="100%">
-    <tbody>
-      {%- for entry in entries | reverse %}
-      {%- if loop.index0 < 3 %}
-      <tr>
-        <td width="90"><code>{{ entry.extra.step }}</code></td>
-        <td><details><summary>{{ entry.extra.short_title or entry.title }}</summary>
-          {%- if entry.description %}<p>{{ entry.description }}</p>{% endif %}
-          <p><a href="{{ entry.permalink }}">Read the full entry →</a></p>
-        </details></td>
-        <td width="90" align="right"><time datetime="{{ entry.date }}">{{ entry.date | date(format="%Y-%m-%d") }}</time></td>
-      </tr>
-      {%- endif %}
-      {%- endfor %}
-      <tr>
-        <td></td>
-        <td colspan="2"><a href="{{ log.permalink }}">All {{ entries | length }} entries, by milestone →</a></td>
-      </tr>
-    </tbody>
-  </table>
-  {%- endif %}
-  {%- endfor %}
-</section>
-
-<hr>
-{%- endif %}
-
+<!-- ======================= PROJECTS ======================= -->
 {%- if section.extra.projects %}
 <section id="projects">
   <h2>Projects</h2>
-  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+  <table border="1" width="100%">
     <thead>
-      <tr><th width="70">Year</th><th width="240">Project</th><th>What it is</th></tr>
+      <tr><th width="170">Project</th><th width="70">Year</th><th width="110">Status</th><th>What it is</th></tr>
     </thead>
     <tbody>
     {%- for project in section.extra.projects %}
       <tr>
-        <td><code>{{ project.year | default(value="") }}</code></td>
         <td>
         {%- if project.link %}
           {%- if project.link is starting_with(pat="@/") %}
@@ -148,12 +115,13 @@
           {%- else %}
             {%- set href = project.link %}
           {%- endif %}
-          <a href="{{ href }}"><b>{{ project.name }}</b></a>
+          <b><a href="{{ href }}">{{ project.name }}</a></b>
         {%- else %}
           <b>{{ project.name }}</b>
         {%- endif %}
-        {%- if project.status %} <br><small>{{ project.status }}</small>{% endif %}
         </td>
+        <td><code>{{ project.year | default(value="") }}</code></td>
+        <td>{{ project.status | default(value="") }}</td>
         <td>{{ project.about }}</td>
       </tr>
     {%- endfor %}
@@ -164,42 +132,164 @@
 <hr>
 {%- endif %}
 
-<section id="writing">
-  <h2>Writing</h2>
-  <p>Every experiment written up, including the parts that didn't work — newest first.</p>
-  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+<!-- ======================= SPOTLIGHT ======================= -->
+<section>
+  <fieldset>
+    <legend><b>flagship — Colophon</b></legend>
+    <p><b>A CMS where “published” is a receipt, not a spinner.</b> In a book, the colophon is the note at
+    the back saying how, when and by whom it was printed. This does that for a website: every publish is a
+    numbered release, and a probe reads the release marker off the live page before the product calls it done.</p>
+    <p>
+      <kbd>PostgreSQL</kbd> is the only authority —
+      <kbd>RLS</kbd> decides who sees what —
+      <kbd>outbox</kbd> commits intent before any external call —
+      <kbd>release generations</kbd> only move forward.
+    </p>
+    <p>[ <a href="{{ get_url(path='@/colophon/_index.md') }}">The build log</a> ] — every step, including the mistakes.</p>
+  </fieldset>
+</section>
+
+<!-- ======================= NUMBERS ======================= -->
+<section id="numbers">
+  <h2>Numbers I can show, not adjectives</h2>
+  <p>House rule: <b>no claim without an executed run and stored evidence.</b> These are from committed result
+  files on laptop-class hardware — development observations, never presented as production capacity.</p>
+  <table border="1" width="100%">
     <thead>
-      <tr><th width="110">Date</th><th>Post</th><th width="110">Kind</th></tr>
+      <tr><th>Measured</th><th width="150" align="right">Number</th><th>What it does and doesn’t prove</th></tr>
     </thead>
     <tbody>
-    {%- for post in posts.pages %}
       <tr>
-        <td><time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d") }}</time></td>
-        <td><a href="{{ post.permalink }}"><b>{{ post.title }}</b></a>
-          {%- if post.description %}<br><small>{{ post.description }}</small>{% endif %}</td>
-        <td><code>{{ post.extra.kind | default(value="—") }}</code></td>
+        <td>Warm baseline, 30 min sustained</td>
+        <td align="right"><b>540,063 req</b></td>
+        <td>300/s with zero failures on this machine. Proves the path holds steady load; says nothing about your hardware.</td>
       </tr>
-    {%- else %}
-      <tr><td colspan="3">No posts yet.</td></tr>
-    {%- endfor %}
+      <tr>
+        <td>Noisy-agent isolation</td>
+        <td align="right"><b>600 refused/s</b></td>
+        <td>A token past quota is throttled inside its own auth lookup while editors beside it hold their latency.</td>
+      </tr>
+      <tr>
+        <td>Import at true scale</td>
+        <td align="right"><b>10,000 records</b></td>
+        <td>A real import, not a loop over a sample labelled “scale”.</td>
+      </tr>
+      <tr>
+        <td>Disaster restore drill</td>
+        <td align="right"><b>400 s</b></td>
+        <td>Encrypted capture to serving on clean infrastructure — rehearsed for real, not documented in hope.</td>
+      </tr>
+      <tr>
+        <td>Full load runs, every scenario</td>
+        <td align="right"><b>≥ 1,000,000 req</b></td>
+        <td>The standing bar for anything that serves traffic; misses fail and get investigated, not re-run till green.</td>
+      </tr>
+      <tr>
+        <td>Hidden-test Rust exam</td>
+        <td align="right"><b>59/59</b></td>
+        <td>The AI couldn’t see the questions or run a compiler. Decoys included.</td>
+      </tr>
     </tbody>
   </table>
 </section>
 
-{%- set x = config.extra.x_handle %}
-{%- set gh = config.extra.github %}
-{%- set mail = config.extra.email %}
-{%- if x or gh or mail %}
 <hr>
-<section id="contact">
+
+<!-- ======================= HOW I WORK ======================= -->
+<section id="how">
+  <h2>How the work is judged</h2>
+  <dl>
+    <dt><b>Proof over breadth.</b></dt>
+    <dd>A feature counts when its <i>failure</i> behaviour is tested and the evidence is stored — never when
+    the screen exists. Every feature ships with the trio: regression tests in CI, a separate testbed app
+    driving the real HTTP API, and a load scenario with committed results.</dd>
+
+    <dt><b>Truthful states.</b></dt>
+    <dd><del>“Accepted” presented as “done”</del> is the industry’s favorite bug. Here an accepted publish is
+    <mark>pending</mark> until a probe sees it live, and an unmeasurable check stays <code>uncertain</code>
+    rather than borrow confidence.</dd>
+
+    <dt><b>Kill it at any moment.</b></dt>
+    <dd>Crash tests have catalogue numbers (F01–F09 and counting). Bugs get a replayable seed:
+    <kbd>colophon-sim --seed N --trace</kbd>. Killing things on purpose is the demo, not the edge case.</dd>
+
+    <dt><b>Bounded everything.</b></dt>
+    <dd>Every queue, body, page, cache, retry loop and pool has a limit and a deadline — a bound you can’t
+    name is an outage you haven’t met yet.</dd>
+
+    <dt><b>No AI hype.</b></dt>
+    <dd>Agents and scripts work through the same API and the same permissions as everyone else — draft-only,
+    on budgets reserved in Postgres, never allowed to approve their own submissions. Safe automation is a
+    tested milestone, not a paragraph.</dd>
+  </dl>
+</section>
+
+<hr>
+
+<!-- ======================= WRITING ======================= -->
+<section id="writing">
+  <h2>Writing</h2>
+  <p>Every project keeps a public build log — the decisions, the dead ends, the bug that only existed in the
+  “nothing to do” path. Recent entries:</p>
+  <ul>
+    {%- for post in posts.pages %}
+    {%- if loop.index0 < 5 %}
+    <li><a href="{{ post.permalink }}">{{ post.title }}</a>{% if post.description %} — {{ post.description | truncate(length=80) }}{% endif %}</li>
+    {%- endif %}
+    {%- endfor %}
+  </ul>
+  <p>And the three projects each keep their own build log —
+    {%- for log_path in logs %}
+      {%- set log = get_section(path=log_path) %}
+      <a href="{{ log.permalink }}">{{ log.extra.short_title or log.title }}</a>{% if not loop.last %}, {% endif %}
+    {%- endfor %}
+    — every entry written up, numbers included. All writing also lives in
+    <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">the feed</a>.</p>
+</section>
+
+<hr>
+
+<!-- ======================= FAQ ======================= -->
+<section>
+  <h2>Asked plainly</h2>
+  <details>
+    <summary><b>Why build in the open, including the mistakes?</b></summary>
+    <p>Because “proof over breadth” can’t be claimed, only shown. A build log that includes the failures is
+    the difference between <i>saying</i> a system is reliable and letting you check.</p>
+  </details>
+  <details>
+    <summary><b>Is any of this usable yet?</b></summary>
+    <p>Honestly labelled: Colophon is pre-0.1 — it runs on my laptop and CI, and its own site says so.
+    The service monitor has an installed release. The runtime is mid-build. Nothing here is marketed
+    ahead of its evidence.</p>
+  </details>
+  <details>
+    <summary><b>Why Rust?</b></summary>
+    <p>Because “bounded everything” is easier to keep than to promise: one type system for the error
+    envelope, explicit deadlines on every I/O await, compilers that refuse what production would regret,
+    and simulators that replay failures deterministically.</p>
+  </details>
+  <details>
+    <summary><b>How minimal is this site, really?</b></summary>
+    <p>Zola generates it; the output is one documented stylesheet (width, font, spacing — all of it), one
+    small script for the theme toggle, no tracking, no webfonts. Layout is tables, accordions are
+    <code>&lt;details&gt;</code>, the ticker is a <code>&lt;marquee&gt;</code>. View source; it fits in your head.</p>
+  </details>
+</section>
+
+<hr>
+
+<!-- ======================= FIND ME ======================= -->
+<section id="find">
   <h2>Find me</h2>
-  <table border="1" cellpadding="6" cellspacing="0" width="100%">
-    <tbody>
-    {%- if x %}<tr><td width="140"><code>x</code></td><td><a href="https://x.com/{{ x }}">@{{ x }}</a></td></tr>{% endif %}
-    {%- if gh %}<tr><td><code>github</code></td><td><a href="https://github.com/{{ gh }}">{{ gh }}</a></td></tr>{% endif %}
-    {%- if mail %}<tr><td><code>email</code></td><td><a href="mailto:{{ mail }}">{{ mail }}</a></td></tr>{% endif %}
-    </tbody>
+  <table border="1" cellpadding="8">
+    {%- set x = config.extra.x_handle %}
+    {%- set gh = config.extra.github %}
+    {%- set mail = config.extra.email %}
+    <tr><td><b>Site</b></td><td><a href="https://404human.dev">404human.dev</a> — this one, generated by Zola in Rust</td></tr>
+    {%- if gh %}<tr><td><b>GitHub</b></td><td><a href="https://github.com/{{ gh }}">github.com/{{ gh }}</a> — every project above, public</td></tr>{% endif %}
+    {%- if x %}<tr><td><b>X</b></td><td><a href="https://x.com/{{ x }}">@{{ x }}</a> — the growth program is itself an experiment</td></tr>{% endif %}
+    {%- if mail %}<tr><td><b>Email</b></td><td><a href="mailto:{{ mail }}">{{ mail }}</a></td></tr>{% endif %}
   </table>
 </section>
-{%- endif %}
 {% endblock content %}

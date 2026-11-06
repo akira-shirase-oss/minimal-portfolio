@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{#- The index of every build log: one fieldset per project, drawn the same way
+    as the flagship panel on the home page. Each fieldset's bracket link is the
+    redirect to that project's own build-log page. #}
+
+{% block ticker %}
+{%- set logs = section.extra.logs | default(value=[]) %}
+{%- set entry_count = 0 %}
+{%- for log_path in logs %}
+  {%- set one_log = get_section(path=log_path) %}
+  {%- set_global entry_count = entry_count + (one_log.pages | length) %}
+{%- endfor %}
+<marquee scrollamount="4" behavior="scroll">status ● {{ logs | length }} build logs · {{ entry_count }} entries on file
+  {%- for log_path in logs %}
+    {%- set one_log = get_section(path=log_path) %}
+    {%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}
+  {%- endfor %}
+   &nbsp;●</marquee>
+<hr>
+{% endblock ticker %}
+
+{% block content %}
+{%- set logs = section.extra.logs | default(value=[]) %}
+{%- set entry_count = 0 %}
+{%- for log_path in logs %}
+  {%- set one_log = get_section(path=log_path) %}
+  {%- set_global entry_count = entry_count + (one_log.pages | length) %}
+{%- endfor %}
+<article>
+  <p><small>build logs · {{ entry_count }} entries</small></p>
+  <h1>{{ section.title }}</h1>
+  {%- if section.description %}
+  <p>{{ section.description }}</p>
+  {%- endif %}
+  {{ section.content | safe }}
+</article>
+
+{%- for log_path in logs %}
+  {%- set log = get_section(path=log_path) %}
+  {%- set latest = log.pages[0] %}
+<section>
+  <fieldset>
+    <legend><b>{{ log.extra.short_title or log.title }}</b></legend>
+    <p><b>{{ log.description }}</b></p>
+    <p>
+      <kbd>{{ log.pages | length }} entries</kbd>
+      {%- if latest %} —
+      <kbd>latest {{ latest.extra.milestone }} · {{ latest.extra.step }}</kbd>
+      {%- if latest.extra.tests is defined %} — <kbd>{{ latest.extra.tests }} tests</kbd>{% endif %}
+      {%- endif %}
+      {%- if log.extra.status %} — <kbd>{{ log.extra.status }}</kbd>{% endif %}
+    </p>
+    <p>[ <a href="{{ log.permalink }}">The build log</a> ] — every step, including the mistakes.</p>
+  </fieldset>
+</section>
+{%- endfor %}
+{% endblock content %}
