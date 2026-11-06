@@ -56,7 +56,7 @@ title = "Retained resources — what a script leaves open is tracked; runtime te
 [[extra.planned]]
 milestone = "M3"
 step = "3.1"
-title = "The manifest completes — paths, destinations, budgets per entry point; ops read it fresh, never cached"
+title = "The manifest completes — paths, destinations, budgets; and a module loader that resolves imports only inside declared read paths (today's loader would import any file)"
 
 [[extra.planned]]
 milestone = "M3"
@@ -73,6 +73,11 @@ title = "Worker processes — an isolate per process, supervised, with OS-enforc
 milestone = "M4"
 step = "4.2"
 title = "The memory boundary — a heap bomb dies bounded and classified 'terminated'; the supervisor lives to report it"
+
+[[extra.planned]]
+milestone = "M4"
+step = "4.3"
+title = "Structured diagnostics — per-run JSON records (run ID, outcome class, resource use), byte limits, rotation, visible dropped counts; a flooded log limits itself and says so"
 
 # M5 — stdlib wave 1
 [[extra.planned]]
