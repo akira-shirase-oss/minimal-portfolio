@@ -8,12 +8,14 @@ kind = "release"
 milestone = "P7"
 step = "own-auth"
 short_title = "Our own auth platform"
+# Rust tests in the workspace at this checkpoint (drawn as the home page's sparkline).
+tests = 758
 
 [extra.summary]
 goal = "Make the platform's built-in authentication complete enough to run a real installation alone: passwordless sign-in for visitors, no hard dependency on Keycloak or any external identity provider, and staff-visible logs for everything the auth system does."
-built = "Single-use hashed magic links (signup-by-link into a project's open role, anti-enumeration 202s, a loopback-only development mailer standing in for a real sender), a public /auth/providers endpoint so the Studio never offers a sign-in button that can only fail, CLI bootstrap for built-in accounts, and every visitor auth event audited under a shared system actor."
-proof = ["6/6 database tests — single-use, supersession, expiry and project-scope proven at Postgres RLS, not around it", "4/4 black-box HTTP tests — dev-mail on/off, request→consume→gated-read, no-open-role refusal", "extended k6 smoke: 1,679 requests, 0 failures, magic_consume p99 36ms, member reads p99 ~10ms", "live smoke on the running server: request → 202 with dev_link → consume → 200 member role → spent token 403 → javascript: return_to 422", "visitor signup/signin/signout/magic-link events all asserted present in the project's /audit feed"]
-code = "akira-shirase-oss/colophon-cms · main @ 80ab744"
+built = "Single-use hashed magic links (signup-by-link into a project's open role, anti-enumeration 202s), a public /auth/providers endpoint so the Studio never offers a sign-in button that can only fail, CLI bootstrap for built-in accounts, every visitor auth event audited under a shared system actor, a Studio Audience page for staff (users, roles, disable/enable, sign-in activity), a usability pass on navigation and scale, and real delivery: a mail-provider seam with a Resend adapter behind three env vars — dev_mail only for development."
+proof = ["6/6 database tests — single-use, supersession, expiry and project-scope proven at Postgres RLS, not around it", "5/5 black-box HTTP tests — dev-mail on/off, request→consume→gated-read, no-open-role refusal", "extended k6 smoke: 1,679 requests, 0 failures, magic_consume p99 36ms, member reads p99 ~10ms", "real-browser e2e: the Audience page driven against a live server — manage flows, the permission boundary hiding it entirely, zero requests to refused endpoints", "visitor signup/signin/signout/magic-link events all asserted present in the project's /audit feed", "Resend e2e against a local receiver: the whole provider call asserted — bearer, sender, recipient, subject, link in both bodies — the emailed token signs in once, and a scripted provider-500 still answers sent"]
+code = "akira-shirase-oss/colophon-cms · main @ 3bf5938"
 +++
 
 The previous checkpoint built the audience itself; this one makes the platform's auth its own product rather

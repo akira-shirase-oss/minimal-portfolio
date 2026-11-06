@@ -8,6 +8,8 @@ kind = "release"
 milestone = "P7"
 step = "audience-auth"
 short_title = "Built-in audience auth"
+# Rust tests in the workspace at this checkpoint (drawn as the home page's sparkline).
+tests = 748
 
 [extra.summary]
 goal = "Give projects a real members feature: visitor signup and sign-in, per-project audience roles, and published content gated to the public, to any signed-in member, or to a named role — with the authorization decision made where it cannot leak a row."
