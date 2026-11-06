@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "early build — step 1 (execute) underway"
+status = "early build — M1 (execute) done; M2 async host next"
 short_title = "jsrt"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, pinned deno_core + V8, the rt.* namespace, an error taxonomy where every way a run ends has its own exit code, and an isolate watchdog that can actually kill a CPU-bound script." },
@@ -18,23 +18,7 @@ milestones = [
   { id = "M6", name = "operate a real app", about = "rt.serve — a capability-gated HTTP listener; then the guide's ship gate verbatim: a small webhook processor deployed on jsrt, updated, broken, inspected, rolled back — every step committed evidence." },
   { id = "M7", name = "load and ship", about = "Cold start on 1,000 scripts (p50/p95 + steady RSS), op overhead on 10,000 calls, a one-hour timers/network soak for retained handles — committed results with machine and commit; laptop numbers stay lab numbers." },
 ]
-up_next = { milestone = "M1", step = "1.1", title = "The run lifecycle — every exit class reproducible end to end" }
-
-# M1 — execute
-[[extra.planned]]
-milestone = "M1"
-step = "1.1"
-title = "The run lifecycle — CARGO_BIN_EXE tests pin every exit class (load 3, syntax 4, exception 5, terminated 6, capability 7, host 8)"
-
-[[extra.planned]]
-milestone = "M1"
-step = "1.2"
-title = "Real module semantics — imports between files, and a load error that names the failing specifier"
-
-[[extra.planned]]
-milestone = "M1"
-step = "1.3"
-title = "The op boundary, measured — cold-start p50/p95 over N runs, 10k op calls; committed perf/results JSON"
+up_next = { milestone = "M2", step = "2.1", title = "Timers — setTimeout/clearTimeout/setInterval over op_sleep; cancellation actually cancels" }
 
 # M2 — async host
 [[extra.planned]]
