@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "early build — M6 done: a real app shipped, broken, rolled back on jsrt; the drill found a real supervisor bug. Load evidence next"
+status = "early build — million-scale load evidence landed (90k rps, zero errors, saturation found); hour soak running; then the roadmap is done"
 short_title = "jsrt"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, pinned deno_core + V8, the rt.* namespace, an error taxonomy where every way a run ends has its own exit code, and an isolate watchdog that can actually kill a CPU-bound script." },
@@ -18,19 +18,9 @@ milestones = [
   { id = "M6", name = "operate a real app", about = "rt.serve — a capability-gated HTTP listener; then the guide's ship gate verbatim: a small webhook processor deployed on jsrt, updated, broken, inspected, rolled back — every step committed evidence." },
   { id = "M7", name = "load and ship", about = "The workspace load standard applied to the runtime itself: cold start on 1,000 scripts, 1,000,000 op calls, 1,000,000+ HTTP requests through rt.serve, a one-hour soak — committed results with machine and commit; misses kept, laptop numbers stay lab numbers." },
 ]
-up_next = { milestone = "M7", step = "7.1", title = "Cold start — 1,000 short scripts, p50/p95 startup and steady RSS, recorded with machine and commit" }
+up_next = { milestone = "M7", step = "7.3", title = "The soak — one hour of timers/fetch churn; retained handles and RSS drift written up, failures included" }
 
 # M7 — load and ship
-[[extra.planned]]
-milestone = "M7"
-step = "7.1"
-title = "Cold start — 1,000 short scripts, p50/p95 startup and steady RSS, recorded with machine and commit"
-
-[[extra.planned]]
-milestone = "M7"
-step = "7.2"
-title = "The boundary at scale — 1,000,000 op calls and 1,000,000+ HTTP requests through rt.serve; throughput, p50/p95/p99, saturation behavior, misses kept"
-
 [[extra.planned]]
 milestone = "M7"
 step = "7.3"
