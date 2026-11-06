@@ -20,6 +20,19 @@
 - [{{ page.title }}]({{ page.permalink }}): {{ page.description }}
 {% endfor %}
 {%- endfor %}
+## Learning
+
+Ordered notes written while learning, with planned work labelled and evidence linked when an experiment has run.
+
+{% set learning = get_section(path="learn/_index.md") -%}
+- [{{ learning.title }}]({{ learning.permalink }}): {{ learning.description }}
+{% for track_path in learning.subsections -%}
+{% set track = get_section(path=track_path) -%}
+- [{{ track.title }}]({{ track.permalink }}): {{ track.description }}
+{% for page in track.pages -%}
+- [{{ page.title }}]({{ page.permalink }}): {{ page.description }}
+{% endfor -%}
+{% endfor %}
 ## Writing
 
 {% for page in posts -%}

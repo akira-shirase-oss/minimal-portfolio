@@ -19,6 +19,7 @@
     [ <a href="#running">Running now</a> ]
     [ <a href="#projects">Projects</a> ]
     [ <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a> ]
+    [ <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a> ]
     [ <a href="#numbers">Numbers</a> ]
     [ <a href="#how">How I work</a> ]
     [ <a href="#writing">Writing</a> ]
@@ -226,11 +227,31 @@
 
 <hr>
 
+<!-- ======================= LEARNING ======================= -->
+<section id="learning">
+  <h2>Learning</h2>
+  <p>Concepts worked through from the beginning, with small examples and questions still open.</p>
+  {%- set learning = get_section(path="learn/_index.md") %}
+  {%- for track_path in learning.subsections %}
+  {%- set track = get_section(path=track_path) %}
+  {%- set chapters = [p for p in track.pages if p.extra.chapter] %}
+  <fieldset>
+    <legend><b>{{ track.title }}</b></legend>
+    <p>{{ track.description }}</p>
+    <p>{{ chapters | length }} chapter note{% if chapters | length != 1 %}s{% endif %} available · {{ track.extra.status }}.</p>
+    <p>[ <a href="{{ track.permalink }}">Chapters</a> ]
+      [ <a href="{{ get_url(path=track.extra.roadmap) }}">Roadmap</a> ]</p>
+  </fieldset>
+  {%- endfor %}
+  <p><a href="{{ learning.permalink }}">All learning tracks →</a></p>
+</section>
+
+<hr>
+
 <!-- ======================= WRITING ======================= -->
 <section id="writing">
   <h2>Writing</h2>
-  <p>Every project keeps a public build log — the decisions, the dead ends, the bug that only existed in the
-  “nothing to do” path. Recent entries:</p>
+  <p>Experiments, learning notes, and the things that went wrong along the way. Recent posts:</p>
   <ul>
     {%- for post in posts.pages %}
     {%- if loop.index0 < 5 %}

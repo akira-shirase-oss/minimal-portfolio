@@ -1,0 +1,42 @@
+{% extends "page.html" %}
+
+{% block series_line %}
+{%- set track = get_section(path=page.ancestors[-1], metadata_only=true) %}
+<p><small><a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a>
+  › <a href="{{ track.permalink }}">{{ track.title }}</a>
+  {%- if page.extra.chapter %} › chapter {{ page.extra.chapter }}{% endif %}</small></p>
+{% endblock series_line %}
+
+{% block after_subtitle %}
+<p><small>Status: {{ page.extra.status }}.</small></p>
+{% endblock after_subtitle %}
+
+{% block after_article %}
+{%- set track = get_section(path=page.ancestors[-1]) %}
+{%- if page.extra.chapter %}
+{%- set previous_chapters = [p for p in track.pages if p.extra.chapter and p.extra.chapter < page.extra.chapter] %}
+{%- set next_chapters = [p for p in track.pages if p.extra.chapter and p.extra.chapter > page.extra.chapter] %}
+<nav aria-label="Chapter navigation">
+  <hr>
+  {%- if previous_chapters %}
+  {%- set previous = previous_chapters | last %}
+  <p>← <a href="{{ previous.permalink }}">Chapter {{ previous.extra.chapter }}: {{ previous.title }}</a></p>
+  {%- endif %}
+  {%- if next_chapters %}
+  {%- set next = next_chapters | first %}
+  <p><a href="{{ next.permalink }}">Chapter {{ next.extra.chapter }}: {{ next.title }}</a> →</p>
+  {%- else %}
+  {%- for chapter in track.extra.chapters %}
+  {%- if chapter.number == page.extra.chapter + 1 %}
+  <p>Next planned: {{ chapter.title }}. <a href="{{ get_url(path=track.extra.roadmap) }}">See the roadmap</a>.</p>
+  {%- endif %}
+  {%- endfor %}
+  {%- endif %}
+</nav>
+{%- endif %}
+{% endblock after_article %}
+
+{% block back_link %}
+{%- set track = get_section(path=page.ancestors[-1], metadata_only=true) %}
+<p><a href="{{ track.permalink }}">← Chapter index</a> · <a href="{{ get_url(path='@/learn/_index.md') }}">All learning tracks</a></p>
+{% endblock back_link %}

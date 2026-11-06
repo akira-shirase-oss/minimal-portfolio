@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article>
+  <p><small>notes from learning in public</small></p>
+  <h1>{{ section.title }}</h1>
+  <p>{{ section.description }}</p>
+  <div class="post-body">{{ section.content | safe }}</div>
+</article>
+
+{%- for track_path in section.subsections %}
+{%- set track = get_section(path=track_path) %}
+{%- set chapters = [p for p in track.pages if p.extra.chapter] %}
+<section>
+  <fieldset>
+    <legend><b>{{ track.title }}</b></legend>
+    <p>{{ track.description }}</p>
+    <p><kbd>{{ track.extra.status }}</kbd> · {{ chapters | length }} chapter note{% if chapters | length != 1 %}s{% endif %} available</p>
+    <p>[ <a href="{{ track.permalink }}">Chapters</a> ]
+      [ <a href="{{ get_url(path=track.extra.roadmap) }}">Roadmap</a> ]</p>
+    {%- if chapters %}
+    <p>Start with <a href="{{ chapters[0].permalink }}">{{ chapters[0].title }}</a>.</p>
+    {%- endif %}
+  </fieldset>
+</section>
+{%- endfor %}
+
+<p><a href="{{ get_url(path='@/_index.md') }}">← Home</a> · <a href="{{ get_url(path='@/_index.md') }}#writing">Blog posts</a></p>
+{% endblock content %}

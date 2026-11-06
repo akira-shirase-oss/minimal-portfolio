@@ -37,6 +37,41 @@ Human first, casual and easy to read. The Rust Book post is the model.
 - **Keep numbers exact and caveats honest.** Say "I", and a little humour is welcome.
 - **Build-log entries use these headings, in order:** What I built · How it works (the short version) · Does it actually work? · Where I messed up · What it doesn't do yet · Up next.
 
+## Learning chapters and the blog
+
+`/learn/` lists ordered learning tracks. The first is **Model engineering from the
+beginning**, under `content/learn/model-engineering/`. Its chapter index is
+`_index.md`, its full plan is `roadmap.md`, and its first worked explanation is
+`weights-predictions-and-loss.md`. `templates/learn.html`, `learning-track.html`,
+and `learning-page.html` use the existing site style. Navigation, the home page,
+`llms.txt`, the sitemap, and the dated-page RSS feed include the new material.
+
+- **Chapters** explain a concept in order, with plain definitions, small worked
+  numbers, code when useful, sources, and exercises. Explain every mathematical
+  symbol. Put exercise answers in `<details>` so readers can predict first.
+- **Blog posts** in `content/posts/` tell the personal story: what was confusing,
+  what was tried, what happened, and what the evidence supports. Link to the
+  chapter for the full explanation instead of duplicating it.
+- **Status is literal.** A written chapter is not a completed experiment or a
+  passed understanding check. Planned experiments stay labelled. Never invent a
+  training run, failure, benchmark, user experience, or result to fill a post.
+  Cite actual code revisions and stored evidence when a lab has run.
+
+To add a chapter, create a Markdown page inside the track with `date`, `weight`
+(reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
+and an honest `status`. Add its `page = "@/learn/<track>/<file>.md"` link to the
+matching entry in `_index.md`'s `extra.chapters`. Entries with no `page` are
+shown as **planned**, with no dead links. Update the roadmap when the plan
+changes. The page template derives previous/next links from available chapter
+numbers, so the roadmap does not become chapter zero.
+
+A new track is a subfolder of `content/learn/` with its own `_index.md`, `weight`,
+`sort_by = "weight"`, `template = "learning-track.html"`, and
+`page_template = "learning-page.html"`. Supply `extra.status`, `extra.roadmap`,
+and `extra.chapters` as in the first track. It appears on the Learning index and
+home page automatically. Keep future chapters as index entries until there is
+real material to write.
+
 ## Add a build-log entry (Colophon CMS, Service Monitor, jsrt)
 
 There are three build logs: `content/colophon/` (the main project: milestones D, then P0–P7 with the lettered R, M, W, E + DX in build order), `content/service-monitor/` (M0–M7) and `content/js-runtime/` (M0–M7, roadmap complete). Entries live in their log's folder, not in `posts/`. The home page draws one panel per log, in the order of `logs` in `content/_index.md`, each with its latest 3 entries; the terminal's `tail` line shows the newest entry of any log. `/colophon/`, `/service-monitor/` and `/js-runtime/` group every entry under its milestone. Previous/next links and the "Service Monitor build log › M0 · 0.4" line above the title are added automatically.

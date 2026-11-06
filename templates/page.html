@@ -27,5 +27,7 @@
 </article>
 {%- block after_article %}{% endblock after_article %}
 
+{% block back_link %}
 <p><a href="{{ get_url(path='@/_index.md') }}#writing">← All writing</a></p>
+{% endblock back_link %}
 {% endblock content %}

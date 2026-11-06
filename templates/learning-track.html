@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article>
+  <p><small><a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a> · {{ section.extra.status }}</small></p>
+  <h1>{{ section.title }}</h1>
+  <p>{{ section.description }}</p>
+  <div class="post-body">{{ section.content | safe }}</div>
+  <p>[ <a href="{{ get_url(path=section.extra.roadmap) }}">Read the learning roadmap</a> ]</p>
+  <hr>
+  <h2>Chapters, in order</h2>
+  <p>Available notes are linked. Planned chapters will get pages as I work through them.</p>
+  <ol>
+    {%- for chapter in section.extra.chapters %}
+    <li>
+      {%- if chapter.page %}
+      <a href="{{ get_url(path=chapter.page) }}">{{ chapter.title }}</a> <small>· note available</small>
+      {%- else %}
+      {{ chapter.title }} <small>· planned</small>
+      {%- endif %}
+    </li>
+    {%- endfor %}
+  </ol>
+</article>
+<p><a href="{{ get_url(path='@/learn/_index.md') }}">← All learning tracks</a></p>
+{% endblock content %}
