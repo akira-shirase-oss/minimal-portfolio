@@ -2,6 +2,7 @@
 title = "Weights, predictions, and loss"
 description = "One adjustable number, an expected answer, and a way to measure the mistake. The first step toward understanding training."
 date = 2026-11-06
+updated = 2026-11-06
 weight = 1
 
 [extra]
@@ -141,4 +142,4 @@ To check whether it learned a useful relationship, we need other examples. We co
 - [PyTorch: optimizing model parameters](https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html) explains the prediction, loss, gradient, and update loop in code.
 - [Hugging Face: supervised fine-tuning](https://huggingface.co/docs/trl/sft_trainer) explains the token-prediction objective we will reach later.
 
-Next planned chapter: **gradients and weight updates**. The [roadmap](@/learn/model-engineering/roadmap.md) shows the rest of the track. The [introductory blog post](@/posts/why-im-learning-how-models-learn.md) explains why I started here.
+Continue with [gradients and weight updates](@/learn/model-engineering/gradients-and-weight-updates.md), including a quick revision table and practice questions. The [roadmap](@/learn/model-engineering/roadmap.md) shows the rest of the track. The [introductory blog post](@/posts/why-im-learning-how-models-learn.md) explains why I started here.

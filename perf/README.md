@@ -4,13 +4,14 @@ Run from the portfolio checkout, with Zola, Node, Python 3.12+, and ApacheBench
 (`ab`) available:
 
 ```sh
-python3 perf/learning-load.py --baseline-ref 1ad0a09d2c3105d9c482f552e645c297c150ec10
+python3 perf/learning-load.py --baseline-ref 7193b0bd3ac6fd377664c24fe71aee20cdd8d1e5
 ```
 
 The script serves the baseline source and current checkout on loopback using
 Zola's development server. It compares 50,000 homepage requests on each version,
-then makes **1,000,000 feature requests** across the Learning index, track,
-chapter, roadmap, and introductory blog. Concurrency rises from 8 to 1,024.
+then makes **1,200,000 feature requests** across the Learning index, track,
+two chapters, roadmap, and introductory blog. Concurrency rises from 8 to 1,024.
+For later changes, choose the previous source revision as the baseline.
 
 Before load, it checks status and identifying content. Each phase must finish
 with zero failed or non-2xx requests, at least 500 requests/second, and p99 at

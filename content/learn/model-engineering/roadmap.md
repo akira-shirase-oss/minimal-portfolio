@@ -2,6 +2,7 @@
 title = "The model-engineering learning roadmap"
 description = "The path from one prediction to training, data pipelines, harnesses, evaluation, and better model versions."
 date = 2026-11-06
+updated = 2026-11-06
 weight = 0
 
 [extra]
@@ -18,7 +19,7 @@ The plan has two practical parts. First, build tiny models whose calculations I 
 | Chapter | Question | Planned exercise |
 | --- | --- | --- |
 | [1. Weights, predictions, and loss](@/learn/model-engineering/weights-predictions-and-loss.md) | What changes when a model learns? | Work through one adjustable weight and its errors. The explanation is available; a code lab is still ahead. |
-| 2. Gradients and weight updates | How does the program choose a direction and size for an update? | Calculate and inspect a single update. |
+| [2. Gradients and weight updates](@/learn/model-engineering/gradients-and-weight-updates.md) | How does the program choose a direction and size for an update? | Direction, loss changes, and overshooting are explained. The gradient and learning-rate calculations remain planned. |
 | 3. Our first training loop | How do repeated updates become training? | Write a small loop, record its predictions and loss, and save the learned numbers. |
 | 4. How learning goes wrong | Did it learn a useful pattern or memorize examples? | Deliberately cause underfitting, overfitting, and unstable updates. |
 | 5. Data a model can learn from | How do raw records become trustworthy examples? | Clean and deduplicate a small dataset; separate training, validation, and test data before tuning. |
@@ -30,7 +31,7 @@ The plan has two practical parts. First, build tiny models whose calculations I 
 | 11. Memory, speed, and scale | What do efficiency changes cost in quality? | Measure numerical precision, quantization, batching, latency, and memory tradeoffs. |
 | 12. Learning from preferences | Can examples of preferred answers improve behavior? | Build reviewed answer pairs and test whether preference training helps. |
 
-These exercises are planned. They are not results or completed milestones. Chapters 2–12 will get their own pages as we work through them.
+The first two chapter notes are available for revision. Their explanations are not completed code experiments or proof of mastery. The calculations still ahead are labelled in chapter 2; chapters 3–12 will get pages as we work through them.
 
 ## Math alongside the code
 

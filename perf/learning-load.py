@@ -130,6 +130,7 @@ def main():
                 "/learn/model-engineering/": b"Chapters, in order",
                 "/learn/model-engineering/roadmap/": b"The model-engineering learning roadmap",
                 "/learn/model-engineering/weights-predictions-and-loss/": b"Weights, predictions, and loss",
+                "/learn/model-engineering/gradients-and-weight-updates/": b"Gradients and weight updates",
                 "/posts/why-im-learning-how-models-learn/": b"Why I",
             }
             for route, marker in expected.items():
@@ -142,11 +143,12 @@ def main():
                 ("learning-c8", "/learn/", 8),
                 ("track-c64", "/learn/model-engineering/", 64),
                 ("chapter-c256", "/learn/model-engineering/weights-predictions-and-loss/", 256),
+                ("gradients-c256", "/learn/model-engineering/gradients-and-weight-updates/", 256),
                 ("roadmap-c1024", "/learn/model-engineering/roadmap/", 1024),
                 ("blog-c64", "/posts/why-im-learning-how-models-learn/", 64),
             ):
                 phase(label, candidate_url, route, 200000, concurrency)
-            check("million-request feature run", sum(p["completed"] for p in result["phases"][2:]) >= 1000000, "Five routes, 200,000 requests each; concurrency 8 through 1,024.")
+            check("million-request feature run", sum(p["completed"] for p in result["phases"][2:]) >= 1000000, "Six routes, 200,000 requests each; concurrency 8 through 1,024.")
             try:
                 get(candidate_url + "/learn/model-engineering/planned-chapter-does-not-exist/")
                 check("missing chapter", False, "unexpected success")

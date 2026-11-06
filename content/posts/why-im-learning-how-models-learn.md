@@ -2,6 +2,7 @@
 title = "Why I'm learning how models learn"
 description = "I started by asking about an 8B blog-writing model. Then I had to ask how training even starts."
 date = 2026-11-06
+updated = 2026-11-06
 
 [extra]
 kind = "experiment"
@@ -50,3 +51,9 @@ The blog will hold the experience of doing it. When something fails, I want to w
 Right now, this is the start of the learning. I have a worked numerical example and a plan. A training program, a fine-tuned model, and measured results are still ahead.
 
 The first chapter is [weights, predictions, and loss](@/learn/model-engineering/weights-predictions-and-loss.md). One adjustable number is enough to begin.
+
+## Learning update — 6 November 2026
+
+We have now worked through loss rising and falling, the sign of a gradient, the direction of a small weight update, and overshooting. Weight and prediction can increase while loss decreases, because the prediction is getting closer to the target. Keeping those three quantities separate is part of the explanation we practised.
+
+Those examples are in [chapter 2: gradients and weight updates](@/learn/model-engineering/gradients-and-weight-updates.md), with a quick revision table and questions whose answers can be opened after trying them. The learning rate has been introduced as a way to help control update size; its calculation, the gradient's numerical value, and a training program are still ahead.

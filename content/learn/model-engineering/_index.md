@@ -18,6 +18,7 @@ page = "@/learn/model-engineering/weights-predictions-and-loss.md"
 [[extra.chapters]]
 number = 2
 title = "Gradients and weight updates"
+page = "@/learn/model-engineering/gradients-and-weight-updates.md"
 
 [[extra.chapters]]
 number = 3
@@ -66,4 +67,4 @@ This track follows that question from the beginning. The goal is to understand t
 
 I am weak at math. I still want to understand it. The examples start small, explain every symbol, and connect the calculation to what the program is doing.
 
-**Where things stand:** the first chapter is a worked explanation. A training program, trained model, and measured model results are still ahead.
+**Where things stand:** two chapter notes cover weights, loss, gradient direction, and overshooting. Chapter 2 opens with a quick revision table and ends with practice questions. Calculating the gradient, applying a learning rate, and running our first training program are still ahead.

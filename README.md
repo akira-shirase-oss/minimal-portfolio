@@ -56,6 +56,12 @@ and `learning-page.html` use the existing site style. Navigation, the home page,
   passed understanding check. Planned experiments stay labelled. Never invent a
   training run, failure, benchmark, user experience, or result to fill a post.
   Cite actual code revisions and stored evidence when a lab has run.
+- **Keep revision material current.** The user requested ongoing portfolio notes
+  for revision. At meaningful lesson milestones, update the covered explanations,
+  a quick revision summary, exercises, the roadmap, and relevant cross-links.
+  Add dated blog updates or reflections when useful. Keep individual learner
+  answers and assessment history in the private local checkpoint. Use `updated`
+  dates for revised pages and publish through the existing Wrangler CLI workflow.
 
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
