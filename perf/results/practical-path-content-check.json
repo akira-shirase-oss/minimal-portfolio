@@ -1,0 +1,10 @@
+{
+  "checked_utc": "2026-11-07T12:18:11.578161+00:00",
+  "kind": "Generated notes, links and structured-data checks; not browser visual QA",
+  "html_pages": 114,
+  "internal_links_and_anchors_checked": 1501,
+  "valid_jsonld_blocks": 114,
+  "broken_links": [],
+  "harness_note_contains_no_canvas_or_external_scripts": true,
+  "passed": true
+}

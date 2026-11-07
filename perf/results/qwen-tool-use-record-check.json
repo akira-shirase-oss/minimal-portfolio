@@ -1,0 +1,11 @@
+{
+  "checked_utc": "2026-11-07T12:17:33.238549+00:00",
+  "kind": "Baseline source identity and observed tool-protocol checks; not broad model-quality evaluation",
+  "source_snapshots_match": true,
+  "model_responses": 2,
+  "valid_note_lookups": 1,
+  "tool_result_in_followup": true,
+  "saved_deploy_command_in_final_answer": true,
+  "weights_changed": false,
+  "passed": true
+}

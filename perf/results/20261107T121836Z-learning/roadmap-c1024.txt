@@ -1,0 +1,55 @@
+This is ApacheBench, Version 2.3 <$Revision: 1923142 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+
+
+Server Software:        
+Server Hostname:        127.0.0.1
+Server Port:            1122
+
+Document Path:          /learn/model-engineering/roadmap/
+Document Length:        16060 bytes
+
+Concurrency Level:      1024
+Time taken for tests:   2.059 seconds
+Complete requests:      200000
+Failed requests:        0
+Keep-Alive requests:    200000
+Total transferred:      3237600000 bytes
+HTML transferred:       3212000000 bytes
+Requests per second:    97137.22 [#/sec] (mean)
+Time per request:       10.542 [ms] (mean)
+Time per request:       0.010 [ms] (mean, across all concurrent requests)
+Transfer rate:          1535602.86 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.8      0      16
+Processing:     5   10   1.8     11      16
+Waiting:        0   10   1.8     11      15
+Total:          5   10   1.9     11      23
+
+Percentage of the requests served within a certain time (ms)
+  50%     11
+  66%     11
+  75%     12
+  80%     12
+  90%     13
+  95%     13
+  98%     13
+  99%     14
+ 100%     23 (longest request)
+
+Completed 20000 requests
+Completed 40000 requests
+Completed 60000 requests
+Completed 80000 requests
+Completed 100000 requests
+Completed 120000 requests
+Completed 140000 requests
+Completed 160000 requests
+Completed 180000 requests
+Completed 200000 requests
+Finished 200000 requests
