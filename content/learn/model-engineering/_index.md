@@ -68,4 +68,4 @@ This track follows that question from the beginning. The goal is to understand t
 
 I am weak at math. I still want to understand it. The examples start small, explain every symbol, and connect the calculation to what the program is doing.
 
-**Where things stand:** three chapter notes cover weights, loss, gradients, update size, and a first training loop. Chapter 3 keeps the program, worked results, and revision question as plain text and code. The direct derivative calculation, automatic differentiation, and unseen-data evaluation remain ahead.
+**Where things stand:** three chapter notes cover weights, loss, gradients, update size, a first training loop, and frozen validation. Chapter 3 includes a two-case acceptance check that the candidate fails, despite improving on the baseline. The direct derivative calculation, automatic differentiation, broader evaluation, and a separate final test remain ahead.

@@ -14,6 +14,13 @@ path adds a parity check; the recorded first run used the learning workspace's
 `perf/results/first-training-loop-experiment.json`. It is a program and training-
 example check, not an unseen-data evaluation or language-model benchmark.
 
+The later frozen validation exercise is recorded in `results/validation-gate-v1.json`,
+with its declared rules in `results/validation-criteria-v1.json` and independent
+arithmetic/provenance checks in `results/validation-record-check.json`. Its
+candidate verdict is deliberately **FAIL**: one required case misses the limit.
+That model verdict is separate from successful record checks and HTTP serving
+checks. Keep the failed result and original criteria available.
+
 Run from the portfolio checkout, with Zola, Node, Python 3.12+, and ApacheBench
 (`ab`) available:
 

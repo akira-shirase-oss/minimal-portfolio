@@ -72,4 +72,14 @@ The loop now runs locally. It uses the same input 2, target 6, starting weight 2
 
 The useful part is seeing each result become the next starting point. The learning rate stays fixed while the fresh gradient gets smaller, so the updates shrink too. It is a small enough program to read from top to bottom.
 
-[Chapter 3](@/learn/model-engineering/our-first-training-loop.md) keeps the code, intermediate results, and the difference between a program check and evidence of a better model. The portfolio stays focused on text and learning notes. Unseen-data evaluation and training Qwen are still ahead.
+[Chapter 3](@/learn/model-engineering/our-first-training-loop.md) keeps the code, intermediate results, and the difference between a program check and evidence of a better model. The portfolio stays focused on text and learning notes. Broader evaluation and training Qwen are still ahead.
+
+### The first check that says FAIL
+
+The next exercise holds the learned weight fixed and tries new inputs. Calculating a loss measures an error. A weight update is a separate instruction, and the validation code does not run it.
+
+After an initial exploratory measurement, we declared a rule for a new two-case check: each prediction must be within 0.05 of its target, and every required case must pass. With weight 2.992, input 1 has an error of 0.008 and passes. Input 10 has an error of 0.08 and fails.
+
+The untrained baseline does worse on both inputs. The candidate still fails the declared rule. That is the distinction I wanted to see: a model can improve and still miss a requirement.
+
+The failure is saved with its criteria and scores in [the chapter's evidence](@/learn/model-engineering/our-first-training-loop.md#one-case-passes-and-another-fails). This is a deliberately small teaching exercise, not a claim about broad generalization or overfitting. No extra training or model promotion has happened yet.
