@@ -1,0 +1,13 @@
+{
+  "exercise": "one-weight-validation-v1",
+  "purpose": "A deliberately small teaching check containing a passing case and a failing case; not a representative benchmark or final test set.",
+  "target_provenance": "Teacher-defined synthetic rule: target = 3 × input.",
+  "criteria_timing": "Declared for this new run before executing the evaluator. The earlier input-4 measurement was exploratory and had no predeclared threshold.",
+  "maximum_absolute_error": 0.05,
+  "case_rule": "absolute prediction error <= maximum_absolute_error",
+  "overall_rule": "Every required validation case must pass.",
+  "validation_cases": [
+    { "id": "input-1", "input": 1, "target": 3 },
+    { "id": "input-10", "input": 10, "target": 30 }
+  ]
+}

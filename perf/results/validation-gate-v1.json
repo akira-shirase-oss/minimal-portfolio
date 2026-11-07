@@ -1,0 +1,94 @@
+{
+  "executed_utc": "2026-11-07T00:42:49.785Z",
+  "runtime": "v24.18.0",
+  "kind": "Two-case frozen validation gate for teaching; intentionally includes a candidate failure",
+  "criteria": {
+    "exercise": "one-weight-validation-v1",
+    "purpose": "A deliberately small teaching check containing a passing case and a failing case; not a representative benchmark or final test set.",
+    "target_provenance": "Teacher-defined synthetic rule: target = 3 × input.",
+    "criteria_timing": "Declared for this new run before executing the evaluator. The earlier input-4 measurement was exploratory and had no predeclared threshold.",
+    "maximum_absolute_error": 0.05,
+    "case_rule": "absolute prediction error <= maximum_absolute_error",
+    "overall_rule": "Every required validation case must pass.",
+    "validation_cases": [
+      {
+        "id": "input-1",
+        "input": 1,
+        "target": 3
+      },
+      {
+        "id": "input-10",
+        "input": 10,
+        "target": 30
+      }
+    ]
+  },
+  "criteria_sha256": "cd114919eb5cf53b9b6b48c2c2ff5de3a458aca5bf3115a4d363ca9a79831477",
+  "training_record_sha256": "df6c7b07f60aaf0b763073a68d1a540c9e2b2417a0bbe8a456178d40bb89e5cd",
+  "evaluation_source_sha256": "1e87cb354093d10b90613667047f64dff302dd8d6200f5f4d302fa3df70570ec",
+  "runner_source_sha256": "589c0f6214f59dccdcef24b4b9ab0d16e3dea9a81565c4bed1b84f9ee42eef9c",
+  "results": [
+    {
+      "name": "untrained baseline",
+      "weight": 2,
+      "cases": [
+        {
+          "id": "input-1",
+          "input": 1,
+          "target": 3,
+          "prediction": 2,
+          "error": -1,
+          "loss": 1,
+          "absolute_error": 1,
+          "passed": false
+        },
+        {
+          "id": "input-10",
+          "input": 10,
+          "target": 30,
+          "prediction": 20,
+          "error": -10,
+          "loss": 100,
+          "absolute_error": 10,
+          "passed": false
+        }
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "name": "three-update candidate",
+      "weight": 2.992,
+      "cases": [
+        {
+          "id": "input-1",
+          "input": 1,
+          "target": 3,
+          "prediction": 2.992,
+          "error": -0.008000000000000007,
+          "loss": 0.00006400000000000012,
+          "absolute_error": 0.008000000000000007,
+          "passed": true
+        },
+        {
+          "id": "input-10",
+          "input": 10,
+          "target": 30,
+          "prediction": 29.92,
+          "error": -0.0799999999999983,
+          "loss": 0.006399999999999727,
+          "absolute_error": 0.0799999999999983,
+          "passed": false
+        }
+      ],
+      "verdict": "FAIL"
+    }
+  ],
+  "integrity_checks": {
+    "trainer_source_matches": true,
+    "validation_inputs_not_used_in_training": true,
+    "weights_unchanged": true
+  },
+  "additional_training_performed": false,
+  "model_promoted": false,
+  "scope": "Development validation for one synthetic rule. Not proof of broad generalization or overfitting; no independent final test set."
+}

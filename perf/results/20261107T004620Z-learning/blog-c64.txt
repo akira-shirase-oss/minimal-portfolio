@@ -1,0 +1,55 @@
+This is ApacheBench, Version 2.3 <$Revision: 1923142 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+
+
+Server Software:        
+Server Hostname:        127.0.0.1
+Server Port:            1122
+
+Document Path:          /posts/why-im-learning-how-models-learn/
+Document Length:        14868 bytes
+
+Concurrency Level:      64
+Time taken for tests:   2.904 seconds
+Complete requests:      200000
+Failed requests:        0
+Keep-Alive requests:    200000
+Total transferred:      2999200000 bytes
+HTML transferred:       2973600000 bytes
+Requests per second:    68878.23 [#/sec] (mean)
+Time per request:       0.929 [ms] (mean)
+Time per request:       0.015 [ms] (mean, across all concurrent requests)
+Transfer rate:          1008689.42 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       1
+Processing:     0    1   0.6      1      16
+Waiting:        0    1   0.6      1      16
+Total:          0    1   0.6      1      16
+
+Percentage of the requests served within a certain time (ms)
+  50%      1
+  66%      1
+  75%      1
+  80%      1
+  90%      2
+  95%      2
+  98%      2
+  99%      3
+ 100%     16 (longest request)
+
+Completed 20000 requests
+Completed 40000 requests
+Completed 60000 requests
+Completed 80000 requests
+Completed 100000 requests
+Completed 120000 requests
+Completed 140000 requests
+Completed 160000 requests
+Completed 180000 requests
+Completed 200000 requests
+Finished 200000 requests

@@ -1,0 +1,40 @@
+{
+  "executed_utc": "2026-11-07T00:36:20.353Z",
+  "runtime": "v24.18.0",
+  "kind": "First frozen-weight validation measurement on one synthetic example; no quality acceptance threshold defined",
+  "target_provenance": "For this teaching exercise, correct target = 3 × input. This rule is supplied by the teacher, not inferred from the training pair.",
+  "training_record": "2026-11-06-first-training-loop.json",
+  "training_dataset": [
+    {
+      "input": 2,
+      "target": 6
+    }
+  ],
+  "validation_examples": [
+    {
+      "input": 4,
+      "target": 12
+    }
+  ],
+  "validation_dataset_sha256": "801b6c40d95c27057e3b4a29dad2eb43c4e75834e30de9bfa1f3aa4f11c340e5",
+  "evaluation_source_sha256": "1e87cb354093d10b90613667047f64dff302dd8d6200f5f4d302fa3df70570ec",
+  "weight_before": 2.992,
+  "weight_after": 2.992,
+  "results": [
+    {
+      "input": 4,
+      "target": 12,
+      "prediction": 11.968,
+      "error": -0.03200000000000003,
+      "loss": 0.001024000000000002
+    }
+  ],
+  "checks": {
+    "recorded_trainer_source_matches": true,
+    "validation_input_not_in_training_pair": true,
+    "weight_unchanged": true,
+    "arithmetic_matches_expected": true
+  },
+  "additional_training_performed": false,
+  "model_quality_verdict": "NOT_GRADED; one measurement only, no pass/fail threshold or final test set"
+}

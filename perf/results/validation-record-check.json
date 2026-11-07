@@ -1,0 +1,34 @@
+{
+  "checked_utc": "2026-11-07T00:44:57.798686+00:00",
+  "kind": "Independent Decimal arithmetic and provenance checks for the intentionally failing model gate",
+  "source_and_criteria_hashes_match": true,
+  "rows": [
+    {
+      "model": "untrained baseline",
+      "input": 1,
+      "expected_absolute_error": "1",
+      "passed": false
+    },
+    {
+      "model": "untrained baseline",
+      "input": 10,
+      "expected_absolute_error": "10",
+      "passed": false
+    },
+    {
+      "model": "three-update candidate",
+      "input": 1,
+      "expected_absolute_error": "0.008",
+      "passed": true
+    },
+    {
+      "model": "three-update candidate",
+      "input": 10,
+      "expected_absolute_error": "0.080",
+      "passed": false
+    }
+  ],
+  "program_record_checks_passed": true,
+  "candidate_gate_verdict": "FAIL",
+  "scope": "Model failure is preserved; this checker does not relax or rerun the gate."
+}

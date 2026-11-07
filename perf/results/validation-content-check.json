@@ -1,0 +1,12 @@
+{
+  "checked_utc": "2026-11-07T00:45:19.206360+00:00",
+  "kind": "Static output, metadata, internal-link and source-continuity checks",
+  "html_pages": 113,
+  "internal_links_and_anchors_checked": 1481,
+  "valid_jsonld_blocks": 113,
+  "broken_links": [],
+  "trainer_snippet_matches_previously_tested_source": true,
+  "no_canvas_or_added_external_scripts": true,
+  "rendered_browser_layout": "not audited; content-only revision, earlier browser control unreliable",
+  "passed": true
+}
