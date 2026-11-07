@@ -2,7 +2,7 @@
 title = "The model-engineering learning roadmap"
 description = "The path from one prediction to training, data pipelines, harnesses, evaluation, and better model versions."
 date = 2026-11-06
-updated = 2026-11-06
+updated = 2026-11-07
 weight = 0
 
 [extra]
@@ -12,7 +12,14 @@ status = "plan; changes as I learn"
 
 I want to understand how to build and improve models. Blog writing and personalized email are possible exercises. The concepts need to carry over to other problems too.
 
-The plan has two practical parts. First, build tiny models whose calculations I can follow. Then adapt an existing model and learn how to handle realistic data, training runs, and evaluation. The tiny teaching model and the existing model are separate exercises.
+The route is now **learn by building**: make a small working piece, run it, inspect the result, understand a failure, then improve it. Mathematics comes in when it helps explain the behavior; repeated arithmetic and pass/fail recall questions are not prerequisites for practical work.
+
+## Two related builds
+
+1. **A local Qwen tool-using assistant.** Start with a read-only project-note lookup, then introduce missing information, tool errors, more tools, and recorded comparisons. The [first working slice and trace are available](@/learn/model-engineering/the-harness-around-the-model.md).
+2. **A separate tiny text model.** Prepare text, turn it into tokens, train a small next-token predictor, generate text, inspect poor outputs, and save/resume the training run. This is planned and can start without finishing a large assistant application.
+
+Later improvements to these builds will teach adapting model weights, reviewing training examples, evaluating candidate versions, memory and speed, and learning from preferred answers. The installed Ollama model is the inference baseline; training an existing model will need compatible model files and a measured memory budget.
 
 ## The path
 
@@ -26,18 +33,18 @@ The plan has two practical parts. First, build tiny models whose calculations I 
 | 6. From text to a tiny language model | How do text pieces become predictions? | Learn tokens, arrays of numbers, embeddings, attention, and a small transformer through code. |
 | 7. Training runs we can inspect and resume | Can we explain and recover a run? | Record settings, data versions, memory use, and checkpoints; interrupt and resume a run. |
 | 8. Adapting an existing model | What does fine-tuning change? | Compare an unchanged model with a trained candidate using the same inputs and settings. |
-| 9. The harness around the model | What does the surrounding program contribute? | Prepare inputs, retrieve relevant context, validate outputs, and record failures. |
+| [9. The harness around the model](@/learn/model-engineering/the-harness-around-the-model.md) | What does the surrounding program contribute? | The first local Qwen lookup cycle has run. Expand the same assistant one tool or failure case at a time. |
 | 10. Evaluation and model promotion | Does this candidate deserve to replace the previous version? | Define acceptance criteria, compare outputs, investigate regressions, and preserve the previous accepted version. |
 | 11. Memory, speed, and scale | What do efficiency changes cost in quality? | Measure numerical precision, quantization, batching, latency, and memory tradeoffs. |
 | 12. Learning from preferences | Can examples of preferred answers improve behavior? | Build reviewed answer pairs and test whether preference training helps. |
 
-The first three chapter notes are available for revision, including a runnable one-weight example in chapter 3. Program behavior, learning on one training pair, and learner understanding are separate claims. The calculations still ahead are labelled; chapters 4–12 will get pages as we work through them.
+Notes for chapters 1, 2, 3, and 9 are available. The earlier one-weight examples remain references. The practical route can revisit topics in a different order; planned chapters get pages when there is real work to explain. A successful run and the learner's understanding remain separate claims.
 
 ## Math alongside the code
 
 We will introduce the math when it becomes useful: multiplication for a prediction, derivatives for an update, arrays and matrix multiplication for layers, and probabilities for language-model output.
 
-Each explanation should define its symbols, use small numbers, show the intermediate steps, and say what the result means. A short prediction before running the code gives me something to compare with the outcome.
+Each explanation should define its symbols, show the needed steps, and connect them to the code or result being inspected. The program handles calculations. Understanding grows through building, observing, and discussing changes together.
 
 ## Testing starts with the first experiment
 

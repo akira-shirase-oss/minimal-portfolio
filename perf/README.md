@@ -21,6 +21,11 @@ candidate verdict is deliberately **FAIL**: one required case misses the limit.
 That model verdict is separate from successful record checks and HTTP serving
 checks. Keep the failed result and original criteria available.
 
+`results/qwen-tool-use-baseline.json` and `qwen-tool-use-baseline-sources/` retain
+the first local Qwen request/tool/result smoke run and its source snapshot. It
+uses existing weights and is not a reliability suite or a training run. The
+website load scenario below measures static page serving, not model inference.
+
 Run from the portfolio checkout, with Zola, Node, Python 3.12+, and ApacheBench
 (`ab`) available:
 
@@ -30,8 +35,8 @@ python3 perf/learning-load.py --baseline-ref 7193b0bd3ac6fd377664c24fe71aee20cdd
 
 The script serves the baseline source and current checkout on loopback using
 Zola's development server. It compares 50,000 homepage requests on each version,
-then makes **3,200,000 feature requests**: 1,000,000 each on the homepage and
-the first-training-loop chapter, plus 200,000 each across the Learning index, track,
+then makes **4,200,000 feature requests**: 1,000,000 each on the homepage,
+the first-training-loop chapter and harness chapter, plus 200,000 each across the Learning index, track,
 two chapters, roadmap, and introductory blog. Concurrency ranges from 8 to 1,024.
 For later changes, choose the previous source revision as the baseline.
 

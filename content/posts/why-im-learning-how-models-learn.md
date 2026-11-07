@@ -2,7 +2,7 @@
 title = "Why I'm learning how models learn"
 description = "I started by asking about an 8B blog-writing model. Then I had to ask how training even starts."
 date = 2026-11-06
-updated = 2026-11-06
+updated = 2026-11-07
 
 [extra]
 kind = "experiment"
@@ -83,3 +83,11 @@ After an initial exploratory measurement, we declared a rule for a new two-case 
 The untrained baseline does worse on both inputs. The candidate still fails the declared rule. That is the distinction I wanted to see: a model can improve and still miss a requirement.
 
 The failure is saved with its criteria and scores in [the chapter's evidence](@/learn/model-engineering/our-first-training-loop.md#one-case-passes-and-another-fails). This is a deliberately small teaching exercise, not a claim about broad generalization or overfitting. No extra training or model promotion has happened yet.
+
+## Learning update — 7 November 2026
+
+I want the next part to happen through building. The concepts stick better when there is a working piece, an output to inspect, or an error to investigate. The numerical examples remain useful references, and the math can come in when it explains the thing we are making.
+
+The first practical slice now uses my local Qwen3-8B model. It asks a tool for a saved portfolio note, our code returns the note, and the model explains the deployment command from that information. The tool reads a note; it does not deploy anything.
+
+[The harness chapter](@/learn/model-engineering/the-harness-around-the-model.md) records this first cycle and its actual trace. Existing weights were used. Training a tiny text model, saving and resuming runs, adapting weights, and investigating real tool-use failures are the next pieces of the practical route.

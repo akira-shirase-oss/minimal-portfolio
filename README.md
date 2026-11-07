@@ -69,6 +69,12 @@ interactive section: do not add the canvas lab, its controls, or its client
 script back without a new request. The small local trainer lives in the separate
 `model-engineering/labs/` learning folder; the chapter includes a runnable copy.
 
+As of 2026-11-07 the learning route is project-based: build small working pieces,
+inspect real outputs/failures, and explain concepts in context. Chapter 9 records
+the first local Qwen tool-use slice. Numbered topics are references, not a rigid
+quiz prerequisite chain. The public site remains text and code; the local runner
+is not a new client-side website feature.
+
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
 and an honest `status`. Add its `page = "@/learn/<track>/<file>.md"` link to the
