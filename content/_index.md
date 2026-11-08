@@ -4,7 +4,7 @@ title = "404human"
 [extra]
 # The build logs, main project first. Each is a section using series.html. The home
 # page draws one panel per log; the terminal's `tail` shows the newest entry of any.
-logs = ["colophon/_index.md", "service-monitor/_index.md", "js-runtime/_index.md"]
+logs = ["colophon/_index.md", "service-monitor/_index.md", "js-runtime/_index.md", "durable-runner/_index.md"]
 
 # "Status": what's running now, drawn as live processes on the home page.
 # `log = "<section>/_index.md"` fills in that build log's step and test count by
@@ -41,6 +41,13 @@ writing = true
 # Projects, newest first. Copy a block to add one.
 # link: a web address, or "@/posts/<file>.md" for one of your posts.
 # status: one or two words, e.g. "live", "shipped", "write-up", "in progress".
+[[extra.projects]]
+name = "Durable Runner"
+about = "A background-task runner where accepting a job is a durable commit: a framed file journal, one writer, at-least-once attempts, and crash recovery that admits what it cannot know. Rust, built in the open."
+link = "@/durable-runner/_index.md"
+year = 2026
+status = "scaffolding"
+
 [[extra.projects]]
 name = "jsrt"
 about = "A JavaScript runtime that is a host, not an engine: V8 through Deno's own deno_core, Rust owning capabilities, the lifecycle, and honest errors. Built to operate a real app, one proven milestone at a time."
