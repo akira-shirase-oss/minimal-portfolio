@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "scaffolding — D0"
+status = "building — D4 (CLI + server live)"
 short_title = "Durable Runner"
 milestones = [
   { id = "D0", name = "model", about = "The state machine: transitions, invalid states, identities, limits — deterministic tests under a fake clock." },
