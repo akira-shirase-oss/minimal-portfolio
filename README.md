@@ -75,6 +75,16 @@ the first local Qwen tool-use slice. Numbered topics are references, not a rigid
 quiz prerequisite chain. The public site remains text and code; the local runner
 is not a new client-side website feature.
 
+The 2026-11-09 agreement makes topics 4–8 the next sequence: learning failures,
+data, a tiny language model, resumable training, and adapting an existing model.
+The assistant implements experiments and handles calculations; explanations focus
+on what each part does, why it matters, and what actual results show. Deep math
+derivations are optional. Revisit broader harness work after this pass. Keep the
+portfolio updated as lessons happen: explanations, small examples, relevant code,
+recorded results, and quick revision summaries. A new plan does not complete a
+chapter or justify inventing an experiment. The roadmap and track index record
+the current sequence; individual learner answers stay in the private checkpoint.
+
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
 and an honest `status`. Add its `page = "@/learn/<track>/<file>.md"` link to the

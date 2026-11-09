@@ -2,7 +2,7 @@
 title = "The model-engineering learning roadmap"
 description = "The path from one prediction to training, data pipelines, harnesses, evaluation, and better model versions."
 date = 2026-11-06
-updated = 2026-11-07
+updated = 2026-11-09
 weight = 0
 
 [extra]
@@ -13,6 +13,16 @@ status = "plan; changes as I learn"
 I want to understand how to build and improve models. Blog writing and personalized email are possible exercises. The concepts need to carry over to other problems too.
 
 The route is now **learn by building**: make a small working piece, run it, inspect the result, understand a failure, then improve it. Mathematics comes in when it helps explain the behavior; repeated arithmetic and pass/fail recall questions are not prerequisites for practical work.
+
+## What comes next — 9 November 2026
+
+The next sequence is topics **4 through 8**: how learning goes wrong, data a model can learn from, a tiny language model, training we can inspect and resume, and adapting an existing model. These remain planned; choosing the sequence does not mean the experiments have run.
+
+For each topic, the lesson starts with a plain explanation and a small example. The assistant implements the experiment and handles the calculations. We inspect the code, outputs, and failures together to understand what each part does, why it matters, and what a change actually helped. Deep mathematical derivations are optional; the numbers needed to explain an observation still get explained.
+
+The [first Qwen tool-use example](@/learn/model-engineering/the-harness-around-the-model.md) stays available as a reference. Expanding that assistant comes after this pass through topics 4–8, alongside deeper evaluation, efficiency, and learning from preferences. Basic validation remains part of the earlier experiments.
+
+The portfolio will follow the lessons: chapter explanations, small examples, relevant code, recorded results, and a quick revision summary. Blog updates will describe actual investigations and learning decisions. Planned work, completed runs, and demonstrated understanding stay distinct.
 
 ## Two related builds
 
@@ -42,9 +52,9 @@ Notes for chapters 1, 2, 3, and 9 are available. The earlier one-weight examples
 
 ## Math alongside the code
 
-We will introduce the math when it becomes useful: multiplication for a prediction, derivatives for an update, arrays and matrix multiplication for layers, and probabilities for language-model output.
+We will explain the math when it helps make an observation clear: multiplication for a prediction, what a gradient tells an update, arrays of numbers for layers, and probabilities for language-model output. Deeper derivations can follow when wanted.
 
-Each explanation should define its symbols, show the needed steps, and connect them to the code or result being inspected. The program handles calculations. Understanding grows through building, observing, and discussing changes together.
+Each explanation should define its symbols, show the needed steps, and connect them to the code or result being inspected. The program handles calculations. The focus is understanding the mechanism, its uses, and its limits through building, observing, and discussing changes together.
 
 ## Testing starts with the first experiment
 

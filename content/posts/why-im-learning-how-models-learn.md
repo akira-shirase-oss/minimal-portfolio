@@ -2,7 +2,7 @@
 title = "Why I'm learning how models learn"
 description = "I started by asking about an 8B blog-writing model. Then I had to ask how training even starts."
 date = 2026-11-06
-updated = 2026-11-07
+updated = 2026-11-09
 
 [extra]
 kind = "experiment"
@@ -91,3 +91,11 @@ I want the next part to happen through building. The concepts stick better when 
 The first practical slice now uses my local Qwen3-8B model. It asks a tool for a saved portfolio note, our code returns the note, and the model explains the deployment command from that information. The tool reads a note; it does not deploy anything.
 
 [The harness chapter](@/learn/model-engineering/the-harness-around-the-model.md) records this first cycle and its actual trace. Existing weights were used. Training a tiny text model, saving and resuming runs, adapting weights, and investigating real tool-use failures are the next pieces of the practical route.
+
+## Learning update — 9 November 2026
+
+I want a clear understanding of the concepts, with the assistant implementing the experiments and handling the calculations. I want to see what the pieces do, why they are useful, and how they fail. We can explain the math needed for an example and come back to deeper derivations when they help.
+
+The next five topics are how learning goes wrong, preparing useful data, building a tiny language model, inspecting and resuming training, and adapting an existing model. After that pass, we will return to expanding the assistant and the later topics. The [roadmap](@/learn/model-engineering/roadmap.md#what-comes-next-9-november-2026) records this sequence.
+
+I also want the portfolio to stay useful for revision. As we cover a topic, its chapter should keep the explanation, a small example, the relevant code, actual results, and a quick recap. The blog will record the investigations and learning decisions. These five topics are still planned; this update records the route, not new training results.
