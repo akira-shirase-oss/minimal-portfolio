@@ -1,0 +1,54 @@
+{
+  "recorded_utc": "2026-11-09T17:24:34.863793+00:00",
+  "kind": "Training-stability lesson validation and source push; not a live-site deployment receipt",
+  "source_and_experiment_commit": "f83349cf0086bbce13835b31ee88e4781a91abc7",
+  "recorded_sources_match_commit": true,
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "experiment": {
+    "command": "node tools/compare-training-stability.mjs",
+    "exit_code": 0,
+    "program_checks_passed": 8,
+    "independent_exact_rational_checks_passed": 51,
+    "raw_result": "perf/results/first-training-stability-comparison.json",
+    "independent_checks": "perf/results/first-training-stability-independent-check.json",
+    "scope": "Three controlled trials of the same one-weight rule. Only learning rate changes. No validation or promotion."
+  },
+  "build": {
+    "command": "zola build",
+    "exit_code": 0,
+    "pages": 111,
+    "sections": 8
+  },
+  "content_checks": {
+    "evidence": "perf/results/2026-11-09-stability-content-check.json",
+    "passed": true,
+    "internal_links_and_anchors_checked": 1587,
+    "jsonld_blocks": 120
+  },
+  "served_source_sha256": "839b407e7f1656cb4f1b0367fd98277ba91bb5e6d86f89b3376c37ee765a2911",
+  "github_push": {
+    "command": "git push origin main",
+    "exit_code": 0,
+    "output": "e1c62f5..f83349c main -> main"
+  },
+  "previous_revision_publication_evidence": "perf/results/2026-11-09-terminal-publication.json",
+  "previous_revision_load": "5200000 feature requests passed for the earlier overfitting/underfitting revision; that digest differs from this revision. It is not new-source load evidence.",
+  "new_revision_load": {
+    "executed": false,
+    "scenario_feature_requests": 5200000,
+    "chapter_requests": 1000000,
+    "passed": null,
+    "state": "Pending. Previously blocked loopback access in agent context; no repeated blocked run in this lesson.",
+    "suggested_baseline_commit": "e1c62f50cdb293ed9acbcb1ab4e1360a5191ebfe"
+  },
+  "new_revision_deployed": false,
+  "live_content_checked": false,
+  "publication_state": "New lesson source pushed to GitHub. New stability section still awaits a full load check and Wrangler publication. Earlier overfitting/underfitting deployment was reported complete at https://45abbdc3.akira-shirase-oss.pages.dev."
+}
