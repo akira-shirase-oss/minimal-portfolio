@@ -1,0 +1,34 @@
+{
+  "recorded_utc": "2026-11-09T13:47:59.781450+00:00",
+  "kind": "Overfitting lesson: local evidence and publication status, not a deployment receipt",
+  "source_and_experiment_commit": "6f5d8951debb996c9ab34ab340df2d5880fc0c5b",
+  "recorded_experiment_source_hashes_match_commit": true,
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "experiment": "node tools/compare-overfitting.mjs completed with six program checks passing; 28 independent exact-rational checks passed",
+  "raw_experiment": "perf/results/first-overfitting-comparison.json",
+  "independent_checks": "perf/results/first-overfitting-independent-check.json",
+  "build": "zola build passed: 111 pages and 8 sections",
+  "content_checks": {
+    "evidence": "perf/results/2026-11-09-overfitting-content-check.json",
+    "passed": true,
+    "internal_links_and_anchors_checked": 1584,
+    "valid_jsonld_blocks": 120
+  },
+  "served_source_sha256": "4c1e156a9cc19f9e8413afc2778f84ff5cb3e06cfda1533a0db04c2a0e927560",
+  "load": {
+    "updated_scenario": "perf/learning-load.py now plans 5200000 feature requests including 1000000 on the new chapter",
+    "executed_this_revision": false,
+    "reason": "Earlier loopback bind PermissionError remains unresolved. No rerun without a changed execution context. Prior blocked attempt is retained at perf/results/20261109T134214Z-learning/.",
+    "passed": null
+  },
+  "github_pushed": false,
+  "deployed": false,
+  "publication_state": "Local commits only; full HTTP load check and publication pending. No browser visual or live-content verification claimed."
+}
