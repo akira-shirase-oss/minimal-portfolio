@@ -1,0 +1,49 @@
+{
+  "checked_utc": "2026-11-09T15:24:03.562947+00:00",
+  "kind": "Isolated process regression check reproducing EMFILE and verifying preflight resource-limit adjustment; not an HTTP load run",
+  "code_base_commit": "8ce8ece1f823964826a42535560fb96aea329d3a",
+  "source_sha256": "2c2d94711a49751f9ad8fa5b5bb5fdd3927f3be94b37b1c865fca48210234237",
+  "machine": {
+    "platform": "darwin",
+    "release": "27.0.0",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368
+  },
+  "python": "3.14.6",
+  "test_source": "import importlib.util,json,os,resource,subprocess,sys\nspec=importlib.util.spec_from_file_location(\"learning_load\", \"perf/learning-load.py\")\nmodule=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)\noriginal_soft,hard=resource.getrlimit(resource.RLIMIT_NOFILE)\nresource.setrlimit(resource.RLIMIT_NOFILE,(256,hard))\nhandles=[];before_error=None\ntry:\n    for _ in range(300):handles.append(open(os.devnull,\"rb\"))\nexcept OSError as error:before_error={\"errno\":error.errno,\"type\":type(error).__name__}\nfinally:\n    opened_before=len(handles)\n    for handle in handles:handle.close()\nprepared=module.prepare_file_descriptor_limit()\nhandles=[]\ntry:\n    for _ in range(300):handles.append(open(os.devnull,\"rb\"))\n    opened_after=len(handles)\nfinally:\n    for handle in handles:handle.close()\ninherited=json.loads(subprocess.check_output([sys.executable,\"-B\",\"-c\",\"import resource,json;print(json.dumps(resource.getrlimit(resource.RLIMIT_NOFILE)))\"],text=True))\nprint(json.dumps({\"forced_soft_limit_before\":256,\"open_failure_before\":before_error,\"opened_before_failure\":opened_before,\"preflight\":prepared,\"opened_after_preflight\":opened_after,\"child_inherited_limits\":inherited,\"hard_limit_preserved\":prepared[\"hard\"]==hard}))\n",
+  "observed": {
+    "forced_soft_limit_before": 256,
+    "open_failure_before": {
+      "errno": 24,
+      "type": "OSError"
+    },
+    "opened_before_failure": 253,
+    "preflight": {
+      "required_soft_minimum": 4096,
+      "soft_before": 256,
+      "soft_after": 4096,
+      "hard": 9223372036854775807,
+      "adjusted": true,
+      "scope": "This process and its children only; no system or shell-profile settings changed."
+    },
+    "opened_after_preflight": 300,
+    "child_inherited_limits": [
+      4096,
+      9223372036854775807
+    ],
+    "hard_limit_preserved": true
+  },
+  "checks": {
+    "original_failure_reproduced_with_low_limit": true,
+    "preflight_raised_soft_limit": true,
+    "previously_failing_open_count_succeeds": true,
+    "subprocess_inherits_sufficient_limit": true,
+    "hard_limit_preserved": true,
+    "test_parent_limits_unchanged": true,
+    "all_performance_thresholds_unchanged": true
+  },
+  "passed": true,
+  "full_http_load_rerun": false
+}

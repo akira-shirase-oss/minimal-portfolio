@@ -8,6 +8,7 @@ import json
 import os
 import platform
 import re
+import resource
 import socket
 import subprocess
 import tarfile
@@ -29,6 +30,32 @@ def command(*args, **kwargs):
 def get(url):
     with urllib.request.urlopen(url, timeout=10) as response:
         return response.status, response.read()
+
+
+def prepare_file_descriptor_limit(minimum=4096):
+    """Give this process and its children headroom for 1,024 connections."""
+    soft_before, hard = resource.getrlimit(resource.RLIMIT_NOFILE)
+    if soft_before != resource.RLIM_INFINITY and soft_before < minimum:
+        if hard != resource.RLIM_INFINITY and hard < minimum:
+            raise RuntimeError(
+                f"Open-file hard limit {hard} is below the required {minimum}; "
+                "raise the terminal's limit before running this scenario."
+            )
+        try:
+            resource.setrlimit(resource.RLIMIT_NOFILE, (minimum, hard))
+        except (OSError, ValueError) as error:
+            raise RuntimeError(
+                f"Cannot raise this process's open-file limit to {minimum}: {error}"
+            ) from error
+    soft_after, hard_after = resource.getrlimit(resource.RLIMIT_NOFILE)
+    return {
+        "required_soft_minimum": minimum,
+        "soft_before": soft_before,
+        "soft_after": soft_after,
+        "hard": hard_after,
+        "adjusted": soft_before != soft_after,
+        "scope": "This process and its children only; no system or shell-profile settings changed.",
+    }
 
 
 def main():
@@ -57,6 +84,11 @@ def main():
         "machine": machine,
         "zola": command("zola", "--version", capture_output=True, text=True).stdout.strip(),
         "scope": "Local Zola development server, HTTP/1.1 keepalive. Not Cloudflare capacity or production evidence.",
+        "file_descriptor_limit": {
+            "required_soft_minimum": 4096,
+            "soft_before": resource.getrlimit(resource.RLIMIT_NOFILE)[0],
+            "hard": resource.getrlimit(resource.RLIMIT_NOFILE)[1],
+        },
         "thresholds": {"failed_requests": 0, "non_2xx_responses": 0, "minimum_rps": 500, "maximum_p99_ms": 1000, "homepage_rps_ratio_min": 0.75, "homepage_p99_ratio_max": 2, "homepage_p99_allowance_ms": 25},
         "phases": [], "checks": [], "passed": False,
     }
@@ -116,6 +148,10 @@ def main():
 
     save()
     try:
+        result["file_descriptor_limit"].update(prepare_file_descriptor_limit())
+        capacity = result["file_descriptor_limit"]
+        check("load-generator open-file headroom", capacity["soft_after"] == resource.RLIM_INFINITY
+              or capacity["soft_after"] >= capacity["required_soft_minimum"], capacity)
         with tempfile.TemporaryDirectory(prefix="404human-learning-load-") as directory:
             scratch = Path(directory)
             baseline = scratch / "baseline"

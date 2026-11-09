@@ -40,6 +40,14 @@ the first-training-loop, overfitting and harness chapters, plus 200,000 each acr
 two chapters, roadmap, and introductory blog. Concurrency ranges from 8 to 1,024.
 For later changes, choose the previous source revision as the baseline.
 
+The macOS/Unix runner checks its open-file limit before starting either server.
+If the soft limit is below 4,096 and the hard limit permits it, the runner raises
+the soft limit for itself and its child processes, including ApacheBench. It
+records the before/after limits in `result.json`. This leaves system settings and
+shell profiles unchanged. If the hard limit is too low, the run stops before
+load with an explicit error. This prevents the load generator from exhausting a
+small terminal limit while opening the scenario's 256–1,024 connections.
+
 Before load, it checks status and identifying content. Each phase must finish
 with zero failed or non-2xx requests, at least 500 requests/second, and p99 at
 most 1,000 ms. The candidate homepage must retain at least 75% of baseline

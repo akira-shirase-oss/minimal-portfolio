@@ -1,0 +1,13 @@
+{
+  "recorded_utc": "2026-11-09T15:24:03.572248+00:00",
+  "original_run": "perf/results/20261109T151643Z-learning/result.json",
+  "raw_evidence": "perf/results/20261109T151643Z-learning/homepage-records-c256.txt",
+  "observed_failure": "socket: Too many open files (24)",
+  "classification": "ApacheBench exhausted its per-process file-descriptor capacity while creating sockets. The million-request phase did not provide completed counts, latency or throughput; no site-capacity verdict is available.",
+  "failing_process_exact_soft_limit": "Unknown: the old runner did not record RLIMIT_NOFILE. Do not substitute this agent process limit for the user terminal limit.",
+  "preserved": true,
+  "change": "Before starting servers, raise only this process soft limit to 4096 when permitted and record before/after values; children inherit that limit. Stop explicitly if hard limit prevents this.",
+  "regression_check": "perf/results/2026-11-09-open-file-preflight-check.json",
+  "thresholds_and_request_counts_changed": false,
+  "full_run_status": "Pending a new run with corrected load-generator resources; the original failure remains a failure."
+}

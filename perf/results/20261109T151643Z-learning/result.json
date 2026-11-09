@@ -1,0 +1,211 @@
+{
+  "started_utc": "20261109T151643Z",
+  "commit": "8ce8ece1f823964826a42535560fb96aea329d3a",
+  "baseline_commit": "e13e85d4c5a11a9fa3cba1259bf9f0e7f86c7713",
+  "source_sha256": "23b76adc847e6f8c3906b6b0df3f0222619b8af0f965b6cc731e65acef859977",
+  "working_tree_status": [],
+  "machine": {
+    "platform": "darwin",
+    "release": "27.0.0",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368
+  },
+  "zola": "zola 0.23.6",
+  "scope": "Local Zola development server, HTTP/1.1 keepalive. Not Cloudflare capacity or production evidence.",
+  "thresholds": {
+    "failed_requests": 0,
+    "non_2xx_responses": 0,
+    "minimum_rps": 500,
+    "maximum_p99_ms": 1000,
+    "homepage_rps_ratio_min": 0.75,
+    "homepage_p99_ratio_max": 2,
+    "homepage_p99_allowance_ms": 25
+  },
+  "phases": [
+    {
+      "name": "baseline-home",
+      "path": "/",
+      "requests": 50000,
+      "concurrency": 32,
+      "exit_code": 0,
+      "completed": 50000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 82597.8,
+      "p95_ms": 0.0,
+      "p99_ms": 1.0,
+      "seconds": 0.605
+    },
+    {
+      "name": "candidate-home",
+      "path": "/",
+      "requests": 50000,
+      "concurrency": 32,
+      "exit_code": 0,
+      "completed": 50000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 83215.72,
+      "p95_ms": 0.0,
+      "p99_ms": 1.0,
+      "seconds": 0.601
+    },
+    {
+      "name": "homepage-records-c256",
+      "path": "/",
+      "requests": 1000000,
+      "concurrency": 256,
+      "exit_code": 24,
+      "completed": null,
+      "failed": null,
+      "non_2xx": 0,
+      "rps": null,
+      "p95_ms": null,
+      "p99_ms": null,
+      "seconds": null
+    }
+  ],
+  "checks": [
+    {
+      "name": "content /learn/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 7868
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 10744
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/roadmap/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 17937
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/weights-predictions-and-loss/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 17626
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/gradients-and-weight-updates/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 24230
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/our-first-training-loop/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 37480
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/how-learning-goes-wrong/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 23993
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/the-harness-around-the-model/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 16363
+      }
+    },
+    {
+      "name": "content /posts/why-im-learning-how-models-learn/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 18967
+      }
+    },
+    {
+      "name": "baseline-home",
+      "passed": true,
+      "detail": {
+        "name": "baseline-home",
+        "path": "/",
+        "requests": 50000,
+        "concurrency": 32,
+        "exit_code": 0,
+        "completed": 50000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 82597.8,
+        "p95_ms": 0.0,
+        "p99_ms": 1.0,
+        "seconds": 0.605
+      }
+    },
+    {
+      "name": "candidate-home",
+      "passed": true,
+      "detail": {
+        "name": "candidate-home",
+        "path": "/",
+        "requests": 50000,
+        "concurrency": 32,
+        "exit_code": 0,
+        "completed": 50000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 83215.72,
+        "p95_ms": 0.0,
+        "p99_ms": 1.0,
+        "seconds": 0.601
+      }
+    },
+    {
+      "name": "homepage regression",
+      "passed": true,
+      "detail": {
+        "baseline_rps": 82597.8,
+        "candidate_rps": 83215.72,
+        "baseline_p99_ms": 1.0,
+        "candidate_p99_ms": 1.0
+      }
+    },
+    {
+      "name": "homepage-records-c256",
+      "passed": false,
+      "detail": {
+        "name": "homepage-records-c256",
+        "path": "/",
+        "requests": 1000000,
+        "concurrency": 256,
+        "exit_code": 24,
+        "completed": null,
+        "failed": null,
+        "non_2xx": 0,
+        "rps": null,
+        "p95_ms": null,
+        "p99_ms": null,
+        "seconds": null
+      }
+    }
+  ],
+  "passed": false,
+  "error": "homepage-records-c256: {'name': 'homepage-records-c256', 'path': '/', 'requests': 1000000, 'concurrency': 256, 'exit_code': 24, 'completed': None, 'failed': None, 'non_2xx': 0, 'rps': None, 'p95_ms': None, 'p99_ms': None, 'seconds': None}",
+  "finished_utc": "2026-11-09T15:16:45.415052+00:00"
+}
