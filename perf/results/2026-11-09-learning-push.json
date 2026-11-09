@@ -1,0 +1,29 @@
+{
+  "recorded_utc": "2026-11-09T14:57:15.985228+00:00",
+  "kind": "GitHub push receipt; not a live-site deployment receipt",
+  "repository": "akira-shirase-oss/minimal-portfolio",
+  "branch": "main",
+  "pushed_head": "55b7404885ba64e46de69dc8de155e4b2d70470e",
+  "remote_tracking_head_after_successful_push": "55b7404885ba64e46de69dc8de155e4b2d70470e",
+  "git_push": {
+    "command": "git push origin main",
+    "exit_code": 0,
+    "output": "To github-learning:akira-shirase-oss/minimal-portfolio.git; e13e85d..55b7404 main -> main"
+  },
+  "remote_verification": {
+    "method": "GitHub connector fetch_file on main, chapter lines 1-18",
+    "blob_sha": "10ed2e00c34004e0bd30cb46649898ec268efb6a",
+    "whole_file_blob_matches_local": true,
+    "url": "https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/content/learn/model-engineering/how-learning-goes-wrong.md",
+    "reported_status": "synthetic overfitting and underfitting comparisons run; unstable-training experiments still planned"
+  },
+  "included": "Overfitting and underfitting chapter, code, fixed dataset, raw results, independent checks, roadmap/track/blog updates and earlier validation receipts. Private continuity files remain outside the portfolio repository.",
+  "deployment_attempted": false,
+  "load_execution_escalation": {
+    "executed": false,
+    "requested_command": "python3 perf/learning-load.py --baseline-ref e13e85d4c5a11a9fa3cba1259bf9f0e7f86c7713",
+    "approval_result": "Rejected before execution: granular approval configuration has sandbox_approval=false and does not permit escalated commands.",
+    "original_failure_preserved": "perf/results/20261109T134214Z-learning/result.json"
+  },
+  "publication_state": "GitHub source pushed and remotely confirmed; live website not deployed. AGENTS.md requires the full load scenario, which remains pending a context allowed to bind loopback sockets."
+}
