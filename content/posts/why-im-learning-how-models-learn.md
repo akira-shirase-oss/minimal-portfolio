@@ -106,4 +106,12 @@ The first overfitting comparison now runs locally. Two small mathematical models
 
 The example was deliberately constructed with noisy training observations and clean checking targets. It makes one distinction visible: fitting every recorded answer does not guarantee a useful prediction between them. It is not a language-model training run or a claim that simpler models always win.
 
-[Chapter 4](@/learn/model-engineering/how-learning-goes-wrong.md) keeps the dataset, model explanations, code links, measured outputs, limitations, and revision notes. Underfitting and unstable updates are still ahead.
+[Chapter 4](@/learn/model-engineering/how-learning-goes-wrong.md) keeps the dataset, model explanations, code links, measured outputs, limitations, and revision notes. The next entry adds underfitting; unstable updates are still ahead.
+
+### Learning too little of the pattern
+
+The next model learns just one number from the same training data: an average delivery time of 20 minutes. It predicts that time for every distance. Its average error is 5.67 minutes on the training rows and 4.80 minutes on the five checking rows.
+
+That is underfitting in this example. The constant model has no way to express that longer distances take longer. Training its one number correctly cannot give it that missing relationship. The earlier straight line has that capability and produces less error on both sets.
+
+The [new chapter section](@/learn/model-engineering/how-learning-goes-wrong.md#underfitting-capturing-too-little-of-the-pattern) keeps the code and recorded comparison. It also explains how application needs define useful performance. The checking cases are reused teaching examples, not a fresh final test.

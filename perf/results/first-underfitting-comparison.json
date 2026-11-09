@@ -1,0 +1,219 @@
+{
+  "recorded_utc": "2026-11-09T14:01:28.088Z",
+  "kind": "One constant-model fitting run with frozen earlier comparisons; not language-model training or a capacity benchmark",
+  "code_base_commit": "6675efd707bf98581eddfb3cebe88b0dc1e12595",
+  "working_tree_status": "?? tools/compare-underfitting.mjs",
+  "source_sha256": {
+    "tools/compare-underfitting.mjs": "eba130fc5f4e7813b651728843520f66026d8aac18f5b4ee2e2663c5b6dc9ab1",
+    "perf/fixtures/overfitting-v1.json": "efc77f50f51625e7a6491930c0399e4ead880eb4f4569147e3ceaf22a1852d3f",
+    "perf/results/first-overfitting-comparison.json": "5fceef9bf1a1cb04379116667325b39fef04fe1acefe351fb9b2ae592e5fbc5f"
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "dataset": {
+    "version": "overfitting-v1",
+    "purpose": "Deliberately constructed teaching example; not real delivery data or a representative benchmark",
+    "input": "distance in kilometres",
+    "output": "delivery duration in minutes",
+    "synthetic_target_rule": "duration = 10 + 2 * distance",
+    "training_observation_noise_minutes": [
+      3,
+      -3,
+      3,
+      -3,
+      3,
+      -3
+    ],
+    "training": [
+      {
+        "distance": 0,
+        "duration": 13
+      },
+      {
+        "distance": 2,
+        "duration": 11
+      },
+      {
+        "distance": 4,
+        "duration": 21
+      },
+      {
+        "distance": 6,
+        "duration": 19
+      },
+      {
+        "distance": 8,
+        "duration": 29
+      },
+      {
+        "distance": 10,
+        "duration": 27
+      }
+    ],
+    "validation": [
+      {
+        "distance": 1,
+        "duration": 12
+      },
+      {
+        "distance": 3,
+        "duration": 16
+      },
+      {
+        "distance": 5,
+        "duration": 20
+      },
+      {
+        "distance": 7,
+        "duration": 24
+      },
+      {
+        "distance": 9,
+        "duration": 28
+      }
+    ],
+    "comparison": {
+      "models": [
+        "least-squares straight line",
+        "degree-5 interpolating polynomial"
+      ],
+      "metric": "mean absolute error in minutes, lower is better",
+      "quality_acceptance_threshold": null,
+      "scope": "Descriptive comparison on fixed teaching cases, not model promotion or final-test evidence",
+      "checks": [
+        "training and validation inputs disjoint",
+        "all predictions finite",
+        "straight-line residuals sum to zero and have zero distance-weighted sum within tolerance",
+        "interpolating curve matches all training observations within tolerance"
+      ]
+    }
+  },
+  "fitting": "Choose the mean training duration, which minimizes training squared error among constant predictions. Report mean absolute error to compare with the original lesson. No validation targets used in fitting.",
+  "model": {
+    "name": "constant",
+    "description": "One fitted number, the mean training duration, used at every distance",
+    "fitted": {
+      "constant_minutes": 20
+    },
+    "training": {
+      "cases": [
+        {
+          "distance": 0,
+          "duration": 13,
+          "prediction": 20,
+          "absolute_error": 7
+        },
+        {
+          "distance": 2,
+          "duration": 11,
+          "prediction": 20,
+          "absolute_error": 9
+        },
+        {
+          "distance": 4,
+          "duration": 21,
+          "prediction": 20,
+          "absolute_error": 1
+        },
+        {
+          "distance": 6,
+          "duration": 19,
+          "prediction": 20,
+          "absolute_error": 1
+        },
+        {
+          "distance": 8,
+          "duration": 29,
+          "prediction": 20,
+          "absolute_error": 9
+        },
+        {
+          "distance": 10,
+          "duration": 27,
+          "prediction": 20,
+          "absolute_error": 7
+        }
+      ],
+      "mean_absolute_error": 5.666666666666667
+    },
+    "validation": {
+      "cases": [
+        {
+          "distance": 1,
+          "duration": 12,
+          "prediction": 20,
+          "absolute_error": 8
+        },
+        {
+          "distance": 3,
+          "duration": 16,
+          "prediction": 20,
+          "absolute_error": 4
+        },
+        {
+          "distance": 5,
+          "duration": 20,
+          "prediction": 20,
+          "absolute_error": 0
+        },
+        {
+          "distance": 7,
+          "duration": 24,
+          "prediction": 20,
+          "absolute_error": 4
+        },
+        {
+          "distance": 9,
+          "duration": 28,
+          "prediction": 20,
+          "absolute_error": 8
+        }
+      ],
+      "mean_absolute_error": 4.8
+    }
+  },
+  "comparison": [
+    {
+      "model": "constant",
+      "training_mean_absolute_error_minutes": 5.666666666666667,
+      "validation_mean_absolute_error_minutes": 4.8,
+      "evidence": "this run"
+    },
+    {
+      "model": "straight_line",
+      "training_mean_absolute_error_minutes": 2.7428571428571424,
+      "validation_mean_absolute_error_minutes": 0.6171428571428571,
+      "evidence": "perf/results/first-overfitting-comparison.json"
+    },
+    {
+      "model": "flexible_curve",
+      "training_mean_absolute_error_minutes": 0,
+      "validation_mean_absolute_error_minutes": 3.9,
+      "evidence": "perf/results/first-overfitting-comparison.json"
+    }
+  ],
+  "checks": {
+    "original_dataset_unchanged": true,
+    "baseline_contains_same_dataset": true,
+    "original_model_sources_unchanged": true,
+    "disjoint_inputs": true,
+    "constant_is_finite": true,
+    "training_residual_sum_zero": true,
+    "prediction_identical_at_all_distances": true
+  },
+  "program_checks_passed": true,
+  "observed_comparison": {
+    "constant_training_error_higher_than_line": true,
+    "constant_validation_error_higher_than_line": true
+  },
+  "quality_verdict": "The constant model cannot represent any distance-dependent trend. Comparison illustrates underfitting on deliberately constructed data, without application acceptance limits or promotion. Validation cases were already inspected in the earlier lesson and are not a fresh final test.",
+  "baseline_models_rerun": false,
+  "neural_network_or_qwen_weights_changed": false,
+  "model_promoted": false
+}

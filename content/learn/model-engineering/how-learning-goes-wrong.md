@@ -1,6 +1,6 @@
 +++
 title = "How learning goes wrong"
-description = "A model can fit every training example and still make worse predictions on new ones. Our first overfitting comparison makes that visible."
+description = "A model can capture too little of a useful pattern or fit accidental details too closely. Small delivery-time examples make both failures visible."
 date = 2026-11-09
 updated = 2026-11-09
 weight = 4
@@ -8,12 +8,12 @@ weight = 4
 [extra]
 kind = "chapter"
 chapter = 4
-status = "first synthetic overfitting comparison run; underfitting and unstable-training experiments still planned"
+status = "synthetic overfitting and underfitting comparisons run; unstable-training experiments still planned"
 +++
 
 A model can get every training example right and still struggle with a new example. Our first experiment in this chapter shows one way that happens: **overfitting**.
 
-We fitted two small mathematical models to the same six made-up measurements. This is a local teaching experiment, using no neural network or language model. No Qwen weights changed.
+We first fitted two small mathematical models to the same six made-up measurements, then added a third model to investigate underfitting. These are local teaching experiments, using no neural network or language model. No Qwen weights changed.
 
 ## Learning a pattern we can use again
 
@@ -89,19 +89,75 @@ Program checks confirmed disjoint fitting/checking inputs, finite predictions, t
 
 There is no application acceptance threshold or model-promotion decision here. This constructed example does not show that flexible models always do worse, or that simplicity always wins. It shows why training accuracy alone is insufficient evidence.
 
+## Underfitting: capturing too little of the pattern
+
+Now imagine a delivery model that always predicts the same time, whatever the distance. It has one adjustable number. Fitting chooses that number from the training measurements, but the model has no way to make its prediction increase with distance.
+
+We implemented exactly that model. It takes the average of the same six training times and learns **20 minutes**. This is a fitted model: the number comes from the training data. Choosing the average minimizes squared training error among constant predictions. We still report average absolute error to keep the comparison with the earlier models consistent.
+
+Its predictions on new distances are:
+
+| Distance | Target time | Fixed-time model's prediction |
+| ---: | ---: | ---: |
+| 1 km | 12 minutes | 20 minutes |
+| 5 km | 20 minutes | 20 minutes |
+| 9 km | 28 minutes | 20 minutes |
+
+It gets the middle example right but misses the distance-dependent pattern. Even a correctly calculated training result cannot give this model a slope: its definition always returns one fixed time.
+
+**Underfitting** means the fitted model captures too little of the useful structure in the data. Here, its limited form prevents it from expressing a relationship that the straight line can represent.
+
+The measured comparison is:
+
+| Model | Average training error | Average error on new rows |
+| --- | ---: | ---: |
+| Fixed 20-minute prediction | 5.67 minutes | 4.80 minutes |
+| Straight line | 2.74 minutes | 0.62 minutes |
+| Flexible curve | 0.00 minutes | 3.90 minutes |
+
+The constant model has more error than the straight line on both sets. The flexible curve fits the training rows perfectly and has more error on the new rows than the line. These illustrate two different problems: capturing too little of the trend, and following the training-specific variations too closely.
+
+The [underfitting program](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/compare-underfitting.mjs) fitted the new constant model and preserved its [raw result](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-underfitting-comparison.json). The line and curve numbers are reused from the unchanged earlier evidence, not new runs. Source and dataset hashes were checked before comparing them.
+
+To run the new example from the portfolio checkout:
+
+```sh
+node tools/compare-underfitting.mjs
+```
+
+The saved first result is protected from overwriting. To repeat it from a checkout that already contains that record, give a fresh result path:
+
+```sh
+node tools/compare-underfitting.mjs perf/results/another-underfitting-run.json
+```
+
+Adding more training updates cannot make a constant model express a distance effect. We would need to change the model so it can use that relationship. The earlier straight line demonstrates that capability on this dataset. We have not run an iterative training repair here.
+
+In other setups, insufficient training or overly strong restrictions can also lead to underfitting. Large errors alone do not diagnose the cause: poor data, a bug, or a mismatch between the task and available inputs could also need investigation.
+
+## The use case defines useful performance
+
+A training score alone does not tell us whether a model is useful. The application determines which mistakes matter and how much error is acceptable. We then evaluate examples resembling the inputs that application will receive.
+
+For a rough delivery estimate, an application might allow a few minutes of error. A different scheduling task might need a tighter limit. These are illustrative requirements; this experiment has no application acceptance threshold.
+
+Perfect training performance alone does not establish overfitting either. Our evidence is the comparison on fixed new cases and the known construction of the example. The same five validation cases have now been inspected twice; they remain development examples, not a fresh final test or a broad real-world benchmark.
+
 ## What we could change next
 
 We could collect more representative examples, constrain how flexible the model is, or penalize unnecessary complexity. That last idea is called **regularization**. These are possible responses to investigate, not fixes already tested in this run.
 
 For models trained through repeated updates, deciding when to stop can also matter. We have not tested that here; these two fits are calculated directly.
 
-**Underfitting**, where a model fails to capture enough of the useful pattern, and unstable updates remain separate upcoming experiments. The [data chapter in the roadmap](@/learn/model-engineering/roadmap.md) will also explain why duplicates, misleading examples, and information leaking into evaluation can give false confidence.
+Unstable updates remain a separate upcoming experiment. The [data chapter in the roadmap](@/learn/model-engineering/roadmap.md) will also explain why duplicates, misleading examples, and information leaking into evaluation can give false confidence.
 
 ## Quick revision
 
 - **Training examples** are used to fit the model. Validation examples check it without changing the fitted model.
 - **Generalization** means handling unfamiliar examples usefully.
+- **Underfitting** means capturing too little of the useful structure. Our fitted constant predicts 20 minutes at every distance and misses the trend.
 - **Overfitting** means fitting training-specific details in a way that hurts performance on new examples.
 - A perfect fit on six training rows was worse on our five new rows. The recorded comparison, rather than the training score alone, supports that conclusion.
+- The use case sets the requirements. Representative evaluation checks whether a model meets them; a score alone does not supply those requirements.
 
 The earlier [training-loop chapter](@/learn/model-engineering/our-first-training-loop.md) showed that improvement and meeting a requirement are different claims. This example adds another distinction: fitting the training observations and capturing a useful pattern are different claims too.

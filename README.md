@@ -89,8 +89,12 @@ Chapter 4 now records its first synthetic overfitting comparison. Run
 `node tools/compare-overfitting.mjs` to fit a line and an interpolating curve to
 the same fixed observations. It saves `perf/results/first-overfitting-comparison.json`
 with source/data identity and per-case results, refusing to overwrite the first
-record. Underfitting and unstable-training experiments remain planned. This is
-a small mathematical fitting example, not neural-network or Qwen training.
+record. `node tools/compare-underfitting.mjs` adds a fitted constant-time model
+using the same data and unchanged earlier comparison evidence. Its first result
+is protected too; an optional result-path argument supports later distinct runs.
+Chapter 4 now covers both underfitting and overfitting; unstable updates remain
+planned. These are small mathematical fitting examples, not neural-network or
+Qwen training.
 
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,

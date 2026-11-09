@@ -70,7 +70,7 @@ This track follows that question from the beginning. The goal is to understand t
 
 I want to understand what each part does, why it matters, and how it can fail. The learning route starts from plain explanations, small working pieces, their outputs, and the errors we encounter. The assistant handles implementation and calculations, with the code and results available to inspect together. Math comes in when it helps explain the behavior; deeper derivations are optional. The earlier small examples stay available for revision.
 
-**Current learning sequence, agreed 9 November 2026:** topics 4–8, from how learning goes wrong through adapting an existing model. [Topic 4 now has its first overfitting comparison](@/learn/model-engineering/how-learning-goes-wrong.md): two small models fitted to the same synthetic data. Other topic-4 experiments and topics 5–8 remain planned. Each will get explanations, examples, code, recorded results, and revision notes as we cover it.
+**Current learning sequence, agreed 9 November 2026:** topics 4–8, from how learning goes wrong through adapting an existing model. [Topic 4 now has overfitting and underfitting comparisons](@/learn/model-engineering/how-learning-goes-wrong.md): a straight line, a flexible curve, and a fixed-time model on the same synthetic delivery data. Unstable-training experiments and topics 5–8 remain planned. Each will get explanations, examples, code, recorded results, and revision notes as we cover it.
 
 **Earlier practical build:** [a local Qwen assistant uses its first tool](@/learn/model-engineering/the-harness-around-the-model.md). The first request → lookup → answer cycle has run, and its trace and source are saved. We will return to expanding the assistant after the next five topics.
 

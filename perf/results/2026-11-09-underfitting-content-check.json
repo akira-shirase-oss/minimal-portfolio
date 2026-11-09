@@ -1,0 +1,21 @@
+{
+  "checked_utc": "2026-11-09T14:03:00.362302+00:00",
+  "kind": "Generated content, links/anchors and JSON-LD checks; not browser visual QA or an HTTP load run",
+  "code_base_commit": "6675efd707bf98581eddfb3cebe88b0dc1e12595",
+  "served_source_sha256": "23b76adc847e6f8c3906b6b0df3f0222619b8af0f965b6cc731e65acef859977",
+  "html_pages": 120,
+  "internal_links_and_anchors_checked": 1585,
+  "valid_jsonld_blocks": 120,
+  "broken_links": [],
+  "checks": {
+    "underfitting_section_available": true,
+    "constant_results_match_saved_run": false,
+    "use_case_clarification_recorded": true,
+    "remaining_experiments_stay_planned": true,
+    "earlier_evidence_remains_distinct": true,
+    "no_interactive_lab_added": true,
+    "underfitting_program_and_independent_checks_passed": true
+  },
+  "passed": false,
+  "load_state": "Existing chapter-4 scenario plans 1000000 requests for this chapter, 5200000 feature requests overall. Not rerun because the earlier loopback PermissionError remains unresolved. Passing load evidence and publication are pending."
+}

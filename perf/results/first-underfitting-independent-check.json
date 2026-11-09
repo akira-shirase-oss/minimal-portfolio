@@ -1,0 +1,95 @@
+{
+  "checked_utc": "2026-11-09T14:02:36.116589+00:00",
+  "kind": "Independent fixed numerical expectations for the new constant model; not a model-quality or capacity benchmark",
+  "expectations": {
+    "constant_minutes": 20,
+    "training_absolute_errors": [
+      7,
+      9,
+      1,
+      1,
+      9,
+      7
+    ],
+    "training_mean_absolute_error": "17/3",
+    "validation_absolute_errors": [
+      8,
+      4,
+      0,
+      4,
+      8
+    ],
+    "validation_mean_absolute_error": "24/5"
+  },
+  "checks": [
+    {
+      "name": "fitted constant equals independently known 20 minutes",
+      "passed": true
+    },
+    {
+      "name": "training case 0: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "training case 1: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "training case 2: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "training case 3: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "training case 4: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "training case 5: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "training exact average absolute error 17/3",
+      "passed": true
+    },
+    {
+      "name": "validation case 0: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "validation case 1: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "validation case 2: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "validation case 3: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "validation case 4: fixed prediction and independently expected absolute error",
+      "passed": true
+    },
+    {
+      "name": "validation exact average absolute error 24/5",
+      "passed": true
+    },
+    {
+      "name": "source identity tools/compare-underfitting.mjs",
+      "passed": true
+    },
+    {
+      "name": "source identity perf/fixtures/overfitting-v1.json",
+      "passed": true
+    },
+    {
+      "name": "source identity perf/results/first-overfitting-comparison.json",
+      "passed": true
+    }
+  ],
+  "passed": true
+}
