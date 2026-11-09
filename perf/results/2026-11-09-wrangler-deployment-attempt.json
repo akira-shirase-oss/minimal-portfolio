@@ -1,0 +1,36 @@
+{
+  "recorded_utc": "2026-11-09T14:59:42.615842+00:00",
+  "kind": "Executed Wrangler CLI production-deployment attempt; failed before authentication completed",
+  "source_commit": "b85bde0a8fb895e897ace2b51e4c31f7ad504581",
+  "wrangler_version": "4.148.0",
+  "project": "akira-shirase-oss",
+  "branch": "main",
+  "command": "WRANGLER_LOG_PATH=/private/tmp/portfolio-wrangler-deploy-20261109.log WRANGLER_SEND_METRICS=false node /Users/vinaysandhu/.npm/_npx/4657ece8094f916a/node_modules/wrangler/bin/wrangler.js pages deploy public --project-name akira-shirase-oss --branch main --commit-hash b85bde0a8fb895e897ace2b51e4c31f7ad504581 --commit-message \"Publish overfitting and underfitting learning notes\"",
+  "exit_code": 1,
+  "error": "Your auth token has expired and could not be refreshed because the Cloudflare auth server could not be reached. Wrangler reported stored credentials were left unchanged.",
+  "auth_check": {
+    "command": "wrangler whoami, using the same cached 4.148.0 CLI and a writable temporary log path",
+    "exit_code": 1,
+    "result": "Saved auth token expired; Cloudflare auth server unreachable."
+  },
+  "network_diagnostic": {
+    "command": "curl --head --silent --show-error --max-time 10 https://api.cloudflare.com/client/v4/user",
+    "exit_code": 6,
+    "error": "Could not resolve host: api.cloudflare.com"
+  },
+  "build": {
+    "command": "zola build",
+    "exit_code": 0,
+    "pages": 111,
+    "sections": 8,
+    "elapsed_ms": 196
+  },
+  "served_sources_match_previously_checked_revision": true,
+  "served_source_sha256": "23b76adc847e6f8c3906b6b0df3f0222619b8af0f965b6cc731e65acef859977",
+  "deployed": false,
+  "deployment_id": null,
+  "live_verified": false,
+  "load_state": "Previously blocked by loopback permissions; original evidence preserved. No new HTTP load run executed.",
+  "next_action": "Restore Cloudflare network/DNS access for the execution context, let Wrangler refresh existing credentials, then retry this prepared CLI deployment. Do not assume an unreachable auth server means the saved refresh credentials are invalid.",
+  "sensitive_debug_logs": "Temporary Wrangler debug logs are not committed or reproduced; this receipt contains only deployment status and non-secret diagnostics."
+}
