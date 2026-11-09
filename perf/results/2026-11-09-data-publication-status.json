@@ -1,0 +1,71 @@
+{
+  "recorded_utc": "2026-11-09T22:55:30.628229+00:00",
+  "kind": "First data-preparation lesson validation and publication state; not a live deployment receipt",
+  "source_and_audit_commit": "e06005f397f5d446e52b0a12ed3a5e76bee766fe",
+  "recorded_sources_match_commit": true,
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "audit": {
+    "command": "node tools/audit-training-data.mjs",
+    "exit_code": 0,
+    "program_checks_passed": 8,
+    "independent_expected_fixture_checks_passed": 12,
+    "summary": {
+      "input_records": 10,
+      "retained_records": 5,
+      "duplicate_records": 1,
+      "review_records": 4,
+      "review_reason_counts": {
+        "missing_text": 1,
+        "missing_label": 1,
+        "conflicting_labels": 2
+      },
+      "retained_label_counts": {
+        "billing": 2,
+        "account_access": 1,
+        "bug_report": 2
+      }
+    },
+    "result": "perf/results/first-training-data-audit.json",
+    "model_called_or_trained": false,
+    "data_split_created": false,
+    "model_quality_measured": false
+  },
+  "build": {
+    "command": "zola build",
+    "exit_code": 0,
+    "pages": 112,
+    "sections": 8
+  },
+  "content_checks": {
+    "evidence": "perf/results/2026-11-09-data-content-check.json",
+    "passed": true,
+    "internal_links_and_anchors_checked": 1607,
+    "jsonld_blocks": 121
+  },
+  "served_source_sha256": "b6af06e433c97f59b278a74fc77866301d312c26c675eaa9f23d6e38c83b3e01",
+  "load_scenario": {
+    "feature_requests": 6200000,
+    "new_data_route_requests": 1000000,
+    "static_scenario_checks_passed": 7,
+    "executed": false,
+    "passed": null,
+    "note": "Previous revision had a passed 5200000-request run. That old digest does not cover this newly added chapter. Agent loopback restrictions remain unresolved; no repeated known-blocked run."
+  },
+  "github_push": {
+    "command": "git push origin main",
+    "exit_code": 128,
+    "failure": "Configured ED25519 learning identity could not sign because communication with the SSH agent failed; GitHub rejected publickey authentication. No alternate identity or account was used."
+  },
+  "prior_stability_publication": "User reports the stability section live after opening its URL. This is user confirmation, not an independent agent live-content verification.",
+  "new_chapter_deployed": false,
+  "new_live_content_verified": false,
+  "publication_state": "Chapter 5 and its code/evidence committed locally; source push blocked by SSH agent. No deployment or model-quality claim.",
+  "next_publication_step": "Restore the configured learning SSH agent, push the local commits, run the full 6200000-request scenario against baseline 6ba53f9392b88a58e3dc6a71dfaed8c3684e8cbb from a context allowing loopback, preserve results and publish through Wrangler if required checks pass."
+}
