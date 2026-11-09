@@ -1,0 +1,45 @@
+{
+  "recorded_utc": "2026-11-09T14:03:41.860233+00:00",
+  "kind": "Local underfitting lesson validation and publication state; not a deployment receipt",
+  "source_and_experiment_commit": "3eff948d8a87c35e751000ead83ffe3f7d772c25",
+  "recorded_source_hashes_match_commit": true,
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "experiment": {
+    "command": "node tools/compare-underfitting.mjs",
+    "exit_code": 0,
+    "program_checks_passed": 7,
+    "independent_known_value_checks_passed": 17,
+    "evidence": "perf/results/first-underfitting-comparison.json",
+    "baseline_models_rerun": false
+  },
+  "build": {
+    "command": "zola build",
+    "exit_code": 0,
+    "pages": 111,
+    "sections": 8
+  },
+  "content": {
+    "evidence": "perf/results/2026-11-09-underfitting-content-check-correction.json",
+    "passed": true,
+    "internal_links_and_anchors_checked": 1585,
+    "jsonld_blocks": 120,
+    "initial_assertion_false_negative": "Original report is preserved. A phrase check failed on extra whitespace inserted at a bold text boundary by the checker. Normalized whitespace corrected the assertion on unchanged page sources; no product or threshold was changed."
+  },
+  "served_source_sha256": "23b76adc847e6f8c3906b6b0df3f0222619b8af0f965b6cc731e65acef859977",
+  "load": {
+    "scenario_feature_requests": 5200000,
+    "chapter_4_requests": 1000000,
+    "executed_this_revision": false,
+    "reason": "Prior loopback PermissionError is unresolved; no new execution-context change, so no repeated load attempt. Earlier failed setup remains stored at perf/results/20261109T134214Z-learning/.",
+    "passed": null
+  },
+  "publication_state": "Local commits only. No push, deployment, browser visual QA or current live verification. Required HTTP load check remains pending.",
+  "model_quality_scope": "Hand-constructed synthetic examples already inspected during development; no independent final test or application acceptance decision."
+}
