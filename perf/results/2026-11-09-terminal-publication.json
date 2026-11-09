@@ -1,0 +1,42 @@
+{
+  "recorded_utc": "2026-11-09T17:22:13.561735+00:00",
+  "kind": "Evidence recovered from the user terminal full load result and Wrangler CLI deployment log; not a new deployment or live-content check",
+  "scope": "Previously written overfitting and underfitting revision. The new training-stability section is not included in this deployment.",
+  "load": {
+    "evidence": "perf/results/20261109T152534Z-learning/result.json",
+    "passed": true,
+    "completed_feature_requests": 5200000.0,
+    "producer_commit": "0e58e6d566f5fe473385b9e321d189dc9b563565",
+    "served_source_sha256": "23b76adc847e6f8c3906b6b0df3f0222619b8af0f965b6cc731e65acef859977",
+    "file_descriptor_limit": {
+      "required_soft_minimum": 4096,
+      "soft_before": 256,
+      "hard": 9223372036854775807,
+      "soft_after": 4096,
+      "adjusted": true,
+      "scope": "This process and its children only; no system or shell-profile settings changed."
+    },
+    "machine": {
+      "platform": "darwin",
+      "release": "27.0.0",
+      "arch": "arm64",
+      "cpu": "Apple M2 Pro",
+      "logical_cpus": 12,
+      "memory_bytes": 34359738368
+    },
+    "interpretation": "Local Zola development-server observations, not production capacity or model inference"
+  },
+  "deployment": {
+    "wrangler_reported_complete": true,
+    "deployment_urls": [
+      "https://45abbdc3.akira-shirase-oss.pages.dev"
+    ],
+    "expected_commit": "e1c62f50cdb293ed9acbcb1ab4e1360a5191ebfe",
+    "expected_commit_present_in_cli_log": true,
+    "source_log_filename": "wrangler-2026-11-09_15-26-40_487.log",
+    "source_log_sha256": "f1363deb35803f2ec57fb8e2cd01478667275467eebbed9ca51f574628df0a9f",
+    "live_content_verified": false,
+    "debug_log_not_copied": true
+  },
+  "old_failed_runs_preserved": true
+}

@@ -21,6 +21,13 @@ candidate verdict is deliberately **FAIL**: one required case misses the limit.
 That model verdict is separate from successful record checks and HTTP serving
 checks. Keep the failed result and original criteria available.
 
+`node tools/compare-training-stability.mjs` uses the preserved one-weight trainer
+to compare three learning rates with the same data, starting weight, and update
+budget. It saves `results/first-training-stability-comparison.json`, refusing to
+overwrite the first record; pass a fresh result path for a later run. The separate
+`results/first-training-stability-independent-check.json` verifies its numerical
+traces. These are local training calculations, separate from HTTP serving load.
+
 `results/qwen-tool-use-baseline.json` and `qwen-tool-use-baseline-sources/` retain
 the first local Qwen request/tool/result smoke run and its source snapshot. It
 uses existing weights and is not a reliability suite or a training run. The

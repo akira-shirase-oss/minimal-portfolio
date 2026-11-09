@@ -106,7 +106,7 @@ The first overfitting comparison now runs locally. Two small mathematical models
 
 The example was deliberately constructed with noisy training observations and clean checking targets. It makes one distinction visible: fitting every recorded answer does not guarantee a useful prediction between them. It is not a language-model training run or a claim that simpler models always win.
 
-[Chapter 4](@/learn/model-engineering/how-learning-goes-wrong.md) keeps the dataset, model explanations, code links, measured outputs, limitations, and revision notes. The next entry adds underfitting; unstable updates are still ahead.
+[Chapter 4](@/learn/model-engineering/how-learning-goes-wrong.md) keeps the dataset, model explanations, code links, measured outputs, limitations, and revision notes. The following entries add underfitting and unstable updates.
 
 ### Learning too little of the pattern
 
@@ -115,3 +115,13 @@ The next model learns just one number from the same training data: an average de
 That is underfitting in this example. The constant model has no way to express that longer distances take longer. Training its one number correctly cannot give it that missing relationship. The earlier straight line has that capability and produces less error on both sets.
 
 The [new chapter section](@/learn/model-engineering/how-learning-goes-wrong.md#underfitting-capturing-too-little-of-the-pattern) keeps the code and recorded comparison. It also explains how application needs define useful performance. The checking cases are reused teaching examples, not a fresh final test.
+
+### A useful direction can still produce a harmful update
+
+The next comparison returns to our original one-weight training loop. The model, input, target, starting weight, and three-update budget stay fixed. Only the learning rate changes.
+
+At rate 0.1, the training loss falls from 4 to 0.000256. At 0.25, the weight alternates between 2 and 4 while loss stays at 4. At 0.3, the corrections swing too far back and forth and the loss grows to about 30.118144.
+
+The model can represent the target exactly at weight 3. Its difficulty here is how it updates. The comparison makes that separate from the fixed-time model's limited ability and the flexible curve's fit to noisy observations.
+
+[The stability section](@/learn/model-engineering/how-learning-goes-wrong.md#unstable-training-updates-that-fail-to-settle) keeps the settings, code, traces, independent calculation checks, and revision notes. No new-example evaluation or model promotion ran. Preparing useful data is the next topic.

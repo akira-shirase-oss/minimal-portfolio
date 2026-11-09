@@ -92,9 +92,13 @@ with source/data identity and per-case results, refusing to overwrite the first
 record. `node tools/compare-underfitting.mjs` adds a fitted constant-time model
 using the same data and unchanged earlier comparison evidence. Its first result
 is protected too; an optional result-path argument supports later distinct runs.
-Chapter 4 now covers both underfitting and overfitting; unstable updates remain
-planned. These are small mathematical fitting examples, not neural-network or
-Qwen training.
+`node tools/compare-training-stability.mjs` compares learning rates 0.1, 0.25,
+and 0.3 using an unchanged snapshot of the earlier one-weight trainer. It records
+steady loss reduction, repeated bouncing, and growing loss. Like the underfitting
+runner, it accepts a fresh result path for a later run without overwriting the
+first trace. Chapter 4 now has examples of underfitting, overfitting, and unstable
+updates. These are small mathematical examples, not neural-network or Qwen
+training. Data preparation is the next topic.
 
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,

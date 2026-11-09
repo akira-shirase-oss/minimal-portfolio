@@ -1,6 +1,6 @@
 +++
 title = "How learning goes wrong"
-description = "A model can capture too little of a useful pattern or fit accidental details too closely. Small delivery-time examples make both failures visible."
+description = "Models can capture too little, fit accidental details too closely, or make updates that fail to settle. Small recorded examples show the differences."
 date = 2026-11-09
 updated = 2026-11-09
 weight = 4
@@ -8,12 +8,14 @@ weight = 4
 [extra]
 kind = "chapter"
 chapter = 4
-status = "synthetic overfitting and underfitting comparisons run; unstable-training experiments still planned"
+status = "synthetic overfitting, underfitting, and training-stability comparisons run; broader evaluation remains ahead"
 +++
 
 A model can get every training example right and still struggle with a new example. Our first experiment in this chapter shows one way that happens: **overfitting**.
 
 We first fitted two small mathematical models to the same six made-up measurements, then added a third model to investigate underfitting. These are local teaching experiments, using no neural network or language model. No Qwen weights changed.
+
+The third comparison returns to our earlier one-weight training loop. It holds the model and data fixed while changing update size, making steady learning, repeated bouncing, and growing error visible.
 
 ## Learning a pattern we can use again
 
@@ -143,13 +145,63 @@ For a rough delivery estimate, an application might allow a few minutes of error
 
 Perfect training performance alone does not establish overfitting either. Our evidence is the comparison on fixed new cases and the known construction of the example. The same five validation cases have now been inspected twice; they remain development examples, not a fresh final test or a broad real-world benchmark.
 
+## Unstable training: updates that fail to settle
+
+Our delivery examples changed the model's flexibility. This experiment instead uses the [earlier one-weight model](@/learn/model-engineering/our-first-training-loop.md): multiply input **2** by a weight to predict target **6**. A weight of **3** can produce the target exactly, so the model can represent this particular answer.
+
+All three runs start at weight **2**, with prediction **4** and squared-error loss **4**. Each takes three updates using a freshly calculated gradient. The only changed setting is the **learning rate**, the multiplier that helps determine how large each update is.
+
+We compare learning rates **0.1**, **0.25**, and **0.3**. These values are specific to this tiny model, data scale, and update rule; they are not universal settings for other models.
+
+### The recorded loss after each update
+
+Loss is the squared mismatch from the target, so it has no minutes unit here. Lower loss means a closer prediction on this one training example. These are different scores from the delivery-time errors above.
+
+| Learning rate | Starting loss | After 1 update | After 2 updates | After 3 updates |
+| ---: | ---: | ---: | ---: | ---: |
+| 0.1 | 4 | 0.16 | 0.0064 | 0.000256 |
+| 0.25 | 4 | 4 | 4 | 4 |
+| 0.3 | 4 | 7.84 | 15.3664 | 30.118144 |
+
+Values are rounded for readability. The saved result keeps the raw floating-point values.
+
+**Rate 0.1 makes shrinking corrections.** The weights move **2 → 2.8 → 2.96 → 2.992**. In these three updates, each prediction moves closer to 6.
+
+**Rate 0.25 keeps bouncing.** The weights go **2 → 4 → 2 → 4**. Predictions alternate between **4 and 8**, equally far from target 6. The model changes, but the loss does not improve. A flat loss does not necessarily mean the weights are unchanged.
+
+**Rate 0.3 makes growing swings.** The weights go approximately **2 → 4.4 → 1.04 → 5.744**. At the first step, increasing the weight is the useful direction, but the update jumps past weight 3. The next correction jumps back too far. Over the recorded updates, the swings grow and the loss increases. This growth in error as updates move farther from the solution is called **divergence**.
+
+An update can point in a useful direction and still be too large. More updates with a harmful update size do not automatically improve training. Bouncing alone is not enough to diagnose failure either: in other runs, swings can shrink. Inspect whether the errors settle, stay large, or grow.
+
+### What this comparison establishes
+
+This is an update problem on a model that can represent the target. In the underfitting example, the fixed-time model lacked a way to express the distance trend. In the overfitting example, a model followed training-specific variation too closely. These are different mechanisms and can need different changes.
+
+The [stability runner](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/compare-training-stability.mjs) uses an [unchanged snapshot of our original trainer](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/fixtures/one-weight-training-v1.mjs). The [raw comparison](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-training-stability-comparison.json) records all settings, weights, predictions, losses, gradients, source hashes, and machine details. The rate-0.1 trace matches the earlier experiment, and eight program checks passed.
+
+A [separate exact-rational calculation](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-training-stability-independent-check.json) checked all three traces and source identities: 51 checks passed. This verifies the recorded toy calculations. It is not evidence about a trained language model or generalization.
+
+Run the example from the portfolio checkout with:
+
+```sh
+node tools/compare-training-stability.mjs
+```
+
+The first result is protected from overwriting. To repeat the comparison after that record exists, supply a fresh result path:
+
+```sh
+node tools/compare-training-stability.mjs perf/results/another-stability-run.json
+```
+
+No validation examples were used in this experiment, and no candidate was promoted. The earlier failed validation gate and its criteria remain unchanged. Real training can have loss spikes for several reasons, including batch variation, bad data, numerical problems, or code errors. Here, holding everything else fixed makes the learning-rate comparison interpretable.
+
 ## What we could change next
 
 We could collect more representative examples, constrain how flexible the model is, or penalize unnecessary complexity. That last idea is called **regularization**. These are possible responses to investigate, not fixes already tested in this run.
 
-For models trained through repeated updates, deciding when to stop can also matter. We have not tested that here; these two fits are calculated directly.
+For models trained through repeated updates, deciding when to stop can also matter. The delivery fits were calculated directly; the separate update-loop comparison changes the learning rate, not the stopping rule. Early-stopping experiments remain ahead.
 
-Unstable updates remain a separate upcoming experiment. The [data chapter in the roadmap](@/learn/model-engineering/roadmap.md) will also explain why duplicates, misleading examples, and information leaking into evaluation can give false confidence.
+Next is **Data a model can learn from** in the [roadmap](@/learn/model-engineering/roadmap.md): preparing useful examples and understanding how duplicates, misleading labels, and information leaking into evaluation can give false confidence. These three teaching examples are a first pass through failure modes, not a complete evaluation of a real application.
 
 ## Quick revision
 
@@ -157,6 +209,8 @@ Unstable updates remain a separate upcoming experiment. The [data chapter in the
 - **Generalization** means handling unfamiliar examples usefully.
 - **Underfitting** means capturing too little of the useful structure. Our fitted constant predicts 20 minutes at every distance and misses the trend.
 - **Overfitting** means fitting training-specific details in a way that hurts performance on new examples.
+- **Unstable updates** can bounce without improvement or move farther from a useful solution. Our same one-weight model showed both when we changed only its learning rate.
+- A useful update direction still needs an appropriate size. Good learning rates depend on the model, data scale, and update rule.
 - A perfect fit on six training rows was worse on our five new rows. The recorded comparison, rather than the training score alone, supports that conclusion.
 - The use case sets the requirements. Representative evaluation checks whether a model meets them; a score alone does not supply those requirements.
 

@@ -1,0 +1,316 @@
+{
+  "checked_utc": "2026-11-09T17:20:45.577320+00:00",
+  "kind": "Independent exact-rational verification of recorded one-weight training traces; not model-quality or capacity evidence",
+  "method": "Closed-form solution weight_after_n = 3 + (starting_weight - 3) * (1 - 8 * learning_rate)^n, derived for the fixed squared-error toy rule. Evaluates weights, predictions, losses, and gradients independently of the numerical-gradient loop.",
+  "exact_expected_traces": {
+    "steady": {
+      "learning_rate": "1/10",
+      "weight_error_multiplier_per_update": "1/5",
+      "rows": [
+        {
+          "step": 0,
+          "weight": "2",
+          "prediction": "4",
+          "loss": "4",
+          "gradient": "-8"
+        },
+        {
+          "step": 1,
+          "weight": "14/5",
+          "prediction": "28/5",
+          "loss": "4/25",
+          "gradient": "-8/5"
+        },
+        {
+          "step": 2,
+          "weight": "74/25",
+          "prediction": "148/25",
+          "loss": "4/625",
+          "gradient": "-8/25"
+        },
+        {
+          "step": 3,
+          "weight": "374/125",
+          "prediction": "748/125",
+          "loss": "4/15625",
+          "gradient": "-8/125"
+        }
+      ]
+    },
+    "oscillating": {
+      "learning_rate": "1/4",
+      "weight_error_multiplier_per_update": "-1",
+      "rows": [
+        {
+          "step": 0,
+          "weight": "2",
+          "prediction": "4",
+          "loss": "4",
+          "gradient": "-8"
+        },
+        {
+          "step": 1,
+          "weight": "4",
+          "prediction": "8",
+          "loss": "4",
+          "gradient": "8"
+        },
+        {
+          "step": 2,
+          "weight": "2",
+          "prediction": "4",
+          "loss": "4",
+          "gradient": "-8"
+        },
+        {
+          "step": 3,
+          "weight": "4",
+          "prediction": "8",
+          "loss": "4",
+          "gradient": "8"
+        }
+      ]
+    },
+    "diverging": {
+      "learning_rate": "3/10",
+      "weight_error_multiplier_per_update": "-7/5",
+      "rows": [
+        {
+          "step": 0,
+          "weight": "2",
+          "prediction": "4",
+          "loss": "4",
+          "gradient": "-8"
+        },
+        {
+          "step": 1,
+          "weight": "22/5",
+          "prediction": "44/5",
+          "loss": "196/25",
+          "gradient": "56/5"
+        },
+        {
+          "step": 2,
+          "weight": "26/25",
+          "prediction": "52/25",
+          "loss": "9604/625",
+          "gradient": "-392/25"
+        },
+        {
+          "step": 3,
+          "weight": "718/125",
+          "prediction": "1436/125",
+          "loss": "470596/15625",
+          "gradient": "2744/125"
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "name": "steady step 0 weight",
+      "passed": true
+    },
+    {
+      "name": "steady step 0 prediction",
+      "passed": true
+    },
+    {
+      "name": "steady step 0 loss",
+      "passed": true
+    },
+    {
+      "name": "steady step 0 gradient",
+      "passed": true
+    },
+    {
+      "name": "steady step 1 weight",
+      "passed": true
+    },
+    {
+      "name": "steady step 1 prediction",
+      "passed": true
+    },
+    {
+      "name": "steady step 1 loss",
+      "passed": true
+    },
+    {
+      "name": "steady step 1 gradient",
+      "passed": true
+    },
+    {
+      "name": "steady step 2 weight",
+      "passed": true
+    },
+    {
+      "name": "steady step 2 prediction",
+      "passed": true
+    },
+    {
+      "name": "steady step 2 loss",
+      "passed": true
+    },
+    {
+      "name": "steady step 2 gradient",
+      "passed": true
+    },
+    {
+      "name": "steady step 3 weight",
+      "passed": true
+    },
+    {
+      "name": "steady step 3 prediction",
+      "passed": true
+    },
+    {
+      "name": "steady step 3 loss",
+      "passed": true
+    },
+    {
+      "name": "steady step 3 gradient",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 0 weight",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 0 prediction",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 0 loss",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 0 gradient",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 1 weight",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 1 prediction",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 1 loss",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 1 gradient",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 2 weight",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 2 prediction",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 2 loss",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 2 gradient",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 3 weight",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 3 prediction",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 3 loss",
+      "passed": true
+    },
+    {
+      "name": "oscillating step 3 gradient",
+      "passed": true
+    },
+    {
+      "name": "diverging step 0 weight",
+      "passed": true
+    },
+    {
+      "name": "diverging step 0 prediction",
+      "passed": true
+    },
+    {
+      "name": "diverging step 0 loss",
+      "passed": true
+    },
+    {
+      "name": "diverging step 0 gradient",
+      "passed": true
+    },
+    {
+      "name": "diverging step 1 weight",
+      "passed": true
+    },
+    {
+      "name": "diverging step 1 prediction",
+      "passed": true
+    },
+    {
+      "name": "diverging step 1 loss",
+      "passed": true
+    },
+    {
+      "name": "diverging step 1 gradient",
+      "passed": true
+    },
+    {
+      "name": "diverging step 2 weight",
+      "passed": true
+    },
+    {
+      "name": "diverging step 2 prediction",
+      "passed": true
+    },
+    {
+      "name": "diverging step 2 loss",
+      "passed": true
+    },
+    {
+      "name": "diverging step 2 gradient",
+      "passed": true
+    },
+    {
+      "name": "diverging step 3 weight",
+      "passed": true
+    },
+    {
+      "name": "diverging step 3 prediction",
+      "passed": true
+    },
+    {
+      "name": "diverging step 3 loss",
+      "passed": true
+    },
+    {
+      "name": "diverging step 3 gradient",
+      "passed": true
+    },
+    {
+      "name": "source identity tools/compare-training-stability.mjs",
+      "passed": true
+    },
+    {
+      "name": "source identity perf/fixtures/one-weight-training-v1.mjs",
+      "passed": true
+    },
+    {
+      "name": "source identity perf/results/first-training-loop-experiment.json",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

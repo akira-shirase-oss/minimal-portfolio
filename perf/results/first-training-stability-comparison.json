@@ -1,0 +1,158 @@
+{
+  "recorded_utc": "2026-11-09T17:19:51.384Z",
+  "kind": "One synthetic training-stability comparison with three controlled learning-rate trials; not a language-model run or capacity benchmark",
+  "code_base_commit": "e1c62f50cdb293ed9acbcb1ab4e1360a5191ebfe",
+  "working_tree_status": "?? perf/fixtures/one-weight-training-v1.mjs\n?? tools/compare-training-stability.mjs",
+  "source_sha256": {
+    "tools/compare-training-stability.mjs": "a525cf5de5e483517c5df78fb2f5c9a518a87378f265dfdbae3a0f5774907235",
+    "perf/fixtures/one-weight-training-v1.mjs": "68faf4d66011faa2aa361ac3c93167d2bd76d69e6f841527b28040de2d281b1e",
+    "perf/results/first-training-loop-experiment.json": "df6c7b07f60aaf0b763073a68d1a540c9e2b2417a0bbe8a456178d40bb89e5cd"
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "dataset": [
+    {
+      "input": 2,
+      "target": 6
+    }
+  ],
+  "settings": {
+    "input": 2,
+    "target": 6,
+    "starting_weight": 2,
+    "updates": 3,
+    "gradient_probe_distance": 0.5
+  },
+  "model": "prediction = input * weight; squared-error loss; centered numerical gradient; ordinary floating-point arithmetic",
+  "changed_factor": "learning_rate only; each trial starts fresh at weight 2 and takes three updates",
+  "trials": [
+    {
+      "name": "steady",
+      "learning_rate": 0.1,
+      "history": [
+        {
+          "step": 0,
+          "weight": 2,
+          "prediction": 4,
+          "loss": 4,
+          "gradient": -8
+        },
+        {
+          "step": 1,
+          "weight": 2.8,
+          "prediction": 5.6,
+          "loss": 0.16000000000000028,
+          "gradient": -1.6000000000000014
+        },
+        {
+          "step": 2,
+          "weight": 2.96,
+          "prediction": 5.92,
+          "loss": 0.006400000000000012,
+          "gradient": -0.3200000000000003
+        },
+        {
+          "step": 3,
+          "weight": 2.992,
+          "prediction": 5.984,
+          "loss": 0.0002560000000000005,
+          "gradient": -0.06400000000000006
+        }
+      ]
+    },
+    {
+      "name": "oscillating",
+      "learning_rate": 0.25,
+      "history": [
+        {
+          "step": 0,
+          "weight": 2,
+          "prediction": 4,
+          "loss": 4,
+          "gradient": -8
+        },
+        {
+          "step": 1,
+          "weight": 4,
+          "prediction": 8,
+          "loss": 4,
+          "gradient": 8
+        },
+        {
+          "step": 2,
+          "weight": 2,
+          "prediction": 4,
+          "loss": 4,
+          "gradient": -8
+        },
+        {
+          "step": 3,
+          "weight": 4,
+          "prediction": 8,
+          "loss": 4,
+          "gradient": 8
+        }
+      ]
+    },
+    {
+      "name": "diverging",
+      "learning_rate": 0.3,
+      "history": [
+        {
+          "step": 0,
+          "weight": 2,
+          "prediction": 4,
+          "loss": 4,
+          "gradient": -8
+        },
+        {
+          "step": 1,
+          "weight": 4.4,
+          "prediction": 8.8,
+          "loss": 7.840000000000004,
+          "gradient": 11.200000000000003
+        },
+        {
+          "step": 2,
+          "weight": 1.0399999999999996,
+          "prediction": 2.079999999999999,
+          "loss": 15.366400000000006,
+          "gradient": -15.680000000000005
+        },
+        {
+          "step": 3,
+          "weight": 5.7440000000000015,
+          "prediction": 11.488000000000003,
+          "loss": 30.118144000000033,
+          "gradient": 21.952000000000016
+        }
+      ]
+    }
+  ],
+  "observations": {
+    "rate_0_1_loss_decreases_each_update": true,
+    "rate_0_25_loss_unchanged_while_weights_alternate": true,
+    "rate_0_3_loss_increases_each_update": true
+  },
+  "checks": {
+    "original_trainer_source_preserved": true,
+    "original_experiment_settings_preserved": true,
+    "steady_trial_matches_original_record": true,
+    "initial_state_identical": true,
+    "three_updates_four_recorded_rows": true,
+    "finite_values": true,
+    "fresh_gradients_match_quadratic": true,
+    "updates_use_current_gradient": true
+  },
+  "program_checks_passed": true,
+  "quality_verdict": "Descriptive toy training comparison. No validation examples, application acceptance threshold, or promotion decision. Rates are specific to this model and data scale, not universal recommendations.",
+  "original_training_and_failed_validation_records_changed": false,
+  "neural_network_or_qwen_weights_changed": false,
+  "model_promoted": false
+}

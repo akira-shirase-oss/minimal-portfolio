@@ -1,0 +1,29 @@
+{
+  "checked_utc": "2026-11-09T17:23:41.909904+00:00",
+  "kind": "Generated content, internal links/anchors and JSON-LD checks; not browser visual QA or an HTTP load run",
+  "code_base_commit": "e1c62f50cdb293ed9acbcb1ab4e1360a5191ebfe",
+  "served_source_sha256": "839b407e7f1656cb4f1b0367fd98277ba91bb5e6d86f89b3376c37ee765a2911",
+  "html_pages": 120,
+  "internal_links_and_anchors_checked": 1587,
+  "valid_jsonld_blocks": 120,
+  "broken_links": [],
+  "checks": {
+    "stability_section_available": true,
+    "recorded_loss_traces_present": true,
+    "controlled_factor_and_loss_meaning_explained": true,
+    "rate_values_are_not_universal_recommendations": true,
+    "original_failed_gate_and_no_promotion_preserved": true,
+    "next_data_topic_identified_and_planned": true,
+    "no_interactive_lab_added": true,
+    "program_and_independent_checks_passed": true
+  },
+  "passed": true,
+  "prior_full_load": {
+    "evidence": "perf/results/20261109T152534Z-learning/result.json",
+    "passed": true,
+    "feature_requests": 5200000.0,
+    "source_sha256": "23b76adc847e6f8c3906b6b0df3f0222619b8af0f965b6cc731e65acef859977",
+    "applies_to_current_served_source": false
+  },
+  "new_revision_load_state": "Pending. Existing 5200000-request scenario includes 1000000 requests on this chapter. Earlier agent execution context could not bind loopback; no repeated known-blocked run in this lesson."
+}
