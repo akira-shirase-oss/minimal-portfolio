@@ -1,0 +1,61 @@
+This is ApacheBench, Version 2.3 <$Revision: 1923142 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+
+
+Server Software:        
+Server Hostname:        127.0.0.1
+Server Port:            1122
+
+Document Path:          /learn/model-engineering/
+Document Length:        10744 bytes
+
+Concurrency Level:      64
+Time taken for tests:   1.592 seconds
+Complete requests:      200000
+Failed requests:        0
+Keep-Alive requests:    200000
+Total transferred:      2174400000 bytes
+HTML transferred:       2148800000 bytes
+Requests per second:    125626.72 [#/sec] (mean)
+Time per request:       0.509 [ms] (mean)
+Time per request:       0.008 [ms] (mean, across all concurrent requests)
+Transfer rate:          1333802.44 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       1
+Processing:     0    1   0.2      0       2
+Waiting:        0    1   0.2      0       2
+Total:          0    1   0.2      0       2
+ERROR: The median and mean for the processing time are more than twice the standard
+       deviation apart. These results are NOT reliable.
+ERROR: The median and mean for the waiting time are more than twice the standard
+       deviation apart. These results are NOT reliable.
+ERROR: The median and mean for the total time are more than twice the standard
+       deviation apart. These results are NOT reliable.
+
+Percentage of the requests served within a certain time (ms)
+  50%      0
+  66%      1
+  75%      1
+  80%      1
+  90%      1
+  95%      1
+  98%      1
+  99%      1
+ 100%      2 (longest request)
+
+Completed 20000 requests
+Completed 40000 requests
+Completed 60000 requests
+Completed 80000 requests
+Completed 100000 requests
+Completed 120000 requests
+Completed 140000 requests
+Completed 160000 requests
+Completed 180000 requests
+Completed 200000 requests
+Finished 200000 requests
