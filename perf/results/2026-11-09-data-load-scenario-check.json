@@ -1,0 +1,18 @@
+{
+  "checked_utc": "2026-11-09T22:52:23.695618+00:00",
+  "kind": "Static verification of the expanded HTTP scenario; no HTTP load executed",
+  "source_sha256": "47a154d0e5015518ada12059d8e5f439a27069225fb503ea479807994d254321",
+  "previous_feature_requests": 5200000,
+  "new_feature_requests": 6200000,
+  "data_chapter_requests": 1000000,
+  "checks": {
+    "python_parses": true,
+    "existing_phases_unchanged": true,
+    "exactly_one_new_data_phase": true,
+    "new_data_route_gets_one_million": true,
+    "total_and_completion_gate_match": true,
+    "performance_thresholds_unchanged": true,
+    "concurrency_bounds_unchanged": true
+  },
+  "passed": true
+}

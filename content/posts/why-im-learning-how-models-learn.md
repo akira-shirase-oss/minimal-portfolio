@@ -125,3 +125,11 @@ At rate 0.1, the training loss falls from 4 to 0.000256. At 0.25, the weight alt
 The model can represent the target exactly at weight 3. Its difficulty here is how it updates. The comparison makes that separate from the fixed-time model's limited ability and the flexible curve's fit to noisy observations.
 
 [The stability section](@/learn/model-engineering/how-learning-goes-wrong.md#unstable-training-updates-that-fail-to-settle) keeps the settings, code, traces, independent calculation checks, and revision notes. No new-example evaluation or model promotion ran. Preparing useful data is the next topic.
+
+### Ten records are not necessarily ten useful examples
+
+The first data exercise now inspects ten made-up support messages. Each pairs a message with its expected category. The audit retains five records, identifies one duplicate, and holds four for review: one missing text, one missing a label, and two versions of the same message with conflicting labels.
+
+The program does not invent the missing answers or silently choose between the conflicting labels. Every record remains accounted for. This is preparation and inspection; no model was trained, and five retained examples do not establish a representative dataset.
+
+[Chapter 5](@/learn/model-engineering/data-a-model-can-learn-from.md) keeps the input/label explanation, original fixture, code, measured counts, limitations, and revision notes. Reviewing the examples and separating training, validation, and test data are the next pieces.

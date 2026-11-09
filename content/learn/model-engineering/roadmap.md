@@ -16,7 +16,7 @@ The route is now **learn by building**: make a small working piece, run it, insp
 
 ## What comes next — 9 November 2026
 
-The current sequence is topics **4 through 8**: how learning goes wrong, data a model can learn from, a tiny language model, training we can inspect and resume, and adapting an existing model. [Topic 4 has recorded overfitting, underfitting, and training-stability comparisons](@/learn/model-engineering/how-learning-goes-wrong.md). Topic 5, **Data a model can learn from**, is next. Topics 5–8 remain planned.
+The current sequence is topics **4 through 8**: how learning goes wrong, data a model can learn from, a tiny language model, training we can inspect and resume, and adapting an existing model. [Topic 4 has recorded overfitting, underfitting, and training-stability comparisons](@/learn/model-engineering/how-learning-goes-wrong.md). [Topic 5 has begun with a small labeled-data audit](@/learn/model-engineering/data-a-model-can-learn-from.md). Dataset splitting and topics 6–8 remain planned.
 
 For each topic, the lesson starts with a plain explanation and a small example. The assistant implements the experiment and handles the calculations. We inspect the code, outputs, and failures together to understand what each part does, why it matters, and what a change actually helped. Deep mathematical derivations are optional; the numbers needed to explain an observation still get explained.
 
@@ -39,7 +39,7 @@ Later improvements to these builds will teach adapting model weights, reviewing 
 | [2. Gradients and weight updates](@/learn/model-engineering/gradients-and-weight-updates.md) | How does the program choose a direction and size for an update? | Direction, overshooting, numerical gradients, and learning-rate updates are worked through. Direct derivatives remain ahead. |
 | [3. Our first training loop](@/learn/model-engineering/our-first-training-loop.md) | How do repeated updates become training? | Run a tiny local program, inspect its weights and loss, then measure a fixed candidate against a declared two-case validation rule. Saving and resuming a learned model remain ahead. |
 | [4. How learning goes wrong](@/learn/model-engineering/how-learning-goes-wrong.md) | Did it capture too little, fit accidental details, or fail to settle during updates? | Overfitting and underfitting examples run on fixed synthetic delivery data; a separate one-weight loop compares steady updates, repeated bouncing, and growing error by changing only learning rate. Broader evaluation remains ahead. |
-| 5. Data a model can learn from | How do raw records become trustworthy examples? | Clean and deduplicate a small dataset; separate training, validation, and test data before tuning. |
+| [5. Data a model can learn from](@/learn/model-engineering/data-a-model-can-learn-from.md) | How do raw records become useful examples? | First synthetic audit run: ten support messages partitioned into five retained records, one duplicate, and four review records. Human review, broader coverage, and training/validation/test split experiments remain ahead. |
 | 6. From text to a tiny language model | How do text pieces become predictions? | Learn tokens, arrays of numbers, embeddings, attention, and a small transformer through code. |
 | 7. Training runs we can inspect and resume | Can we explain and recover a run? | Record settings, data versions, memory use, and checkpoints; interrupt and resume a run. |
 | 8. Adapting an existing model | What does fine-tuning change? | Compare an unchanged model with a trained candidate using the same inputs and settings. |
@@ -48,7 +48,7 @@ Later improvements to these builds will teach adapting model weights, reviewing 
 | 11. Memory, speed, and scale | What do efficiency changes cost in quality? | Measure numerical precision, quantization, batching, latency, and memory tradeoffs. |
 | 12. Learning from preferences | Can examples of preferred answers improve behavior? | Build reviewed answer pairs and test whether preference training helps. |
 
-Notes for chapters 1, 2, 3, 4, and 9 are available. The earlier one-weight examples remain references. The practical route can revisit topics in a different order; planned chapters get pages when there is real work to explain. A successful run and the learner's understanding remain separate claims.
+Notes for chapters 1, 2, 3, 4, 5, and 9 are available. The earlier one-weight examples remain references. The practical route can revisit topics in a different order; planned chapters get pages when there is real work to explain. A successful run and the learner's understanding remain separate claims.
 
 ## Math alongside the code
 

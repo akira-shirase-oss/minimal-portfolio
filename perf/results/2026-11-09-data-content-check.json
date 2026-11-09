@@ -1,0 +1,23 @@
+{
+  "checked_utc": "2026-11-09T22:52:54.455527+00:00",
+  "kind": "Generated content, internal links/anchors and JSON-LD checks; not browser visual QA, a live-content check or an HTTP load run",
+  "code_base_commit": "6ba53f9392b88a58e3dc6a71dfaed8c3684e8cbb",
+  "served_source_sha256": "b6af06e433c97f59b278a74fc77866301d312c26c675eaa9f23d6e38c83b3e01",
+  "html_pages": 121,
+  "internal_links_and_anchors_checked": 1607,
+  "valid_jsonld_blocks": 121,
+  "broken_links": [],
+  "checks": {
+    "new_chapter_linked_in_track": true,
+    "six_notes_available": true,
+    "audit_and_review_policy_explained": true,
+    "model_and_split_not_claimed": true,
+    "checks_not_equated_with_correct_labels": true,
+    "data_audit_program_checks_passed": true,
+    "independent_expected_fixture_checks_passed": true,
+    "new_load_scenario_statically_checked": true,
+    "no_interactive_lab_added": true
+  },
+  "passed": true,
+  "load_state": "New chapter route has a 1000000-request scenario; total feature run is now 6200000 requests. This revised source has not had a full HTTP load run. Previous successful 5200000-request run applies to the stability revision only."
+}

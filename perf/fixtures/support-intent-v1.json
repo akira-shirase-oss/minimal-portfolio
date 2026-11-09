@@ -1,0 +1,18 @@
+{
+  "version": "support-intent-v1",
+  "kind": "Hand-written synthetic teaching records; no real customer messages",
+  "task": "Assign one support-message category from its text",
+  "allowed_labels": ["billing", "account_access", "bug_report"],
+  "records": [
+    {"id": "s01", "text": "Please send my invoice.", "label": "billing"},
+    {"id": "s02", "text": "I cannot sign in to my account.", "label": "account_access"},
+    {"id": "s03", "text": "The app crashes when I open it.", "label": "bug_report"},
+    {"id": "s04", "text": "  PLEASE send my invoice.  ", "label": "billing"},
+    {"id": "s05", "text": "I cannot sign in to my account.", "label": "billing"},
+    {"id": "s06", "text": "", "label": "bug_report"},
+    {"id": "s07", "text": "Please reset my password.", "label": null},
+    {"id": "s08", "text": "I was charged twice for one order.", "label": "billing"},
+    {"id": "s09", "text": "The save button crashes the app.", "label": "bug_report"},
+    {"id": "s10", "text": "I forgot my password.", "label": "account_access"}
+  ]
+}

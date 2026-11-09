@@ -100,6 +100,14 @@ first trace. Chapter 4 now has examples of underfitting, overfitting, and unstab
 updates. These are small mathematical examples, not neural-network or Qwen
 training. Data preparation is the next topic.
 
+Chapter 5 now has its first synthetic labeled-data audit. Run
+`node tools/audit-training-data.mjs` to inspect the ten fixed support messages in
+`perf/fixtures/support-intent-v1.json`. It preserves retained records, duplicate
+relationships, and review reasons in `perf/results/first-training-data-audit.json`.
+Pass a fresh result path to record a later run without overwriting the first.
+The audit does not train a model or create a data split. Human review, expanded
+coverage, and training/validation/test separation remain ahead.
+
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
 and an honest `status`. Add its `page = "@/learn/<track>/<file>.md"` link to the

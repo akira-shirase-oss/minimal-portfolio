@@ -28,6 +28,12 @@ overwrite the first record; pass a fresh result path for a later run. The separa
 `results/first-training-stability-independent-check.json` verifies its numerical
 traces. These are local training calculations, separate from HTTP serving load.
 
+`node tools/audit-training-data.mjs` inspects a ten-record synthetic support-label
+fixture without calling or training a model. The first result and independent
+hand-checked expected dispositions are preserved in `results/first-training-data-audit.json`
+and `results/first-training-data-independent-check.json`. Those data-audit checks
+do not establish model quality or replace the static-serving load scenario.
+
 `results/qwen-tool-use-baseline.json` and `qwen-tool-use-baseline-sources/` retain
 the first local Qwen request/tool/result smoke run and its source snapshot. It
 uses existing weights and is not a reliability suite or a training run. The
@@ -42,8 +48,8 @@ python3 perf/learning-load.py --baseline-ref 7193b0bd3ac6fd377664c24fe71aee20cdd
 
 The script serves the baseline source and current checkout on loopback using
 Zola's development server. It compares 50,000 homepage requests on each version,
-then makes **5,200,000 feature requests**: 1,000,000 each on the homepage,
-the first-training-loop, overfitting and harness chapters, plus 200,000 each across the Learning index, track,
+then makes **6,200,000 feature requests**: 1,000,000 each on the homepage,
+the first-training-loop, overfitting, data and harness chapters, plus 200,000 each across the Learning index, track,
 two chapters, roadmap, and introductory blog. Concurrency ranges from 8 to 1,024.
 For later changes, choose the previous source revision as the baseline.
 

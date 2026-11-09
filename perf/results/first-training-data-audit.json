@@ -1,0 +1,190 @@
+{
+  "recorded_utc": "2026-11-09T22:49:58.107Z",
+  "kind": "One synthetic labeled-data audit, not model training, evaluation or a performance benchmark",
+  "code_base_commit": "6ba53f9392b88a58e3dc6a71dfaed8c3684e8cbb",
+  "working_tree_status": "?? perf/fixtures/support-intent-v1.json\n?? tools/audit-training-data.mjs",
+  "source_sha256": {
+    "tools/audit-training-data.mjs": "3d0cb0a5b8f7deeeb90683d2ccb7b538fbbef93ce9c78d7d32c8fbc6aa880c54",
+    "perf/fixtures/support-intent-v1.json": "9d8d5b4ba8936e95e658b99752a11b2960e7e17e76d61c58080c993d0560e7ae"
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "dataset": {
+    "version": "support-intent-v1",
+    "kind": "Hand-written synthetic teaching records; no real customer messages",
+    "task": "Assign one support-message category from its text",
+    "allowed_labels": [
+      "billing",
+      "account_access",
+      "bug_report"
+    ],
+    "records": [
+      {
+        "id": "s01",
+        "text": "Please send my invoice.",
+        "label": "billing"
+      },
+      {
+        "id": "s02",
+        "text": "I cannot sign in to my account.",
+        "label": "account_access"
+      },
+      {
+        "id": "s03",
+        "text": "The app crashes when I open it.",
+        "label": "bug_report"
+      },
+      {
+        "id": "s04",
+        "text": "  PLEASE send my invoice.  ",
+        "label": "billing"
+      },
+      {
+        "id": "s05",
+        "text": "I cannot sign in to my account.",
+        "label": "billing"
+      },
+      {
+        "id": "s06",
+        "text": "",
+        "label": "bug_report"
+      },
+      {
+        "id": "s07",
+        "text": "Please reset my password.",
+        "label": null
+      },
+      {
+        "id": "s08",
+        "text": "I was charged twice for one order.",
+        "label": "billing"
+      },
+      {
+        "id": "s09",
+        "text": "The save button crashes the app.",
+        "label": "bug_report"
+      },
+      {
+        "id": "s10",
+        "text": "I forgot my password.",
+        "label": "account_access"
+      }
+    ]
+  },
+  "policy": {
+    "comparison_key": "Trim outer whitespace, collapse whitespace, and lowercase solely for grouping this toy task. Preserve original retained text.",
+    "identical_input_and_label": "Keep first occurrence; account for later occurrences separately as duplicates.",
+    "identical_input_with_different_labels": "Hold every version for review. Do not infer a replacement label from the message.",
+    "missing_or_unsupported_fields": "Hold for review; no invented input or label.",
+    "scope": "Case-insensitive comparison is a chosen teaching policy, not a universal rule. This is not semantic duplicate detection or human label verification."
+  },
+  "summary": {
+    "input_records": 10,
+    "retained_records": 5,
+    "duplicate_records": 1,
+    "review_records": 4,
+    "review_reason_counts": {
+      "missing_text": 1,
+      "missing_label": 1,
+      "conflicting_labels": 2
+    },
+    "retained_label_counts": {
+      "billing": 2,
+      "account_access": 1,
+      "bug_report": 2
+    }
+  },
+  "retained": [
+    {
+      "id": "s01",
+      "text": "Please send my invoice.",
+      "label": "billing"
+    },
+    {
+      "id": "s03",
+      "text": "The app crashes when I open it.",
+      "label": "bug_report"
+    },
+    {
+      "id": "s08",
+      "text": "I was charged twice for one order.",
+      "label": "billing"
+    },
+    {
+      "id": "s09",
+      "text": "The save button crashes the app.",
+      "label": "bug_report"
+    },
+    {
+      "id": "s10",
+      "text": "I forgot my password.",
+      "label": "account_access"
+    }
+  ],
+  "duplicates": [
+    {
+      "id": "s04",
+      "text": "  PLEASE send my invoice.  ",
+      "label": "billing",
+      "duplicate_of": "s01",
+      "comparison_key": "please send my invoice."
+    }
+  ],
+  "review": [
+    {
+      "id": "s06",
+      "text": "",
+      "label": "bug_report",
+      "reason": "missing_text"
+    },
+    {
+      "id": "s07",
+      "text": "Please reset my password.",
+      "label": null,
+      "reason": "missing_label"
+    },
+    {
+      "id": "s02",
+      "text": "I cannot sign in to my account.",
+      "label": "account_access",
+      "reason": "conflicting_labels",
+      "comparison_key": "i cannot sign in to my account.",
+      "competing_labels": [
+        "account_access",
+        "billing"
+      ]
+    },
+    {
+      "id": "s05",
+      "text": "I cannot sign in to my account.",
+      "label": "billing",
+      "reason": "conflicting_labels",
+      "comparison_key": "i cannot sign in to my account.",
+      "competing_labels": [
+        "account_access",
+        "billing"
+      ]
+    }
+  ],
+  "checks": {
+    "unique_input_ids": true,
+    "every_input_record_accounted_for": true,
+    "no_record_in_two_output_groups": true,
+    "clean_rows_have_text_and_allowed_label": true,
+    "no_normalized_duplicate_inputs_in_clean_rows": true,
+    "duplicates_reference_matching_clean_record": true,
+    "conflicting_inputs_not_silently_kept": true,
+    "original_kept_text_and_label_preserved": true
+  },
+  "program_checks_passed": true,
+  "interpretation": "Audit-consistent subset under the declared rules, not a representative or fully validated training dataset. Five retained messages are insufficient evidence of useful model performance.",
+  "train_validation_test_split_created": false,
+  "model_called_or_trained": false,
+  "model_quality_measured": false
+}

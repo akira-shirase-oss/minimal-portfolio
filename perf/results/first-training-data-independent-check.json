@@ -1,0 +1,35 @@
+{
+  "checked_utc": "2026-11-09T22:51:29.558099+00:00",
+  "kind": "Independent hand-checked expected IDs, dispositions and counts for the synthetic data-audit fixture; not generic label-quality verification",
+  "expected_retained_ids": [
+    "s01",
+    "s03",
+    "s08",
+    "s09",
+    "s10"
+  ],
+  "expected_review_reasons": {
+    "s02": "conflicting_labels",
+    "s05": "conflicting_labels",
+    "s06": "missing_text",
+    "s07": "missing_label"
+  },
+  "expected_duplicate_mapping": {
+    "s04": "s01"
+  },
+  "checks": {
+    "hand_checked_partition_counts": true,
+    "expected_retained_ids": true,
+    "expected_duplicate_mapping": true,
+    "expected_review_reasons": true,
+    "expected_label_counts": true,
+    "all_conflicting_versions_held": true,
+    "missing_label_not_invented": true,
+    "missing_text_not_invented": true,
+    "kept_records_exactly_preserved": true,
+    "no_model_or_split_claimed": true,
+    "source_identity tools/audit-training-data.mjs": true,
+    "source_identity perf/fixtures/support-intent-v1.json": true
+  },
+  "passed": true
+}
