@@ -85,6 +85,13 @@ recorded results, and quick revision summaries. A new plan does not complete a
 chapter or justify inventing an experiment. The roadmap and track index record
 the current sequence; individual learner answers stay in the private checkpoint.
 
+Chapter 4 now records its first synthetic overfitting comparison. Run
+`node tools/compare-overfitting.mjs` to fit a line and an interpolating curve to
+the same fixed observations. It saves `perf/results/first-overfitting-comparison.json`
+with source/data identity and per-case results, refusing to overwrite the first
+record. Underfitting and unstable-training experiments remain planned. This is
+a small mathematical fitting example, not neural-network or Qwen training.
+
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
 and an honest `status`. Add its `page = "@/learn/<track>/<file>.md"` link to the

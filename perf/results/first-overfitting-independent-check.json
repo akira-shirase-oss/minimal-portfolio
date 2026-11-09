@@ -1,0 +1,130 @@
+{
+  "checked_utc": "2026-11-09T13:47:12.951958+00:00",
+  "kind": "Independent exact-rational verification of the recorded fitting comparison; not a model-quality benchmark",
+  "method": "Gaussian elimination on normal equations for the line and a Vandermonde system for polynomial coefficients, then direct evaluation; original program uses centered least squares and Lagrange interpolation",
+  "exact_mean_absolute_errors": {
+    "straight_line": {
+      "training_mean_absolute_error": "96/35",
+      "validation_mean_absolute_error": "108/175"
+    },
+    "flexible_curve": {
+      "training_mean_absolute_error": "0",
+      "validation_mean_absolute_error": "39/10"
+    }
+  },
+  "checks": [
+    {
+      "name": "straight_line training prediction 0",
+      "passed": true
+    },
+    {
+      "name": "straight_line training prediction 1",
+      "passed": true
+    },
+    {
+      "name": "straight_line training prediction 2",
+      "passed": true
+    },
+    {
+      "name": "straight_line training prediction 3",
+      "passed": true
+    },
+    {
+      "name": "straight_line training prediction 4",
+      "passed": true
+    },
+    {
+      "name": "straight_line training prediction 5",
+      "passed": true
+    },
+    {
+      "name": "straight_line training mean absolute error",
+      "passed": true
+    },
+    {
+      "name": "straight_line validation prediction 0",
+      "passed": true
+    },
+    {
+      "name": "straight_line validation prediction 1",
+      "passed": true
+    },
+    {
+      "name": "straight_line validation prediction 2",
+      "passed": true
+    },
+    {
+      "name": "straight_line validation prediction 3",
+      "passed": true
+    },
+    {
+      "name": "straight_line validation prediction 4",
+      "passed": true
+    },
+    {
+      "name": "straight_line validation mean absolute error",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve training prediction 0",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve training prediction 1",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve training prediction 2",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve training prediction 3",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve training prediction 4",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve training prediction 5",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve training mean absolute error",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve validation prediction 0",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve validation prediction 1",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve validation prediction 2",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve validation prediction 3",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve validation prediction 4",
+      "passed": true
+    },
+    {
+      "name": "flexible_curve validation mean absolute error",
+      "passed": true
+    },
+    {
+      "name": "source identity tools/compare-overfitting.mjs",
+      "passed": true
+    },
+    {
+      "name": "source identity perf/fixtures/overfitting-v1.json",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

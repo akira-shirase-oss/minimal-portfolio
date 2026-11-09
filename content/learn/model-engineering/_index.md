@@ -28,6 +28,7 @@ page = "@/learn/model-engineering/our-first-training-loop.md"
 [[extra.chapters]]
 number = 4
 title = "How learning goes wrong"
+page = "@/learn/model-engineering/how-learning-goes-wrong.md"
 
 [[extra.chapters]]
 number = 5
@@ -69,8 +70,8 @@ This track follows that question from the beginning. The goal is to understand t
 
 I want to understand what each part does, why it matters, and how it can fail. The learning route starts from plain explanations, small working pieces, their outputs, and the errors we encounter. The assistant handles implementation and calculations, with the code and results available to inspect together. Math comes in when it helps explain the behavior; deeper derivations are optional. The earlier small examples stay available for revision.
 
-**Next learning sequence, agreed 9 November 2026:** topics 4–8, from how learning goes wrong through adapting an existing model. Each will get explanations, examples, code, recorded results, and revision notes as we cover it. The five topics remain planned.
+**Current learning sequence, agreed 9 November 2026:** topics 4–8, from how learning goes wrong through adapting an existing model. [Topic 4 now has its first overfitting comparison](@/learn/model-engineering/how-learning-goes-wrong.md): two small models fitted to the same synthetic data. Other topic-4 experiments and topics 5–8 remain planned. Each will get explanations, examples, code, recorded results, and revision notes as we cover it.
 
 **Earlier practical build:** [a local Qwen assistant uses its first tool](@/learn/model-engineering/the-harness-around-the-model.md). The first request → lookup → answer cycle has run, and its trace and source are saved. We will return to expanding the assistant after the next five topics.
 
-Chapter numbers organize the concepts; they are not quiz prerequisites. Four chapter notes are available, including the earlier training-loop and validation experiments. The [roadmap](@/learn/model-engineering/roadmap.md) records the next sequence and the later topics. Broader evaluation, resumable text-model training, weight adaptation, and preference learning remain ahead.
+Chapter numbers organize the concepts; they are not quiz prerequisites. Five chapter notes are available, including the earlier training-loop and validation experiments. The [roadmap](@/learn/model-engineering/roadmap.md) records the sequence and the later topics. Broader evaluation, resumable text-model training, weight adaptation, and preference learning remain ahead.

@@ -35,8 +35,8 @@ python3 perf/learning-load.py --baseline-ref 7193b0bd3ac6fd377664c24fe71aee20cdd
 
 The script serves the baseline source and current checkout on loopback using
 Zola's development server. It compares 50,000 homepage requests on each version,
-then makes **4,200,000 feature requests**: 1,000,000 each on the homepage,
-the first-training-loop chapter and harness chapter, plus 200,000 each across the Learning index, track,
+then makes **5,200,000 feature requests**: 1,000,000 each on the homepage,
+the first-training-loop, overfitting and harness chapters, plus 200,000 each across the Learning index, track,
 two chapters, roadmap, and introductory blog. Concurrency ranges from 8 to 1,024.
 For later changes, choose the previous source revision as the baseline.
 

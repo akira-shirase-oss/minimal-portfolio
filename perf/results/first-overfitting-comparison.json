@@ -1,0 +1,307 @@
+{
+  "recorded_utc": "2026-11-09T13:45:42.703Z",
+  "kind": "One synthetic model-fitting comparison; not a language-model training run or capacity benchmark",
+  "code_base_commit": "c63713904351e5ea09469c392f8cdbb01b55f979",
+  "working_tree_status": "?? perf/fixtures/\n?? tools/compare-overfitting.mjs",
+  "source_sha256": {
+    "tools/compare-overfitting.mjs": "53bb9a7cc7e504765923d55f93a2985268f37ac8994eb7bcd0b671b36138a378",
+    "perf/fixtures/overfitting-v1.json": "efc77f50f51625e7a6491930c0399e4ead880eb4f4569147e3ceaf22a1852d3f"
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "dataset": {
+    "version": "overfitting-v1",
+    "purpose": "Deliberately constructed teaching example; not real delivery data or a representative benchmark",
+    "input": "distance in kilometres",
+    "output": "delivery duration in minutes",
+    "synthetic_target_rule": "duration = 10 + 2 * distance",
+    "training_observation_noise_minutes": [
+      3,
+      -3,
+      3,
+      -3,
+      3,
+      -3
+    ],
+    "training": [
+      {
+        "distance": 0,
+        "duration": 13
+      },
+      {
+        "distance": 2,
+        "duration": 11
+      },
+      {
+        "distance": 4,
+        "duration": 21
+      },
+      {
+        "distance": 6,
+        "duration": 19
+      },
+      {
+        "distance": 8,
+        "duration": 29
+      },
+      {
+        "distance": 10,
+        "duration": 27
+      }
+    ],
+    "validation": [
+      {
+        "distance": 1,
+        "duration": 12
+      },
+      {
+        "distance": 3,
+        "duration": 16
+      },
+      {
+        "distance": 5,
+        "duration": 20
+      },
+      {
+        "distance": 7,
+        "duration": 24
+      },
+      {
+        "distance": 9,
+        "duration": 28
+      }
+    ],
+    "comparison": {
+      "models": [
+        "least-squares straight line",
+        "degree-5 interpolating polynomial"
+      ],
+      "metric": "mean absolute error in minutes, lower is better",
+      "quality_acceptance_threshold": null,
+      "scope": "Descriptive comparison on fixed teaching cases, not model promotion or final-test evidence",
+      "checks": [
+        "training and validation inputs disjoint",
+        "all predictions finite",
+        "straight-line residuals sum to zero and have zero distance-weighted sum within tolerance",
+        "interpolating curve matches all training observations within tolerance"
+      ]
+    }
+  },
+  "fitting": "Closed-form least squares and interpolation using training observations only; no iterative optimizer or early stopping",
+  "models": [
+    {
+      "name": "straight_line",
+      "description": "Least-squares straight line: two fitted coefficients",
+      "fitted": {
+        "slope": 1.7428571428571429,
+        "intercept": 11.285714285714285
+      },
+      "training": {
+        "cases": [
+          {
+            "distance": 0,
+            "duration": 13,
+            "prediction": 11.285714285714285,
+            "absolute_error": 1.7142857142857153
+          },
+          {
+            "distance": 2,
+            "duration": 11,
+            "prediction": 14.77142857142857,
+            "absolute_error": 3.7714285714285705
+          },
+          {
+            "distance": 4,
+            "duration": 21,
+            "prediction": 18.257142857142856,
+            "absolute_error": 2.7428571428571438
+          },
+          {
+            "distance": 6,
+            "duration": 19,
+            "prediction": 21.74285714285714,
+            "absolute_error": 2.74285714285714
+          },
+          {
+            "distance": 8,
+            "duration": 29,
+            "prediction": 25.228571428571428,
+            "absolute_error": 3.7714285714285722
+          },
+          {
+            "distance": 10,
+            "duration": 27,
+            "prediction": 28.714285714285715,
+            "absolute_error": 1.7142857142857153
+          }
+        ],
+        "mean_absolute_error": 2.7428571428571424
+      },
+      "validation": {
+        "cases": [
+          {
+            "distance": 1,
+            "duration": 12,
+            "prediction": 13.028571428571428,
+            "absolute_error": 1.0285714285714285
+          },
+          {
+            "distance": 3,
+            "duration": 16,
+            "prediction": 16.514285714285712,
+            "absolute_error": 0.5142857142857125
+          },
+          {
+            "distance": 5,
+            "duration": 20,
+            "prediction": 20,
+            "absolute_error": 0
+          },
+          {
+            "distance": 7,
+            "duration": 24,
+            "prediction": 23.485714285714284,
+            "absolute_error": 0.514285714285716
+          },
+          {
+            "distance": 9,
+            "duration": 28,
+            "prediction": 26.97142857142857,
+            "absolute_error": 1.0285714285714285
+          }
+        ],
+        "mean_absolute_error": 0.6171428571428571
+      }
+    },
+    {
+      "name": "flexible_curve",
+      "description": "Degree-5 polynomial interpolating the six training observations",
+      "fitted": {
+        "representation": "Lagrange interpolation through training rows",
+        "nodes": [
+          {
+            "distance": 0,
+            "duration": 13
+          },
+          {
+            "distance": 2,
+            "duration": 11
+          },
+          {
+            "distance": 4,
+            "duration": 21
+          },
+          {
+            "distance": 6,
+            "duration": 19
+          },
+          {
+            "distance": 8,
+            "duration": 29
+          },
+          {
+            "distance": 10,
+            "duration": 27
+          }
+        ]
+      },
+      "training": {
+        "cases": [
+          {
+            "distance": 0,
+            "duration": 13,
+            "prediction": 13,
+            "absolute_error": 0
+          },
+          {
+            "distance": 2,
+            "duration": 11,
+            "prediction": 11,
+            "absolute_error": 0
+          },
+          {
+            "distance": 4,
+            "duration": 21,
+            "prediction": 21,
+            "absolute_error": 0
+          },
+          {
+            "distance": 6,
+            "duration": 19,
+            "prediction": 19,
+            "absolute_error": 0
+          },
+          {
+            "distance": 8,
+            "duration": 29,
+            "prediction": 29,
+            "absolute_error": 0
+          },
+          {
+            "distance": 10,
+            "duration": 27,
+            "prediction": 27,
+            "absolute_error": 0
+          }
+        ],
+        "mean_absolute_error": 0
+      },
+      "validation": {
+        "cases": [
+          {
+            "distance": 1,
+            "duration": 12,
+            "prediction": 4.5,
+            "absolute_error": 7.5
+          },
+          {
+            "distance": 3,
+            "duration": 16,
+            "prediction": 18.25,
+            "absolute_error": 2.25
+          },
+          {
+            "distance": 5,
+            "duration": 20,
+            "prediction": 20,
+            "absolute_error": 0
+          },
+          {
+            "distance": 7,
+            "duration": 24,
+            "prediction": 21.75,
+            "absolute_error": 2.25
+          },
+          {
+            "distance": 9,
+            "duration": 28,
+            "prediction": 35.5,
+            "absolute_error": 7.5
+          }
+        ],
+        "mean_absolute_error": 3.9
+      }
+    }
+  ],
+  "checks": {
+    "disjoint_inputs": true,
+    "unique_training_inputs": true,
+    "finite_predictions": true,
+    "line_residual_sum": true,
+    "line_weighted_residual_sum": true,
+    "curve_matches_training": true
+  },
+  "program_checks_passed": true,
+  "observed_comparison": {
+    "flexible_curve_training_error_lower": true,
+    "flexible_curve_validation_error_higher": true
+  },
+  "quality_verdict": "No application acceptance threshold or promotion decision. This hand-constructed example illustrates fitting noise; it is not evidence that flexible models always generalize worse.",
+  "model_promoted": false
+}

@@ -1,0 +1,21 @@
+{
+  "checked_utc": "2026-11-09T13:47:37.882503+00:00",
+  "kind": "Generated content, links/anchors and JSON-LD checks, not browser visual QA or an HTTP load run",
+  "code_base_commit": "c63713904351e5ea09469c392f8cdbb01b55f979",
+  "served_source_sha256": "4c1e156a9cc19f9e8413afc2778f84ff5cb3e06cfda1533a0db04c2a0e927560",
+  "html_pages": 120,
+  "internal_links_and_anchors_checked": 1584,
+  "valid_jsonld_blocks": 120,
+  "broken_links": [],
+  "checks": {
+    "chapter_available_in_track": true,
+    "five_notes_and_remaining_topics_planned": true,
+    "chapter_reports_actual_errors": true,
+    "chapter_labels_scope_and_remaining_work": true,
+    "no_interactive_lab_added": true,
+    "result_and_independent_checks_passed": true,
+    "updated_load_scenario_python_parses": true
+  },
+  "passed": true,
+  "load_state": "Not rerun: earlier loopback PermissionError condition has no evidence of changing. The updated 5.2-million-request scenario includes this new chapter; passing load evidence is pending."
+}

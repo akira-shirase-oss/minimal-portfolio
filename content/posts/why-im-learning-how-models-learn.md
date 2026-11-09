@@ -98,4 +98,12 @@ I want a clear understanding of the concepts, with the assistant implementing th
 
 The next five topics are how learning goes wrong, preparing useful data, building a tiny language model, inspecting and resuming training, and adapting an existing model. After that pass, we will return to expanding the assistant and the later topics. The [roadmap](@/learn/model-engineering/roadmap.md#what-comes-next-9-november-2026) records this sequence.
 
-I also want the portfolio to stay useful for revision. As we cover a topic, its chapter should keep the explanation, a small example, the relevant code, actual results, and a quick recap. The blog will record the investigations and learning decisions. These five topics are still planned; this update records the route, not new training results.
+I also want the portfolio to stay useful for revision. As we cover a topic, its chapter should keep the explanation, a small example, the relevant code, actual results, and a quick recap. The blog will record the investigations and learning decisions. At this point, the five topics were planned; the next entry records the first experiment in topic 4.
+
+### A perfect training score can hide a problem
+
+The first overfitting comparison now runs locally. Two small mathematical models fit the same six synthetic delivery measurements. A flexible curve matches every training row, but its average error on five new rows is 3.90 minutes. A straight line misses some training measurements and averages 0.62 minutes of error on those new rows.
+
+The example was deliberately constructed with noisy training observations and clean checking targets. It makes one distinction visible: fitting every recorded answer does not guarantee a useful prediction between them. It is not a language-model training run or a claim that simpler models always win.
+
+[Chapter 4](@/learn/model-engineering/how-learning-goes-wrong.md) keeps the dataset, model explanations, code links, measured outputs, limitations, and revision notes. Underfitting and unstable updates are still ahead.

@@ -132,6 +132,7 @@ def main():
                 "/learn/model-engineering/weights-predictions-and-loss/": b"Weights, predictions, and loss",
                 "/learn/model-engineering/gradients-and-weight-updates/": b"Gradients and weight updates",
                 "/learn/model-engineering/our-first-training-loop/": b"Our first training loop",
+                "/learn/model-engineering/how-learning-goes-wrong/": b"How learning goes wrong",
                 "/learn/model-engineering/the-harness-around-the-model/": b"The harness around the model",
                 "/posts/why-im-learning-how-models-learn/": b"Why I",
             }
@@ -144,6 +145,7 @@ def main():
             for label, route, concurrency in (
                 ("homepage-records-c256", "/", 256),
                 ("training-loop-c256", "/learn/model-engineering/our-first-training-loop/", 256),
+                ("overfitting-c256", "/learn/model-engineering/how-learning-goes-wrong/", 256),
                 ("harness-c256", "/learn/model-engineering/the-harness-around-the-model/", 256),
                 ("learning-c8", "/learn/", 8),
                 ("track-c64", "/learn/model-engineering/", 64),
@@ -152,9 +154,9 @@ def main():
                 ("roadmap-c1024", "/learn/model-engineering/roadmap/", 1024),
                 ("blog-c64", "/posts/why-im-learning-how-models-learn/", 64),
             ):
-                count = 1000000 if route in ("/", "/learn/model-engineering/our-first-training-loop/", "/learn/model-engineering/the-harness-around-the-model/") else 200000
+                count = 1000000 if route in ("/", "/learn/model-engineering/our-first-training-loop/", "/learn/model-engineering/how-learning-goes-wrong/", "/learn/model-engineering/the-harness-around-the-model/") else 200000
                 phase(label, candidate_url, route, count, concurrency)
-            check("million-request feature run", sum(p["completed"] for p in result["phases"][2:]) >= 4200000, "Homepage, training-loop and harness chapters: 1,000,000 requests each; six other learning routes: 200,000 each; concurrency 8 through 1,024.")
+            check("million-request feature run", sum(p["completed"] for p in result["phases"][2:]) >= 5200000, "Homepage, training-loop, overfitting and harness chapters: 1,000,000 requests each; six other learning routes: 200,000 each; concurrency 8 through 1,024.")
             try:
                 get(candidate_url + "/learn/model-engineering/planned-chapter-does-not-exist/")
                 check("missing chapter", False, "unexpected success")
