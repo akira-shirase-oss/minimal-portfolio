@@ -1,0 +1,47 @@
+{
+  "recorded_utc": "2026-11-09T13:43:05.286105+00:00",
+  "kind": "Local portfolio revision and validation status; not a deployment receipt",
+  "source_commit": "b9de6a4e51cb0d2ab6a39a9add2efe8ad1260496",
+  "scope": "Record the agreed concepts-first teaching approach, next topics 4-8, and ongoing portfolio revision notes. No new experiments or completed chapters are claimed.",
+  "build": {
+    "command": "zola build",
+    "exit_code": 0,
+    "output": "Creating 110 pages (0 orphan) and 8 sections; Done in 335ms."
+  },
+  "generated_content_checks": {
+    "evidence": "perf/results/2026-11-09-concept-first-content-check.json",
+    "passed": true,
+    "internal_links_and_anchors_checked": 1563,
+    "valid_jsonld_blocks": 119
+  },
+  "load": {
+    "command": "python3 perf/learning-load.py --baseline-ref e13e85d4c5a11a9fa3cba1259bf9f0e7f86c7713",
+    "exit_code": 1,
+    "evidence": "perf/results/20261109T134214Z-learning/result.json",
+    "passed": false,
+    "completed_request_phases": 0,
+    "completed_load_requests": 0,
+    "classification": "Server setup blocked before load execution; no throughput or model-quality verdict",
+    "server_log": "perf/results/20261109T134214Z-learning/baseline-server.log",
+    "diagnostic": "perf/results/20261109T134214Z-learning/bind-diagnostic.json",
+    "observed_cause": "Binding even an OS-selected loopback port raises PermissionError errno 1: Operation not permitted. lsof found no listeners on requested ports 1121/1122. Original failed run preserved; not rerun."
+  },
+  "machine": {
+    "platform": "darwin",
+    "release": "27.0.0",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368
+  },
+  "source_sha256": "c9dab39c5a7b368cb41e354d38fa35ea3283021aa5c0205ee3bcd6f78c38a489",
+  "github_push_attempted": false,
+  "deployment_attempted": false,
+  "live_read_check": {
+    "method": "web open on track and roadmap URLs",
+    "result": "Tool returned inaccessible for both URLs; current live content not verified."
+  },
+  "publication_state": "Local commits only. Required full HTTP load scenario could not run with this session socket permissions. No new production publication claimed.",
+  "next_publication_step": "In an execution context permitted to bind and connect on loopback, run the existing load scenario against the unchanged source revision, preserve every run, then push and publish via the existing Wrangler workflow if required checks pass.",
+  "browser_visual_qa_performed": false
+}

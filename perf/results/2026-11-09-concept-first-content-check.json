@@ -1,0 +1,26 @@
+{
+  "checked_utc": "2026-11-09T13:42:07.284128+00:00",
+  "kind": "Generated static content, internal links/anchors and JSON-LD checks; not browser visual QA or model evaluation",
+  "base_commit": "e13e85d4c5a11a9fa3cba1259bf9f0e7f86c7713",
+  "source_sha256": {
+    "README.md": "05b1bc0e8caed106dd38d941baecf84ae35cfe96e755c3c5929af001a565a4c3",
+    "content/learn/model-engineering/_index.md": "0fe32fa7ebfe9004207b94a68294a9d02b3f3e5be38985ef84d1bf33930c93bc",
+    "content/learn/model-engineering/roadmap.md": "18fe9a0912b079e0bd9868a1a7352f69b060ccdcd71ae575d6461986917f22f0",
+    "content/posts/why-im-learning-how-models-learn.md": "fe828cbd3e2cfc910d79c714fd457cbf0da32d3bac9e9f786343e7109a88299e"
+  },
+  "html_pages": 119,
+  "internal_links_and_anchors_checked": 1563,
+  "valid_jsonld_blocks": 119,
+  "broken_links": [],
+  "checks": {
+    "track_identifies_next_sequence": true,
+    "track_keeps_five_topics_planned": true,
+    "roadmap_has_november_9_priority": true,
+    "roadmap_has_concept_first_implementation_agreement": true,
+    "blog_records_update_and_planned_state": true,
+    "planned_chapter_pages_not_invented": true
+  },
+  "passed": true,
+  "source_commit": "b9de6a4e51cb0d2ab6a39a9add2efe8ad1260496",
+  "source_hashes_confirmed_after_commit": true
+}

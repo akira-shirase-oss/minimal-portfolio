@@ -1,0 +1,8 @@
+{
+  "checked_utc": "2026-11-09T13:42:30.252336+00:00",
+  "purpose": "Diagnose server-start failure; not a load rerun",
+  "bind_succeeded": false,
+  "error_type": "PermissionError",
+  "errno": 1,
+  "error": "[Errno 1] Operation not permitted"
+}
