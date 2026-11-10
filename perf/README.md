@@ -50,6 +50,13 @@ the independent expected IDs are in `results/first-text-tokenization-independent
 It does not train a predictive model or measure inference quality. Use a fresh
 result path to preserve later runs separately.
 
+`node tools/inspect-next-token-probabilities.mjs` fits and queries an exact-prefix
+count model on the same training documents. `results/first-next-token-probabilities.json`
+records its table, distributions, selection examples, and a separately specified
+single-target loss comparison. The independent hand-written expectations are in
+`results/first-next-token-probabilities-independent-check.json`. These are fixture
+checks, not held-out quality or neural training. Preserve later runs under fresh paths.
+
 `results/qwen-tool-use-baseline.json` and `qwen-tool-use-baseline-sources/` retain
 the first local Qwen request/tool/result smoke run and its source snapshot. It
 uses existing weights and is not a reliability suite or a training run. The

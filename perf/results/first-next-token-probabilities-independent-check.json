@@ -1,0 +1,62 @@
+{
+  "recorded_utc": "2026-11-10T14:44:40.505293+00:00",
+  "kind": "Independent hand-written prefix counts, probability vectors, selections and loss arithmetic; not held-out model quality",
+  "expected_prefix_counts": {
+    "c": {
+      "a": 2
+    },
+    "ca": {
+      "t": 2
+    },
+    "cat": {
+      " ": 2
+    },
+    "cat ": {
+      "a": 1,
+      "s": 1
+    },
+    "cat s": {
+      "a": 1
+    },
+    "cat sa": {
+      "t": 1
+    },
+    "cat sat": {
+      ".": 1
+    },
+    "cat sat.": {
+      "\n": 1
+    },
+    "cat a": {
+      "t": 1
+    },
+    "cat at": {
+      "e": 1
+    },
+    "cat ate": {
+      ".": 1
+    },
+    "cat ate.": {
+      "\n": 1
+    }
+  },
+  "checks": {
+    "hand_written_twelve_prefix_table_matches": true,
+    "sixteen_training_observations_not_seventeen_cross_document_pairs": true,
+    "only_training_documents_fit_counts": true,
+    "full_ambiguous_probability_vector_matches": true,
+    "longer_prefix_cat_s_has_a_only": true,
+    "longer_prefix_cat_a_has_t_only": true,
+    "tea_is_representable_but_has_no_fitted_prefix": true,
+    "greedy_tie_resolves_to_lower_id_a": true,
+    "fixed_draw_intervals_yield_a_then_s": true,
+    "hypothetical_both_top_guesses_wrong": true,
+    "loss_values_match_independent_natural_log_calculation": true,
+    "no_held_out_quality_neural_training_or_test_claim": true,
+    "source identity tools/character-tokenizer.mjs": true,
+    "source identity tools/prefix-count-model.mjs": true,
+    "source identity tools/inspect-next-token-probabilities.mjs": true,
+    "source identity perf/fixtures/tiny-text-tokens-v1.json": true
+  },
+  "passed": true
+}

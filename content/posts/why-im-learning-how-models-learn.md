@@ -151,3 +151,13 @@ The first text-model piece now encodes `cat sat.` as `[4, 3, 7, 1, 6, 3, 7, 2]` 
 The next-token targets come from the text itself. After `ca`, this example supplies `t`; after `cat`, it supplies a space. The second training sentence, `cat ate.`, provides another valid continuation after `cat `. We will need predictions over possible next pieces, not a rule that every prefix has only one valid answer.
 
 [Chapter 6](@/learn/model-engineering/from-text-to-a-tiny-language-model.md) records the fixed vocabulary, shifted input/target arrays, round trips, document boundaries, and explicit failure on the unseen `?` character. This run prepares inputs and targets. No predictive model or new-text generation has run yet.
+
+### A first distribution over what follows
+
+The next run fits a tiny count-based predictor. After `cat `, it gives `a` and `s` 50% each: each follows that prefix once in the training fixture. After `cat s`, it gives `a` 100% from a single matching observation. That confidence describes this tiny table, not language generally.
+
+I can now inspect the difference between a prediction and a choice. Greedy selection picks a highest-probability token; our explicit tie rule chooses `a`. Two fixed draws illustrate how sampling can choose either `a` or `s` from the same distribution. The fitted counts stay unchanged.
+
+The limit is visible too. The tokenizer can encode `tea`, but the predictor has no matching prefix and abstains. A separate calculated example shows two equally wrong top guesses receiving different losses because they assign 40% versus 1% probability to the observed token.
+
+[The probability lesson](@/learn/model-engineering/from-text-to-a-tiny-language-model.md#probabilities-from-observed-continuations) records the counts, distributions, selection rules, loss calculations, and raw results. Neural weights and a full generation loop remain ahead. Adjustable scores are the next small piece.

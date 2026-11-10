@@ -1,6 +1,6 @@
 +++
 title = "From text to a tiny language model"
-description = "Our first piece turns characters into token IDs, reconstructs the text, and prepares next-token targets. Prediction and model training come next."
+description = "Text becomes token IDs and next-token targets. A count model now predicts continuations, with probabilities, selection, and loss inspected."
 date = 2026-11-10
 updated = 2026-11-10
 weight = 6
@@ -8,12 +8,12 @@ weight = 6
 [extra]
 kind = "chapter"
 chapter = 6
-status = "character tokenizer and next-token targets run; predictive model training has not started"
+status = "character tokenizer and exact-prefix count predictor run; neural-model training remains ahead"
 +++
 
 We are starting a separate tiny text model. The first piece prepares its inputs: text becomes token IDs, and the text itself supplies the expected next pieces.
 
-This run built a character tokenizer, reconstructed its inputs, and prepared training targets. It did not train a predictive model, generate new text, or change Qwen's weights.
+The first run built a character tokenizer, reconstructed its inputs, and prepared training targets. A second run now fits a small count-based predictor and selects individual next tokens. Neural layers, weight updates, and a full text-generation loop remain ahead. Qwen's weights are unchanged.
 
 ## Tokens are pieces of text
 
@@ -80,7 +80,7 @@ For the first sentence, the program prepares these examples:
 | `cat sa` | `t` |
 | `cat sat` | `.` |
 
-The model's job will be to predict the next piece using the text available so far. At that position, it must not see later pieces as a hint. We have prepared the examples, not implemented that predictor yet.
+The model's job is to predict the next piece using the text available so far. At that position, it must not see later pieces as a hint. The first run prepared these examples; the count-based predictor later in this chapter uses an exact match on that visible prefix.
 
 The same relationship appears as two arrays shifted by one position:
 
@@ -93,7 +93,7 @@ At each position, the target is the next token. A model can use the prefix up to
 
 This way of deriving targets from the data is a **self-supervised** setup. A person does not need to label every next character manually.
 
-There can be several valid continuations. Our second training document contains `cat ate.`, so the prefix `cat ` is followed by `s` in one document and `a` in the other. That is normal for language continuation. The next step will explain how a model assigns probabilities to possible next tokens.
+There can be several valid continuations. Our second training document contains `cat ate.`, so the prefix `cat ` is followed by `s` in one document and `a` in the other. That is normal for language continuation. The count model below turns those observations into probabilities.
 
 ## Preserve document boundaries and the dictionary
 
@@ -105,7 +105,7 @@ Our additional probe, `cat?`, was rejected because `?` is absent from the traini
 
 That strict failure is a limitation of this small tokenizer. A larger design can use a different vocabulary or a defined fallback strategy. Whichever design we choose, the saved dictionary must keep the same ID-to-piece meaning when the model is used later.
 
-## What actually ran
+## What ran for tokenization
 
 The [text fixture](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/fixtures/tiny-text-tokens-v1.json), [tokenizer](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/character-tokenizer.mjs), and [inspection runner](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/inspect-text-tokens.mjs) use Node's built-in libraries. The [raw result](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-text-tokenization.json) preserves the vocabulary, document IDs, token arrays, visible prefixes, targets, unknown-character failure, source hashes, and machine details.
 
@@ -125,10 +125,96 @@ node tools/inspect-text-tokens.mjs perf/results/another-tokenization-run.json
 
 Validation encoding here checks whether text can be represented and reconstructed. It is not a model-quality score. No predictive-model training, generation, test-set evaluation, or promotion has run in this step.
 
+## Probabilities from observed continuations
+
+The next piece is an **exact-prefix count model**: it counts which tokens follow each whole prefix in the training documents. It fits its table using the same two training documents only. Each document starts a fresh prefix, preserving the earlier document boundaries.
+
+For the prefix `cat `, it finds two observations:
+
+| Next token | Times observed | Probability from this table |
+| --- | ---: | ---: |
+| `a` | 1 | 50% |
+| `s` | 1 | 50% |
+| Every other vocabulary token | 0 | 0% |
+
+Each of the two observed continuations gets one out of two observations, or 50%. The complete list of probabilities is called a **distribution**. Its entries add to 100%.
+
+More context changes the lookup. After `cat s`, the only recorded continuation is `a`, so the table gives `a` 100%. After `cat a`, it gives `t` 100%.
+
+These are frequencies in two invented sentences. A 100% entry here does not establish certainty about language generally. A zero means that this table has no observation of that continuation; it does not prove the continuation is impossible. This first model has no smoothing, which would adjust the raw counts to give unobserved possibilities some probability.
+
+The core calculation is small:
+
+```js
+const total = counts.reduce((sum, count) => sum + count, 0);
+const probabilities = counts.map(count => count / total);
+```
+
+For a known prefix, each token's count is divided by the total number of observed continuations. When the whole prefix has never been observed, our implementation reports `UNSEEN_PREFIX` and supplies no probability vector.
+
+The probe `tea` demonstrates that limit. Its characters all have IDs, but the model has never seen that prefix in training. It abstains. The tokenizer can represent the input while the predictor still cannot handle it. The probe does not add any counts or change the vocabulary.
+
+This predictor stores exact prefixes. It has not learned general representations that connect different contexts. The next neural-model pieces will replace this table with adjustable numerical scores and learned representations.
+
+## A distribution and a selected token are different things
+
+The model supplies probabilities. A **selection rule** chooses one token from them.
+
+**Greedy selection** chooses a token with the highest probability. At `cat `, `a` and `s` tie. Our program resolves that tie by choosing the lower vocabulary ID, so it selects `a`. That is an implementation convention, not evidence that `a` is a better continuation.
+
+**Sampling** uses a random draw to select according to the probabilities. To make this step inspectable, our run supplies two fixed draws instead of generating random ones:
+
+| Supplied draw | Selected next token |
+| ---: | --- |
+| 0.25 | `a` |
+| 0.75 | `s` |
+
+The first half of the interval from zero to one belongs to `a`; the second half belongs to `s`. These two fixed examples illustrate the selection mechanism. They are not a sampling-frequency experiment, and a random sample would not guarantee an exact 50/50 split in a small number of draws.
+
+Changing this selection rule leaves the fitted count table unchanged. We have selected individual next tokens, without implementing the repeated predict → select → append cycle needed for a full text-generation loop.
+
+## Why top-guess accuracy does not tell the whole story
+
+Suppose the observed target is `a`. The runner also calculates this separate, hand-specified example:
+
+| Hypothetical prediction | Probability of `a` | Probability of `s` | Top guess correct? | Loss for observed `a` |
+| --- | ---: | ---: | --- | ---: |
+| First distribution | 40% | 60% | No | 0.916291 |
+| Second distribution | 1% | 99% | No | 4.605170 |
+
+Both choose `s` first, so top-guess accuracy marks both wrong on this target. The first distribution assigned much more probability to the token that appeared.
+
+The recorded loss is **negative log likelihood**: a penalty calculated from the probability of the observed target. The runner uses the natural logarithm. Lower target probability produces a larger penalty; higher target probability produces a smaller one. In next-token neural training, this provides a signal for changing the probabilities even when the highest-ranked guess has not changed yet.
+
+The numbers above are computed illustrations. They are not predictions from our count model, and no neural weights were trained to obtain them. Over many examples, the objective considers all the observed targets; one example alone does not establish the best distribution for language generally.
+
+## What ran for the probability lesson
+
+The [count model and selection rules](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/prefix-count-model.mjs) and [inspection runner](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/inspect-next-token-probabilities.mjs) fit **12 distinct prefix entries from 16 within-document observations**. They preserve the full count table, probability vectors, selection examples, hypothetical loss calculations, source hashes, and machine details in the [raw result](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-next-token-probabilities.json).
+
+Twelve program checks passed. A [separate check](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-next-token-probabilities-independent-check.json) passed sixteen checks against a hand-written twelve-prefix table, expected probability vectors and selections, and an independent loss calculation.
+
+```sh
+node tools/inspect-next-token-probabilities.mjs
+```
+
+The first result is protected. Supply a fresh result path for a later run:
+
+```sh
+node tools/inspect-next-token-probabilities.mjs perf/results/another-probability-run.json
+```
+
+A count-based predictive model was fitted and queried in this step. No neural network, trainable-weight update, held-out quality measurement, test-set evaluation, or full text-generation loop has run. The original tokenization result remains unchanged.
+
 ## Quick revision
 
 - Tokens are the text pieces our tokenizer works with; this example uses characters.
 - A vocabulary maps those pieces to fixed IDs. IDs themselves do not supply meaning or train weights.
 - Encoding maps text to IDs; decoding maps IDs back to text with the same dictionary.
 - For next-token learning, the following piece in the text supplies the target.
-- Several continuations of a prefix can be valid. Prediction and probabilities are the next piece of the build.
+- Several continuations can be valid. A probability distribution assigns a probability to each possible next token.
+- Our first predictor turns exact-prefix counts into probabilities; unseen prefixes cause abstention.
+- Greedy selection and sampling choose tokens from a distribution. Changing the selection rule does not train the model.
+- Probability-sensitive loss distinguishes predictions even when their top guesses have the same accuracy.
+
+Next we will introduce adjustable scores and show how training can change a next-token distribution. Learned representations and attention remain later pieces of the build.

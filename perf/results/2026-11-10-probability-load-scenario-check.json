@@ -1,0 +1,100 @@
+{
+  "recorded_utc": "2026-11-10T14:46:28.343355+00:00",
+  "code_base_commit": "baaaebd73f2d568eee657d95a23e81907187691b",
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "served_source_sha256": "e45919e0a80ddbc3f14adee7ece09a75c00a012fe5e74c7d4244c7310c3f9a9d",
+  "kind": "Static load scenario inspection; no HTTP requests executed",
+  "scenario_sha256": "eea2a674acd12ccb89f84985c613cccd7b40c4831de781bc0569e533fbc1ba9e",
+  "phases": [
+    {
+      "name": "homepage-records-c256",
+      "route": "/",
+      "concurrency": 256,
+      "requests": 1000000
+    },
+    {
+      "name": "training-loop-c256",
+      "route": "/learn/model-engineering/our-first-training-loop/",
+      "concurrency": 256,
+      "requests": 1000000
+    },
+    {
+      "name": "overfitting-c256",
+      "route": "/learn/model-engineering/how-learning-goes-wrong/",
+      "concurrency": 256,
+      "requests": 1000000
+    },
+    {
+      "name": "data-c256",
+      "route": "/learn/model-engineering/data-a-model-can-learn-from/",
+      "concurrency": 256,
+      "requests": 1000000
+    },
+    {
+      "name": "text-model-c256",
+      "route": "/learn/model-engineering/from-text-to-a-tiny-language-model/",
+      "concurrency": 256,
+      "requests": 1000000
+    },
+    {
+      "name": "harness-c256",
+      "route": "/learn/model-engineering/the-harness-around-the-model/",
+      "concurrency": 256,
+      "requests": 1000000
+    },
+    {
+      "name": "learning-c8",
+      "route": "/learn/",
+      "concurrency": 8,
+      "requests": 200000
+    },
+    {
+      "name": "track-c64",
+      "route": "/learn/model-engineering/",
+      "concurrency": 64,
+      "requests": 200000
+    },
+    {
+      "name": "chapter-c256",
+      "route": "/learn/model-engineering/weights-predictions-and-loss/",
+      "concurrency": 256,
+      "requests": 200000
+    },
+    {
+      "name": "gradients-c256",
+      "route": "/learn/model-engineering/gradients-and-weight-updates/",
+      "concurrency": 256,
+      "requests": 200000
+    },
+    {
+      "name": "roadmap-c1024",
+      "route": "/learn/model-engineering/roadmap/",
+      "concurrency": 1024,
+      "requests": 200000
+    },
+    {
+      "name": "blog-c64",
+      "route": "/posts/why-im-learning-how-models-learn/",
+      "concurrency": 64,
+      "requests": 200000
+    }
+  ],
+  "checks": {
+    "only_change_is_revised_chapter_marker": true,
+    "feature_requests_still_7200000": true,
+    "revised_chapter_still_receives_one_million": true,
+    "updated_content_marker_exists_in_built_chapter": true,
+    "concurrency_eight_through_1024_preserved": true
+  },
+  "passed": true,
+  "feature_requests_planned": 7200000,
+  "full_http_load_executed": false,
+  "status": "Pending. Known agent-context loopback binding denials remain unresolved; earlier successful load runs do not cover this changed source."
+}

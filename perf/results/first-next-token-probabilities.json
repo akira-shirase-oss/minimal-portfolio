@@ -1,0 +1,492 @@
+{
+  "recorded_utc": "2026-11-10T14:44:24.098Z",
+  "kind": "Exact-prefix count-model fit and inference on a teaching fixture; no neural-network training",
+  "code_base_commit": "baaaebd73f2d568eee657d95a23e81907187691b",
+  "working_tree_status": "?? tools/inspect-next-token-probabilities.mjs\n?? tools/prefix-count-model.mjs",
+  "source_sha256": {
+    "tools/character-tokenizer.mjs": "a587fdfe8946dbd2e58f8800aab52171e4745f5bd7534a9922f1e01ece4de52a",
+    "tools/prefix-count-model.mjs": "6b20a9bcad8e3404990547658ad5a8d2fd11969a4d81868b401cd0f26f61f341",
+    "tools/inspect-next-token-probabilities.mjs": "b505f783f0b54a005919dd55244d8e4649683df7c07b447ae041f56e45ad7078",
+    "perf/fixtures/tiny-text-tokens-v1.json": "5f0da3975eb088f255311d118defb93c3afb1157e1c65de06f019d4a87c07a86"
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "fixture_version": "tiny-text-tokens-v1",
+  "fitted_document_ids": [
+    "train-line-1",
+    "train-line-2"
+  ],
+  "vocabulary": [
+    {
+      "id": 0,
+      "token": "\n"
+    },
+    {
+      "id": 1,
+      "token": " "
+    },
+    {
+      "id": 2,
+      "token": "."
+    },
+    {
+      "id": 3,
+      "token": "a"
+    },
+    {
+      "id": 4,
+      "token": "c"
+    },
+    {
+      "id": 5,
+      "token": "e"
+    },
+    {
+      "id": 6,
+      "token": "s"
+    },
+    {
+      "id": 7,
+      "token": "t"
+    }
+  ],
+  "training_observations": 16,
+  "distinct_prefixes": 12,
+  "fitted_prefix_table": [
+    {
+      "prefix_ids": [
+        4
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3,
+        7
+      ],
+      "counts": [
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        6
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        6,
+        3
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        6,
+        3,
+        7
+      ],
+      "counts": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        6,
+        3,
+        7,
+        2
+      ],
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        3
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        3,
+        7
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        3,
+        7,
+        5
+      ],
+      "counts": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        3,
+        7,
+        5,
+        2
+      ],
+      "counts": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "predictions": [
+    {
+      "prefix": "cat ",
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1
+      ],
+      "known_prefix": true,
+      "observations": 2,
+      "counts": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "probabilities": [
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0.5,
+        0
+      ]
+    },
+    {
+      "prefix": "cat s",
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        6
+      ],
+      "known_prefix": true,
+      "observations": 1,
+      "counts": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "probabilities": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "prefix": "cat a",
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        3
+      ],
+      "known_prefix": true,
+      "observations": 1,
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "probabilities": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "prefix": "tea",
+      "prefix_ids": [
+        7,
+        5,
+        3
+      ],
+      "known_prefix": false,
+      "observations": 0,
+      "counts": null,
+      "probabilities": null,
+      "reason": "UNSEEN_PREFIX"
+    }
+  ],
+  "selections": {
+    "prefix": "cat ",
+    "greedy": {
+      "token_id": 3,
+      "token": "a",
+      "tie_policy": "Lowest vocabulary ID among equal maxima."
+    },
+    "fixed_draw_examples": [
+      {
+        "draw": 0.25,
+        "token_id": 3,
+        "token": "a"
+      },
+      {
+        "draw": 0.75,
+        "token_id": 6,
+        "token": "s"
+      }
+    ],
+    "scope": "Two fixed draws illustrate probability intervals; this is not a random-sampling benchmark or a measured frequency."
+  },
+  "illustrative_loss_comparison": {
+    "kind": "Illustrative hand-specified probability comparison, not trained-model scores",
+    "observed_target": "a",
+    "candidates": [
+      {
+        "probabilities": [
+          0,
+          0,
+          0,
+          0.4,
+          0,
+          0,
+          0.6,
+          0
+        ],
+        "target_probability": 0.4,
+        "greedy": {
+          "token_id": 6,
+          "token": "s"
+        },
+        "top_one_correct": false,
+        "single_target_negative_log_likelihood": 0.916290731874155
+      },
+      {
+        "probabilities": [
+          0,
+          0,
+          0,
+          0.01,
+          0,
+          0,
+          0.99,
+          0
+        ],
+        "target_probability": 0.01,
+        "greedy": {
+          "token_id": 6,
+          "token": "s"
+        },
+        "top_one_correct": false,
+        "single_target_negative_log_likelihood": 4.605170185988091
+      }
+    ],
+    "explanation": "Both top guesses are s. More probability on the observed target a produces a lower negative-log-likelihood loss. Natural logarithm; lower is better for this target."
+  },
+  "checks": {
+    "exact_training_counts_and_document_boundaries": true,
+    "shared_prefix_has_two_observed_continuations": true,
+    "shared_prefix_distribution_is_half_each": true,
+    "longer_context_changes_predictions": true,
+    "all_known_distributions_are_normalized": true,
+    "known_characters_can_still_form_an_unseen_prefix": true,
+    "inference_does_not_refit_counts": true,
+    "greedy_tie_policy_is_explicit": true,
+    "fixed_draws_can_select_either_supported_token": true,
+    "both_hypothetical_top_guesses_are_wrong": true,
+    "more_target_probability_has_lower_loss": true,
+    "out_of_range_draw_is_rejected": true
+  },
+  "passed": true,
+  "count_based_model_fitted": true,
+  "inference_performed": true,
+  "neural_network_trained": false,
+  "trainable_weights_updated": false,
+  "held_out_quality_measured": false,
+  "test_set_evaluated": false,
+  "full_text_generation_loop_implemented": false,
+  "limitations": "Exact-prefix counts with no smoothing or fallback. Unobserved continuations of known prefixes receive zero probability; unseen prefixes cause abstention. These frequencies do not establish language understanding, calibrated real-world probabilities, or held-out quality. Fixed draws select one next token without a full generation loop."
+}

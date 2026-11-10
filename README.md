@@ -126,7 +126,15 @@ prepare next-token targets within each document. It records and preserves an
 unknown-character failure rather than changing the vocabulary from a probe.
 The first result is `perf/results/first-text-tokenization.json`; pass a fresh
 result path for later runs. This is tokenization and target preparation, not
-predictive-model training or generation. Prediction probabilities come next.
+predictive-model training or generation.
+
+The next chapter-6 piece, `node tools/inspect-next-token-probabilities.mjs`, fits
+an exact-prefix count model using those training documents. It records raw
+counts, probabilities, greedy and fixed-draw choices, an unseen-prefix abstention,
+and a separate hypothetical comparison of probability-sensitive losses. Results
+are in `perf/results/first-next-token-probabilities.json`; use a fresh path for
+later runs. This predictor fits counts and performs inference; neural weights,
+held-out quality measurement, and a full generation loop remain ahead.
 
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
