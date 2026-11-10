@@ -8,7 +8,7 @@ kind = "experiment"
 milestone = "P12"
 step = "ship"
 short_title = "Attack lab + ship gate"
-tests = "38 suites, 0 failures; 15/15 attack scenarios; ~26.3M fuzz execs, 0 crashes; 9/9 proptest invariants; 6M load ops, all PASS; devnet demo 17/17 phases"
+tests = 153
 
 [extra.summary]
 goal = "Prove the thing is honest under attack, not just correct on the happy path — then run the blueprint's own definition of done end to end."

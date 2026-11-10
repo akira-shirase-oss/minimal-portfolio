@@ -22,6 +22,7 @@ milestones = [
   { id = "P10", name = "explorer", about = "Read-only HTML explorer: blocks, transactions, addresses, mempool." },
   { id = "P11", name = "mcp server", about = "11 tools, resources, prompts — spending gated on human approval." },
   { id = "P12", name = "attack lab and hardening", about = "All 15 blueprint attacks, fuzzing, property tests, million-op load runs." },
+  { id = "P13", name = "UI expansion", about = "Enriched read-only explorer + a local web wallet with in-memory sessions, CSRF and a human-gated send flow." },
 ]
 up_next = { milestone = "P12", step = "ship", title = "Done — the blueprint's own definition of finished is met" }
 
