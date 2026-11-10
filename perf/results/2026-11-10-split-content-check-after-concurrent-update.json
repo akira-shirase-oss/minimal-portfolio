@@ -1,0 +1,33 @@
+{
+  "checked_utc": "2026-11-10T13:26:42.064761+00:00",
+  "kind": "Fresh build/content verification after concurrent MiniBTC checkpoint changed shared served sources; not an HTTP load or live check",
+  "previous_snapshot_evidence": "perf/results/2026-11-10-split-content-check.json",
+  "original_evidence_preserved": true,
+  "build": {
+    "command": "zola build",
+    "exit_code": 0,
+    "output": ""
+  },
+  "code_base_commit": "555d9f571e2013b37a35f51ebc2e371d023308e0",
+  "served_source_sha256_before": "366aa5fe91b5499e36a60ae2cb64c129fe1d3d9dff8b4980cbd26e6f4e4da681",
+  "served_source_sha256": "366aa5fe91b5499e36a60ae2cb64c129fe1d3d9dff8b4980cbd26e6f4e4da681",
+  "html_pages": 124,
+  "internal_links_and_anchors_checked": 1645,
+  "valid_jsonld_blocks": 124,
+  "broken_links": [],
+  "checks": {
+    "served_sources_stable_during_build_and_check": true,
+    "roles_section_available": true,
+    "leakage_and_same_baseline_explained": true,
+    "abstentions_explained": true,
+    "test_scope_honest": true,
+    "leaky_view_rejected_despite_score": true,
+    "original_audit_not_silently_rewritten": true,
+    "next_topic_is_tiny_language_model": true,
+    "program_checks_passed": true,
+    "independent_fixture_checks_passed": true,
+    "no_interactive_lab_added": true
+  },
+  "passed": true,
+  "load_state": "Fresh full 6200000-request run remains pending. No previous revision pass is applied to this snapshot."
+}
