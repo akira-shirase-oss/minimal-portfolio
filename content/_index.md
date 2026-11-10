@@ -91,6 +91,6 @@ year = 2026
 status = "live"
 +++
 
-# hey, I *<mark>break</mark>* things.
+# hey, I *break* things.
 
-Then I <mark>fix</mark> them, and write down what I learned. Mostly Rust: runtimes, background jobs, AI tools. All in public, mistakes included.
+Then I fix them, and write down what I learned. Mostly Rust: runtimes, background jobs, AI tools. All in public, mistakes included.
