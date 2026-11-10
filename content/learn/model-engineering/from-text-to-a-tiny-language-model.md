@@ -1,6 +1,6 @@
 +++
 title = "From text to a tiny language model"
-description = "Text becomes tokens, targets, and probabilities. After a count predictor, one gradient update now changes eight adjustable next-token scores."
+description = "Text becomes tokens, targets, and predictions. Small recorded updates now change output scores and two-number input embeddings."
 date = 2026-11-10
 updated = 2026-11-10
 weight = 6
@@ -8,12 +8,12 @@ weight = 6
 [extra]
 kind = "chapter"
 chapter = 6
-status = "tokenizer, count predictor, and one fixed-context score update run; a full neural text model remains ahead"
+status = "tokenizer, count predictor, score update, and last-token embedding update run; attention and broader text-model training remain ahead"
 +++
 
 We are starting a separate tiny text model. The first piece prepares its inputs: text becomes token IDs, and the text itself supplies the expected next pieces.
 
-The first run built a character tokenizer and prepared targets. A second run fitted a count-based predictor and selected individual next tokens. A third run now updates eight adjustable scores for one fixed prefix. Neural context processing, learned token representations, and a full text-generation loop remain ahead. Qwen's weights are unchanged.
+The first runs built a tokenizer, a count predictor, and an adjustable score vector for one fixed prefix. A new small predictor now learns two-number input embeddings and produces different scores for different last tokens. Combining earlier context, attention, broader text-model training, and a full text-generation loop remain ahead. Qwen's weights are unchanged.
 
 ## Tokens are pieces of text
 
@@ -154,7 +154,7 @@ For a known prefix, each token's count is divided by the total number of observe
 
 The probe `tea` demonstrates that limit. Its characters all have IDs, but the model has never seen that prefix in training. It abstains. The tokenizer can represent the input while the predictor still cannot handle it. The probe does not add any counts or change the vocabulary.
 
-This predictor stores exact prefixes. It has not learned general representations that connect different contexts. The adjustable-score example below introduces parameter updates; learned representations remain a later piece.
+This predictor stores exact prefixes. It has not learned general representations that connect different contexts. The next experiment introduces adjustable scores; a later section adds learned input representations.
 
 ## A distribution and a selected token are different things
 
@@ -212,7 +212,7 @@ The next experiment replaces the direct frequency calculation with **eight adjus
 
 A raw score is also called a **logit**. It can be negative, and the scores do not need to add to one. A function called **softmax** converts the score vector into a probability distribution. Higher scores give higher probabilities relative to the other scores in that vector.
 
-This example attaches a free score vector to one fixed context. A full neural language model computes context-dependent scores through learned weights and intermediate representations. We have not built that context-processing network yet; this is its output-and-update mechanism in isolation.
+This example attaches a free score vector to one fixed context. A full neural language model computes context-dependent scores through learned weights and intermediate representations. This experiment isolates the output-and-update mechanism; the embedding experiment later in this chapter adds a predictor that reads the last input token.
 
 The conversion uses four short steps:
 
@@ -282,6 +282,97 @@ node tools/inspect-score-update.mjs perf/results/another-score-update.json
 
 Trainable parameters changed in this run. A full neural language model, embeddings, attention, predictions for other contexts, held-out quality measurement, test-set evaluation, and text generation remain ahead. The earlier tokenizer and count-model results remain unchanged.
 
+## Token IDs and learned embeddings
+
+A token ID chooses an entry in a vocabulary. An **embedding** gives that token an adjustable numerical representation: a **vector**, which is an ordered list of numbers.
+
+The new example uses two numbers per token. Eight tokens therefore have eight vector rows, containing sixteen trainable numbers in total. Each ID looks up its own row:
+
+```js
+const vector = embeddings[tokenId];
+```
+
+The ID selects the row; it is not used as an amount of meaning. The vector values are model parameters that can change during training. They are also not probabilities and do not need to add to one.
+
+All vectors start as `[0, 0]` in this controlled experiment. One training update produces:
+
+| Input token | Fixed ID | Vector before | Vector after |
+| --- | ---: | --- | --- |
+| `a` | 3 | `[0, 0]` | `[0, 0.5]` |
+| `s` | 6 | `[0, 0]` | `[0.5, 0]` |
+| Other six tokens | Their existing IDs | `[0, 0]` | `[0, 0]` |
+
+These are the actual learned values from this run. The coordinates do not have universal meanings such as grammar or intelligence. Their useful role depends on the rest of the model and the task. Two coordinates are a teaching choice; larger models use wider representations.
+
+An input embedding lookup returns the same base vector whenever the same token ID appears. A later context-processing model can transform that vector using surrounding tokens, so a token's representation can depend on its context. We have not added that transformation here.
+
+## From an input vector to next-token scores
+
+The earlier score experiment had parameters attached to one fixed prefix. The new predictor reads the **last token only**, looks up its embedding, and turns that vector into scores for all eight possible next tokens:
+
+**Last token ID → embedding vector → output scores → softmax probabilities**
+
+The **output head** is the final calculation that creates those scores. For each possible output token, it has two weights. Multiplying the matching vector coordinates and weights, then adding the products, gives that token's score:
+
+```js
+const scores = head.map(row =>
+  row.reduce((sum, weight, dimension) =>
+    sum + weight * vector[dimension], 0)
+);
+```
+
+For this experiment, the head weights are deliberately simple, nonzero constants and stay frozen. Only the input embeddings learn. This isolates what an embedding update contributes; it is not a general initialization or training recipe.
+
+For example, the head weights for output `a` are `[1, 0]`, and those for output `t` are `[0, 1]`. After the update, input `s` has vector `[0.5, 0]`: its score for output `a` is 0.5, and its score for output `t` is 0. Input `a`, with vector `[0, 0.5]`, reverses those two scores. The complete head supplies the other six scores too; softmax uses all eight when calculating probabilities.
+
+## What the embedding update learned
+
+We select two different positions from the same training fixture:
+
+| Prefix supplied | Input actually consumed | Observed next-token target |
+| --- | --- | --- |
+| `cat s` | `s` | `a` |
+| `cat a` | `a` | `t` |
+
+The earlier characters are retained in the trace but are not input features of this predictor. The target is the following character and is not fed into the prediction. Only these two positions out of the sixteen available training positions contribute to the update.
+
+Both input vectors begin at zero, giving all eight outputs 12.5% probability. The program computes the mean next-token loss, passes its gradient through the frozen score calculation, and updates the selected embedding rows. This is the same loss-and-gradient training idea, now reaching the input representations.
+
+After one full-batch update at learning rate 1:
+
+| Training prefix | Probability of its observed target before | After |
+| --- | ---: | ---: |
+| `cat s`, target `a` | 12.50% | 19.67% |
+| `cat a`, target `t` | 12.50% | 19.67% |
+
+The **mean training loss falls from 2.079442 to 1.625956**. The vocabulary, token IDs, and output-head weights stay fixed. Only the `a` and `s` embedding rows change.
+
+This before/after comparison measures the new predictor against its own initialization on the same two training positions. It does not establish semantic understanding, useful similarity between tokens, or better unfamiliar-text predictions.
+
+## Why the last token is not enough
+
+We also query `tea` without scoring it. It ends in `a`, just like `cat a`, so this predictor gives both prefixes exactly the same probabilities. The different earlier characters cannot affect a model that does not consume them.
+
+That is the limitation we will address next. Embedding lookup provides token vectors; a model still needs a way to use multiple positions and their order. Attention is a later mechanism for combining information from earlier positions. Our current predictor has neither attention nor positional information.
+
+## What ran for the embedding lesson
+
+The [embedding predictor](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/last-token-embeddings.mjs) and [runner](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/inspect-token-embeddings.mjs) implement the lookup, frozen linear head, probabilities, and one gradient update. The [raw result](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-token-embeddings.json) preserves the full initial and learned vector tables, frozen head, training examples, gradients, predictions, source identities, and machine details.
+
+Thirteen program checks passed. A [separate independent check](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-token-embeddings-independent-check.json) passed nineteen checks against hand-written expected vectors, independently calculated scores/probabilities/losses, and numerical gradients for all sixteen embedding parameters. The maximum gradient difference was below 0.00000001.
+
+```sh
+node tools/inspect-token-embeddings.mjs
+```
+
+Use a fresh result path for a later run; the first result is protected:
+
+```sh
+node tools/inspect-token-embeddings.mjs perf/results/another-embedding-run.json
+```
+
+This is a small last-token embedding predictor. Its input vectors were trained once, and its head was frozen. No attention, full-prefix context processing, held-out quality measurement, test-set evaluation, text generation, or Qwen adaptation ran. The earlier experiments remain available unchanged.
+
 ## Quick revision
 
 - Tokens are the text pieces our tokenizer works with; this example uses characters.
@@ -296,5 +387,10 @@ Trainable parameters changed in this run. A full neural language model, embeddin
 - Logits are raw scores; softmax turns them into probabilities that sum to one.
 - Training can update scores through the loss gradient. Our one-step example increases probability for both observed continuations.
 - Lower loss on the training examples is a different claim from improved predictions on unseen text.
+- A token ID selects a row; an embedding is the adjustable vector stored in that row.
+- The output head turns a representation into scores; softmax then produces probabilities.
+- Training can change embeddings while leaving IDs and, in this experiment, the output head fixed.
+- Base token embeddings are shared across occurrences. Context processing adds information from surrounding positions.
+- Reading only the last token gives identical predictions to different prefixes ending in that token.
 
-Next we will connect different input contexts to numerical representations that can be learned, before building the context-processing model and attention. The eight-score update is a small working piece, not the completed text model.
+Next we will work with more than the last token, explain why token order matters, and introduce position information before attention. Broader text-model training and generation remain later pieces of the build.

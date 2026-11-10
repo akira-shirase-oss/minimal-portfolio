@@ -65,6 +65,14 @@ and numerical-gradient check are in `results/first-next-token-score-update-indep
 Only two training positions are used. This is a parameter-update demonstration,
 not a full neural language model or held-out quality evaluation. Use a fresh result path.
 
+`node tools/inspect-token-embeddings.mjs` trains the input vectors of a last-token
+predictor for one update on two selected training positions. The fixed output
+head isolates embedding learning. `results/first-token-embeddings.json` records
+the vectors, head, gradients, probabilities and same-last-token probe;
+`results/first-token-embeddings-independent-check.json` records independent
+expected values and numerical gradients for all sixteen embedding parameters.
+These are mechanism checks, not semantic-quality or held-out evaluation. Use a fresh result path.
+
 `results/qwen-tool-use-baseline.json` and `qwen-tool-use-baseline-sources/` retain
 the first local Qwen request/tool/result smoke run and its source snapshot. It
 uses existing weights and is not a reliability suite or a training run. The

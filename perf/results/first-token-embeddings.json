@@ -1,0 +1,493 @@
+{
+  "recorded_utc": "2026-11-10T15:55:12.711Z",
+  "kind": "One embedding-gradient step in a last-token predictor with a frozen linear output head",
+  "code_base_commit": "27a19737af1174efda2d104700170e3cbc4075d6",
+  "working_tree_status": "?? tools/inspect-token-embeddings.mjs\n?? tools/last-token-embeddings.mjs",
+  "source_sha256": {
+    "tools/character-tokenizer.mjs": "a587fdfe8946dbd2e58f8800aab52171e4745f5bd7534a9922f1e01ece4de52a",
+    "tools/next-token-scores.mjs": "f67bd75f0547393f1ceac3b2e747707920c6afacd3523e7c9dfdb441d63865c0",
+    "tools/last-token-embeddings.mjs": "867b4a2173bb4814ecafc3427b7c2979aae55a67d0d8b87318697d3a977f2fd5",
+    "tools/inspect-token-embeddings.mjs": "6c8f1b3ca4bc9a4c1974ef50e354a139c09bcafc9eb36860a2a026ae36fcd9fd",
+    "perf/fixtures/tiny-text-tokens-v1.json": "5f0da3975eb088f255311d118defb93c3afb1157e1c65de06f019d4a87c07a86"
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "fixture_version": "tiny-text-tokens-v1",
+  "vocabulary": [
+    {
+      "id": 0,
+      "token": "\n"
+    },
+    {
+      "id": 1,
+      "token": " "
+    },
+    {
+      "id": 2,
+      "token": "."
+    },
+    {
+      "id": 3,
+      "token": "a"
+    },
+    {
+      "id": 4,
+      "token": "c"
+    },
+    {
+      "id": 5,
+      "token": "e"
+    },
+    {
+      "id": 6,
+      "token": "s"
+    },
+    {
+      "id": 7,
+      "token": "t"
+    }
+  ],
+  "vocabulary_fitted_document_ids": [
+    "train-line-1",
+    "train-line-2"
+  ],
+  "architecture": {
+    "input": "Last token of the supplied prefix only",
+    "embedding_width": 2,
+    "embedding_parameters": 16,
+    "output_head": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        0.5,
+        0.5
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -0.5,
+        -0.5
+      ],
+      [
+        0.5,
+        -0.5
+      ],
+      [
+        -0.5,
+        0.5
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "output_head_origin": "Author-chosen and frozen to isolate embedding updates; coordinate directions are not general semantic labels.",
+    "output_head_trained": false,
+    "attention_implemented": false,
+    "positional_information_used": false
+  },
+  "training": {
+    "examples": [
+      {
+        "document_id": "train-line-1",
+        "prefix": "cat s",
+        "prefix_ids": [
+          4,
+          3,
+          7,
+          1,
+          6
+        ],
+        "input_token_id": 6,
+        "target_id": 3,
+        "target_token": "a"
+      },
+      {
+        "document_id": "train-line-2",
+        "prefix": "cat a",
+        "prefix_ids": [
+          4,
+          3,
+          7,
+          1,
+          3
+        ],
+        "input_token_id": 3,
+        "target_id": 7,
+        "target_token": "t"
+      }
+    ],
+    "selected_positions": 2,
+    "available_training_positions": 16,
+    "updates": 1,
+    "learning_rate": 1,
+    "objective": "Mean next-token negative log likelihood over the two selected training positions, natural log"
+  },
+  "update": {
+    "learning_rate": 1,
+    "embedding_gradients": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        -0.5
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "before": {
+      "embeddings": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "predictions": [
+        {
+          "input_token_id": 6,
+          "embedding": [
+            0,
+            0
+          ],
+          "scores": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "probabilities": [
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125
+          ]
+        },
+        {
+          "input_token_id": 3,
+          "embedding": [
+            0,
+            0
+          ],
+          "scores": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "probabilities": [
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125
+          ]
+        }
+      ],
+      "mean_loss": 2.0794415416798357
+    },
+    "after": {
+      "embeddings": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.5
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "predictions": [
+        {
+          "input_token_id": 6,
+          "embedding": [
+            0.5,
+            0
+          ],
+          "scores": [
+            -0.5,
+            0,
+            0.25,
+            0.5,
+            -0.25,
+            0.25,
+            -0.25,
+            0
+          ],
+          "probabilities": [
+            0.07237055046034908,
+            0.11931886591625449,
+            0.1532084565268274,
+            0.1967235522319453,
+            0.09292562621077095,
+            0.1532084565268274,
+            0.09292562621077095,
+            0.11931886591625449
+          ]
+        },
+        {
+          "input_token_id": 3,
+          "embedding": [
+            0,
+            0.5
+          ],
+          "scores": [
+            0,
+            -0.5,
+            0.25,
+            0,
+            -0.25,
+            -0.25,
+            0.25,
+            0.5
+          ],
+          "probabilities": [
+            0.11931886591625449,
+            0.07237055046034908,
+            0.1532084565268274,
+            0.11931886591625449,
+            0.09292562621077095,
+            0.09292562621077095,
+            0.1532084565268274,
+            0.1967235522319453
+          ]
+        }
+      ],
+      "mean_loss": 1.6259558239377938
+    }
+  },
+  "predictions": [
+    {
+      "prefix": "cat s",
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        6
+      ],
+      "input_scope": "Last token only; earlier tokens are not consumed by this predictor",
+      "input_token_id": 6,
+      "embedding": [
+        0.5,
+        0
+      ],
+      "scores": [
+        -0.5,
+        0,
+        0.25,
+        0.5,
+        -0.25,
+        0.25,
+        -0.25,
+        0
+      ],
+      "probabilities": [
+        0.07237055046034908,
+        0.11931886591625449,
+        0.1532084565268274,
+        0.1967235522319453,
+        0.09292562621077095,
+        0.1532084565268274,
+        0.09292562621077095,
+        0.11931886591625449
+      ]
+    },
+    {
+      "prefix": "cat a",
+      "prefix_ids": [
+        4,
+        3,
+        7,
+        1,
+        3
+      ],
+      "input_scope": "Last token only; earlier tokens are not consumed by this predictor",
+      "input_token_id": 3,
+      "embedding": [
+        0,
+        0.5
+      ],
+      "scores": [
+        0,
+        -0.5,
+        0.25,
+        0,
+        -0.25,
+        -0.25,
+        0.25,
+        0.5
+      ],
+      "probabilities": [
+        0.11931886591625449,
+        0.07237055046034908,
+        0.1532084565268274,
+        0.11931886591625449,
+        0.09292562621077095,
+        0.09292562621077095,
+        0.1532084565268274,
+        0.1967235522319453
+      ]
+    },
+    {
+      "prefix": "tea",
+      "prefix_ids": [
+        7,
+        5,
+        3
+      ],
+      "input_scope": "Last token only; earlier tokens are not consumed by this predictor",
+      "input_token_id": 3,
+      "embedding": [
+        0,
+        0.5
+      ],
+      "scores": [
+        0,
+        -0.5,
+        0.25,
+        0,
+        -0.25,
+        -0.25,
+        0.25,
+        0.5
+      ],
+      "probabilities": [
+        0.11931886591625449,
+        0.07237055046034908,
+        0.1532084565268274,
+        0.11931886591625449,
+        0.09292562621077095,
+        0.09292562621077095,
+        0.1532084565268274,
+        0.1967235522319453
+      ]
+    }
+  ],
+  "checks": {
+    "two_training_positions_with_different_last_tokens": true,
+    "eight_two_number_vectors_are_parameters": true,
+    "equal_initial_embeddings_give_uniform_probabilities": true,
+    "lookup_uses_token_id_as_row_index": true,
+    "s_embedding_learns_first_direction": true,
+    "a_embedding_learns_second_direction": true,
+    "other_six_embedding_rows_unchanged": true,
+    "frozen_head_and_vocabulary_preserved": true,
+    "different_last_tokens_produce_different_scores": true,
+    "both_training_targets_gain_probability": true,
+    "same_last_token_has_same_prediction_despite_different_prefix": true,
+    "probability_vectors_are_normalized": true,
+    "mean_loss_on_the_two_training_positions_decreases": true
+  },
+  "passed": true,
+  "input_embeddings_updated": true,
+  "output_head_updated": false,
+  "held_out_quality_measured": false,
+  "test_set_evaluated": false,
+  "text_generated": false,
+  "scope": "A small last-token embedding predictor, not a transformer. The tea probe is an unscored architecture check: it has the same last token as cat a and therefore the same distribution. No semantic-similarity quality claim, full-prefix context processing, generation, or Qwen adaptation."
+}

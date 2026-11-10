@@ -144,6 +144,15 @@ in `perf/results/first-next-token-score-update.json`. Pass a fresh path for late
 runs. This updates parameters for one context; neural context processing, learned
 representations, held-out quality and a full text model remain ahead.
 
+`node tools/inspect-token-embeddings.mjs` adds a last-token predictor: an ID looks
+up a two-number input vector, a frozen linear head creates output scores, and
+softmax creates probabilities. One update uses the training positions `cat s`
+→ `a` and `cat a` → `t`; only the input embedding rows learn. The result in
+`perf/results/first-token-embeddings.json` records all vectors, head weights,
+gradients and predictions. Use a fresh path for later runs. This example ignores
+earlier tokens; a same-last-token probe exposes that limitation. Positions,
+attention, broader training, held-out quality and generation remain ahead.
+
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
 and an honest `status`. Add its `page = "@/learn/<track>/<file>.md"` link to the

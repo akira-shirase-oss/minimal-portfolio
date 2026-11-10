@@ -1,0 +1,42 @@
+{
+  "recorded_utc": "2026-11-10T15:58:07.492350+00:00",
+  "code_base_commit": "27a19737af1174efda2d104700170e3cbc4075d6",
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "served_source_sha256": "cba4b0691b21b9116fceb8773b65145da8b6ad2c88ce1dc99b7122537c86b54a",
+  "kind": "Correction of one static checker false negative; original failing result preserved",
+  "build": {
+    "command": "/Users/vinaysandhu/.local/bin/zola build",
+    "exit_code": 0,
+    "pages_reported": 118,
+    "sections_reported": 9
+  },
+  "html_files_checked": 128,
+  "internal_link_or_anchor_checks": 1695,
+  "json_ld_blocks_parsed": 128,
+  "checks": {
+    "internal_links_and_anchors_resolve": true,
+    "prior_tokenization_and_score_examples_preserved": true,
+    "embedding_anchor_exists": true,
+    "id_vector_and_lookup_distinguished": true,
+    "learned_vectors_recorded": true,
+    "frozen_output_head_explained": true,
+    "measured_probability_and_loss_recorded": true,
+    "same_last_token_limitation_recorded": true,
+    "no_semantic_quality_claim": true,
+    "no_canvas_added": true
+  },
+  "errors": [],
+  "passed": true,
+  "original_result": "perf/results/2026-11-10-embedding-content-check.json",
+  "original_result_sha256": "9b4f6858ab2c22515c36ec81bc2d628b8dd4b6a03098f9d7049ecebce14f8c35",
+  "correction_reason": "Original checker inserted spaces between every HTML text node. Syntax highlighting splits the lookup into multiple text nodes, so the lookup substring falsely failed. Corrected extraction concatenates preformatted code text nodes without inserting characters and checks the exact complete lookup statement.",
+  "exact_extracted_lookup": "const vector = embeddings[tokenId];",
+  "checked_source_unchanged": true
+}

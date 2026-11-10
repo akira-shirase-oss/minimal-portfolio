@@ -169,3 +169,11 @@ I now have one recorded gradient update for the next-token task. Eight adjustabl
 After one update, each of those two tokens receives about 17.73%. The mean training loss falls from 2.079442 to 1.729739. The token dictionary stays fixed; it is the scores that change. Softmax converts those scores into the new probabilities.
 
 [The score-update lesson](@/learn/model-engineering/from-text-to-a-tiny-language-model.md#adjustable-scores-and-softmax) preserves the exact scores, gradients, probability vectors, and an independent numerical-gradient check. This is one free score vector for one context, not a complete neural text model. Learned input representations are next; unfamiliar-text quality and a full generation loop remain unmeasured.
+
+### An ID now points to a learned vector
+
+The next run keeps the token IDs fixed and learns two-number input vectors. After one update, `s` has vector `[0.5, 0]` and `a` has `[0, 0.5]`. A deliberately simple frozen output head turns them into different next-token scores. The target probabilities for `cat s` → `a` and `cat a` → `t` each rise from 12.5% to about 19.67%.
+
+The limit is visible: this predictor reads only the last character. It gives `tea` and `cat a` identical predictions because both end in `a`. The vector lookup is working, but earlier context cannot help until the model consumes it.
+
+[The embedding lesson](@/learn/model-engineering/from-text-to-a-tiny-language-model.md#token-ids-and-learned-embeddings) records the learned vectors, unchanged head, gradients, mean training loss, and an independent check of all sixteen parameter gradients. Positions and the use of more than the last token are next. The run does not establish semantic understanding or unfamiliar-text quality.

@@ -1,0 +1,132 @@
+{
+  "recorded_utc": "2026-11-10T15:55:37.769387+00:00",
+  "kind": "Independent hand-written embedding update, forward calculations and numerical-gradient check; not quality evaluation",
+  "expected_after_embeddings": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.5
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.5,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "expected_gradients": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      -0.5
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      -0.5,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "finite_difference": {
+    "step": 1e-05,
+    "numerical_gradients": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -0.4999999999810711
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        -0.4999999999810711,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "maximum_absolute_error": 1.89289139918003e-11
+  },
+  "checks": {
+    "expected_eight_token_vocabulary": true,
+    "expected_two_training_examples": true,
+    "sixteen_embedding_parameters_and_one_update": true,
+    "expected_frozen_readout": true,
+    "all_initial_vectors_zero": true,
+    "hand_written_after_vectors_match": true,
+    "hand_written_embedding_gradients_match": true,
+    "finite_difference_matches_embedding_gradients": true,
+    "independent_two_context_scores_match": true,
+    "independent_two_context_probabilities_match": true,
+    "independent_mean_losses_match": true,
+    "unused_six_rows_remain_zero": true,
+    "same_last_token_probe_has_same_distribution": true,
+    "no_attention_semantic_quality_or_generation_claim": true,
+    "source identity tools/character-tokenizer.mjs": true,
+    "source identity tools/next-token-scores.mjs": true,
+    "source identity tools/last-token-embeddings.mjs": true,
+    "source identity tools/inspect-token-embeddings.mjs": true,
+    "source identity perf/fixtures/tiny-text-tokens-v1.json": true
+  },
+  "passed": true
+}

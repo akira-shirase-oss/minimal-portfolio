@@ -170,7 +170,7 @@ def main():
                 "/learn/model-engineering/our-first-training-loop/": b"Our first training loop",
                 "/learn/model-engineering/how-learning-goes-wrong/": b"How learning goes wrong",
                 "/learn/model-engineering/data-a-model-can-learn-from/": b"Data a model can learn from",
-                "/learn/model-engineering/from-text-to-a-tiny-language-model/": b"Adjustable scores and softmax",
+                "/learn/model-engineering/from-text-to-a-tiny-language-model/": b"Token IDs and learned embeddings",
                 "/learn/model-engineering/the-harness-around-the-model/": b"The harness around the model",
                 "/posts/why-im-learning-how-models-learn/": b"Why I",
             }
