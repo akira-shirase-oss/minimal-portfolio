@@ -1,0 +1,78 @@
+{
+  "recorded_utc": "2026-11-10T13:33:21.068694+00:00",
+  "kind": "Data-split teaching comparison validation and publication state; not a deployment or capacity receipt",
+  "source_snapshot_commit": "c4d2849c96e49b80c98305817501a300de097f4a",
+  "first_commit_containing_demo_sources": "f9f225f7e18efbcf8a005025478fe234eb2c92db",
+  "recorded_model_sources_match_commit": true,
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "experiment": {
+    "command": "node tools/compare-data-splits.mjs",
+    "exit_code": 0,
+    "program_checks_passed": 10,
+    "independent_expected_fixture_checks_passed": 22,
+    "raw_result": "perf/results/first-data-split-comparison.json",
+    "safe_split_sizes": {
+      "training": 3,
+      "validation": 3,
+      "test": 3
+    },
+    "excluded_duplicate_records": 3,
+    "leaky_validation": {
+      "correct": 3,
+      "total": 3,
+      "accepted": false
+    },
+    "clean_validation": {
+      "correct": 0,
+      "total": 3,
+      "abstained": 3
+    },
+    "test": {
+      "correct": 0,
+      "total": 3,
+      "abstained": 3
+    },
+    "scope": "One unchanged training-message lookup, two validation views and one test evaluation. No neural-model training, tuning from test, or promotion."
+  },
+  "build_and_content": {
+    "build_exit_code": 0,
+    "pages": 114,
+    "sections": 9,
+    "evidence": "perf/results/2026-11-10-split-content-check-after-concurrent-update.json",
+    "passed": true,
+    "checked_served_source_sha256": "366aa5fe91b5499e36a60ae2cb64c129fe1d3d9dff8b4980cbd26e6f4e4da681",
+    "matches_current_served_sources": false,
+    "internal_links_and_anchors_checked": 1645,
+    "jsonld_blocks": 124,
+    "earlier_snapshot_preserved": "perf/results/2026-11-10-split-content-check.json"
+  },
+  "concurrent_checkout_changes": "A separate MiniBTC checkpoint commit captured the already-prepared lesson files. Its work and commit history were preserved; a fresh full-site build checked the updated shared snapshot. Model/data source hashes still match the recorded run.",
+  "github_push": {
+    "command": "git push origin main",
+    "attempted_head": "555d9f571e2013b37a35f51ebc2e371d023308e0",
+    "exit_code": 128,
+    "error": "SSH connection to github.com port 22 timed out. No alternate identity or account was used."
+  },
+  "loopback_probe": {
+    "available": false,
+    "error_type": "PermissionError",
+    "errno": 1,
+    "error": "[Errno 1] Operation not permitted"
+  },
+  "full_http_load": {
+    "scenario_feature_requests": 6200000,
+    "chapter_5_requests": 1000000,
+    "executed": false,
+    "passed": null
+  },
+  "deployment_performed_by_this_session": false,
+  "live_content_verified": false,
+  "publication_state": "Notes, fixture, code and results are committed. This session push failed on SSH connectivity; no new live publication was performed or verified. Do not claim the demonstration score or old static load pass establishes real-model quality or capacity."
+}
