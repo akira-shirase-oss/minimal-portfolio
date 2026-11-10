@@ -22,6 +22,10 @@ https://:version.:project.pages.dev/*
 /style.css
   Cache-Control: public, max-age=31536000, immutable
 
+# The self-hosted font is only replaced when its file name changes: a month.
+/fonts/*
+  Cache-Control: public, max-age=2592000
+
 # Pictures and icons change rarely (and keep their names when they do): a month.
 /img/*
   Cache-Control: public, max-age=2592000

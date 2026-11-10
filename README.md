@@ -1,6 +1,6 @@
 # 404human: portfolio and blog
 
-A text-only portfolio and blog built with [Zola](https://www.getzola.org) 0.23.6, a single program (installed at `~/.local/bin/zola`) that turns Markdown files into a plain, fast website. There's no theme and no tracking. The only JavaScript is a small script in `templates/base.html` for the light/dark toggle, which remembers the reader's choice and otherwise follows their system setting. The look is a calm "job log": the system monospace font, bordered tables, fieldset panels, `<details>` accordions and a scrolling status ticker — the web of 1996, minus the clutter. The ticker stops for readers who turn motion off, and every page is complete without JavaScript. The site also makes `sitemap.xml`, `robots.txt` and an RSS feed (`rss.xml`) automatically.
+A text-only portfolio and blog built with [Zola](https://www.getzola.org) 0.23.6, a single program (installed at `~/.local/bin/zola`) that turns Markdown files into a plain, fast website. There's no theme and no tracking. The only JavaScript is a small script in `templates/base.html` for the light/dark toggle, which remembers the reader's choice and otherwise follows their system setting. The look is a calm "job log": Manrope for reading, the system monospace stack for everything terminal — bordered tables, fieldset panels, `<details>` accordions and a scrolling status ticker — the web of 1996, minus the clutter. The ticker stops for readers who turn motion off, and every page is complete without JavaScript. The site also makes `sitemap.xml`, `robots.txt` and an RSS feed (`rss.xml`) automatically.
 
 ## Write a new post
 
@@ -203,7 +203,9 @@ The Colophon and js-runtime entries follow the same steps below, in `content/col
 
 Reskinned on 2026-11-08 to the house style: the page is drawn the way a terminal
 log would be — tables with real headers, a scrolling status ticker, fieldset
-panels and `<details>` accordions, all in the system's monospace font.
+panels and `<details>` accordions. Two typefaces: self-hosted Manrope (OFL,
+`static/fonts/`) for reading, and the system monospace stack for the terminal
+chrome — code, keys, nav brackets, the ticker and the ASCII masthead.
 
 - **The stylesheet is the whole design.** `static/style.css` is one documented
   file: a max-width, the font stack, table padding, the light/dark hints. No
