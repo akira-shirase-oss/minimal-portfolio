@@ -24,7 +24,7 @@
                     color-scheme: light dark; }
 body              { max-width: 1180px; margin: 0 auto; padding: 0 24px;
                     font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-                    font-size: 15px; line-height: 1.55; font-optical-sizing: auto; }
+                    font-size: 16px; line-height: 1.55; font-optical-sizing: auto; }
 /* Terminal chrome stays monospace: code, keys, the bracket nav, the ticker
    (its text is drawn by .ticker-copy's pseudo-elements, so it inherits this). */
 pre, code, kbd, nav, .ticker-copy { font-family: var(--mono); }
