@@ -1,0 +1,86 @@
+{
+  "recorded_utc": "2026-11-10T15:58:44.676068+00:00",
+  "kind": "Embedding lesson source identity and publication status",
+  "source_commit": "2a6b2cd8ed54e95efcbf993275968688af51a7ad",
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "experiment_sources_match_committed_blobs": {
+    "tools/character-tokenizer.mjs": true,
+    "tools/next-token-scores.mjs": true,
+    "tools/last-token-embeddings.mjs": true,
+    "tools/inspect-token-embeddings.mjs": true,
+    "perf/fixtures/tiny-text-tokens-v1.json": true
+  },
+  "served_source_sha256": "cba4b0691b21b9116fceb8773b65145da8b6ad2c88ce1dc99b7122537c86b54a",
+  "served_source_matches_checked_build": true,
+  "experiment": {
+    "result": "perf/results/first-token-embeddings.json",
+    "passed": true,
+    "program_checks": 13,
+    "independent_checks": 19,
+    "independent_evidence": "perf/results/first-token-embeddings-independent-check.json"
+  },
+  "training_scope": {
+    "architecture": "Last-token embedding lookup with frozen linear output head",
+    "embedding_parameters": 16,
+    "selected_training_positions": 2,
+    "updates": 1,
+    "learning_rate": 1,
+    "learned_rows": {
+      "a": [
+        0,
+        0.5
+      ],
+      "s": [
+        0.5,
+        0
+      ]
+    },
+    "target_probability_before": 0.125,
+    "target_probability_after": 0.1967235522319453,
+    "mean_training_loss_before": 2.0794415416798357,
+    "mean_training_loss_after": 1.6259558239377938,
+    "input_embeddings_updated": true,
+    "output_head_updated": false,
+    "attention_implemented": false,
+    "held_out_quality_measured": false,
+    "test_set_evaluated": false,
+    "text_generated": false
+  },
+  "static_content": {
+    "build_passed": true,
+    "original_checker_passed": false,
+    "original_evidence": "perf/results/2026-11-10-embedding-content-check.json",
+    "corrected_checker_passed": true,
+    "corrected_evidence": "perf/results/2026-11-10-embedding-content-check-correction.json",
+    "correction": "Preserved one false negative caused by inserting spaces between highlighted code text nodes. Exact preformatted code extraction passed on the unchanged built source.",
+    "build_pages": 118,
+    "sections": 9,
+    "links_and_anchors_checked": 1695,
+    "json_ld_blocks_parsed": 128,
+    "browser_qa_performed": false
+  },
+  "load_scenario": {
+    "static_inspection_passed": true,
+    "evidence": "perf/results/2026-11-10-embedding-load-scenario-check.json",
+    "feature_requests_planned": 7200000,
+    "revised_chapter_requests_planned": 1000000,
+    "full_http_load_executed": false,
+    "status": "Pending. Recorded agent-context loopback bind denials remain unresolved; older full-load results do not cover this source."
+  },
+  "integration": "Lesson commit fast-forwarded from isolated worktree into local main; unrelated work preserved.",
+  "git_push": {
+    "attempted_this_turn": false,
+    "status": "Pending; prior configured SSH-agent signing failure has not been reported resolved. No alternate identity used."
+  },
+  "wrangler_deployment_performed": false,
+  "live_publication_verified": false,
+  "publication": "Local source and evidence committed. Full HTTP load and GitHub/Wrangler publication remain pending.",
+  "next_learning_step": "Use more than the last token; inspect order and position information before introducing attention."
+}
