@@ -1,0 +1,24 @@
+{
+  "checked_utc": "2026-11-10T13:23:58.742289+00:00",
+  "kind": "Generated chapter content, internal links/anchors and JSON-LD checks; not browser visual QA, a live check or an HTTP load run",
+  "code_base_commit": "402fd52f931d67b289164979905e0937701ed516",
+  "served_source_sha256": "19bab7f2ea3ead50a111ee04c63fd7612a8f0814b059dd486eb953fcac1df4c4",
+  "html_pages": 124,
+  "internal_links_and_anchors_checked": 1645,
+  "valid_jsonld_blocks": 124,
+  "broken_links": [],
+  "checks": {
+    "roles_section_available": true,
+    "leakage_and_same_baseline_explained": true,
+    "abstentions_explained": true,
+    "test_scope_honest": true,
+    "leaky_view_rejected_despite_score": true,
+    "original_audit_not_silently_rewritten": true,
+    "next_topic_is_tiny_language_model": true,
+    "program_checks_passed": true,
+    "independent_fixture_checks_passed": true,
+    "no_interactive_lab_added": true
+  },
+  "passed": true,
+  "load_state": "Existing 6200000-request scenario includes 1000000 requests on chapter 5. Fresh full HTTP load and publication are pending for this revision; no old revision result is reused as new-source evidence."
+}

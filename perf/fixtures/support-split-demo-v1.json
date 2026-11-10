@@ -1,0 +1,32 @@
+{
+  "version": "support-split-demo-v1",
+  "kind": "Fixed synthetic teaching fixture for split isolation and duplicate leakage; not a real-world benchmark",
+  "task": "Assign one category from a support message's text",
+  "allowed_labels": ["billing", "account_access", "bug_report"],
+  "provenance": "Reuse all five retained examples and the invoice duplicate from the first audit. Add four distinct messages and two duplicate variants. The old missing/conflicting records and audit result are unchanged; they are not silently repaired.",
+  "group_assignment": {
+    "invoice": "training",
+    "password": "training",
+    "open-crash": "training",
+    "double-charge": "validation",
+    "account-locked": "validation",
+    "save-crash": "validation",
+    "receipt-total": "test",
+    "expired-link": "test",
+    "settings-freeze": "test"
+  },
+  "records": [
+    {"id": "s01", "group": "invoice", "text": "Please send my invoice.", "label": "billing"},
+    {"id": "s10", "group": "password", "text": "I forgot my password.", "label": "account_access"},
+    {"id": "s03", "group": "open-crash", "text": "The app crashes when I open it.", "label": "bug_report"},
+    {"id": "s04", "group": "invoice", "text": "  PLEASE send my invoice.  ", "label": "billing"},
+    {"id": "dup-password", "group": "password", "text": " I FORGOT my password. ", "label": "account_access"},
+    {"id": "dup-open-crash", "group": "open-crash", "text": "THE APP CRASHES WHEN I OPEN IT.", "label": "bug_report"},
+    {"id": "s08", "group": "double-charge", "text": "I was charged twice for one order.", "label": "billing"},
+    {"id": "v-account-locked", "group": "account-locked", "text": "My account is locked.", "label": "account_access"},
+    {"id": "s09", "group": "save-crash", "text": "The save button crashes the app.", "label": "bug_report"},
+    {"id": "t-receipt", "group": "receipt-total", "text": "The payment receipt has the wrong total.", "label": "billing"},
+    {"id": "t-signin", "group": "expired-link", "text": "My sign-in link has expired.", "label": "account_access"},
+    {"id": "t-settings", "group": "settings-freeze", "text": "The settings page freezes when I click save.", "label": "bug_report"}
+  ]
+}

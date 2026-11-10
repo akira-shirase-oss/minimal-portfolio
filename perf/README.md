@@ -34,6 +34,15 @@ hand-checked expected dispositions are preserved in `results/first-training-data
 and `results/first-training-data-independent-check.json`. Those data-audit checks
 do not establish model quality or replace the static-serving load scenario.
 
+`node tools/compare-data-splits.mjs` reuses the audit's retained messages in a
+fixed split lesson. One unchanged training-message lookup is evaluated on copies,
+different validation messages, and one separate test partition. The leaky view
+is rejected by overlap checks even with its perfect answer score. Results and
+hand-checked expected outputs are in `results/first-data-split-comparison.json`
+and `results/first-data-split-independent-check.json`. This is not neural-model
+training or an independent real-world benchmark; use a fresh result path for a
+later run so the first evidence remains intact.
+
 `results/qwen-tool-use-baseline.json` and `qwen-tool-use-baseline-sources/` retain
 the first local Qwen request/tool/result smoke run and its source snapshot. It
 uses existing weights and is not a reliability suite or a training run. The

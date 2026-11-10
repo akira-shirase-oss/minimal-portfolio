@@ -1,0 +1,413 @@
+{
+  "recorded_utc": "2026-11-10T13:14:04.331Z",
+  "kind": "Fixed synthetic split-isolation lesson with an exact-message lookup baseline; not a neural-network, language-model or capacity benchmark",
+  "code_base_commit": "402fd52f931d67b289164979905e0937701ed516",
+  "working_tree_status": "?? perf/fixtures/support-split-demo-v1.json\n?? tools/compare-data-splits.mjs",
+  "source_sha256": {
+    "tools/compare-data-splits.mjs": "cbb8c0e43b1e49b01ed8fefe64458936c67e6a8a838ef90b77c06b4a3c3d702f",
+    "perf/fixtures/support-split-demo-v1.json": "c346ba76bd583489211a00e7f1d0e714a19a24ed1c1985e77fa7600125113461",
+    "perf/results/first-training-data-audit.json": "5888cf7d1560f920f3448609d03fd0522e25a713ba77ac41a25caf4c8604691a"
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "dataset": {
+    "version": "support-split-demo-v1",
+    "kind": "Fixed synthetic teaching fixture for split isolation and duplicate leakage; not a real-world benchmark",
+    "task": "Assign one category from a support message's text",
+    "allowed_labels": [
+      "billing",
+      "account_access",
+      "bug_report"
+    ],
+    "provenance": "Reuse all five retained examples and the invoice duplicate from the first audit. Add four distinct messages and two duplicate variants. The old missing/conflicting records and audit result are unchanged; they are not silently repaired.",
+    "group_assignment": {
+      "invoice": "training",
+      "password": "training",
+      "open-crash": "training",
+      "double-charge": "validation",
+      "account-locked": "validation",
+      "save-crash": "validation",
+      "receipt-total": "test",
+      "expired-link": "test",
+      "settings-freeze": "test"
+    },
+    "records": [
+      {
+        "id": "s01",
+        "group": "invoice",
+        "text": "Please send my invoice.",
+        "label": "billing"
+      },
+      {
+        "id": "s10",
+        "group": "password",
+        "text": "I forgot my password.",
+        "label": "account_access"
+      },
+      {
+        "id": "s03",
+        "group": "open-crash",
+        "text": "The app crashes when I open it.",
+        "label": "bug_report"
+      },
+      {
+        "id": "s04",
+        "group": "invoice",
+        "text": "  PLEASE send my invoice.  ",
+        "label": "billing"
+      },
+      {
+        "id": "dup-password",
+        "group": "password",
+        "text": " I FORGOT my password. ",
+        "label": "account_access"
+      },
+      {
+        "id": "dup-open-crash",
+        "group": "open-crash",
+        "text": "THE APP CRASHES WHEN I OPEN IT.",
+        "label": "bug_report"
+      },
+      {
+        "id": "s08",
+        "group": "double-charge",
+        "text": "I was charged twice for one order.",
+        "label": "billing"
+      },
+      {
+        "id": "v-account-locked",
+        "group": "account-locked",
+        "text": "My account is locked.",
+        "label": "account_access"
+      },
+      {
+        "id": "s09",
+        "group": "save-crash",
+        "text": "The save button crashes the app.",
+        "label": "bug_report"
+      },
+      {
+        "id": "t-receipt",
+        "group": "receipt-total",
+        "text": "The payment receipt has the wrong total.",
+        "label": "billing"
+      },
+      {
+        "id": "t-signin",
+        "group": "expired-link",
+        "text": "My sign-in link has expired.",
+        "label": "account_access"
+      },
+      {
+        "id": "t-settings",
+        "group": "settings-freeze",
+        "text": "The settings page freezes when I click save.",
+        "label": "bug_report"
+      }
+    ]
+  },
+  "policy": "Keep one row per case/whitespace-normalized message, then assign whole declared copy families to a split. Retain removed copies as evidence. This is not semantic paraphrase detection.",
+  "safe_split": {
+    "training": [
+      {
+        "id": "s01",
+        "group": "invoice",
+        "text": "Please send my invoice.",
+        "label": "billing"
+      },
+      {
+        "id": "s10",
+        "group": "password",
+        "text": "I forgot my password.",
+        "label": "account_access"
+      },
+      {
+        "id": "s03",
+        "group": "open-crash",
+        "text": "The app crashes when I open it.",
+        "label": "bug_report"
+      }
+    ],
+    "validation": [
+      {
+        "id": "s08",
+        "group": "double-charge",
+        "text": "I was charged twice for one order.",
+        "label": "billing"
+      },
+      {
+        "id": "v-account-locked",
+        "group": "account-locked",
+        "text": "My account is locked.",
+        "label": "account_access"
+      },
+      {
+        "id": "s09",
+        "group": "save-crash",
+        "text": "The save button crashes the app.",
+        "label": "bug_report"
+      }
+    ],
+    "test": [
+      {
+        "id": "t-receipt",
+        "group": "receipt-total",
+        "text": "The payment receipt has the wrong total.",
+        "label": "billing"
+      },
+      {
+        "id": "t-signin",
+        "group": "expired-link",
+        "text": "My sign-in link has expired.",
+        "label": "account_access"
+      },
+      {
+        "id": "t-settings",
+        "group": "settings-freeze",
+        "text": "The settings page freezes when I click save.",
+        "label": "bug_report"
+      }
+    ]
+  },
+  "excluded_duplicates": [
+    {
+      "id": "s04",
+      "group": "invoice",
+      "text": "  PLEASE send my invoice.  ",
+      "label": "billing",
+      "duplicate_of": "s01"
+    },
+    {
+      "id": "dup-password",
+      "group": "password",
+      "text": " I FORGOT my password. ",
+      "label": "account_access",
+      "duplicate_of": "s10"
+    },
+    {
+      "id": "dup-open-crash",
+      "group": "open-crash",
+      "text": "THE APP CRASHES WHEN I OPEN IT.",
+      "label": "bug_report",
+      "duplicate_of": "s03"
+    }
+  ],
+  "safe_split_isolation": {
+    "training_validation": {
+      "record_id_overlap": [],
+      "normalized_input_overlap": [],
+      "group_overlap": [],
+      "passed": true
+    },
+    "training_test": {
+      "record_id_overlap": [],
+      "normalized_input_overlap": [],
+      "group_overlap": [],
+      "passed": true
+    },
+    "validation_test": {
+      "record_id_overlap": [],
+      "normalized_input_overlap": [],
+      "group_overlap": [],
+      "passed": true
+    }
+  },
+  "deliberately_leaky_validation": {
+    "records": [
+      {
+        "id": "s04",
+        "group": "invoice",
+        "text": "  PLEASE send my invoice.  ",
+        "label": "billing",
+        "duplicate_of": "s01"
+      },
+      {
+        "id": "dup-password",
+        "group": "password",
+        "text": " I FORGOT my password. ",
+        "label": "account_access",
+        "duplicate_of": "s10"
+      },
+      {
+        "id": "dup-open-crash",
+        "group": "open-crash",
+        "text": "THE APP CRASHES WHEN I OPEN IT.",
+        "label": "bug_report",
+        "duplicate_of": "s03"
+      }
+    ],
+    "isolation": {
+      "record_id_overlap": [],
+      "normalized_input_overlap": [
+        "please send my invoice.",
+        "i forgot my password.",
+        "the app crashes when i open it."
+      ],
+      "group_overlap": [
+        "invoice",
+        "password",
+        "open-crash"
+      ],
+      "passed": false
+    },
+    "accepted": false
+  },
+  "lookup_baseline": {
+    "fitted_once": true,
+    "training_entries": [
+      [
+        "please send my invoice.",
+        "billing"
+      ],
+      [
+        "i forgot my password.",
+        "account_access"
+      ],
+      [
+        "the app crashes when i open it.",
+        "bug_report"
+      ]
+    ],
+    "fitted_sha256": "b5cb5f25a28cadf9051da4cdcda324538498f88ed3d88c559da5d881b66035ca",
+    "behavior": "Return saved training label for exact normalized text; abstain on unseen text. No semantic inference."
+  },
+  "validation_scores": {
+    "leaky_validation": {
+      "cases": [
+        {
+          "id": "s04",
+          "group": "invoice",
+          "text": "  PLEASE send my invoice.  ",
+          "label": "billing",
+          "duplicate_of": "s01",
+          "predicted_label": "billing",
+          "answered": true,
+          "correct": true
+        },
+        {
+          "id": "dup-password",
+          "group": "password",
+          "text": " I FORGOT my password. ",
+          "label": "account_access",
+          "duplicate_of": "s10",
+          "predicted_label": "account_access",
+          "answered": true,
+          "correct": true
+        },
+        {
+          "id": "dup-open-crash",
+          "group": "open-crash",
+          "text": "THE APP CRASHES WHEN I OPEN IT.",
+          "label": "bug_report",
+          "duplicate_of": "s03",
+          "predicted_label": "bug_report",
+          "answered": true,
+          "correct": true
+        }
+      ],
+      "total": 3,
+      "correct": 3,
+      "abstained": 0,
+      "fraction_correct_including_abstentions": 1,
+      "answer_coverage": 1
+    },
+    "clean_validation": {
+      "cases": [
+        {
+          "id": "s08",
+          "group": "double-charge",
+          "text": "I was charged twice for one order.",
+          "label": "billing",
+          "predicted_label": null,
+          "answered": false,
+          "correct": false
+        },
+        {
+          "id": "v-account-locked",
+          "group": "account-locked",
+          "text": "My account is locked.",
+          "label": "account_access",
+          "predicted_label": null,
+          "answered": false,
+          "correct": false
+        },
+        {
+          "id": "s09",
+          "group": "save-crash",
+          "text": "The save button crashes the app.",
+          "label": "bug_report",
+          "predicted_label": null,
+          "answered": false,
+          "correct": false
+        }
+      ],
+      "total": 3,
+      "correct": 0,
+      "abstained": 3,
+      "fraction_correct_including_abstentions": 0,
+      "answer_coverage": 0
+    }
+  },
+  "test_result": {
+    "cases": [
+      {
+        "id": "t-receipt",
+        "group": "receipt-total",
+        "text": "The payment receipt has the wrong total.",
+        "label": "billing",
+        "predicted_label": null,
+        "answered": false,
+        "correct": false
+      },
+      {
+        "id": "t-signin",
+        "group": "expired-link",
+        "text": "My sign-in link has expired.",
+        "label": "account_access",
+        "predicted_label": null,
+        "answered": false,
+        "correct": false
+      },
+      {
+        "id": "t-settings",
+        "group": "settings-freeze",
+        "text": "The settings page freezes when I click save.",
+        "label": "bug_report",
+        "predicted_label": null,
+        "answered": false,
+        "correct": false
+      }
+    ],
+    "total": 3,
+    "correct": 0,
+    "abstained": 3,
+    "fraction_correct_including_abstentions": 0,
+    "answer_coverage": 0
+  },
+  "scoring": "Correct answers divided by all cases, counting abstentions as not correct. Report abstentions explicitly. Same training lookup used for both validation views and one test evaluation.",
+  "test_evaluation_calls": 1,
+  "candidate_versions_selected_using_test": false,
+  "checks": {
+    "all_records_have_valid_text_label_and_group": true,
+    "duplicate_families_have_consistent_group_and_label": true,
+    "safe_plan_accounts_for_all_input_ids_once": true,
+    "original_retained_examples_preserved": true,
+    "original_invoice_duplicate_preserved": true,
+    "safe_split_isolation_passes": true,
+    "every_safe_split_contains_all_categories": true,
+    "leaky_view_has_distinct_ids_but_is_detected": true,
+    "one_lookup_entry_per_training_message": true,
+    "lookup_model_unchanged_during_all_evaluation": true
+  },
+  "program_checks_passed": true,
+  "quality_verdict": "Safe partitions pass declared overlap checks; deliberately leaky validation fails them. Tiny constructed examples were designed and inspected by the author, so the demonstration test partition is not an independent real-world benchmark. No model promotion or deployment decision.",
+  "original_audit_or_review_records_changed": false,
+  "neural_network_or_language_model_trained": false,
+  "model_promoted": false
+}

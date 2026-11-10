@@ -1,6 +1,6 @@
 +++
 title = "Checkpoint P13: the chain gets a face — explorer search and a real web wallet"
-description = "Beyond the blueprint's read-only explorer: global search, pagination and dashboard stats on the public side, and a separate key-holding wallet UI with passphrase-to-memory sessions, per-session CSRF, origin checks, a two-step build-review-confirm-broadcast send flow, and a secret-free audit log — live-verified end to end on the devnet."
+description = "Restructured after UX review (Solana-explorer-style flows): create/restore/unlock landing, two-step wallet creation with a show-once seed gate, dashboard hero + action bar, receive/addresses/activity pages — plus the earlier enriched explorer. Beyond the blueprint's read-only explorer: global search, pagination and dashboard stats on the public side, and a separate key-holding wallet UI with passphrase-to-memory sessions, per-session CSRF, origin checks, a two-step build-review-confirm-broadcast send flow, and a secret-free audit log — live-verified end to end on the devnet."
 date = 2026-11-10T14:00:00Z
 
 [extra]
@@ -8,19 +8,19 @@ kind = "experiment"
 milestone = "P13"
 step = "ui"
 short_title = "Explorer + wallet UI"
-tests = 161
+tests = 167
 
 [extra.summary]
 goal = "Make the chain browsable and the wallet usable in a browser — without weakening the security model the CLI and MCP already enforce."
-built = "apps/minibtc-explorer enrichment (search classifier, ?start= pagination, dashboard stats, fee-rate columns) + new apps/minibtc-wallet-ui binary (session map, unlock rate limiting, CSRF+Origin checks, PendingSend review step, audit JSONL)."
+built = "apps/minibtc-wallet-ui v2 (create/restore/unlock flows, seed-once gate, dashboard/receive/activity pages) + apps/minibtc-explorer enrichment (search classifier, ?start= pagination, dashboard stats, fee-rate columns) + new apps/minibtc-wallet-ui binary (session map, unlock rate limiting, CSRF+Origin checks, PendingSend review step, audit JSONL)."
 proof = [
-  "live flow: unlock webtest -> dashboard 150 BTC mature -> send form -> build+sign -> review page (to/amount/fee/txid) -> confirm -> broadcast -> tx 30d1d5de…facd confirmed in a block",
+  "live flow v2: create webui2 via UI (seed gate enforced, keystore 0600), restore webui2b derives identical address, 2 BTC CLI-funded shows on dashboard; earlier: unlock webtest -> dashboard 150 BTC mature -> send form -> build+sign -> review page (to/amount/fee/txid) -> confirm -> broadcast -> tx 30d1d5de…facd confirmed in a block",
   "negatives: wrong CSRF leaves pending draft untouched; wrong passphrase -> error + unlock_fail audit; foreign Origin rejected; lock destroys session and /wallet redirects",
   "indices persisted: state.json shows next_change=1 after the send's change address",
   "audit log carries events only — no passphrase, seed, or key material anywhere",
   "gates: cargo fmt --check, clippy --workspace --all-targets -D warnings, cargo test --workspace --locked — all green at 6dc7c5a",
 ]
-code = "akira-shirase-oss/projects/minibtc · main @ 6dc7c5a (local only — remote push not configured)"
+code = "akira-shirase-oss/projects/minibtc · main @ 31696de (local only — remote push not configured)"
 +++
 
 The blueprint asked for "a small web UI to browse blocks, transactions

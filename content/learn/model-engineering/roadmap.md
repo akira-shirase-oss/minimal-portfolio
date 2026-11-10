@@ -2,7 +2,7 @@
 title = "The model-engineering learning roadmap"
 description = "The path from one prediction to training, data pipelines, harnesses, evaluation, and better model versions."
 date = 2026-11-06
-updated = 2026-11-09
+updated = 2026-11-10
 weight = 0
 
 [extra]
@@ -16,7 +16,7 @@ The route is now **learn by building**: make a small working piece, run it, insp
 
 ## What comes next — 9 November 2026
 
-The current sequence is topics **4 through 8**: how learning goes wrong, data a model can learn from, a tiny language model, training we can inspect and resume, and adapting an existing model. [Topic 4 has recorded overfitting, underfitting, and training-stability comparisons](@/learn/model-engineering/how-learning-goes-wrong.md). [Topic 5 has begun with a small labeled-data audit](@/learn/model-engineering/data-a-model-can-learn-from.md). Dataset splitting and topics 6–8 remain planned.
+The current sequence is topics **4 through 8**: how learning goes wrong, data a model can learn from, a tiny language model, training we can inspect and resume, and adapting an existing model. [Topic 4 has recorded overfitting, underfitting, and training-stability comparisons](@/learn/model-engineering/how-learning-goes-wrong.md). [Topic 5 has a small labeled-data audit and a duplicate-leakage split demonstration](@/learn/model-engineering/data-a-model-can-learn-from.md). Next is topic 6, **From text to a tiny language model**. Topics 6–8 remain planned; these first teaching examples do not establish mastery or replace broader data-quality work.
 
 For each topic, the lesson starts with a plain explanation and a small example. The assistant implements the experiment and handles the calculations. We inspect the code, outputs, and failures together to understand what each part does, why it matters, and what a change actually helped. Deep mathematical derivations are optional; the numbers needed to explain an observation still get explained.
 
@@ -39,7 +39,7 @@ Later improvements to these builds will teach adapting model weights, reviewing 
 | [2. Gradients and weight updates](@/learn/model-engineering/gradients-and-weight-updates.md) | How does the program choose a direction and size for an update? | Direction, overshooting, numerical gradients, and learning-rate updates are worked through. Direct derivatives remain ahead. |
 | [3. Our first training loop](@/learn/model-engineering/our-first-training-loop.md) | How do repeated updates become training? | Run a tiny local program, inspect its weights and loss, then measure a fixed candidate against a declared two-case validation rule. Saving and resuming a learned model remain ahead. |
 | [4. How learning goes wrong](@/learn/model-engineering/how-learning-goes-wrong.md) | Did it capture too little, fit accidental details, or fail to settle during updates? | Overfitting and underfitting examples run on fixed synthetic delivery data; a separate one-weight loop compares steady updates, repeated bouncing, and growing error by changing only learning rate. Broader evaluation remains ahead. |
-| [5. Data a model can learn from](@/learn/model-engineering/data-a-model-can-learn-from.md) | How do raw records become useful examples? | First synthetic audit run: ten support messages partitioned into five retained records, one duplicate, and four review records. Human review, broader coverage, and training/validation/test split experiments remain ahead. |
+| [5. Data a model can learn from](@/learn/model-engineering/data-a-model-can-learn-from.md) | How do raw records become useful examples and separate checks? | Synthetic data audit and fixed split-leakage comparison run. A lookup answers training-message copies but abstains on different validation/test messages. Broader human review, representative coverage, and real-model evaluation remain ahead. |
 | 6. From text to a tiny language model | How do text pieces become predictions? | Learn tokens, arrays of numbers, embeddings, attention, and a small transformer through code. |
 | 7. Training runs we can inspect and resume | Can we explain and recover a run? | Record settings, data versions, memory use, and checkpoints; interrupt and resume a run. |
 | 8. Adapting an existing model | What does fine-tuning change? | Compare an unchanged model with a trained candidate using the same inputs and settings. |

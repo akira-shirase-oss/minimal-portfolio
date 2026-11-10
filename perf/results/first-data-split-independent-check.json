@@ -1,0 +1,47 @@
+{
+  "checked_utc": "2026-11-10T13:22:48.292976+00:00",
+  "kind": "Independent hand-checked fixture split IDs, lookup contents, abstentions, and score expectations; not a real-world model benchmark",
+  "expected_safe_partition_ids": {
+    "training": [
+      "s01",
+      "s10",
+      "s03"
+    ],
+    "validation": [
+      "s08",
+      "v-account-locked",
+      "s09"
+    ],
+    "test": [
+      "t-receipt",
+      "t-signin",
+      "t-settings"
+    ]
+  },
+  "checks": {
+    "expected training ids": true,
+    "expected validation ids": true,
+    "expected test ids": true,
+    "expected duplicate links": true,
+    "safe partitions and excluded rows account for input once": true,
+    "training validation have no shared group": true,
+    "training test have no shared group": true,
+    "validation test have no shared group": true,
+    "expected training-only lookup entries": true,
+    "leaky validation uses different record ids": true,
+    "leaky validation rejected": true,
+    "three overlapping inputs exposed": true,
+    "leaky_validation expected score": true,
+    "leaky_validation expected predictions": true,
+    "clean_validation expected score": true,
+    "clean_validation expected predictions": true,
+    "test expected score": true,
+    "test expected predictions": true,
+    "no test selection or language-model training claimed": true,
+    "source identity tools/compare-data-splits.mjs": true,
+    "source identity perf/fixtures/support-split-demo-v1.json": true,
+    "source identity perf/results/first-training-data-audit.json": true
+  },
+  "passed": true,
+  "accounting_check_method": "Compare the complete sorted output ID list, including excluded duplicates, with the raw input ID list; require output IDs unique."
+}

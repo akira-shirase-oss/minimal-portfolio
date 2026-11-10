@@ -2,7 +2,7 @@
 title = "Why I'm learning how models learn"
 description = "I started by asking about an 8B blog-writing model. Then I had to ask how training even starts."
 date = 2026-11-06
-updated = 2026-11-09
+updated = 2026-11-10
 
 [extra]
 kind = "experiment"
@@ -133,3 +133,13 @@ The first data exercise now inspects ten made-up support messages. Each pairs a 
 The program does not invent the missing answers or silently choose between the conflicting labels. Every record remains accounted for. This is preparation and inspection; no model was trained, and five retained examples do not establish a representative dataset.
 
 [Chapter 5](@/learn/model-engineering/data-a-model-can-learn-from.md) keeps the input/label explanation, original fixture, code, measured counts, limitations, and revision notes. Reviewing the examples and separating training, validation, and test data are the next pieces.
+
+## Learning update — 10 November 2026
+
+Different IDs can make two records look separate while hiding the same message underneath. The next experiment keeps three training messages fixed and builds a lookup that remembers only those messages and their labels.
+
+It answers all three validation copies correctly. On three different validation messages, it abstains every time. It also abstains on a separate three-message test partition. The program does not understand the messages; the copied validation view was rewarding answers it already had.
+
+[The split lesson](@/learn/model-engineering/data-a-model-can-learn-from.md#training-validation-and-test-have-different-jobs) records the roles of training, validation, and test data, the fixed partitions, overlap checks, and actual lookup outputs. The leaky view fails the separation checks even with its perfect answer score. The tiny test fixture is an illustration, not an independent real-world benchmark.
+
+Turning text into tokens is next, as we begin the separate tiny language-model build. The original data audit and its review records remain available unchanged.

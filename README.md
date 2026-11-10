@@ -105,8 +105,19 @@ Chapter 5 now has its first synthetic labeled-data audit. Run
 `perf/fixtures/support-intent-v1.json`. It preserves retained records, duplicate
 relationships, and review reasons in `perf/results/first-training-data-audit.json`.
 Pass a fresh result path to record a later run without overwriting the first.
-The audit does not train a model or create a data split. Human review, expanded
-coverage, and training/validation/test separation remain ahead.
+The audit itself does not train a model or create a data split. The following
+lesson adds a split demonstration; broader human review and coverage remain work
+to revisit throughout the model builds.
+
+The 2026-11-10 split lesson is a separate run: `node tools/compare-data-splits.mjs`
+uses a fixed fixture derived from the retained audit examples. It creates three
+groups of distinct messages, preserves excluded copies, and compares leaky and
+separate validation views using one unchanged exact-message lookup. Its test
+partition is evaluated once; it is a teaching fixture, not an independent final
+benchmark. The original audit and missing/conflicting records are not changed.
+Recorded outputs are in `perf/results/first-data-split-comparison.json`. Pass a
+fresh result path for later runs. Chapter 5 now introduces the three data roles
+and duplicate leakage; broader data review continues alongside later builds.
 
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
