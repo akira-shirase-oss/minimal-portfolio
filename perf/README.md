@@ -43,6 +43,13 @@ and `results/first-data-split-independent-check.json`. This is not neural-model
 training or an independent real-world benchmark; use a fresh result path for a
 later run so the first evidence remains intact.
 
+`node tools/inspect-text-tokens.mjs` prepares character IDs and next-token targets
+from a fixed tiny text fixture. The original round trips, vocabulary, per-document
+targets and unknown-character rejection are in `results/first-text-tokenization.json`;
+the independent expected IDs are in `results/first-text-tokenization-independent-check.json`.
+It does not train a predictive model or measure inference quality. Use a fresh
+result path to preserve later runs separately.
+
 `results/qwen-tool-use-baseline.json` and `qwen-tool-use-baseline-sources/` retain
 the first local Qwen request/tool/result smoke run and its source snapshot. It
 uses existing weights and is not a reliability suite or a training run. The
@@ -57,8 +64,8 @@ python3 perf/learning-load.py --baseline-ref 7193b0bd3ac6fd377664c24fe71aee20cdd
 
 The script serves the baseline source and current checkout on loopback using
 Zola's development server. It compares 50,000 homepage requests on each version,
-then makes **6,200,000 feature requests**: 1,000,000 each on the homepage,
-the first-training-loop, overfitting, data and harness chapters, plus 200,000 each across the Learning index, track,
+then makes **7,200,000 feature requests**: 1,000,000 each on the homepage,
+the first-training-loop, overfitting, data, text-model and harness chapters, plus 200,000 each across the Learning index, track,
 two chapters, roadmap, and introductory blog. Concurrency ranges from 8 to 1,024.
 For later changes, choose the previous source revision as the baseline.
 

@@ -119,6 +119,15 @@ Recorded outputs are in `perf/results/first-data-split-comparison.json`. Pass a
 fresh result path for later runs. Chapter 5 now introduces the three data roles
 and duplicate leakage; broader data review continues alongside later builds.
 
+Chapter 6 begins with text preparation. `node tools/inspect-text-tokens.mjs`
+uses `tools/character-tokenizer.mjs` and the fixed `tiny-text-tokens-v1.json`
+fixture to build a training-only character vocabulary, round-trip text, and
+prepare next-token targets within each document. It records and preserves an
+unknown-character failure rather than changing the vocabulary from a probe.
+The first result is `perf/results/first-text-tokenization.json`; pass a fresh
+result path for later runs. This is tokenization and target preparation, not
+predictive-model training or generation. Prediction probabilities come next.
+
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
 and an honest `status`. Add its `page = "@/learn/<track>/<file>.md"` link to the

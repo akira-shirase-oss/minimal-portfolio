@@ -170,6 +170,7 @@ def main():
                 "/learn/model-engineering/our-first-training-loop/": b"Our first training loop",
                 "/learn/model-engineering/how-learning-goes-wrong/": b"How learning goes wrong",
                 "/learn/model-engineering/data-a-model-can-learn-from/": b"Data a model can learn from",
+                "/learn/model-engineering/from-text-to-a-tiny-language-model/": b"From text to a tiny language model",
                 "/learn/model-engineering/the-harness-around-the-model/": b"The harness around the model",
                 "/posts/why-im-learning-how-models-learn/": b"Why I",
             }
@@ -184,6 +185,7 @@ def main():
                 ("training-loop-c256", "/learn/model-engineering/our-first-training-loop/", 256),
                 ("overfitting-c256", "/learn/model-engineering/how-learning-goes-wrong/", 256),
                 ("data-c256", "/learn/model-engineering/data-a-model-can-learn-from/", 256),
+                ("text-model-c256", "/learn/model-engineering/from-text-to-a-tiny-language-model/", 256),
                 ("harness-c256", "/learn/model-engineering/the-harness-around-the-model/", 256),
                 ("learning-c8", "/learn/", 8),
                 ("track-c64", "/learn/model-engineering/", 64),
@@ -192,9 +194,9 @@ def main():
                 ("roadmap-c1024", "/learn/model-engineering/roadmap/", 1024),
                 ("blog-c64", "/posts/why-im-learning-how-models-learn/", 64),
             ):
-                count = 1000000 if route in ("/", "/learn/model-engineering/our-first-training-loop/", "/learn/model-engineering/how-learning-goes-wrong/", "/learn/model-engineering/data-a-model-can-learn-from/", "/learn/model-engineering/the-harness-around-the-model/") else 200000
+                count = 1000000 if route in ("/", "/learn/model-engineering/our-first-training-loop/", "/learn/model-engineering/how-learning-goes-wrong/", "/learn/model-engineering/data-a-model-can-learn-from/", "/learn/model-engineering/from-text-to-a-tiny-language-model/", "/learn/model-engineering/the-harness-around-the-model/") else 200000
                 phase(label, candidate_url, route, count, concurrency)
-            check("million-request feature run", sum(p["completed"] for p in result["phases"][2:]) >= 6200000, "Homepage, training-loop, overfitting, data and harness chapters: 1,000,000 requests each; six other learning routes: 200,000 each; concurrency 8 through 1,024.")
+            check("million-request feature run", sum(p["completed"] for p in result["phases"][2:]) >= 7200000, "Homepage, training-loop, overfitting, data, text-model and harness chapters: 1,000,000 requests each; six other learning routes: 200,000 each; concurrency 8 through 1,024.")
             try:
                 get(candidate_url + "/learn/model-engineering/planned-chapter-does-not-exist/")
                 check("missing chapter", False, "unexpected success")

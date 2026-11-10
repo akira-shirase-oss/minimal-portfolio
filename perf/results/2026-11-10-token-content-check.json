@@ -1,0 +1,33 @@
+{
+  "recorded_utc": "2026-11-10T14:17:14.881828+00:00",
+  "code_base_commit": "b6f9e206c7180edb36020aef4477433aa8c70c7c",
+  "machine": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "processor": "arm"
+  },
+  "served_source_sha256": "a0254f15090c02352f4312b25045cff8f4ad073908635cf6fa293e85cb0ebeb6",
+  "kind": "Static built-site checks, not browser verification or HTTP load",
+  "build": {
+    "command": "/Users/vinaysandhu/.local/bin/zola build",
+    "exit_code": 0,
+    "pages_reported": 118,
+    "sections_reported": 9
+  },
+  "html_files_checked": 128,
+  "internal_link_or_anchor_checks": 1692,
+  "json_ld_blocks_parsed": 128,
+  "checks": {
+    "no_broken_internal_links_or_anchors": true,
+    "json_ld_decodes": true,
+    "sample_id_array_recorded": true,
+    "input_and_target_arrays_recorded": true,
+    "document_boundaries_and_counts_explained": true,
+    "unknown_character_failure_explained": true,
+    "no_predictive_model_claim": true,
+    "multiple_valid_continuations_explained": true,
+    "no_interactive_canvas_added": true,
+    "chapter_available_in_track": true
+  },
+  "errors": [],
+  "passed": true
+}

@@ -143,3 +143,11 @@ It answers all three validation copies correctly. On three different validation 
 [The split lesson](@/learn/model-engineering/data-a-model-can-learn-from.md#training-validation-and-test-have-different-jobs) records the roles of training, validation, and test data, the fixed partitions, overlap checks, and actual lookup outputs. The leaky view fails the separation checks even with its perfect answer score. The tiny test fixture is an illustration, not an independent real-world benchmark.
 
 Turning text into tokens is next, as we begin the separate tiny language-model build. The original data audit and its review records remain available unchanged.
+
+### First, turn text into IDs
+
+The first text-model piece now encodes `cat sat.` as `[4, 3, 7, 1, 6, 3, 7, 2]` and decodes it back exactly. Our toy tokenizer treats characters, spaces, and punctuation as pieces. The IDs are entries in a dictionary; assigning those numbers does not teach the model what the sentence means.
+
+The next-token targets come from the text itself. After `ca`, this example supplies `t`; after `cat`, it supplies a space. The second training sentence, `cat ate.`, provides another valid continuation after `cat `. We will need predictions over possible next pieces, not a rule that every prefix has only one valid answer.
+
+[Chapter 6](@/learn/model-engineering/from-text-to-a-tiny-language-model.md) records the fixed vocabulary, shifted input/target arrays, round trips, document boundaries, and explicit failure on the unseen `?` character. This run prepares inputs and targets. No predictive model or new-text generation has run yet.

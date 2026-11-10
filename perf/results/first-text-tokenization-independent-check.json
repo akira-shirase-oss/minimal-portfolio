@@ -1,0 +1,77 @@
+{
+  "checked_utc": "2026-11-10T14:13:08.820323+00:00",
+  "kind": "Independent hand-written expectations for vocabulary, IDs, shifted targets and unknown-character behavior; not model-quality evidence",
+  "expected_tokens_in_id_order": [
+    "\n",
+    " ",
+    ".",
+    "a",
+    "c",
+    "e",
+    "s",
+    "t"
+  ],
+  "expected_sample_ids": [
+    4,
+    3,
+    7,
+    1,
+    6,
+    3,
+    7,
+    2
+  ],
+  "expected_prefix_and_target_pairs": [
+    [
+      "c",
+      "a"
+    ],
+    [
+      "ca",
+      "t"
+    ],
+    [
+      "cat",
+      " "
+    ],
+    [
+      "cat ",
+      "s"
+    ],
+    [
+      "cat s",
+      "a"
+    ],
+    [
+      "cat sa",
+      "t"
+    ],
+    [
+      "cat sat",
+      "."
+    ]
+  ],
+  "shared_prefix_cat_space_targets": {
+    "s": 1,
+    "a": 1
+  },
+  "checks": {
+    "expected_training_only_vocabulary": true,
+    "expected_sample_ids": true,
+    "expected_sample_decode": true,
+    "expected_shifted_inputs": true,
+    "expected_shifted_targets": true,
+    "expected_visible_prefix_targets": true,
+    "expected_first_training_document": true,
+    "expected_second_training_document": true,
+    "document_boundaries_preserve_16_targets_from_18_tokens": true,
+    "expected_validation_encoding": true,
+    "shared_prefix_has_two_recorded_continuations": true,
+    "expected_unknown_character_failure": true,
+    "no_predictive_model_or_test_claimed": true,
+    "source identity tools/character-tokenizer.mjs": true,
+    "source identity tools/inspect-text-tokens.mjs": true,
+    "source identity perf/fixtures/tiny-text-tokens-v1.json": true
+  },
+  "passed": true
+}

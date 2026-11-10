@@ -1,0 +1,13 @@
+{
+  "version": "tiny-text-tokens-v1",
+  "kind": "Author-written synthetic text for an inspectable tokenization lesson",
+  "documents": [
+    {"id": "train-line-1", "partition": "training", "text": "cat sat.\n"},
+    {"id": "train-line-2", "partition": "training", "text": "cat ate.\n"},
+    {"id": "validation-line-1", "partition": "validation", "text": "tea.\n"}
+  ],
+  "demonstration_text": "cat sat.",
+  "unknown_character_probe": "cat?",
+  "tokenizer_policy": "One Unicode code point per token, illustrated with ASCII characters. Build vocabulary from training documents only, sort by code point, preserve case/whitespace, and reject unknown characters. No start/end/padding/unknown special tokens.",
+  "sequence_policy": "Create shifted input/target arrays inside each training document separately; do not create a target across document boundaries."
+}
