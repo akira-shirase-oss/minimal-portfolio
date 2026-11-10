@@ -1,6 +1,6 @@
 # 404human: portfolio and blog
 
-A text-only portfolio and blog built with [Zola](https://www.getzola.org) 0.23.6, a single program (installed at `~/.local/bin/zola`) that turns Markdown files into a plain, fast website. There's no theme and no tracking. The only JavaScript is a small script in `templates/base.html` for the light/dark toggle, which remembers the reader's choice and otherwise follows their system setting. The look is a calm "job log": monospace labels, a blinking cursor after the name, a pulsing "running" dot, and a reading bar on posts. Blinking and pulsing switch off for readers who turn motion off. The site also makes `sitemap.xml`, `robots.txt` and an RSS feed (`rss.xml`) automatically.
+A text-only portfolio and blog built with [Zola](https://www.getzola.org) 0.23.6, a single program (installed at `~/.local/bin/zola`) that turns Markdown files into a plain, fast website. There's no theme and no tracking. The only JavaScript is a small script in `templates/base.html` for the light/dark toggle, which remembers the reader's choice and otherwise follows their system setting. The look is a calm "job log": the system monospace font, bordered tables, fieldset panels, `<details>` accordions and a scrolling status ticker — the web of 1996, minus the clutter. The ticker stops for readers who turn motion off, and every page is complete without JavaScript. The site also makes `sitemap.xml`, `robots.txt` and an RSS feed (`rss.xml`) automatically.
 
 ## Write a new post
 
@@ -21,7 +21,7 @@ A text-only portfolio and blog built with [Zola](https://www.getzola.org) 0.23.6
    Your first paragraph...
    ```
 
-3. Set `kind` to `experiment`, `failure` or `release`. It shows as a coloured tag (rust, red or green) next to the title. Leave the `[extra]` lines out for no tag.
+3. Set `kind` to `experiment`, `failure` or `release`. It shows as a small tag next to the date. Leave the `[extra]` lines out for no tag.
 4. Delete the `draft = true` line when it's ready to go live. Drafts only show up when you preview with `zola serve --drafts`.
 
 Code blocks get colours when you name the language, e.g. ```` ```rust ````. A typo in the language name stops the build, so you'll see it straight away.
@@ -168,11 +168,11 @@ and `extra.chapters` as in the first track. It appears on the Learning index and
 home page automatically. Keep future chapters as index entries until there is
 real material to write.
 
-## Add a build-log entry (Colophon CMS, Service Monitor, jsrt)
+## Add a build-log entry
 
-There are three build logs: `content/colophon/` (the main project: milestones D, then P0–P7 with the lettered R, M, W, E + DX in build order), `content/service-monitor/` (M0–M7) and `content/js-runtime/` (M0–M7, roadmap complete). Entries live in their log's folder, not in `posts/`. The home page draws one panel per log, in the order of `logs` in `content/_index.md`, each with its latest 3 entries; the terminal's `tail` line shows the newest entry of any log. `/colophon/`, `/service-monitor/` and `/js-runtime/` group every entry under its milestone. Previous/next links and the "Service Monitor build log › M0 · 0.4" line above the title are added automatically.
+There are five build logs: `content/colophon/` (the main project), `content/service-monitor/`, `content/js-runtime/`, `content/minibtc/` and `content/durable-runner/`. Entries live in their log's folder, not in `posts/`. The status ticker and `/build-log/` show each log's newest entry, in the order of `logs` in `content/_index.md`; `/build-log/` draws one panel per log. `/colophon/` and the other logs group every entry under its milestone. Previous/next links and the "Service Monitor build log › M0 · 0.4" line above the title are added automatically.
 
-**A new build log** is a folder with an `_index.md` using `template = "series.html"` and `page_template = "series-page.html"` (copy `content/colophon/_index.md`), plus a line in `logs` and a `[[extra.now]]` block with `log = "<folder>/_index.md"` in `content/_index.md`. Give its milestone IDs colours in `static/style.css` (the `.m-…` rules), and set `track_columns` when it has more than six milestones.
+**A new build log** is a folder with an `_index.md` using `template = "series.html"` and `page_template = "series-page.html"` (copy `content/colophon/_index.md`, including its `extra.short_title`, `status` and `milestones`), a line in `logs` in both `content/_index.md` and `content/build-log/_index.md`, and a `[[extra.now]]` block with `log = "<folder>/_index.md"` in `content/_index.md`.
 
 The Colophon and js-runtime entries follow the same steps below, in `content/colophon/` and `content/js-runtime/`, with `milestone = "P0"` / `"M7"` and so on.
 
@@ -189,7 +189,7 @@ The Colophon and js-runtime entries follow the same steps below, in `content/col
    milestone = "M0"
    step = "0.4"
    short_title = "Your title"
-   # Rust tests in the workspace at this checkpoint (drawn as the home page's sparkline).
+   # Rust tests in the workspace at this checkpoint (shown in the log's tables).
    tests = 49
    +++
    ```
@@ -199,24 +199,30 @@ The Colophon and js-runtime entries follow the same steps below, in `content/col
 2. In `content/service-monitor/_index.md`, move `up_next` to the checkpoint after this one (or delete the line when nothing is in progress). A new milestone only needs a line in `milestones`. The `[[extra.planned]]` tables at the end list what's still ahead, shown faded under each milestone: a step disappears from the page by itself once its entry is published or while it's `up_next`, so the list only changes when a plan changes. Steps of a milestone that isn't planned yet have no `step` and show as "planned"; give them numbers when that milestone's checkpoints are agreed.
 3. Publish as below.
 
-## How the site looks, and why (the "control room")
+## How the site looks, and why (the "job log")
 
-Redesigned on 2026-10-15: the home page draws the work like a small control room.
-(A colourful variant borrowing from another portfolio was tried the same day and
-reverted at Akira's request: "keep your interactive version, without the reference".)
+Reskinned on 2026-11-08 to the house style: the page is drawn the way a terminal
+log would be — tables with real headers, a scrolling status ticker, fieldset
+panels and `<details>` accordions, all in the system's monospace font.
 
-- **Every number on the home page comes from the posts**, never typed in: the status
-  rows, the build-log strip (one bar per entry; hover or focus names it in the readout),
-  the milestone track and the test sparkline (`tests` in each entry).
-  `templates/partials/log-panel.html` draws the strip, track and sparkline, on the home
-  page and on the build log's own page.
-- **Words you can edit** are in `content/_index.md`: the intro (the headline types itself
-  after `$ whoami`), `now` (the status rows) and `projects`.
-- **Motion and JavaScript are extras.** `static/site.js` (under 4 KB) types the headline,
-  ticks the clock and fills the strip's readout. With JavaScript off, or with "reduce
-  motion" on, every page is complete and still.
-- **Checked in headless Chrome** at 390 and 1280 px, light and dark: no sideways scroll,
-  rows and labels on one baseline (measured 0.00 px).
+- **The stylesheet is the whole design.** `static/style.css` is one documented
+  file: a max-width, the font stack, table padding, the light/dark hints. No
+  colors by hand — the browser's own palette carries the theme — and no
+  flexbox, no grid, no shadows.
+- **Every list is a real table.** `templates/partials/log-panel.html` draws each
+  build log's milestone table plus a tests-per-entry sparkline inside
+  `<details>`, on the log's own page. On phones the home page's record tables
+  become labelled cards (`.mobile-records`), while genuinely wide tables scroll
+  inside the page.
+- **Words you can edit** are in `content/_index.md`: the intro, `now` (the
+  Running-now rows) and `projects`. The ticker counts, the Running-now states
+  and the latest-entry names are derived from the build logs, never typed in;
+  the Numbers table is curated claims, each tied to stored evidence.
+- **Motion is one ticker, and JavaScript is one toggle.** The status strip is a
+  CSS-scrolling track — the text is written once in `data-ticker` and two copies
+  are drawn from it — and it stops dead for readers who ask for less motion.
+  The only script is the light/dark toggle in `templates/base.html`: with
+  JavaScript off, or with "reduce motion" on, every page is complete and still.
 
 ## Preview on your computer
 
@@ -282,7 +288,7 @@ Three things are done by hand:
 - **Pictures in posts.** Give every `<img>` its `width`, `height` and `alt`, plus `loading="lazy" decoding="async"` unless it's at the very top of the post: the page then never jumps while pictures load, and pictures further down only load when someone scrolls to them.
 - **Old addresses.** If a page moves, give it `aliases = ["/old/address/"]` in its front matter *and* add the old address to `static/_redirects`, so it answers with a real permanent redirect (301) instead of Zola's redirect page.
 
-`static/_headers` also sets caching: a year for the stylesheet and script (their links change whenever their content does), a month for pictures and icons.
+`static/_headers` also sets caching: a year for the stylesheet (its link changes whenever its content does), a month for pictures and icons.
 
 ## Publishing
 

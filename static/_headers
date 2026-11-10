@@ -17,11 +17,9 @@ https://:project.pages.dev/*
 https://:version.:project.pages.dev/*
   X-Robots-Tag: noindex
 
-# The stylesheet and script are always linked as ?h=<hash of their content>,
-# so a changed file gets a new address: browsers may keep them for a year.
+# The stylesheet is always linked as ?h=<hash of its content>,
+# so a changed file gets a new address: browsers may keep it for a year.
 /style.css
-  Cache-Control: public, max-age=31536000, immutable
-/site.js
   Cache-Control: public, max-age=31536000, immutable
 
 # Pictures and icons change rarely (and keep their names when they do): a month.

@@ -97,7 +97,7 @@
           try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
           show();
         });
-        b.hidden = false;
+        (document.getElementById("theme-toggle-wrap") || b).hidden = false;
         show();
       });
     })();
@@ -131,7 +131,7 @@
       [ <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a> ]
       [ <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a> ]
       [ <a href="{{ get_url(path='@/_index.md') }}#writing">Writing</a> ]
-      [ <button id="theme-toggle" class="link" type="button" hidden>dark</button> ]
+      <span id="theme-toggle-wrap" hidden>[ <button id="theme-toggle" class="link" type="button">dark</button> ]</span>
     </p></nav>
   </header>
   {% endblock header %}

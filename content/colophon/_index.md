@@ -9,8 +9,6 @@ page_template = "series-page.html"
 status = "in progress"
 # How lists elsewhere on the site name this build log.
 short_title = "Colophon"
-# Twelve milestones: draw the track as three rows of four.
-track_columns = 4
 # The roadmap, in build order. D is the design work before any code; the rest are the
 # milestones from the project's ROADMAP.md, each named after what it proves. The roadmap
 # calls developer parity "D"; here it's DX, because D is already the design work.

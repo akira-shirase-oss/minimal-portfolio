@@ -4,10 +4,9 @@
     milestones listed in the section's `extra.milestones`, oldest first, so it reads in order. #}
 
 {% block ticker %}
-<marquee scrollamount="4" behavior="scroll">status ● {{ section.extra.short_title or section.title }} build log · {{ section.pages | length }} entries
-  {%- if section.extra.status %} &nbsp;●&nbsp; {{ section.extra.status }}{% endif %}
-  {%- if section.extra.up_next %} &nbsp;●&nbsp; next: {{ section.extra.up_next.step }} — {{ section.extra.up_next.title }}{% endif %}
-   &nbsp;●</marquee>
+{#- The status ticker: the text is written once in data-ticker; the CSS draws
+    two copies from it and slides the track by half its width. -#}
+<div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ section.extra.short_title or section.title }} build log · {{ section.pages | length }} entries{%- if section.extra.status %} &nbsp;●&nbsp; {{ section.extra.status }}{% endif %}{%- if section.extra.up_next %} &nbsp;●&nbsp; next: {{ section.extra.up_next.step }} — {{ section.extra.up_next.title }}{% endif %} &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
 <hr>
 {% endblock ticker %}
 

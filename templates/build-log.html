@@ -11,12 +11,9 @@
   {%- set one_log = get_section(path=log_path) %}
   {%- set_global entry_count = entry_count + (one_log.pages | length) %}
 {%- endfor %}
-<marquee scrollamount="4" behavior="scroll">status ● {{ logs | length }} build logs · {{ entry_count }} entries on file
-  {%- for log_path in logs %}
-    {%- set one_log = get_section(path=log_path) %}
-    {%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}
-  {%- endfor %}
-   &nbsp;●</marquee>
+{#- The status ticker: the text is written once in data-ticker; the CSS draws
+    two copies from it and slides the track by half its width. -#}
+<div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ logs | length }} build logs · {{ entry_count }} entries on file{%- for log_path in logs %}{%- set one_log = get_section(path=log_path) %}{%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}{%- endfor %} &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
 <hr>
 {% endblock ticker %}
 

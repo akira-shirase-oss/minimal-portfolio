@@ -6,7 +6,7 @@ template = "build-log.html"
 [extra]
 # The logs shown here, main project first. Each entry must be a section that
 # renders with series.html.
-logs = ["colophon/_index.md", "service-monitor/_index.md", "js-runtime/_index.md"]
+logs = ["colophon/_index.md", "service-monitor/_index.md", "js-runtime/_index.md", "minibtc/_index.md", "durable-runner/_index.md"]
 +++
 
 A feature only counts here when its failure behaviour is tested and the
