@@ -1,0 +1,65 @@
+{
+  "recorded_utc": "2026-11-10T14:47:07.135797+00:00",
+  "kind": "Probability lesson source identity and publication status",
+  "source_commit": "c1fdd13dea4270decb73e1db0fa25852bd4d7d6b",
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "experiment_sources_match_committed_blobs": {
+    "tools/character-tokenizer.mjs": true,
+    "tools/prefix-count-model.mjs": true,
+    "tools/inspect-next-token-probabilities.mjs": true,
+    "perf/fixtures/tiny-text-tokens-v1.json": true
+  },
+  "served_source_sha256": "e45919e0a80ddbc3f14adee7ece09a75c00a012fe5e74c7d4244c7310c3f9a9d",
+  "served_source_matches_checked_build": true,
+  "experiment": {
+    "result": "perf/results/first-next-token-probabilities.json",
+    "passed": true,
+    "program_checks": 12,
+    "independent_checks": 16,
+    "independent_evidence": "perf/results/first-next-token-probabilities-independent-check.json"
+  },
+  "model_state": {
+    "count_model_fitted": true,
+    "inference_performed": true,
+    "training_observations": 16,
+    "distinct_prefixes": 12,
+    "neural_network_trained": false,
+    "trainable_weights_updated": false,
+    "held_out_quality_measured": false,
+    "test_set_evaluated": false,
+    "full_text_generation_loop_implemented": false
+  },
+  "static_content": {
+    "passed": true,
+    "evidence": "perf/results/2026-11-10-probability-content-check.json",
+    "build_pages": 118,
+    "sections": 9,
+    "links_and_anchors_checked": 1693,
+    "json_ld_blocks_parsed": 128,
+    "browser_qa_performed": false
+  },
+  "load_scenario": {
+    "static_inspection_passed": true,
+    "evidence": "perf/results/2026-11-10-probability-load-scenario-check.json",
+    "feature_requests_planned": 7200000,
+    "revised_chapter_requests_planned": 1000000,
+    "full_http_load_executed": false,
+    "status": "Pending. Recorded loopback socket denials in this agent context remain unresolved; no new HTTP load run or capacity claim."
+  },
+  "integration": "Lesson commit fast-forwarded from isolated worktree into local main. Unrelated source and history preserved.",
+  "git_push": {
+    "attempted_this_turn": false,
+    "status": "Pending. Previous token-lesson push failed when the configured SSH agent could not sign. No restored-agent evidence or alternate-identity attempt."
+  },
+  "wrangler_deployment_performed": false,
+  "live_publication_verified": false,
+  "publication": "Local source and evidence committed. Required full HTTP load and GitHub/Wrangler publication remain pending.",
+  "next_learning_step": "Adjustable next-token scores, conversion to probabilities, and how a training update changes them; representations and attention follow later."
+}
