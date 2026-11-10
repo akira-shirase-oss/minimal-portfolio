@@ -1,0 +1,70 @@
+{
+  "recorded_utc": "2026-11-10T15:05:14.044765+00:00",
+  "kind": "Next-token score-update source identity and publication status",
+  "source_commit": "20ceec61fe695d08349d44b374a60a5ab1733bbf",
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "experiment_sources_match_committed_blobs": {
+    "tools/character-tokenizer.mjs": true,
+    "tools/next-token-scores.mjs": true,
+    "tools/inspect-score-update.mjs": true,
+    "perf/fixtures/tiny-text-tokens-v1.json": true
+  },
+  "served_source_sha256": "7fbce648d7b34d535874cd7d1408b96146d6aa0fa2b5b286f1c2af9039c07d7b",
+  "served_source_matches_checked_build": true,
+  "experiment": {
+    "result": "perf/results/first-next-token-score-update.json",
+    "passed": true,
+    "program_checks": 12,
+    "independent_checks": 16,
+    "independent_evidence": "perf/results/first-next-token-score-update-independent-check.json"
+  },
+  "training_scope": {
+    "context": "cat ",
+    "parameters": 8,
+    "examples": 2,
+    "updates": 1,
+    "learning_rate": 1,
+    "target_probability_before": 0.125,
+    "target_probability_after": 0.1773306221962217,
+    "mean_training_loss_before": 2.0794415416798357,
+    "mean_training_loss_after": 1.7297393667926415,
+    "trainable_parameters_updated": true,
+    "full_neural_language_model_trained": false,
+    "held_out_quality_measured": false,
+    "test_set_evaluated": false,
+    "text_generated": false
+  },
+  "static_content": {
+    "passed": true,
+    "evidence": "perf/results/2026-11-10-score-update-content-check.json",
+    "build_pages": 118,
+    "sections": 9,
+    "links_and_anchors_checked": 1694,
+    "json_ld_blocks_parsed": 128,
+    "browser_qa_performed": false
+  },
+  "load_scenario": {
+    "static_inspection_passed": true,
+    "evidence": "perf/results/2026-11-10-score-update-load-scenario-check.json",
+    "feature_requests_planned": 7200000,
+    "revised_chapter_requests_planned": 1000000,
+    "full_http_load_executed": false,
+    "status": "Pending. Agent-context loopback binding denials remain unresolved; no new HTTP load or capacity claim."
+  },
+  "integration": "Lesson source fast-forwarded from isolated worktree into local main; unrelated work preserved.",
+  "git_push": {
+    "attempted_this_turn": false,
+    "status": "Pending. Previous configured SSH-agent signing failure has not been reported resolved; no alternate identity used."
+  },
+  "wrangler_deployment_performed": false,
+  "live_publication_verified": false,
+  "publication": "Local source and evidence committed. Full HTTP load and GitHub/Wrangler publication remain pending.",
+  "next_learning_step": "Learned numerical input representations, then how different contexts produce different scores; attention and a full text model remain later pieces."
+}
