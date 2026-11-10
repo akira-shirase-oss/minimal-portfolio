@@ -136,6 +136,14 @@ are in `perf/results/first-next-token-probabilities.json`; use a fresh path for
 later runs. This predictor fits counts and performs inference; neural weights,
 held-out quality measurement, and a full generation loop remain ahead.
 
+`node tools/inspect-score-update.mjs` adds one real parameter update for the
+fixed prefix `cat `. Eight free scores start at zero; softmax turns them into
+probabilities, and one full-batch gradient step uses both observed continuations.
+It preserves before/after scores, probabilities, gradients and mean training loss
+in `perf/results/first-next-token-score-update.json`. Pass a fresh path for later
+runs. This updates parameters for one context; neural context processing, learned
+representations, held-out quality and a full text model remain ahead.
+
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
 and an honest `status`. Add its `page = "@/learn/<track>/<file>.md"` link to the

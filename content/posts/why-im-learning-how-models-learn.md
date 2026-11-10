@@ -161,3 +161,11 @@ I can now inspect the difference between a prediction and a choice. Greedy selec
 The limit is visible too. The tokenizer can encode `tea`, but the predictor has no matching prefix and abstains. A separate calculated example shows two equally wrong top guesses receiving different losses because they assign 40% versus 1% probability to the observed token.
 
 [The probability lesson](@/learn/model-engineering/from-text-to-a-tiny-language-model.md#probabilities-from-observed-continuations) records the counts, distributions, selection rules, loss calculations, and raw results. Neural weights and a full generation loop remain ahead. Adjustable scores are the next small piece.
+
+### The probabilities can now move
+
+I now have one recorded gradient update for the next-token task. Eight adjustable scores start at zero for the fixed prefix `cat `, giving every vocabulary token 12.5% probability. The training batch contains both observed continuations, `a` and `s`.
+
+After one update, each of those two tokens receives about 17.73%. The mean training loss falls from 2.079442 to 1.729739. The token dictionary stays fixed; it is the scores that change. Softmax converts those scores into the new probabilities.
+
+[The score-update lesson](@/learn/model-engineering/from-text-to-a-tiny-language-model.md#adjustable-scores-and-softmax) preserves the exact scores, gradients, probability vectors, and an independent numerical-gradient check. This is one free score vector for one context, not a complete neural text model. Learned input representations are next; unfamiliar-text quality and a full generation loop remain unmeasured.

@@ -1,0 +1,227 @@
+{
+  "recorded_utc": "2026-11-10T15:02:11.891Z",
+  "kind": "One full-batch gradient update of a free logit vector for one fixed prefix; not a complete neural language model",
+  "code_base_commit": "ecba350ba547450a52ac454031fb09f8f57df8b6",
+  "working_tree_status": "?? tools/inspect-score-update.mjs\n?? tools/next-token-scores.mjs",
+  "source_sha256": {
+    "tools/character-tokenizer.mjs": "a587fdfe8946dbd2e58f8800aab52171e4745f5bd7534a9922f1e01ece4de52a",
+    "tools/next-token-scores.mjs": "f67bd75f0547393f1ceac3b2e747707920c6afacd3523e7c9dfdb441d63865c0",
+    "tools/inspect-score-update.mjs": "5f3cdebfa46075a1cbee385eb10bcaddca24e945a23d3662f181ee66703018ab",
+    "perf/fixtures/tiny-text-tokens-v1.json": "5f0da3975eb088f255311d118defb93c3afb1157e1c65de06f019d4a87c07a86"
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "fixture_version": "tiny-text-tokens-v1",
+  "vocabulary": [
+    {
+      "id": 0,
+      "token": "\n"
+    },
+    {
+      "id": 1,
+      "token": " "
+    },
+    {
+      "id": 2,
+      "token": "."
+    },
+    {
+      "id": 3,
+      "token": "a"
+    },
+    {
+      "id": 4,
+      "token": "c"
+    },
+    {
+      "id": 5,
+      "token": "e"
+    },
+    {
+      "id": 6,
+      "token": "s"
+    },
+    {
+      "id": 7,
+      "token": "t"
+    }
+  ],
+  "vocabulary_fitted_document_ids": [
+    "train-line-1",
+    "train-line-2"
+  ],
+  "model": {
+    "kind": "Eight free scores attached to exactly one prefix; scores are parameters, token IDs are fixed",
+    "prefix": "cat ",
+    "prefix_ids": [
+      4,
+      3,
+      7,
+      1
+    ],
+    "trainable_parameters": 8,
+    "initial_scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "training": {
+    "examples": [
+      {
+        "document_id": "train-line-1",
+        "prefix_ids": [
+          4,
+          3,
+          7,
+          1
+        ],
+        "target_id": 6,
+        "target_token": "s"
+      },
+      {
+        "document_id": "train-line-2",
+        "prefix_ids": [
+          4,
+          3,
+          7,
+          1
+        ],
+        "target_id": 3,
+        "target_token": "a"
+      }
+    ],
+    "target_ids": [
+      6,
+      3
+    ],
+    "updates": 1,
+    "learning_rate": 1,
+    "objective": "Mean next-token negative log likelihood over both selected training examples, natural logarithm",
+    "selected_positions": 2,
+    "available_training_positions": 16,
+    "context_scope": "Only cat followed by a space; other prefixes and the remaining 14 training positions are not trained here."
+  },
+  "update": {
+    "learning_rate": 1,
+    "before": {
+      "scores": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "probabilities": [
+        0.125,
+        0.125,
+        0.125,
+        0.125,
+        0.125,
+        0.125,
+        0.125,
+        0.125
+      ],
+      "target_distribution": [
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0.5,
+        0
+      ],
+      "mean_loss": 2.0794415416798357,
+      "gradient": [
+        0.125,
+        0.125,
+        0.125,
+        -0.375,
+        0.125,
+        0.125,
+        -0.375,
+        0.125
+      ]
+    },
+    "after": {
+      "scores": [
+        -0.125,
+        -0.125,
+        -0.125,
+        0.375,
+        -0.125,
+        -0.125,
+        0.375,
+        -0.125
+      ],
+      "probabilities": [
+        0.1075564592679261,
+        0.1075564592679261,
+        0.1075564592679261,
+        0.1773306221962217,
+        0.1075564592679261,
+        0.1075564592679261,
+        0.1773306221962217,
+        0.1075564592679261
+      ],
+      "target_distribution": [
+        0,
+        0,
+        0,
+        0.5,
+        0,
+        0,
+        0.5,
+        0
+      ],
+      "mean_loss": 1.7297393667926415,
+      "gradient": [
+        0.1075564592679261,
+        0.1075564592679261,
+        0.1075564592679261,
+        -0.3226693778037783,
+        0.1075564592679261,
+        0.1075564592679261,
+        -0.3226693778037783,
+        0.1075564592679261
+      ]
+    }
+  },
+  "checks": {
+    "two_training_examples_for_one_fixed_prefix": true,
+    "eight_scores_start_uniform": true,
+    "balanced_training_targets": true,
+    "initial_mean_loss_matches_log_eight": true,
+    "batch_gradient_matches_expected_values": true,
+    "scores_changed_by_one_declared_update": true,
+    "both_observed_target_probabilities_increased": true,
+    "other_six_probabilities_decreased": true,
+    "updated_distribution_is_positive_and_normalized": true,
+    "same_batch_mean_loss_decreased": true,
+    "vocabulary_and_initial_scores_unchanged": true,
+    "softmax_stays_finite_after_large_common_shift": true
+  },
+  "passed": true,
+  "trainable_parameters_updated": true,
+  "neural_network_layers_implemented": false,
+  "full_language_model_trained": false,
+  "held_out_quality_measured": false,
+  "test_set_evaluated": false,
+  "text_generated": false,
+  "limitations": "A single fixed-context logit row cannot compute predictions for other contexts or learn shared token representations. Lower loss is measured on the same two training examples only. No embeddings, attention, neural context encoder, generation loop, or Qwen adaptation."
+}

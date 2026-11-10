@@ -57,6 +57,14 @@ single-target loss comparison. The independent hand-written expectations are in
 `results/first-next-token-probabilities-independent-check.json`. These are fixture
 checks, not held-out quality or neural training. Preserve later runs under fresh paths.
 
+`node tools/inspect-score-update.mjs` executes one full-batch gradient update of
+eight free next-token scores for the fixed prefix `cat `. Before/after scores,
+probabilities, loss, gradients and source identity are in
+`results/first-next-token-score-update.json`; the independent expected values
+and numerical-gradient check are in `results/first-next-token-score-update-independent-check.json`.
+Only two training positions are used. This is a parameter-update demonstration,
+not a full neural language model or held-out quality evaluation. Use a fresh result path.
+
 `results/qwen-tool-use-baseline.json` and `qwen-tool-use-baseline-sources/` retain
 the first local Qwen request/tool/result smoke run and its source snapshot. It
 uses existing weights and is not a reliability suite or a training run. The

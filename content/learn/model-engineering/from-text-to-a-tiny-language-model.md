@@ -1,6 +1,6 @@
 +++
 title = "From text to a tiny language model"
-description = "Text becomes token IDs and next-token targets. A count model now predicts continuations, with probabilities, selection, and loss inspected."
+description = "Text becomes tokens, targets, and probabilities. After a count predictor, one gradient update now changes eight adjustable next-token scores."
 date = 2026-11-10
 updated = 2026-11-10
 weight = 6
@@ -8,12 +8,12 @@ weight = 6
 [extra]
 kind = "chapter"
 chapter = 6
-status = "character tokenizer and exact-prefix count predictor run; neural-model training remains ahead"
+status = "tokenizer, count predictor, and one fixed-context score update run; a full neural text model remains ahead"
 +++
 
 We are starting a separate tiny text model. The first piece prepares its inputs: text becomes token IDs, and the text itself supplies the expected next pieces.
 
-The first run built a character tokenizer, reconstructed its inputs, and prepared training targets. A second run now fits a small count-based predictor and selects individual next tokens. Neural layers, weight updates, and a full text-generation loop remain ahead. Qwen's weights are unchanged.
+The first run built a character tokenizer and prepared targets. A second run fitted a count-based predictor and selected individual next tokens. A third run now updates eight adjustable scores for one fixed prefix. Neural context processing, learned token representations, and a full text-generation loop remain ahead. Qwen's weights are unchanged.
 
 ## Tokens are pieces of text
 
@@ -154,7 +154,7 @@ For a known prefix, each token's count is divided by the total number of observe
 
 The probe `tea` demonstrates that limit. Its characters all have IDs, but the model has never seen that prefix in training. It abstains. The tokenizer can represent the input while the predictor still cannot handle it. The probe does not add any counts or change the vocabulary.
 
-This predictor stores exact prefixes. It has not learned general representations that connect different contexts. The next neural-model pieces will replace this table with adjustable numerical scores and learned representations.
+This predictor stores exact prefixes. It has not learned general representations that connect different contexts. The adjustable-score example below introduces parameter updates; learned representations remain a later piece.
 
 ## A distribution and a selected token are different things
 
@@ -206,6 +206,82 @@ node tools/inspect-next-token-probabilities.mjs perf/results/another-probability
 
 A count-based predictive model was fitted and queried in this step. No neural network, trainable-weight update, held-out quality measurement, test-set evaluation, or full text-generation loop has run. The original tokenization result remains unchanged.
 
+## Adjustable scores and softmax
+
+The next experiment replaces the direct frequency calculation with **eight adjustable scores**, one per vocabulary token, for the single fixed prefix `cat `. These scores are model parameters: the numbers that this training step can change. The token IDs and vocabulary stay fixed.
+
+A raw score is also called a **logit**. It can be negative, and the scores do not need to add to one. A function called **softmax** converts the score vector into a probability distribution. Higher scores give higher probabilities relative to the other scores in that vector.
+
+This example attaches a free score vector to one fixed context. A full neural language model computes context-dependent scores through learned weights and intermediate representations. We have not built that context-processing network yet; this is its output-and-update mechanism in isolation.
+
+The conversion uses four short steps:
+
+```js
+const maximum = Math.max(...scores);
+const positive = scores.map(score => Math.exp(score - maximum));
+const total = positive.reduce((sum, value) => sum + value, 0);
+const probabilities = positive.map(value => value / total);
+```
+
+First, subtract the largest score from every score. This keeps the exponential calculation numerically manageable while preserving the resulting probabilities. `Math.exp` converts each shifted score into an exponential value. Dividing each value by their total makes the probabilities add to one.
+
+All eight scores start at zero. Their exponential values are all one, so each token receives one eighth of the probability: **12.5%**. These are initial probabilities from the new score model, rather than the earlier count model's fitted 50/50 result.
+
+## One training update changes the distribution
+
+We select exactly two training positions from the existing fixture:
+
+| Prefix | Observed target | Training document |
+| --- | --- | --- |
+| `cat ` | `s` | `cat sat.` |
+| `cat ` | `a` | `cat ate.` |
+
+Both positions belong to training documents. The other fourteen available next-token positions are unused in this deliberately small update. Validation and test examples do not supply targets.
+
+The program calculates the mean negative-log-likelihood loss over these two targets, then computes its gradient with respect to the eight scores. A **batch** means the examples considered together for this update. Here both valid observed continuations contribute equally.
+
+The earlier training cycle now applies to next-token scores: **scores → probabilities → loss → gradient → updated scores**. The selected learning rate is 1 for this controlled example; it is not a general recommendation for other models.
+
+Before the update, `a` and `s` each receive 12.5% predicted probability but each accounts for 50% of this training batch's targets. Their score gradients are −0.375. The other six tokens each receive 12.5% predicted probability and account for none of this batch's targets; their gradients are +0.125.
+
+Subtracting learning rate times gradient increases the first two scores and decreases the other six:
+
+```js
+const nextScores = scores.map(
+  (score, id) => score - learningRate * gradient[id]
+);
+```
+
+`score` is the current parameter, `gradient[id]` is its loss gradient, and `learningRate` controls the update size. The program then recomputes probabilities from the updated scores. It does not set the new probabilities by hand.
+
+| Token | Score before | Score after | Probability before | Probability after |
+| --- | ---: | ---: | ---: | ---: |
+| `a` | 0 | 0.375 | 12.50% | 17.73% |
+| `s` | 0 | 0.375 | 12.50% | 17.73% |
+| Each of the other six tokens | 0 | −0.125 | 12.50% | 10.76% |
+
+Probabilities in the table are rounded. The full recorded vector sums to one. Both observed continuations gain probability, and the **mean training loss falls from 2.079442 to 1.729739**.
+
+This is a measured parameter update on the same two training examples. It does not establish improved behavior on unseen text. One update also does not reproduce the earlier count model's 50/50 distribution; the score model has just begun learning from its equal-probability initialization.
+
+## What ran for the score update
+
+The [score functions](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/next-token-scores.mjs) and [runner](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/inspect-score-update.mjs) execute exactly one full-batch gradient step on eight parameters. The [raw result](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-next-token-score-update.json) preserves the selected examples, initial and updated scores, probabilities, loss, fresh gradients, settings, source hashes, and machine details.
+
+Twelve program checks passed. A [separate independent check](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-next-token-score-update-independent-check.json) passed sixteen checks, including hand-written expected scores, independent probability/loss calculations, and a numerical approximation of the gradient. The maximum difference between that approximation and the recorded analytic gradient was below 0.00000001.
+
+```sh
+node tools/inspect-score-update.mjs
+```
+
+The first result is protected. Use a fresh result path for a later run:
+
+```sh
+node tools/inspect-score-update.mjs perf/results/another-score-update.json
+```
+
+Trainable parameters changed in this run. A full neural language model, embeddings, attention, predictions for other contexts, held-out quality measurement, test-set evaluation, and text generation remain ahead. The earlier tokenizer and count-model results remain unchanged.
+
 ## Quick revision
 
 - Tokens are the text pieces our tokenizer works with; this example uses characters.
@@ -216,5 +292,9 @@ A count-based predictive model was fitted and queried in this step. No neural ne
 - Our first predictor turns exact-prefix counts into probabilities; unseen prefixes cause abstention.
 - Greedy selection and sampling choose tokens from a distribution. Changing the selection rule does not train the model.
 - Probability-sensitive loss distinguishes predictions even when their top guesses have the same accuracy.
+- Producing the distribution is the prediction step. Selection then chooses a token from it.
+- Logits are raw scores; softmax turns them into probabilities that sum to one.
+- Training can update scores through the loss gradient. Our one-step example increases probability for both observed continuations.
+- Lower loss on the training examples is a different claim from improved predictions on unseen text.
 
-Next we will introduce adjustable scores and show how training can change a next-token distribution. Learned representations and attention remain later pieces of the build.
+Next we will connect different input contexts to numerical representations that can be learned, before building the context-processing model and attention. The eight-score update is a small working piece, not the completed text model.

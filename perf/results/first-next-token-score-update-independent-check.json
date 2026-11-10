@@ -1,0 +1,57 @@
+{
+  "recorded_utc": "2026-11-10T15:02:40.207160+00:00",
+  "kind": "Independent hand-written score update and probability/loss calculations, plus finite-difference gradient check; not model-quality evaluation",
+  "expected_after_scores": [
+    -0.125,
+    -0.125,
+    -0.125,
+    0.375,
+    -0.125,
+    -0.125,
+    0.375,
+    -0.125
+  ],
+  "expected_after_probabilities": [
+    0.1075564592679261,
+    0.1075564592679261,
+    0.1075564592679261,
+    0.1773306221962217,
+    0.1075564592679261,
+    0.1075564592679261,
+    0.1773306221962217,
+    0.1075564592679261
+  ],
+  "finite_difference": {
+    "step": 1e-05,
+    "numerical_gradient": [
+      0.12499999999526777,
+      0.12499999999526777,
+      0.12499999999526777,
+      -0.3749999999858033,
+      0.12499999999526777,
+      0.12499999999526777,
+      -0.3749999999858033,
+      0.12499999999526777
+    ],
+    "maximum_absolute_error": 1.4196699371638033e-11
+  },
+  "checks": {
+    "original_eight_token_dictionary_preserved": true,
+    "only_two_declared_training_targets_used": true,
+    "one_update_at_declared_learning_rate": true,
+    "uniform_initial_scores_and_probabilities": true,
+    "balanced_target_distribution": true,
+    "hand_written_expected_score_update": true,
+    "independent_probability_calculation": true,
+    "independent_before_and_after_loss": true,
+    "numerical_gradient_matches_reported_analytic_gradient": true,
+    "both_target_probabilities_rise_symmetrically": true,
+    "fresh_after_gradient_matches_new_probabilities": true,
+    "scope_is_parameter_update_without_held_out_or_full_model_claim": true,
+    "source identity tools/character-tokenizer.mjs": true,
+    "source identity tools/next-token-scores.mjs": true,
+    "source identity tools/inspect-score-update.mjs": true,
+    "source identity perf/fixtures/tiny-text-tokens-v1.json": true
+  },
+  "passed": true
+}
