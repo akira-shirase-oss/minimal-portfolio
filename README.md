@@ -111,7 +111,7 @@ to revisit throughout the model builds.
 
 The 2026-11-10 split lesson is a separate run: `node tools/compare-data-splits.mjs`
 uses a fixed fixture derived from the retained audit examples. It creates three
-groups of distinct messages, preserves excluded copies, and compares leaky and
+partitions of distinct messages, preserves excluded copies, and compares leaky and
 separate validation views using one unchanged exact-message lookup. Its test
 partition is evaluated once; it is a teaching fixture, not an independent final
 benchmark. The original audit and missing/conflicting records are not changed.
