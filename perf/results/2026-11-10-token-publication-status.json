@@ -1,0 +1,61 @@
+{
+  "recorded_utc": "2026-11-10T14:23:28.754138+00:00",
+  "kind": "Token lesson source identity, checks, and publication status",
+  "source_commit": "b124bd1cbb074c4b414b6e3a031161c827724c28",
+  "source_identity_matches_recorded_run": {
+    "tools/character-tokenizer.mjs": true,
+    "tools/inspect-text-tokens.mjs": true,
+    "perf/fixtures/tiny-text-tokens-v1.json": true
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "served_source_sha256": "a0254f15090c02352f4312b25045cff8f4ad073908635cf6fa293e85cb0ebeb6",
+  "program_run": {
+    "evidence": "perf/results/first-text-tokenization.json",
+    "passed": true,
+    "checks": 10,
+    "vocabulary_items": 8,
+    "training_tokens": 18,
+    "next_token_positions": 16
+  },
+  "independent_expectations": {
+    "evidence": "perf/results/first-text-tokenization-independent-check.json",
+    "passed": true,
+    "checks": 16
+  },
+  "build_and_static_content": {
+    "evidence": "perf/results/2026-11-10-token-content-check.json",
+    "passed": true,
+    "internal_links_and_anchors_checked": 1692,
+    "json_ld_blocks_parsed": 128,
+    "browser_visual_qa_performed": false
+  },
+  "load_scenario": {
+    "evidence": "perf/results/2026-11-10-token-load-scenario-check.json",
+    "static_inspection_passed": true,
+    "feature_requests_planned": 7200000,
+    "new_chapter_requests_planned": 1000000,
+    "full_http_load_executed": false,
+    "status": "Pending: this agent execution context has denied loopback socket binding in earlier stored attempts. No full-load success claimed for these notes."
+  },
+  "predictive_model_trained": false,
+  "new_text_generation_performed": false,
+  "model_quality_measured": false,
+  "integration": "Lesson branch fast-forwarded into local main at source_commit; unrelated source/history preserved.",
+  "git_push": {
+    "command": "git push origin main",
+    "exit_code": 128,
+    "pushed_by_this_session": false,
+    "error": "Configured learning ED25519 identity could not sign: SSH agent communication failed. GitHub rejected publickey authentication. No retry or alternate identity used."
+  },
+  "wrangler_deployment_performed": false,
+  "live_publication_verified": false,
+  "publication": "Local source and evidence committed. Full HTTP load, GitHub push and Wrangler publication are pending.",
+  "next_learning_step": "Prediction probabilities for possible next tokens, starting with the two observed continuations after cat followed by a space."
+}
