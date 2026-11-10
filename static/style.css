@@ -25,9 +25,9 @@
 body              { max-width: 1180px; margin: 0 auto; padding: 0 24px;
                     font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
                     font-size: 16px; line-height: 1.55; font-optical-sizing: auto; }
-/* Terminal chrome stays monospace: code, keys, the bracket nav, the ticker
-   (its text is drawn by .ticker-copy's pseudo-elements, so it inherits this). */
-pre, code, kbd, nav, .ticker-copy { font-family: var(--mono); }
+/* Code stays monospace — pre also holds the ASCII masthead, which needs it.
+   Everything else, nav and ticker included, reads in Manrope. */
+pre, code, kbd { font-family: var(--mono); }
 html[data-theme="dark"]  { color-scheme: dark;  background: #1c1a17; color: #e8e4dc; }
 html[data-theme="light"] { color-scheme: light; background: #f7f5f2; color: #1f1d1a; }
 /* The theme toggle is a button drawn as a text link — same size, same color. */
