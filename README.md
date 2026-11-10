@@ -225,6 +225,11 @@ chrome — code, keys, nav brackets, the ticker and the ASCII masthead.
   are drawn from it — and it stops dead for readers who ask for less motion.
   The only script is the light/dark toggle in `templates/base.html`: with
   JavaScript off, or with "reduce motion" on, every page is complete and still.
+- **A Content-Security-Policy meta** in `base.html` allows same-origin
+  everything, plus two inline scripts by hash: the theme toggle and the
+  livereload snippet `zola serve` injects. Editing the toggle means updating
+  its hash (the comment there says how); the JSON-LD blocks are data, not
+  script requests, so they need none.
 
 ## Preview on your computer
 

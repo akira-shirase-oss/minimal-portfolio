@@ -3,6 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Content Security Policy: everything same-origin; connect-src also
+       allows ws: for zola serve's livereload (prod opens no sockets). Two
+       inline scripts are allowed by hash: the theme toggle, and the
+       livereload snippet zola serve injects on port 1111 (absent from
+       builds, so its hash is unused in production — it breaks only if you
+       serve on another port). If you edit the theme script, recompute
+       over its exact text (`shasum -a 256`, base64) and update the hash or
+       the toggle silently stops unhiding. JSON-LD blocks are data, not
+       script requests, so they need no hash. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-jpUsicNqxEQKhYxYNdg/zI1U5Kda3wxX1CujGCq5+Tw=' 'sha256-915BT+Saxf9hcT8mOhqas9hdZ5S8Z0bfVMUr5YP4ytI='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' ws:; object-src 'none'; base-uri 'self'; form-action 'self'">
   {%- set is_home = false %}
   {%- if page is defined and page.title %}
     {%- set doc_title = page.title %}
@@ -83,6 +93,9 @@
       try {
         var saved = localStorage.getItem("theme");
         if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+        // No saved choice: follow the system, same as the toggle label does.
+        // Without this the palette never applies until the first click.
+        else root.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       } catch (e) {}
       document.addEventListener("DOMContentLoaded", function () {
         var b = document.getElementById("theme-toggle");
