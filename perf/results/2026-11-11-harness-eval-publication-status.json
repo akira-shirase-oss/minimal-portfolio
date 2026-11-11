@@ -1,0 +1,64 @@
+{
+ "recorded_utc": "2026-11-11T19:12:39.760124+00:00",
+ "kind": "Chapter 9 failure-repair revision: source identity, checks, and publication status",
+ "source_commit": "fe5bf9a79d0c540cdecb0cfc966ea2f1614a3256",
+ "machine": {
+  "platform": "darwin",
+  "arch": "arm64",
+  "cpu": "Apple M2 Pro",
+  "runtime": "v24.18.0"
+ },
+ "static_content": {
+  "build_passed": true,
+  "build_pages": 123,
+  "sections": 10,
+  "content_checks_passed": true,
+  "evidence": "perf/results/2026-11-11-harness-eval-content-check.json",
+  "links_and_anchors_checked": 2847,
+  "html_files_checked": 134,
+  "json_ld_blocks_parsed": 134,
+  "browser_qa_performed": false
+ },
+ "load_scenario": {
+  "executed": true,
+  "tool": "tools/site-sweep.mjs",
+  "total_requests": 1000063,
+  "urls_served": 159,
+  "non200": 0,
+  "evidence": "perf/results/2026-11-11T191128945Z-site-sweep.json",
+  "note": "Local serving observation, not production capacity."
+ },
+ "experiment": {
+  "suite_manifest": "perf/results/qwen-tool-use-2026-11-11-suite.json",
+  "raw_traces_dir": "perf/results/qwen-tool-use-2026-11-11/",
+  "raw_traces": 13,
+  "final_source_snapshot": "perf/results/qwen-tool-use-2026-11-11-sources/",
+  "cases": 5,
+  "verdicts_judged_by_reading": true,
+  "automated_answer_checker": false,
+  "weights_changed": false,
+  "single_run_per_version": true
+ },
+ "git_push": {
+  "status": "success",
+  "remote": "github-learning",
+  "commit": "fe5bf9a79d0c540cdecb0cfc966ea2f1614a3256"
+ },
+ "wrangler": {
+  "version": "4.148.0",
+  "via": "npx -y wrangler@4.148.0",
+  "deployment_url": "https://f8f10ade.akira-shirase-oss.pages.dev",
+  "branch": "main"
+ },
+ "live_checks": {
+  "chapter_new_section": true,
+  "blog_new_section": true,
+  "roadmap_updated": true,
+  "github_evidence_links_200": 3,
+  "urls": [
+   "https://404human.dev/learn/model-engineering/the-harness-around-the-model/",
+   "https://404human.dev/posts/why-im-learning-how-models-learn/",
+   "https://404human.dev/learn/model-engineering/roadmap/"
+  ]
+ }
+}
