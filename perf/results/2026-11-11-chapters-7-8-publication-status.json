@@ -1,0 +1,66 @@
+{
+ "recorded_utc": "2026-11-11T20:09:01.212741+00:00",
+ "kind": "Chapters 7-8 first-lab publication: source identity, checks, and publication status",
+ "source_commit": "f38bb38998ce1109336201ba76b87bd034c025ac",
+ "machine": {
+  "platform": "darwin",
+  "arch": "arm64",
+  "cpu": "Apple M2 Pro",
+  "runtime": "v24.18.0"
+ },
+ "static_content": {
+  "build_passed": true,
+  "build_pages": 125,
+  "sections": 10,
+  "original_checker_passed": false,
+  "original_evidence": "perf/results/2026-11-11-chapters-7-8-content-check.json",
+  "corrected_checker_passed": true,
+  "corrected_evidence": "perf/results/2026-11-11-chapters-7-8-content-check-correction.json",
+  "correction": "One false negative: ch8_honest_limits compared a mixed-case needle against a lowercased page. Corrected checker passed on the unchanged build.",
+  "links_and_anchors_checked": 2900,
+  "html_files_checked": 136,
+  "browser_qa_performed": false
+ },
+ "load_scenario": {
+  "executed": true,
+  "tool": "tools/site-sweep.mjs",
+  "total_requests": 1000063,
+  "urls_served": 161,
+  "non200": 0,
+  "p99_ms": 8.387,
+  "evidence": "perf/results/2026-11-11T200638888Z-site-sweep.json",
+  "note": "Local serving observation, not production capacity."
+ },
+ "experiments": {
+  "chapter_7": {
+   "lab": "resumable-trainer.mjs",
+   "evidence": "perf/results/resumable-run-2026-11-11/",
+   "result": "8-step run interrupted at 4, resumed to 8, bit-identical finals; 5/5 parity checks",
+   "scale": "one-weight deterministic toy; no optimizer state"
+  },
+  "chapter_8": {
+   "lab": "adapter-demo.mjs",
+   "evidence": "perf/results/adapter-demo-2026-11-11.json",
+   "result": "frozen baseline fails; full fine-tune w->3.0; frozen-base adapter delta->0.008 same result; adapter-off == exact baseline",
+   "scale": "one-parameter teaching contrast; no LLM adaptation"
+  }
+ },
+ "git_push": {
+  "status": "success",
+  "remote": "github-learning",
+  "commit": "f38bb38998ce1109336201ba76b87bd034c025ac",
+  "note": "Interleaved unrelated commit 8deacd3 (build-log milestones, parallel session) landed between commits; clean fast-forward."
+ },
+ "wrangler": {
+  "version": "4.148.0",
+  "via": "npx -y wrangler@4.148.0",
+  "deployment_url": "https://06682e48.akira-shirase-oss.pages.dev",
+  "branch": "main"
+ },
+ "live_checks": {
+  "ch7_200_with_content": true,
+  "ch8_200_with_content": true,
+  "index_links_ch7_ch8": true,
+  "remaining_planned_are_ch10_11_12": true
+ }
+}
