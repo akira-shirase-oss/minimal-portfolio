@@ -23,11 +23,12 @@
   {%- set bar_max = count + remaining %}
   {%- if milestone.id == current_id %}{% set bar_max = bar_max + 1 %}{% endif %}
   {%- if bar_max == 0 %}{% set bar_max = 1 %}{% endif %}
-  {%- set state = "current" if milestone.id == current_id else ("done" if count > 0 and remaining == 0 else ("started" if count > 0 else "upcoming")) %}
+  {%- set state = "current" if milestone.id == current_id else ("done" if milestone.done or (count > 0 and remaining == 0) else ("started" if count > 0 else "upcoming")) %}
+  {%- set shown = bar_max if milestone.done and count == 0 else count %}
     <tr>
       <td><code>{{ milestone.id }}</code></td>
       <td>{{ milestone.name }}</td>
-      <td nowrap><progress value="{{ count }}" max="{{ bar_max }}"></progress> {% if state == "upcoming" %}next{% else %}{{ count }}{% endif %}</td>
+      <td nowrap><progress value="{{ shown }}" max="{{ bar_max }}"></progress> {% if state == "upcoming" %}next{% else %}{{ count }}{% endif %}</td>
       <td nowrap>{% if state == "current" %}<mark>● in progress</mark>{% elif state == "done" %}done{% elif state == "started" %}started{% else %}upcoming{% endif %}</td>
     </tr>
   {%- endfor %}

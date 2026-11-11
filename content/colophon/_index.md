@@ -18,7 +18,7 @@ milestones = [
   { id = "P1", name = "never lose an edit", about = "Saves that either succeed or clearly fail, safe conflicts between two editors, and projects that can't see each other." },
   { id = "P2", name = "publish exactly once", about = "Reviewed changes become one numbered release, and background work survives being killed halfway." },
   { id = "P3", name = "prove it reached the site", about = "Caching that can't serve the wrong thing, and a receipt for every publish. The first public demo." },
-  { id = "R", name = "roles you define", about = "Owners decide exactly who may do what, down to a field, and every path checks it the same way." },
+  { id = "R", name = "roles you define", about = "Owners decide exactly who may do what, down to a field, and every path checks it the same way.", done = true },
   { id = "M", name = "content you can shape", about = "References, reusable groups, lists and page builders, kept valid as they change." },
   { id = "W", name = "sites from content", about = "Ordinary content composed into websites: pages, a menu and a theme from a fixed section library and design tokens — no arbitrary CSS — built from one pinned release." },
   { id = "P4", name = "time travel", about = "Browse the site as it was at any release, roll back safely, and upload images without risk." },
