@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article>
+  <p><small>daily lessons · {{ section.pages | length }} shared</small></p>
+  <h1>{{ section.title }}</h1>
+  {%- if section.description %}
+  <p>{{ section.description }}</p>
+  {%- endif %}
+  <div class="post-body">{{ section.content | safe }}</div>
+</article>
+
+{%- set weeks = [p.extra.week for p in section.pages if p.extra.week] %}
+{%- set weeks = weeks | unique | sort %}
+{%- for week in weeks %}
+{%- set lessons = [p for p in section.pages if p.extra.week == week] %}
+{%- set lessons = lessons | sort(attribute="extra.lesson") %}
+<section>
+  <h2>Week {{ week }}</h2>
+  <ol>
+    {%- for lesson in lessons %}
+    <li>
+      <a href="{{ lesson.permalink }}">{{ lesson.title }}</a>
+      <small>· <time datetime="{{ lesson.date }}">{{ lesson.date | date(format="%Y-%m-%d") }}</time></small>
+      {%- if lesson.description %}<br><small>{{ lesson.description }}</small>{% endif %}
+    </li>
+    {%- endfor %}
+  </ol>
+</section>
+{%- endfor %}
+
+<p><a href="{{ get_url(path='@/_index.md') }}">← Home</a></p>
+{% endblock content %}

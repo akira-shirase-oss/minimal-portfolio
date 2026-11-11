@@ -5,8 +5,9 @@ date = 2026-11-11
 weight = 1
 
 [extra]
-kind = "chapter"
-chapter = 1
+kind = "lesson"
+week = 1
+lesson = 1
 status = "lesson shared"
 +++
 

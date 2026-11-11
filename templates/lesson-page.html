@@ -1,0 +1,10 @@
+{% extends "page.html" %}
+
+{% block series_line %}
+<p><small><a href="{{ get_url(path='@/lessons/_index.md') }}">Lessons</a>
+  {%- if page.extra.lesson %} › W{{ page.extra.week | default(value=1) }} · lesson {{ page.extra.lesson }}{% endif %}</small></p>
+{% endblock series_line %}
+
+{% block back_link %}
+<p><a href="{{ get_url(path='@/lessons/_index.md') }}">← All lessons</a></p>
+{% endblock back_link %}
