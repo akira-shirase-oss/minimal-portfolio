@@ -8,7 +8,7 @@
   <div class="post-body">{{ section.content | safe }}</div>
   <p>[ <a href="{{ get_url(path=section.extra.roadmap) }}">Read the learning roadmap</a> ]</p>
   <hr>
-  <h2>Chapters, in order</h2>
+  <h2>{{ section.extra.item_label | default(value="chapter") | capitalize }}s, in order</h2>
   <p>Available notes are linked. Planned chapters will get pages as I work through them.</p>
   <ol>
     {%- for chapter in section.extra.chapters %}

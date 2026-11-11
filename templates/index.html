@@ -238,7 +238,7 @@
   <fieldset>
     <legend><b>{{ track.title }}</b></legend>
     <p>{{ track.description }}</p>
-    <p>{{ chapters | length }} chapter note{% if chapters | length != 1 %}s{% endif %} available · {{ track.extra.status }}.</p>
+    <p>{{ chapters | length }} {{ track.extra.item_label | default(value="chapter note") }}{% if chapters | length != 1 %}s{% endif %} available · {{ track.extra.status }}.</p>
     <p>[ <a href="{{ track.permalink }}">Chapters</a> ]
       [ <a href="{{ get_url(path=track.extra.roadmap) }}">Roadmap</a> ]</p>
   </fieldset>
