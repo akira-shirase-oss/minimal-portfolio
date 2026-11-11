@@ -43,10 +43,12 @@ page = "@/learn/model-engineering/from-text-to-a-tiny-language-model.md"
 [[extra.chapters]]
 number = 7
 title = "Training runs we can inspect and resume"
+page = "@/learn/model-engineering/training-runs-we-can-inspect-and-resume.md"
 
 [[extra.chapters]]
 number = 8
 title = "Adapting an existing model"
+page = "@/learn/model-engineering/adapting-an-existing-model.md"
 
 [[extra.chapters]]
 number = 9
@@ -72,8 +74,8 @@ This track follows that question from the beginning. The goal is to understand t
 
 I want to understand what each part does, why it matters, and how it can fail. The learning route starts from plain explanations, small working pieces, their outputs, and the errors we encounter. The assistant handles implementation and calculations, with the code and results available to inspect together. Math comes in when it helps explain the behavior; deeper derivations are optional. The earlier small examples stay available for revision.
 
-**Current learning sequence, agreed 9 November 2026:** topics 4–8, from how learning goes wrong through adapting an existing model. [Topic 4 has failure-mode comparisons](@/learn/model-engineering/how-learning-goes-wrong.md), and [topic 5 has a data audit and split-leakage demonstration](@/learn/model-engineering/data-a-model-can-learn-from.md). [Topic 6 now has tokens, count probabilities, adjustable scores, and a last-token predictor with learned input embeddings](@/learn/model-engineering/from-text-to-a-tiny-language-model.md). Attention, broader text-model training, generation, and topics 7–8 remain ahead. Explanations, examples, code, recorded results, and revision notes are added as we cover them.
+**Current learning sequence, agreed 9 November 2026:** topics 4–8, from how learning goes wrong through adapting an existing model. [Topic 4 has failure-mode comparisons](@/learn/model-engineering/how-learning-goes-wrong.md), and [topic 5 has a data audit and split-leakage demonstration](@/learn/model-engineering/data-a-model-can-learn-from.md). [Topic 6 now has tokens, count probabilities, adjustable scores, and a last-token predictor with learned input embeddings](@/learn/model-engineering/from-text-to-a-tiny-language-model.md). On 11 November, [topic 7 ran its first interrupt/resume proof](@/learn/model-engineering/training-runs-we-can-inspect-and-resume.md) and [topic 8 its first adapter-vs-fine-tune contrast](@/learn/model-engineering/adapting-an-existing-model.md). Attention, broader text-model training, generation, and real-model checkpointing/adaptation remain ahead. Explanations, examples, code, recorded results, and revision notes are added as we cover them.
 
 **Earlier practical build:** [a local Qwen assistant uses its first tool](@/learn/model-engineering/the-harness-around-the-model.md). The first request → lookup → answer cycle ran on 7 November; on 11 November a small failure-hunting suite repaired two silent-answer failures, and its traces and case manifest are saved. The assistant keeps expanding a step at a time alongside topics 4–8.
 
-Chapter numbers organize the concepts; they are not quiz prerequisites. Seven chapter notes are available, including the earlier training-loop and validation experiments. The [roadmap](@/learn/model-engineering/roadmap.md) records the sequence and the later topics. Broader evaluation, resumable text-model training, weight adaptation, and preference learning remain ahead.
+Chapter numbers organize the concepts; they are not quiz prerequisites. Nine chapter notes are available, including the earlier training-loop and validation experiments. The [roadmap](@/learn/model-engineering/roadmap.md) records the sequence and the later topics. Broader evaluation, resumable text-model training, weight adaptation, and preference learning remain ahead.

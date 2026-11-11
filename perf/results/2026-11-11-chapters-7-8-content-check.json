@@ -1,0 +1,33 @@
+{
+ "recorded_utc": "2026-11-11T20:04:32.105626+00:00",
+ "code_base_commit": "8deacd3969bf687e674b1d172838e9b541dab1a2",
+ "machine": {
+  "platform": "darwin",
+  "arch": "arm64",
+  "cpu": "Apple M2 Pro",
+  "runtime": "v24.18.0"
+ },
+ "kind": "Static built-site checks for the 2026-11-11 chapters-7-8 publication; not browser QA or HTTP load",
+ "checks": {
+  "ch7_page_built": true,
+  "ch7_checkpoint_concept": true,
+  "ch7_evidence_links": true,
+  "ch7_honest_limits": true,
+  "ch8_page_built": true,
+  "ch8_three_ways": true,
+  "ch8_evidence_links": true,
+  "ch8_lora_explained": true,
+  "ch8_honest_limits": false,
+  "index_ch7_ch8_linked": true,
+  "roadmap_ch7_ch8_linked": true,
+  "index_nine_chapters": true,
+  "internal_links_and_anchors_resolve": true
+ },
+ "errors": [
+  "ch8_honest_limits"
+ ],
+ "html_files_checked": 136,
+ "internal_link_or_anchor_checks": 2900,
+ "json_ld_blocks_parsed": 136,
+ "passed": false
+}

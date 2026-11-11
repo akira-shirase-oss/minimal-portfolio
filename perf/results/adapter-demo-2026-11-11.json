@@ -1,0 +1,139 @@
+{
+  "kind": "Adapter-vs-fine-tune teaching comparison on the preserved failed gate; tiny one-parameter example, not an LLM adaptation",
+  "limit": 0.05,
+  "base_weight": 2.992,
+  "new_data": {
+    "input": 10,
+    "target": 30
+  },
+  "rate": 0.005,
+  "steps": 1,
+  "source_sha256": "9324e5f3b93d9a713ff567ef98b5cd4963d471a6f8bbdadcdcbd165444d37177",
+  "baseline": {
+    "label": "frozen baseline",
+    "effective_weight": 2.992,
+    "all_pass": false,
+    "rows": [
+      {
+        "input": 1,
+        "target": 3,
+        "prediction": 2.992,
+        "abs_error": 0.008000000000000007,
+        "pass": true
+      },
+      {
+        "input": 2,
+        "target": 6,
+        "prediction": 5.984,
+        "abs_error": 0.016000000000000014,
+        "pass": true
+      },
+      {
+        "input": 10,
+        "target": 30,
+        "prediction": 29.92,
+        "abs_error": 0.0799999999999983,
+        "pass": false
+      }
+    ]
+  },
+  "full_finetune": {
+    "label": "full fine-tune (base weight retrained)",
+    "effective_weight": 3,
+    "all_pass": true,
+    "rows": [
+      {
+        "input": 1,
+        "target": 3,
+        "prediction": 3,
+        "abs_error": 0,
+        "pass": true
+      },
+      {
+        "input": 2,
+        "target": 6,
+        "prediction": 6,
+        "abs_error": 0,
+        "pass": true
+      },
+      {
+        "input": 10,
+        "target": 30,
+        "prediction": 30,
+        "abs_error": 0,
+        "pass": true
+      }
+    ],
+    "base_weight_now": 3,
+    "base_weight_changed": true,
+    "way_back": "Only by keeping a saved copy of the old weights."
+  },
+  "adapter": {
+    "label": "adapter (base frozen + trained delta)",
+    "effective_weight": 3,
+    "all_pass": true,
+    "rows": [
+      {
+        "input": 1,
+        "target": 3,
+        "prediction": 3,
+        "abs_error": 0,
+        "pass": true
+      },
+      {
+        "input": 2,
+        "target": 6,
+        "prediction": 6,
+        "abs_error": 0,
+        "pass": true
+      },
+      {
+        "input": 10,
+        "target": 30,
+        "prediction": 30,
+        "abs_error": 0,
+        "pass": true
+      }
+    ],
+    "base_weight_still": 2.992,
+    "delta": 0.00799999999999983,
+    "base_weight_changed": false,
+    "trained_parameters": 1,
+    "frozen_parameters": 1,
+    "removed": {
+      "label": "adapter switched OFF (revert check)",
+      "effective_weight": 2.992,
+      "all_pass": false,
+      "rows": [
+        {
+          "input": 1,
+          "target": 3,
+          "prediction": 2.992,
+          "abs_error": 0.008000000000000007,
+          "pass": true
+        },
+        {
+          "input": 2,
+          "target": 6,
+          "prediction": 5.984,
+          "abs_error": 0.016000000000000014,
+          "pass": true
+        },
+        {
+          "input": 10,
+          "target": 30,
+          "prediction": 29.92,
+          "abs_error": 0.0799999999999983,
+          "pass": false
+        }
+      ]
+    },
+    "revert_is_exact_baseline": true
+  },
+  "what_differs": {
+    "both_pass_now": true,
+    "distinction": "Full fine-tune edits the base weights; an adapter leaves them frozen and learns the change in a small add-on that can be removed or swapped.",
+    "real_models": "In a real model the base is billions of frozen numbers and the adapter (e.g. LoRA) is a tiny trained add-on. Same idea, bigger scale.",
+    "honest_limit": "This adapter still changes the answer for every input — adapters are modular, not task-selective. Real Qwen adapter training needs a framework and a memory check; untested locally."
+  }
+}

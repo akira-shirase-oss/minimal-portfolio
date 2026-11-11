@@ -1,0 +1,35 @@
+{
+  "kind": "resumed from checkpoint to step 8",
+  "resumed_from_step": 4,
+  "settings": {
+    "rate": 0.1,
+    "probe": 0.5,
+    "total_steps": 8
+  },
+  "history": [
+    {
+      "step": 5,
+      "weight": 2.99968,
+      "gradient": -0.01279999999999848,
+      "loss": 4.0959999999968243e-7
+    },
+    {
+      "step": 6,
+      "weight": 2.999936,
+      "gradient": -0.0025599999999988965,
+      "loss": 1.6384000000032773e-8
+    },
+    {
+      "step": 7,
+      "weight": 2.9999872,
+      "gradient": -0.000512000000000401,
+      "loss": 6.553599999922159e-10
+    },
+    {
+      "step": 8,
+      "weight": 2.99999744,
+      "gradient": -0.00010239999999939187,
+      "loss": 2.6214399999688637e-11
+    }
+  ]
+}

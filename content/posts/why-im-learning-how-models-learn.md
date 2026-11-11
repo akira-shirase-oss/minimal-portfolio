@@ -185,3 +185,11 @@ I asked my local Qwen assistant about a project with no saved note. It answered 
 Fixing it did not need a smarter model. The tool now accepts any project name and returns an honest not-found error. Then a port question exposed a different failure: the note records no port, so the model filled the gap from memory — "Zola's default, 1111." A system-prompt clause telling it to report missing facts fixed that, and quietly broke a different case, which only re-running all the recorded cases caught.
 
 We now keep a small case suite and re-run every case after any change. [The updated harness chapter](@/learn/model-engineering/the-harness-around-the-model.md#the-first-failures-11-november) records each failure, where each fix lived, and the honest limits. Fourteen traces, one manifest, no weight updates — prompt and tool-contract work only.
+
+### A run I can stop, and a fix I can take back
+
+Two more firsts today. A tiny 8-step training run learned to checkpoint itself: it stopped at step 4, wrote its whole state to a JSON file, exited, and a different process picked it up and finished — landing on exactly the same final weight as a run that never stopped. Resume isn't something you hope for; on a deterministic run it's something you can prove bit-for-bit.
+
+Then my old failed validation candidate got three second chances: frozen (still fails), full fine-tune (works, but the old weight is gone), and a small adapter delta trained while the base weight stayed frozen (works, and removing it puts the baseline back exactly). That revert property is the whole reason adapters exist at real scale — it's LoRA's idea with one number instead of billions.
+
+[Chapter 7](@/learn/model-engineering/training-runs-we-can-inspect-and-resume.md) and [chapter 8](@/learn/model-engineering/adapting-an-existing-model.md) have the recordings and the honest limits. Both are toy-scale: no LLM checkpointing or adapter training has run yet.

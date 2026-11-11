@@ -1,0 +1,29 @@
+{
+  "kind": "resume-parity verification",
+  "checks": {
+    "checkpoint_saved_at_step_4": true,
+    "resume_continued_from_4": true,
+    "final_weights_identical": true,
+    "final_losses_identical": true,
+    "checkpoint_records_code_hash": true
+  },
+  "passed": true,
+  "full_final": {
+    "step": 8,
+    "weight": 2.99999744,
+    "gradient": -0.00010239999999939187,
+    "loss": 2.6214399999688637e-11
+  },
+  "interrupted_final": {
+    "step": 4,
+    "weight": 2.9984,
+    "gradient": -0.06400000000000006,
+    "loss": 0.000010239999999997744
+  },
+  "resumed_final": {
+    "step": 8,
+    "weight": 2.99999744,
+    "gradient": -0.00010239999999939187,
+    "loss": 2.6214399999688637e-11
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "interrupted at step 4",
+  "settings": {
+    "rate": 0.1,
+    "probe": 0.5,
+    "total_steps": 8
+  },
+  "history": [
+    {
+      "step": 0,
+      "weight": 2,
+      "loss": 4
+    },
+    {
+      "step": 1,
+      "weight": 2.8,
+      "gradient": -8,
+      "loss": 0.16000000000000028
+    },
+    {
+      "step": 2,
+      "weight": 2.96,
+      "gradient": -1.6000000000000014,
+      "loss": 0.006400000000000012
+    },
+    {
+      "step": 3,
+      "weight": 2.992,
+      "gradient": -0.3200000000000003,
+      "loss": 0.0002560000000000005
+    },
+    {
+      "step": 4,
+      "weight": 2.9984,
+      "gradient": -0.06400000000000006,
+      "loss": 0.000010239999999997744
+    }
+  ]
+}

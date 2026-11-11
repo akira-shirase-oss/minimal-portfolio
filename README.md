@@ -153,6 +153,17 @@ gradients and predictions. Use a fresh path for later runs. This example ignores
 earlier tokens; a same-last-token probe exposes that limitation. Positions,
 attention, broader training, held-out quality and generation remain ahead.
 
+Chapters 7 and 8 ran their first labs on 2026-11-11, both in the learning
+workspace's `labs/`. `resumable-trainer.mjs` saves a JSON checkpoint (step,
+weight, settings, data, code hash), interrupts an 8-step run at step 4, resumes
+to 8, and verifies bit-identical finals against the uninterrupted run — five
+checks in `perf/results/resumable-run-2026-11-11/`. `adapter-demo.mjs` reuses the
+preserved failed gate (weight 2.992 fails 10→30) and contrasts frozen baseline,
+full fine-tune (weight → 3.0), and a frozen-base adapter (delta → 0.008);
+removing the adapter reverts exactly to baseline
+(`perf/results/adapter-demo-2026-11-11.json`). Both are one-parameter teaching
+contrasts — no LLM checkpointing or adapter training has run.
+
 Chapter 9 now records its first failure-and-repair pass, run 2026-11-11. A
 small set of harder questions exposed a schema trap (the `enum` made the wrong
 lookup the only legal call, producing a silent wrong-project answer), a missing-

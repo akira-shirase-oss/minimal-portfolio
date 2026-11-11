@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-11T20:06:38.888Z",
+  "urls": 161,
+  "requests": 1000063,
+  "rps": 11292,
+  "non200": 0,
+  "failed": 0,
+  "latency_ms": {
+    "p50": 5.427,
+    "p95": 7.314,
+    "p99": 8.387,
+    "max": 148.801
+  },
+  "machine": "apple-m2-pro-12c",
+  "commit": "8deacd3"
+}
