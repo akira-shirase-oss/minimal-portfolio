@@ -153,6 +153,17 @@ gradients and predictions. Use a fresh path for later runs. This example ignores
 earlier tokens; a same-last-token probe exposes that limitation. Positions,
 attention, broader training, held-out quality and generation remain ahead.
 
+Chapter 9 now records its first failure-and-repair pass, run 2026-11-11. A
+small set of harder questions exposed a schema trap (the `enum` made the wrong
+lookup the only legal call, producing a silent wrong-project answer), a missing-
+fact hallucination (an invented port number), and a prompt-fix regression caught
+only by re-running the recorded cases. The tool contract now returns an explicit
+not-found error and the system prompt requires evidence-backed claims. The raw
+traces, a suite manifest, and the final source snapshot live in
+`perf/results/qwen-tool-use-2026-11-11*/`. Each case ran once per harness version
+at temperature 0 on one local 8B model — a learning record, not reliability
+evidence. No weights changed.
+
 To add a chapter, create a Markdown page inside the track with `date`, `weight`
 (reading order), and `[extra]` fields `kind = "chapter"`, `chapter = <number>`,
 and an honest `status`. Add its `page = "@/learn/<track>/<file>.md"` link to the

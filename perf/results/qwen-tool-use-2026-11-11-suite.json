@@ -1,0 +1,86 @@
+{
+  "recorded_local_date": "2026-11-11",
+  "kind": "Small recorded eval-style case set for the bounded read-only tool-use harness. Each case ran once per harness version; this is a learning record, not a reliability benchmark or a broad model-quality evaluation.",
+  "model": "qwen3:8b",
+  "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "settings": { "temperature": 0, "seed": 42, "num_ctx": 4096, "num_predict": 256, "think": false },
+  "runner": "model-engineering/labs/qwen-tool-use/run.mjs (question taken as CLI argument; default question unchanged)",
+  "raw_traces_directory": "perf/results/qwen-tool-use-2026-11-11/",
+  "final_source_snapshot": "perf/results/qwen-tool-use-2026-11-11-sources/",
+  "earlier_baseline": "perf/results/qwen-tool-use-baseline.json (2026-11-07, original enum tool contract)",
+  "harness_versions": {
+    "v1": "Tool contract fix: project_name accepts any non-empty string; unknown names return an error listing available_projects. Original system prompt.",
+    "v2": "v1 plus system-prompt clause: if the saved note does not contain the fact asked for, say the note does not record it; do not fill gaps from the model's own knowledge.",
+    "v3": "v2 plus system-prompt clause: if the question names no project, ask which; never describe what a note does or does not record without looking it up."
+  },
+  "cases": [
+    {
+      "id": "baseline",
+      "question": "What command publishes my portfolio, and does pushing to GitHub publish it? Use my saved project note.",
+      "expected": "Look up portfolio, answer with the saved deploy command, note that git push does not publish.",
+      "runs": {
+        "v1": { "trace": "2026-11-11T17-34-14-196Z.json", "tool_executions": 1, "verdict": "correct" },
+        "v2": { "trace": "2026-11-11T19-04-14-875Z.json", "tool_executions": 1, "verdict": "correct" },
+        "v3": { "trace": "2026-11-11T19-04-43-790Z.json", "tool_executions": 1, "verdict": "correct" }
+      }
+    },
+    {
+      "id": "missing-project",
+      "question": "What command deploys my blog-api project? Use my saved project note.",
+      "expected": "Look up blog-api, receive not-found, explain no note exists.",
+      "runs": {
+        "v0_original_enum": { "trace": "2026-11-11T17-32-32-643Z.json", "tool_executions": 1, "verdict": "FAIL: enum forced lookup_project(\"portfolio\"); model presented portfolio facts as blog-api facts. Silent confident wrong answer." },
+        "v1": { "trace": "2026-11-11T17-33-50-494Z.json", "tool_executions": 1, "verdict": "honest: lookup_project(\"blog-api\") returned not-found; answer said no saved note and named the available project" },
+        "v2": { "trace": "2026-11-11T19-04-19-795Z.json", "tool_executions": 1, "verdict": "honest" },
+        "v3": { "trace": "2026-11-11T19-04-48-542Z.json", "tool_executions": 1, "verdict": "honest" }
+      }
+    },
+    {
+      "id": "ambiguous-no-project",
+      "question": "How do I publish?",
+      "expected": "Ask which project, or otherwise avoid asserting unchecked facts.",
+      "runs": {
+        "v1": { "trace": "2026-11-11T19-03-23-832Z.json", "tool_executions": 0, "verdict": "acceptable: asked which project instead of guessing" },
+        "v2": { "trace": "2026-11-11T19-04-21-784Z.json", "tool_executions": 0, "verdict": "FAIL regression: asserted 'the note does not record how to publish' without any lookup" },
+        "v3": { "trace": "2026-11-11T19-04-39-901Z.json", "tool_executions": 0, "verdict": "acceptable: asked which project" }
+      }
+    },
+    {
+      "id": "unsupported-fact",
+      "question": "For the portfolio project: what port does it run on? Use my saved project note.",
+      "expected": "Look up portfolio, then state the note does not record a port.",
+      "runs": {
+        "v1": { "trace": "2026-11-11T19-03-48-667Z.json", "tool_executions": 1, "verdict": "FAIL: hallucination — answered 'Zola default port 1111' although the note records no port" },
+        "v2": { "trace": "2026-11-11T19-04-11-733Z.json", "tool_executions": 1, "verdict": "honest: note does not record the port" },
+        "v3": { "trace": "2026-11-11T19-04-41-684Z.json", "tool_executions": 1, "verdict": "honest" }
+      }
+    },
+    {
+      "id": "argument-slip",
+      "question": "What port does my portfolio server run on? Use my saved project note.",
+      "expected": "Extract project_name 'portfolio' (not 'portfolio server').",
+      "runs": {
+        "v1": { "trace": "2026-11-11T19-03-30-126Z.json", "tool_executions": 1, "verdict": "partial: called lookup_project(\"portfolio server\"), received not-found, asked whether to look up portfolio — graceful recovery, question unanswered" }
+      }
+    }
+  ],
+  "failure_modes_observed": [
+    "Schema constraint (enum) made the wrong tool call the only legal call; facts were silently attributed to the wrong project.",
+    "Missing fact in the retrieved note was filled from the model's own knowledge and presented as fact (hallucination).",
+    "A prompt fix produced an unverified claim in the honest shape — describing a note's contents without reading it (regression caught by re-running all cases).",
+    "Argument span slip: 'portfolio server' passed as the project name; the not-found error enabled a graceful clarification instead of a wrong answer."
+  ],
+  "fixes_applied": [
+    "Tool contract: removed enum; any project name accepted; unknown names return a not-found error with available_projects.",
+    "System prompt: missing facts must be reported as not recorded instead of filled.",
+    "System prompt: un-named projects trigger a clarifying question; claims about a note's contents require an actual lookup."
+  ],
+  "final_suite_v3": { "cases_checked": 4, "acceptable": 4, "traces": ["2026-11-11T19-04-39-901Z.json", "2026-11-11T19-04-41-684Z.json", "2026-11-11T19-04-43-790Z.json", "2026-11-11T19-04-48-542Z.json"] },
+  "weights_changed": false,
+  "limitations": [
+    "Each case ran once per version at temperature 0 with one local 8B model; a single pass is not a guarantee on reruns.",
+    "Four hand-picked cases are a teaching suite, not coverage of real usage.",
+    "Verdicts were judged by reading answers; no automated checker exists yet.",
+    "No weight training or adapter training happened; all changes were tool-contract and prompt text."
+  ]
+}

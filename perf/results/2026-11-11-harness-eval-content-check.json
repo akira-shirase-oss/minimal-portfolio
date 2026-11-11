@@ -1,0 +1,30 @@
+{
+ "recorded_utc": "2026-11-11T19:08:35.392799+00:00",
+ "code_base_commit": "7606816e59019885d4c18c072b077cbb0306fc0d",
+ "machine": {
+  "platform": "darwin",
+  "arch": "arm64",
+  "cpu": "Apple M2 Pro",
+  "runtime": "v24.18.0"
+ },
+ "kind": "Static built-site checks for the 2026-11-11 harness-eval revision; not browser QA or HTTP load",
+ "checks": {
+  "chapter_anchor_exists": true,
+  "enum_trap_explained": true,
+  "hallucination_recorded": true,
+  "regression_recorded": true,
+  "suite_table_present": true,
+  "evidence_links_present": true,
+  "honest_limits_stated": true,
+  "notfound_contract_described": true,
+  "blog_section_present": true,
+  "track_index_updated": true,
+  "roadmap_updated": true,
+  "internal_links_and_anchors_resolve": true
+ },
+ "errors": [],
+ "html_files_checked": 134,
+ "internal_link_or_anchor_checks": 2847,
+ "json_ld_blocks_parsed": 134,
+ "passed": true
+}

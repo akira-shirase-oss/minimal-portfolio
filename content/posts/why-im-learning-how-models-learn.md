@@ -2,7 +2,7 @@
 title = "Why I'm learning how models learn"
 description = "I started by asking about an 8B blog-writing model. Then I had to ask how training even starts."
 date = 2026-11-06
-updated = 2026-11-10
+updated = 2026-11-11
 
 [extra]
 kind = "experiment"
@@ -177,3 +177,11 @@ The next run keeps the token IDs fixed and learns two-number input vectors. Afte
 The limit is visible: this predictor reads only the last character. It gives `tea` and `cat a` identical predictions because both end in `a`. The vector lookup is working, but earlier context cannot help until the model consumes it.
 
 [The embedding lesson](@/learn/model-engineering/from-text-to-a-tiny-language-model.md#token-ids-and-learned-embeddings) records the learned vectors, unchanged head, gradients, mean training loss, and an independent check of all sixteen parameter gradients. Positions and the use of more than the last token are next. The run does not establish semantic understanding or unfamiliar-text quality.
+
+### The tool-using assistant met its first failures
+
+I asked my local Qwen assistant about a project with no saved note. It answered fluently, confidently, and wrongly: the tool's schema only allowed "portfolio", so the model looked up *portfolio* anyway and presented its deploy command as the answer for `blog-api`. Every check inside the program passed.
+
+Fixing it did not need a smarter model. The tool now accepts any project name and returns an honest not-found error. Then a port question exposed a different failure: the note records no port, so the model filled the gap from memory — "Zola's default, 1111." A system-prompt clause telling it to report missing facts fixed that, and quietly broke a different case, which only re-running all the recorded cases caught.
+
+We now keep a small case suite and re-run every case after any change. [The updated harness chapter](@/learn/model-engineering/the-harness-around-the-model.md#the-first-failures-11-november) records each failure, where each fix lived, and the honest limits. Fourteen traces, one manifest, no weight updates — prompt and tool-contract work only.

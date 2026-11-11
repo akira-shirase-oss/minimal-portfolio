@@ -20,13 +20,13 @@ The current sequence is topics **4 through 8**: how learning goes wrong, data a 
 
 For each topic, the lesson starts with a plain explanation and a small example. The assistant implements the experiment and handles the calculations. We inspect the code, outputs, and failures together to understand what each part does, why it matters, and what a change actually helped. Deep mathematical derivations are optional; the numbers needed to explain an observation still get explained.
 
-The [first Qwen tool-use example](@/learn/model-engineering/the-harness-around-the-model.md) stays available as a reference. Expanding that assistant comes after this pass through topics 4–8, alongside deeper evaluation, efficiency, and learning from preferences. Basic validation remains part of the earlier experiments.
+The [first Qwen tool-use example](@/learn/model-engineering/the-harness-around-the-model.md) stays available as a reference, and on 11 November it gained its first failure-hunting pass: two silent-answer failures found and repaired, with a small recorded case suite re-run after every change. Topics 4–8 remain the main sequence; the assistant keeps expanding alongside them, toward deeper evaluation, efficiency, and learning from preferences. Basic validation remains part of the earlier experiments.
 
 The portfolio will follow the lessons: chapter explanations, small examples, relevant code, recorded results, and a quick revision summary. Blog updates will describe actual investigations and learning decisions. Planned work, completed runs, and demonstrated understanding stay distinct.
 
 ## Two related builds
 
-1. **A local Qwen tool-using assistant.** Start with a read-only project-note lookup, then introduce missing information, tool errors, more tools, and recorded comparisons. The [first working slice and trace are available](@/learn/model-engineering/the-harness-around-the-model.md).
+1. **A local Qwen tool-using assistant.** Start with a read-only project-note lookup, then introduce missing information, tool errors, more tools, and recorded comparisons. The [first working slice, trace, and failure-repair suite are available](@/learn/model-engineering/the-harness-around-the-model.md).
 2. **A separate tiny text model.** Prepare text, turn it into tokens, train a small next-token predictor, generate text, inspect poor outputs, and save/resume the training run. This is planned and can start without finishing a large assistant application.
 
 Later improvements to these builds will teach adapting model weights, reviewing training examples, evaluating candidate versions, memory and speed, and learning from preferred answers. The installed Ollama model is the inference baseline; training an existing model will need compatible model files and a measured memory budget.
@@ -43,7 +43,7 @@ Later improvements to these builds will teach adapting model weights, reviewing 
 | [6. From text to a tiny language model](@/learn/model-engineering/from-text-to-a-tiny-language-model.md) | How do text pieces become predictions? | Tokenizer, count probabilities, score update, and last-token embedding update run. A frozen head maps two-number vectors to scores. Using multiple positions, attention, broader model training, and generation remain ahead. |
 | 7. Training runs we can inspect and resume | Can we explain and recover a run? | Record settings, data versions, memory use, and checkpoints; interrupt and resume a run. |
 | 8. Adapting an existing model | What does fine-tuning change? | Compare an unchanged model with a trained candidate using the same inputs and settings. |
-| [9. The harness around the model](@/learn/model-engineering/the-harness-around-the-model.md) | What does the surrounding program contribute? | The first local Qwen lookup cycle has run. Expand the same assistant one tool or failure case at a time. |
+| [9. The harness around the model](@/learn/model-engineering/the-harness-around-the-model.md) | What does the surrounding program contribute? | First lookup cycle ran 7 November; first failure cases were recorded and repaired 11 November, with a small case suite re-run after each change. Expand the same assistant one tool or failure case at a time. |
 | 10. Evaluation and model promotion | Does this candidate deserve to replace the previous version? | Define acceptance criteria, compare outputs, investigate regressions, and preserve the previous accepted version. |
 | 11. Memory, speed, and scale | What do efficiency changes cost in quality? | Measure numerical precision, quantization, batching, latency, and memory tradeoffs. |
 | 12. Learning from preferences | Can examples of preferred answers improve behavior? | Build reviewed answer pairs and test whether preference training helps. |
