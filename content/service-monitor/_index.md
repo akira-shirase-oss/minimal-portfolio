@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "feature-complete — 24-hour soak running"
+status = "feature-complete — 24-hour soak evidence committed"
 short_title = "Service Monitor"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, contract-first domain types, the honest-states dashboard shell." },
@@ -18,10 +18,5 @@ milestones = [
   { id = "M6", name = "parity", about = "Every gap the retired monitor knew — real certificate classification, per-monitor sensitivity, the four incident times, a mutating dashboard, honest charts, a drift-checked guide, exit codes, mutation testing, and maintenance windows." },
   { id = "M7", name = "deferred items, closed", about = "Email alerts as a second outbox channel, a real dashboard login, and a rising-load drill that checks the monitor's story against a real app's own ground truth." },
 ]
-up_next = { milestone = "M5", step = "soak", title = "The 24-hour soak — the one run still owed" }
-
-[[extra.planned]]
-milestone = "M5"
-step = "soak"
-title = "The 24-hour soak — the one run still owed"
+up_next = { milestone = "done", step = "—", title = "M0–M7 built and the 24-hour soak evidenced — every owed gate has committed results" }
 +++

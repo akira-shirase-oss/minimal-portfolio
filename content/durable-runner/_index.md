@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "building — D4 (CLI + server + inspector live)"
+status = "building — D4 ship gate: sustained load red, root-causing"
 short_title = "Durable Runner"
 milestones = [
   { id = "D0", name = "model", about = "The state machine: transitions, invalid states, identities, limits — deterministic tests under a fake clock." },
@@ -15,10 +15,15 @@ milestones = [
   { id = "D3", name = "maintain", about = "Compaction into generations, seven-day terminal expiry, backup and restore, bounded diagnostics." },
   { id = "D4", name = "ship", about = "CLI and inspection UI, a pilot workflow, the load plan — and a second developer restores a real directory." },
 ]
-up_next = { milestone = "D0", step = "model", title = "The state machine — transitions and their refusals" }
+up_next = { milestone = "D4", step = "load", title = "The sustained-load gate — red twice, solo included; the fsync ceiling is being root-caused" }
 
 [[extra.planned]]
-milestone = "D0"
-step = "model"
-title = "The state machine — transitions and their refusals"
+milestone = "D4"
+step = "load"
+title = "Sustained load inside the latency gate — per-record fsync ceiling under investigation"
+
+[[extra.planned]]
+milestone = "D4"
+step = "restore"
+title = "A second developer restores a real journal directory, unaided"
 +++

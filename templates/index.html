@@ -259,7 +259,7 @@
     {%- endif %}
     {%- endfor %}
   </ul>
-  <p>And the three projects each keep their own build log —
+  <p>And each project keeps its own build log —
     {%- for log_path in logs %}
       {%- set log = get_section(path=log_path) %}
       <a href="{{ log.permalink }}">{{ log.extra.short_title or log.title }}</a>{% if not loop.last %}, {% endif %}
@@ -281,8 +281,9 @@
   <details>
     <summary><b>Is any of this usable yet?</b></summary>
     <p>Honestly labelled: Colophon is pre-0.1 — it runs on my laptop and CI, and its own site says so.
-    The service monitor has an installed release. The runtime is mid-build. Nothing here is marketed
-    ahead of its evidence.</p>
+    The service monitor has an installed release and its 24-hour soak is evidenced. jsrt's roadmap
+    is done — host, capabilities and supervisor, all with committed load numbers. Nothing here is
+    marketed ahead of its evidence.</p>
   </details>
   <details>
     <summary><b>Why Rust?</b></summary>

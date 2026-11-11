@@ -1,16 +1,15 @@
----
-title: "Checkpoint 0.3: the inspector, and the bug it caught"
-date: 2026-11-08
-description: "GET /jobs + a SvelteKit inspector — and the journaled-refusal bug the first smoke test surfaced."
-extra:
-  kind: series
-  milestone: "durable-runner"
-  step: "0.3"
-  short_title: "The UI catches a journal bug"
-  series:
-    title: "Durable Workflow Runner"
-    slug: durable-runner
----
++++
+title = "Checkpoint 0.3: the inspector, and the bug it caught"
+description = "GET /jobs + a SvelteKit inspector — and the journaled-refusal bug the first smoke test surfaced."
+date = 2026-11-08
+
+[extra]
+kind = "experiment"
+milestone = "D4"
+step = "0.3"
+short_title = "The UI catches a journal bug"
+series = "durable-runner"
++++
 
 ## Where this checkpoint stands
 

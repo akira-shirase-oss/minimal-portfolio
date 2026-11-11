@@ -28,6 +28,18 @@ link = "@/js-runtime/_index.md"
 log = "js-runtime/_index.md"
 
 [[extra.now]]
+process = "minibtc"
+what = "A Bitcoin-style blockchain built from scratch in Rust — consensus through the wallet UI; every blueprint gate passed."
+link = "@/minibtc/_index.md"
+log = "minibtc/_index.md"
+
+[[extra.now]]
+process = "durable-runner"
+what = "Acknowledged work survives restarts — journaled, crash-tested, and now load-measured honestly: the sustained gate is red and being root-caused."
+link = "@/durable-runner/_index.md"
+log = "durable-runner/_index.md"
+
+[[extra.now]]
 process = "rust-knowledge-base"
 what = "Claude Code studying the whole Rust Book, checked by exams the AI can’t see."
 link = "@/posts/i-made-an-ai-read-the-rust-book.md"
@@ -53,7 +65,7 @@ name = "Durable Runner"
 about = "A background-task runner where accepting a job is a durable commit: a framed file journal, one writer, at-least-once attempts, and crash recovery that admits what it cannot know. Rust, built in the open."
 link = "@/durable-runner/_index.md"
 year = 2026
-status = "scaffolding"
+status = "in progress"
 
 [[extra.projects]]
 name = "jsrt"
@@ -74,7 +86,7 @@ name = "Service Monitor"
 about = "Keeps an eye on your websites and tells you, honestly, when something breaks. Written in Rust, built in the open, one tested step at a time."
 link = "@/service-monitor/_index.md"
 year = 2026
-status = "in progress"
+status = "feature-complete"
 
 [[extra.projects]]
 name = "Teaching an AI Rust"

@@ -6,7 +6,7 @@ draft = false
 
 [extra]
 kind = "experiment"
-milestone = "D4"
+milestone = "D3"
 step = "0.2"
 short_title = "The journal survives kill -9"
 series = "durable-runner"

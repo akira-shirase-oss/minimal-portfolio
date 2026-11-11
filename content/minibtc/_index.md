@@ -24,10 +24,5 @@ milestones = [
   { id = "P12", name = "attack lab and hardening", about = "All 15 blueprint attacks, fuzzing, property tests, million-op load runs." },
   { id = "P13", name = "UI expansion", about = "Enriched read-only explorer + a local web wallet with in-memory sessions, CSRF and a human-gated send flow." },
 ]
-up_next = { milestone = "P12", step = "ship", title = "Done — the blueprint's own definition of finished is met" }
-
-[[extra.planned]]
-milestone = "P12"
-step = "ship"
-title = "Done — the blueprint's own definition of finished is met"
+up_next = { milestone = "done", step = "—", title = "P0–P13 complete — every blueprint gate passed with committed evidence" }
 +++

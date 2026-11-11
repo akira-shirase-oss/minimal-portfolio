@@ -1,11 +1,16 @@
 {#- The build log at a glance, drawn the house way: a milestone table with
     native progress bars, and an ASCII sparkline inside <details>. Needs `log`
     (the build log's section) and `entries` (its pages, oldest first). Every
-    number comes from the posts: nothing here is typed in by hand. -#}
+    number comes from the posts: nothing here is typed in by hand.
+    A milestone's bar is entries-published over entries-published plus planned
+    steps still owed — a finished milestone fills completely, the current one
+    shows its honest fraction, and an untouched one stays empty. #}
 {%- set up_next = log.extra.up_next %}
 {%- set latest = entries[-1] %}
 {%- set current_id = up_next.milestone if up_next else latest.extra.milestone %}
 {%- set tested = [p for p in entries if p.extra.tests is defined] %}
+{%- set published_steps = [p.extra.step for p in entries] %}
+{%- set planned_all = log.extra.planned | default(value=[]) %}
 
 <table border="1" cellpadding="6" cellspacing="0" width="100%">
   <thead>
@@ -14,12 +19,16 @@
   <tbody>
   {%- for milestone in log.extra.milestones %}
   {%- set count = [p for p in entries if p.extra.milestone == milestone.id] | length %}
-  {%- set state = "current" if milestone.id == current_id else ("done" if count > 0 else "upcoming") %}
+  {%- set remaining = [p for p in planned_all if p.milestone == milestone.id and not (p.step and p.step in published_steps)] | length %}
+  {%- set bar_max = count + remaining %}
+  {%- if milestone.id == current_id %}{% set bar_max = bar_max + 1 %}{% endif %}
+  {%- if bar_max == 0 %}{% set bar_max = 1 %}{% endif %}
+  {%- set state = "current" if milestone.id == current_id else ("done" if count > 0 and remaining == 0 else ("started" if count > 0 else "upcoming")) %}
     <tr>
       <td><code>{{ milestone.id }}</code></td>
       <td>{{ milestone.name }}</td>
-      <td nowrap><progress value="{{ count }}" max="{{ entries | length }}"></progress> {% if state == "upcoming" %}next{% else %}{{ count }}{% endif %}</td>
-      <td nowrap>{% if state == "current" %}<mark>● in progress</mark>{% else %}{{ "done" if state == "done" else "upcoming" }}{% endif %}</td>
+      <td nowrap><progress value="{{ count }}" max="{{ bar_max }}"></progress> {% if state == "upcoming" %}next{% else %}{{ count }}{% endif %}</td>
+      <td nowrap>{% if state == "current" %}<mark>● in progress</mark>{% elif state == "done" %}done{% elif state == "started" %}started{% else %}upcoming{% endif %}</td>
     </tr>
   {%- endfor %}
   </tbody>
