@@ -150,8 +150,27 @@ softmax creates probabilities. One update uses the training positions `cat s`
 → `a` and `cat a` → `t`; only the input embedding rows learn. The result in
 `perf/results/first-token-embeddings.json` records all vectors, head weights,
 gradients and predictions. Use a fresh path for later runs. This example ignores
-earlier tokens; a same-last-token probe exposes that limitation. Positions,
-attention, broader training, held-out quality and generation remain ahead.
+earlier tokens; a same-last-token probe exposes that limitation.
+
+`node tools/inspect-attention-context.mjs` answers that limitation with the
+first attention mechanism: the last position queries all positions, softmax
+turns the dot-product scores into weights, and a weighted sum builds the
+context vector. It uses declared unit-circle token vectors (the learned table
+left six of eight rows at zero) and toggleable declared `[sin(p), cos(p)]`
+position vectors. The run records `cat sa` attention concentrating on both `a`
+positions, `cat a` versus `tea` now differing, and `cat ` versus `tac `
+producing identical context without positions — order blindness demonstrated
+directly — but different context with them. Results are in
+`perf/results/first-attention-context.json` with a separate independent check.
+Identity projections, a single head, and no trained attention weights.
+
+`node tools/inspect-generation.mjs` adds the generation loop: predict, select,
+append, repeat until a newline or step cap, over the fitted count model.
+Greedy from `cat ` writes `cat ate.` in five steps, fixed-draw sampling writes
+`cat sat.`, and unseen seed `te` halts with `UNSEEN_PREFIX`. Every output is a
+verbatim training document — memorization, not generalization. Results are in
+`perf/results/first-text-generation.json` with a separate independent check.
+Trained attention weights and broader text-model training remain ahead.
 
 Chapters 7 and 8 ran their first labs on 2026-11-11, both in the learning
 workspace's `labs/`. `resumable-trainer.mjs` saves a JSON checkpoint (step,

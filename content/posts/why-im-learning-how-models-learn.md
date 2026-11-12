@@ -193,3 +193,11 @@ Two more firsts today. A tiny 8-step training run learned to checkpoint itself: 
 Then my old failed validation candidate got three second chances: frozen (still fails), full fine-tune (works, but the old weight is gone), and a small adapter delta trained while the base weight stayed frozen (works, and removing it puts the baseline back exactly). That revert property is the whole reason adapters exist at real scale — it's LoRA's idea with one number instead of billions.
 
 [Chapter 7](@/learn/model-engineering/training-runs-we-can-inspect-and-resume.md) and [chapter 8](@/learn/model-engineering/adapting-an-existing-model.md) have the recordings and the honest limits. Both are toy-scale: no LLM checkpointing or adapter training has run yet.
+
+### The model looked back — and wrote its first text
+
+Two pieces I had been circling finally ran inside chapter 6. First, attention: the last token's vector now queries every earlier position, softmax turns the similarity scores into weights, and a weighted blend becomes the context. In `cat sa` the two `a` positions tied for the top weight — the mechanism found the matching tokens by itself. And `cat a` versus `tea`, which the last-token predictor could not tell apart, now produce different predictions.
+
+Then the surprise the mechanism was hiding: `cat ` and `tac ` — same characters, different order — produced identical context. Attention reads a bag of tokens, not a sequence. Order only became visible after adding declared position vectors, which is why every real transformer carries them.
+
+Second, the generation loop: predict, select, append, repeat. Greedy wrote `cat ate.`, sampled wrote `cat sat.` — and both are verbatim training sentences, because a count model can only recite what it memorized. The honest limit is the lesson: generation is a loop over knowledge, not new knowledge. [Chapter 6](@/learn/model-engineering/from-text-to-a-tiny-language-model.md) records both runs and their limits; training attention weights is next.

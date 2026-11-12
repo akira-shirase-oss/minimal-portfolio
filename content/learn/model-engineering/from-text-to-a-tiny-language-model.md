@@ -1,19 +1,19 @@
 +++
 title = "From text to a tiny language model"
-description = "Text becomes tokens, targets, and predictions. Small recorded updates now change output scores and two-number input embeddings."
+description = "Text becomes tokens, targets, predictions, and generated output. Two-number input embeddings, an attention mechanism, and a first generation loop have run."
 date = 2026-11-10
-updated = 2026-11-10
+updated = 2026-11-11
 weight = 6
 
 [extra]
 kind = "chapter"
 chapter = 6
-status = "tokenizer, count predictor, score update, and last-token embedding update run; attention and broader text-model training remain ahead"
+status = "tokenizer, count predictor, score update, last-token embedding update, attention mechanism, and generation loop run; trained attention weights and broader text-model training remain ahead"
 +++
 
 We are starting a separate tiny text model. The first piece prepares its inputs: text becomes token IDs, and the text itself supplies the expected next pieces.
 
-The first runs built a tokenizer, a count predictor, and an adjustable score vector for one fixed prefix. A new small predictor now learns two-number input embeddings and produces different scores for different last tokens. Combining earlier context, attention, broader text-model training, and a full text-generation loop remain ahead. Qwen's weights are unchanged.
+The first runs built a tokenizer, a count predictor, and an adjustable score vector for one fixed prefix. A new small predictor now learns two-number input embeddings and produces different scores for different last tokens. An attention mechanism now combines the whole prefix — and revealed that order needs position information — and a first generation loop writes text one token at a time. Training attention weights and broader text-model training remain ahead. Qwen's weights are unchanged.
 
 ## Tokens are pieces of text
 
@@ -373,6 +373,86 @@ node tools/inspect-token-embeddings.mjs perf/results/another-embedding-run.json
 
 This is a small last-token embedding predictor. Its input vectors were trained once, and its head was frozen. No attention, full-prefix context processing, held-out quality measurement, test-set evaluation, text generation, or Qwen adaptation ran. The earlier experiments remain available unchanged.
 
+## Reading the whole prefix: attention
+
+The last-token predictor recorded its own failure: `cat a` and `tea` end in the same token, so they received identical predictions. The earlier characters could not affect a model that never consumed them.
+
+**Attention** lets the last token read earlier positions. It works in three steps:
+
+1. The last token's vector is the **query**. Each position's vector acts as a **key**; the dot product — multiply matching coordinates and add — scores how much each key relates to the query. Similar directions score higher.
+2. Softmax turns the scores into **attention weights** that sum to one.
+3. The **context vector** is the weighted sum of the position vectors (the **values**): a blend that emphasizes the positions the query found relevant.
+
+For `cat sa`, whose last token is `a`, the recorded weights were:
+
+| Position | Token | Score | Weight |
+| ---: | --- | ---: | ---: |
+| 0 | `c` | 0.707 | 21.75% |
+| 1 | `a` | 1.000 | 29.15% |
+| 2 | `t` | −1.000 | 3.94% |
+| 3 | ` ` | 0.000 | 10.72% |
+| 4 | `s` | −0.707 | 5.29% |
+| 5 | `a` | 1.000 | 29.15% |
+
+The two positions holding `a` tie at the top — attention found the matching tokens. And the untrained mechanism already distinguishes `cat a` from `tea`: their context vectors differ (`[-0.555, 0.486]` versus `[-0.580, 0.234]`), producing different probability vectors. Earlier characters finally affect the answer.
+
+## Why order needs position information
+
+A second recorded result: `cat ` and `tac ` — the same four tokens in different order — produced *identical* context vectors without position information, within a difference of 10⁻¹². Attention sums weighted vectors, and a sum cannot see order. The mechanism reads a bag of tokens, not a sequence.
+
+The fix adds a declared **position vector** to each token's vector — ours is `[sin(p), cos(p)]` at position `p`, following the periodic style real transformers use. With positions included, `cat ` and `tac ` produce different contexts, and `t` at position 2 becomes a different vector from `t` at position 6.
+
+## What ran for the attention lesson
+
+The [attention library](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/attention-context.mjs) and [runner](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/inspect-attention-context.mjs) implement the query-key-value weighting, optional position vectors, and the same frozen output head as the embedding lab. Token vectors are **declared, not learned** — one unit-circle direction per token ID — because the previously learned table left six of eight rows at zero, which would make most keys indistinguishable.
+
+The [raw result](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-attention-context.json) preserves all seven prefix traces, per-position weights, context vectors, the order-blindness pair, probabilities, source identities, and machine details. Twelve program checks passed. A [separate independent check](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-attention-context-independent-check.json) recomputed weights and contexts without importing the lab modules and passed ten checks.
+
+```sh
+node tools/inspect-attention-context.mjs
+```
+
+The first result is protected; pass a fresh result path for a later run:
+
+```sh
+node tools/inspect-attention-context.mjs perf/results/another-attention-run.json
+```
+
+This is a mechanism demonstration: declared vectors, identity projections, a single head, and no trained attention parameters. Multi-head attention, learned projections, stacked layers, causal masking, and training remain ahead.
+
+## The loop that writes: generation
+
+A predictor answers "what comes next" once. A **generator** repeats it: **predict → select → append → repeat**, until a stop rule fires. Each selected token becomes part of the next prefix — the model reads its own output.
+
+The generation runner loops the fitted exact-prefix count model:
+
+| Seed | Selection rule | Result | Steps |
+| --- | --- | --- | ---: |
+| `cat ` | greedy | `cat ate.` | 5 |
+| `c` | greedy | `cat ate.` | 8 |
+| `cat ` | fixed draws | `cat sat.` | 5 |
+| `te` | greedy | halts `UNSEEN_PREFIX` | 0 |
+
+Generation halted on the newline token (a 32-step cap is the other stop rule). The selection rule, not the model, created the variety: the greedy and sampled runs share one unchanged count table.
+
+Every generated text is a **verbatim training document**. The count model memorized two sentences and can only recite them; `te` stops honestly because it has no counts for that prefix. This is memorization, not generalization — learned parameters that generalize are what let larger models write text they have never seen.
+
+## What ran for the generation lesson
+
+The [generation loop](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/generate-text.mjs) and [runner](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/inspect-generation.mjs) record every step's prefix, probability vector, and selected token. The [raw result](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-text-generation.json) preserves the four runs, halt reasons, source identities, and machine details. Eleven program checks passed; a [separate independent check](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-text-generation-independent-check.json) regenerated the outputs without the lab modules and passed ten checks.
+
+```sh
+node tools/inspect-generation.mjs
+```
+
+The first result is protected; pass a fresh result path for a later run:
+
+```sh
+node tools/inspect-generation.mjs perf/results/another-generation-run.json
+```
+
+This is generation over a memorized count table, not neural sampling. No trained weights, no generalization to unseen prefixes, no held-out quality measurement, and no Qwen adaptation ran.
+
 ## Quick revision
 
 - Tokens are the text pieces our tokenizer works with; this example uses characters.
@@ -392,5 +472,11 @@ This is a small last-token embedding predictor. Its input vectors were trained o
 - Training can change embeddings while leaving IDs and, in this experiment, the output head fixed.
 - Base token embeddings are shared across occurrences. Context processing adds information from surrounding positions.
 - Reading only the last token gives identical predictions to different prefixes ending in that token.
+- Attention scores how much each earlier position matters to the last token's query; softmax turns those scores into weights summing to one.
+- The context vector is a weighted blend of position vectors; earlier tokens can finally change the prediction.
+- Attention alone is order-blind — the same tokens in different orders produce identical context. Position vectors make order visible.
+- Generation is a loop: predict, select, append, repeat. Each generated token becomes part of the next prefix.
+- Greedy selection and sampling change which token is picked, not the model's learned or counted knowledge.
+- Our generator recites training text verbatim. Generalizing to unseen text requires learned parameters.
 
-Next we will work with more than the last token, explain why token order matters, and introduce position information before attention. Broader text-model training and generation remain later pieces of the build.
+Next we will train attention weights so the position weightings come from data rather than our declared vectors. Broader text-model training remains the following piece of the build.

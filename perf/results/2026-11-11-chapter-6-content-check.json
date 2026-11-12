@@ -1,0 +1,41 @@
+{
+  "recorded_utc": "2026-11-12T12:28:51.382Z",
+  "kind": "Content check for chapter-6 attention+generation publication",
+  "code_base_commit": "b04af80a09a229a76cb4aeb40e7ce41fe7b6fac5",
+  "internal_links_checked": 2894,
+  "html_files": 136,
+  "broken_links": [
+    "public/404.html: /style.css?h=a503cb810a5b2e1a50db",
+    "public/build-log/index.html: /style.css?h=a503cb810a5b2e1a50db",
+    "public/colophon/checkpoint-0-1/index.html: /style.css?h=a503cb810a5b2e1a50db",
+    "public/colophon/checkpoint-0-2/index.html: /style.css?h=a503cb810a5b2e1a50db",
+    "public/colophon/checkpoint-0-3/index.html: /style.css?h=a503cb810a5b2e1a50db",
+    "public/colophon/checkpoint-0-4/index.html: /style.css?h=a503cb810a5b2e1a50db",
+    "public/colophon/checkpoint-0-5/index.html: /style.css?h=a503cb810a5b2e1a50db",
+    "public/colophon/checkpoint-0-6/index.html: /style.css?h=a503cb810a5b2e1a50db",
+    "public/colophon/checkpoint-0-7/index.html: /style.css?h=a503cb810a5b2e1a50db",
+    "public/colophon/checkpoint-1-1/index.html: /style.css?h=a503cb810a5b2e1a50db"
+  ],
+  "checks": {
+    "ch6_attention_section_present": true,
+    "ch6_order_blindness_section": true,
+    "ch6_generation_section": true,
+    "ch6_recorded_weights_table": true,
+    "ch6_context_vectors_recorded": true,
+    "ch6_identical_within_claim": true,
+    "ch6_generation_results": true,
+    "ch6_memorization_limit_stated": true,
+    "ch6_attention_tool_links": true,
+    "ch6_generation_tool_links": true,
+    "ch6_evidence_links": true,
+    "ch6_independent_check_links": true,
+    "ch6_honest_limits_no_trained_attention": true,
+    "index_topic6_updated": true,
+    "roadmap_topic6_updated": true,
+    "roadmap_remaining_is_trained_attention": true,
+    "blog_dated_entry": true,
+    "internal_links_checked": true,
+    "no_broken_internal_links": false
+  },
+  "passed": false
+}
