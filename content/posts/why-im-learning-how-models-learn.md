@@ -201,3 +201,11 @@ Two pieces I had been circling finally ran inside chapter 6. First, attention: t
 Then the surprise the mechanism was hiding: `cat ` and `tac ` — same characters, different order — produced identical context. Attention reads a bag of tokens, not a sequence. Order only became visible after adding declared position vectors, which is why every real transformer carries them.
 
 Second, the generation loop: predict, select, append, repeat. Greedy wrote `cat ate.`, sampled wrote `cat sat.` — and both are verbatim training sentences, because a count model can only recite what it memorized. The honest limit is the lesson: generation is a loop over knowledge, not new knowledge. [Chapter 6](@/learn/model-engineering/from-text-to-a-tiny-language-model.md) records both runs and their limits; training attention weights is next.
+
+### Attention weights learned from data
+
+The declared-vector demo left the obvious question open: can the weighting be *learned*? So I trained the shared embeddings through the attention mechanism on three prefixes that all end in `t` — `cat`, `cat sat`, `cat at` — where only earlier positions can decide what comes next.
+
+Three arms made the answer inspectable. The last-token baseline is blind by construction and stuck near 1.75 loss. Attention with a frozen head learned real structure — non-uniform weights, different answers per prefix — but plateaued: a frozen component caps what training can reach. Training embeddings *and* the head together converged to 0.0009, all three targets correct.
+
+The detail that made me stop: the trained model put 85% of `cat sat`'s attention on the space at position 3 — the character that says "the second word is over." Gradient descent found the signal I would have hand-picked, and the weight vector now *is* the explanation. [Chapter 6](@/learn/model-engineering/from-text-to-a-tiny-language-model.md) records the full trajectories, both check runs, and the honest limits — sixteen to thirty-two parameters, not a transformer.

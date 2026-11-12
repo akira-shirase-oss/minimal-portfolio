@@ -1,0 +1,28 @@
+{
+  "recorded_utc": "2026-11-12T16:38:23.760Z",
+  "kind": "Content check for chapter-6 trained-attention publication",
+  "code_base_commit": "c349e2b974efd72ad8b1b8b22a74855cc8cd9b33",
+  "internal_links_checked": 2914,
+  "html_files": 137,
+  "broken_links": [],
+  "checks": {
+    "ch6_training_section_present": true,
+    "ch6_what_ran_section": true,
+    "ch6_three_arm_table": true,
+    "ch6_recorded_losses": true,
+    "ch6_same_last_token_task": true,
+    "ch6_space_weight_finding": true,
+    "ch6_frozen_ceiling_lesson": true,
+    "ch6_tool_links": true,
+    "ch6_evidence_link": true,
+    "ch6_independent_check_link": true,
+    "ch6_honest_scale_limit": true,
+    "index_mentions_trained_attention": true,
+    "roadmap_trained_attention": true,
+    "roadmap_arm_result": true,
+    "blog_training_entry": true,
+    "internal_links_checked": true,
+    "no_broken_internal_links": true
+  },
+  "passed": true
+}

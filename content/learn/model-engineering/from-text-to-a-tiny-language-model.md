@@ -1,19 +1,19 @@
 +++
 title = "From text to a tiny language model"
-description = "Text becomes tokens, targets, predictions, and generated output. Two-number input embeddings, an attention mechanism, and a first generation loop have run."
+description = "Text becomes tokens, targets, predictions, and generated output. Embeddings, an attention mechanism, a generation loop, and trained attention weights have run."
 date = 2026-11-10
-updated = 2026-11-11
+updated = 2026-11-12
 weight = 6
 
 [extra]
 kind = "chapter"
 chapter = 6
-status = "tokenizer, count predictor, score update, last-token embedding update, attention mechanism, and generation loop run; trained attention weights and broader text-model training remain ahead"
+status = "tokenizer, count predictor, score update, last-token embedding update, attention mechanism, generation loop, and trained attention weights run; broader text-model training remains ahead"
 +++
 
 We are starting a separate tiny text model. The first piece prepares its inputs: text becomes token IDs, and the text itself supplies the expected next pieces.
 
-The first runs built a tokenizer, a count predictor, and an adjustable score vector for one fixed prefix. A new small predictor now learns two-number input embeddings and produces different scores for different last tokens. An attention mechanism now combines the whole prefix — and revealed that order needs position information — and a first generation loop writes text one token at a time. Training attention weights and broader text-model training remain ahead. Qwen's weights are unchanged.
+The first runs built a tokenizer, a count predictor, and an adjustable score vector for one fixed prefix. A new small predictor now learns two-number input embeddings and produces different scores for different last tokens. An attention mechanism now combines the whole prefix — and revealed that order needs position information — a first generation loop writes text one token at a time, and attention weights have now been trained on a task that requires earlier positions. Broader text-model training remains ahead. Qwen's weights are unchanged.
 
 ## Tokens are pieces of text
 
@@ -453,6 +453,48 @@ node tools/inspect-generation.mjs perf/results/another-generation-run.json
 
 This is generation over a memorized count table, not neural sampling. No trained weights, no generalization to unseen prefixes, no held-out quality measurement, and no Qwen adaptation ran.
 
+## Training attention weights
+
+The attention demo used declared vectors — the weighting pattern was built into our choices, not learned. The next experiment trains the shared token embeddings **through** the attention mechanism: the gradient now flows from the loss, through the output scores, into the context vector, the attention weights, the attention scores, and finally the key, query, and value rows of the embedding table.
+
+The task forces earlier positions to matter. Three training prefixes all end in `t`:
+
+| Prefix | Observed continuation | What decides it |
+| --- | --- | --- |
+| `cat` | space | this word is finished |
+| `cat sat` | `.` | a second word just finished |
+| `cat at` | `e` | the second word is still going |
+
+A last-token predictor receives identical input (`t`) for all three and can never separate them. Three arms were trained under the same declared initial vectors:
+
+| Arm | What trains | Final mean loss | Top guesses |
+| --- | --- | ---: | --- |
+| Last-token baseline | embeddings, 300 steps | ~1.75 | identical for all three — blind by construction |
+| Attention, frozen head | embeddings, 300 steps | ~1.35 | separates the prefixes, still wrong answers |
+| Attention, trained head | embeddings **and** head, 2000 steps | **0.0009** | **all three correct** |
+
+The frozen-head arm is its own lesson: it genuinely learned — non-uniform weights, different distributions per prefix — but the fixed head capped what the context could become. Every frozen piece is a ceiling on what training can reach, which is why real transformers learn projections at every stage.
+
+After training, the full arm put **85.2% of `cat sat`'s attention weight on position 3 — the space**. Gradient descent discovered that the space before the second word is the signal separating "word ended" from "word continues." The learned weights are inspectable evidence of what the model uses.
+
+## What ran for the attention-training lesson
+
+The [trainable-attention library](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/trainable-attention.mjs) implements the forward pass and the analytic backward pass through attention; the [runner](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/tools/inspect-attention-training.mjs) trains all three arms and records every step's loss. The [raw result](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-attention-training.json) preserves the trajectories, learned embeddings and head, per-position weights, probes, source identities, and machine details.
+
+Seventeen program checks passed. A [separate independent check](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/first-attention-training-independent-check.json) rebuilt the forward pass without the lab modules, recomputed losses and predictions, and verified gradient direction with finite differences — ten checks passed.
+
+```sh
+node tools/inspect-attention-training.mjs
+```
+
+The first result is protected; pass a fresh result path for a later run:
+
+```sh
+node tools/inspect-attention-training.mjs perf/results/another-attention-training-run.json
+```
+
+This is 16–32 parameters on three examples with declared position vectors, identity projections, and a single head. Multi-head attention, learned projections, stacked layers, held-out quality, and generation under a trained model remain ahead.
+
 ## Quick revision
 
 - Tokens are the text pieces our tokenizer works with; this example uses characters.
@@ -478,5 +520,8 @@ This is generation over a memorized count table, not neural sampling. No trained
 - Generation is a loop: predict, select, append, repeat. Each generated token becomes part of the next prefix.
 - Greedy selection and sampling change which token is picked, not the model's learned or counted knowledge.
 - Our generator recites training text verbatim. Generalizing to unseen text requires learned parameters.
+- Training through attention means the gradient flows through weights, scores, keys, and query back into shared embeddings.
+- A frozen component caps what training can reach: our frozen-head arm learned real structure yet could not finish the task.
+- Training embeddings and the head together solved all three same-last-token cases; the learned weights concentrated on the one discriminative position.
 
-Next we will train attention weights so the position weightings come from data rather than our declared vectors. Broader text-model training remains the following piece of the build.
+Chapter 6 now covers the full skeleton — text to tokens, distributions, embeddings, attention, trained weighting, and generation. Broader text-model training remains the next piece of the build.

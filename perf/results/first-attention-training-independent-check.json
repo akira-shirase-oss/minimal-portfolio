@@ -1,0 +1,24 @@
+{
+  "recorded_utc": "2026-11-12T16:34:43.832Z",
+  "kind": "Independent check of first-attention-training.json: losses, argmaxes, dominant weight, and finite-difference gradients recomputed without lab imports",
+  "code_base_commit": "c349e2b974efd72ad8b1b8b22a74855cc8cd9b33",
+  "evidence_file": "perf/results/first-attention-training.json",
+  "method": "Rebuilt the vocabulary and forward pass (position vectors, dot-product attention, softmax, head, NLL) from the fixture; recomputed final losses for arms B and C, all argmaxes, the dominant weight position, and finite-difference gradients on an embedding parameter and a head weight.",
+  "spot_check": {
+    "numerical_embedding_gradient_example": 0.43943190819462075,
+    "numerical_head_gradient_example": -0.2910273468881286
+  },
+  "checks": {
+    "arm_c_loss_recomputed_near_zero": true,
+    "arm_c_argmax_all_correct": true,
+    "arm_c_dominant_weight_is_the_space_position": true,
+    "arm_b_loss_recomputed": true,
+    "baseline_identical_for_all_three": true,
+    "ordering_is_strict": true,
+    "numerical_gradient_is_finite_and_nonzero": true,
+    "learned_embeddings_differ_from_initial": true,
+    "trained_head_differs_from_initial": true,
+    "evidence_checks_all_passed": true
+  },
+  "passed": true
+}

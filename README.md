@@ -170,7 +170,21 @@ Greedy from `cat ` writes `cat ate.` in five steps, fixed-draw sampling writes
 `cat sat.`, and unseen seed `te` halts with `UNSEEN_PREFIX`. Every output is a
 verbatim training document — memorization, not generalization. Results are in
 `perf/results/first-text-generation.json` with a separate independent check.
-Trained attention weights and broader text-model training remain ahead.
+
+`node tools/inspect-attention-training.mjs` trains attention weights for the
+first time: analytic backprop flows through output scores, context, attention
+weights, scores, keys, and query back into shared embeddings — on three
+same-last-token prefixes (`cat`/`cat sat`/`cat at`, all ending `t`) that a
+last-token model cannot separate. Three arms: the blind baseline plateaus
+~1.75 with identical predictions; attention with a frozen head learns
+non-uniform weights but plateaus ~1.35 (a frozen component caps what training
+reaches); attention with embeddings and head trained together converges to
+0.0009 — all three targets correct, with 85.2% of `cat sat`'s weight on the
+discriminative space position. Results are in
+`perf/results/first-attention-training.json` with a separate independent
+check including finite-difference gradient verification. Declared position
+vectors, identity projections, single head; broader text-model training
+remains ahead.
 
 Chapters 7 and 8 ran their first labs on 2026-11-11, both in the learning
 workspace's `labs/`. `resumable-trainer.mjs` saves a JSON checkpoint (step,
