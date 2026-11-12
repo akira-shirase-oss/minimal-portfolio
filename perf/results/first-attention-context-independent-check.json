@@ -1,0 +1,20 @@
+{
+  "recorded_utc": "2026-11-11T20:22:39.025Z",
+  "kind": "Independent check of first-attention-context.json: attention weights, order blindness, and position separation recomputed from the fixture without importing the lab modules",
+  "code_base_commit": "8576315ae51ae804eaaa1ea0c601ac66bd26af4c",
+  "evidence_file": "perf/results/first-attention-context.json",
+  "method": "Rebuilt the character vocabulary from training text, recomputed unit-circle embeddings, dot products, softmax weights, and context sums with independent code; compared against recorded values within 1e-9 (1e-15 for the identical-a weight claim).",
+  "checks": {
+    "cat_sa_weights_match_independent_softmax": true,
+    "top_weights_are_exactly_the_two_a_positions": true,
+    "a_dot_a_is_one_by_construction": true,
+    "cat_tac_contexts_identical_without_positions": true,
+    "cat_tac_contexts_differ_with_positions": true,
+    "prefixes_differing_in_earlier_tokens_differ": true,
+    "weights_sum_to_one_independent": true,
+    "recorded_t_at_6_differs_from_t_at_2": true,
+    "position_offset_recomputed": true,
+    "evidence_checks_all_passed": true
+  },
+  "passed": true
+}

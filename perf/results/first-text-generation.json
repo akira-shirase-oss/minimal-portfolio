@@ -1,0 +1,435 @@
+{
+  "recorded_utc": "2026-11-11T21:19:28.402Z",
+  "kind": "First text-generation loop over the fitted exact-prefix count model",
+  "code_base_commit": "8576315ae51ae804eaaa1ea0c601ac66bd26af4c",
+  "working_tree_status": "?? perf/results/first-attention-context-independent-check.json\n?? perf/results/first-attention-context.json\n?? tools/attention-context.mjs\n?? tools/generate-text.mjs\n?? tools/inspect-attention-context.mjs\n?? tools/inspect-generation.mjs",
+  "source_sha256": {
+    "tools/character-tokenizer.mjs": "a587fdfe8946dbd2e58f8800aab52171e4745f5bd7534a9922f1e01ece4de52a",
+    "tools/prefix-count-model.mjs": "6b20a9bcad8e3404990547658ad5a8d2fd11969a4d81868b401cd0f26f61f341",
+    "tools/generate-text.mjs": "2572995526b429d5cea499b0c3458f5a09a355cd8ca775298a08f92d0a9476f7",
+    "tools/inspect-generation.mjs": "85406bb35b299c9abdb2dc8f18ffdca19ecc6e3b9c37b2976566cc00149d8139",
+    "perf/fixtures/tiny-text-tokens-v1.json": "5f0da3975eb088f255311d118defb93c3afb1157e1c65de06f019d4a87c07a86"
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "fixture_version": "tiny-text-tokens-v1",
+  "vocabulary": [
+    {
+      "id": 0,
+      "token": "\n"
+    },
+    {
+      "id": 1,
+      "token": " "
+    },
+    {
+      "id": 2,
+      "token": "."
+    },
+    {
+      "id": 3,
+      "token": "a"
+    },
+    {
+      "id": 4,
+      "token": "c"
+    },
+    {
+      "id": 5,
+      "token": "e"
+    },
+    {
+      "id": 6,
+      "token": "s"
+    },
+    {
+      "id": 7,
+      "token": "t"
+    }
+  ],
+  "model": {
+    "kind": "Exact-prefix count model",
+    "distinct_prefixes": 12,
+    "training_observations": 16
+  },
+  "loop": {
+    "predict_then_select_then_append": true,
+    "stop_rule": "newline token or 32-step limit",
+    "sampling_draws": "Fixed supplied draws, not randomness"
+  },
+  "runs": {
+    "greedy_from_cat": {
+      "seed": "cat ",
+      "steps": [
+        {
+          "step": 0,
+          "prefix": "cat ",
+          "probabilities": [
+            0,
+            0,
+            0,
+            0.5,
+            0,
+            0,
+            0.5,
+            0
+          ],
+          "selected_id": 3,
+          "selected_token": "a"
+        },
+        {
+          "step": 1,
+          "prefix": "cat a",
+          "probabilities": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "selected_id": 7,
+          "selected_token": "t"
+        },
+        {
+          "step": 2,
+          "prefix": "cat at",
+          "probabilities": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "selected_id": 5,
+          "selected_token": "e"
+        },
+        {
+          "step": 3,
+          "prefix": "cat ate",
+          "probabilities": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "selected_id": 2,
+          "selected_token": "."
+        },
+        {
+          "step": 4,
+          "prefix": "cat ate.",
+          "probabilities": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "selected_id": 0,
+          "selected_token": "\n"
+        }
+      ],
+      "generated_ids": [
+        4,
+        3,
+        7,
+        1,
+        3,
+        7,
+        5,
+        2,
+        0
+      ],
+      "generated_text": "cat ate.\n",
+      "halt_reason": "STOP_TOKEN"
+    },
+    "greedy_from_c": {
+      "seed": "c",
+      "steps": [
+        {
+          "step": 0,
+          "prefix": "c",
+          "probabilities": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "selected_id": 3,
+          "selected_token": "a"
+        },
+        {
+          "step": 1,
+          "prefix": "ca",
+          "probabilities": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "selected_id": 7,
+          "selected_token": "t"
+        },
+        {
+          "step": 2,
+          "prefix": "cat",
+          "probabilities": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "selected_id": 1,
+          "selected_token": " "
+        },
+        {
+          "step": 3,
+          "prefix": "cat ",
+          "probabilities": [
+            0,
+            0,
+            0,
+            0.5,
+            0,
+            0,
+            0.5,
+            0
+          ],
+          "selected_id": 3,
+          "selected_token": "a"
+        },
+        {
+          "step": 4,
+          "prefix": "cat a",
+          "probabilities": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "selected_id": 7,
+          "selected_token": "t"
+        },
+        {
+          "step": 5,
+          "prefix": "cat at",
+          "probabilities": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "selected_id": 5,
+          "selected_token": "e"
+        },
+        {
+          "step": 6,
+          "prefix": "cat ate",
+          "probabilities": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "selected_id": 2,
+          "selected_token": "."
+        },
+        {
+          "step": 7,
+          "prefix": "cat ate.",
+          "probabilities": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "selected_id": 0,
+          "selected_token": "\n"
+        }
+      ],
+      "generated_ids": [
+        4,
+        3,
+        7,
+        1,
+        3,
+        7,
+        5,
+        2,
+        0
+      ],
+      "generated_text": "cat ate.\n",
+      "halt_reason": "STOP_TOKEN"
+    },
+    "sampled_from_cat": {
+      "seed": "cat ",
+      "steps": [
+        {
+          "step": 0,
+          "prefix": "cat ",
+          "probabilities": [
+            0,
+            0,
+            0,
+            0.5,
+            0,
+            0,
+            0.5,
+            0
+          ],
+          "selected_id": 6,
+          "selected_token": "s"
+        },
+        {
+          "step": 1,
+          "prefix": "cat s",
+          "probabilities": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "selected_id": 3,
+          "selected_token": "a"
+        },
+        {
+          "step": 2,
+          "prefix": "cat sa",
+          "probabilities": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "selected_id": 7,
+          "selected_token": "t"
+        },
+        {
+          "step": 3,
+          "prefix": "cat sat",
+          "probabilities": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "selected_id": 2,
+          "selected_token": "."
+        },
+        {
+          "step": 4,
+          "prefix": "cat sat.",
+          "probabilities": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "selected_id": 0,
+          "selected_token": "\n"
+        }
+      ],
+      "generated_ids": [
+        4,
+        3,
+        7,
+        1,
+        6,
+        3,
+        7,
+        2,
+        0
+      ],
+      "generated_text": "cat sat.\n",
+      "halt_reason": "STOP_TOKEN"
+    },
+    "unseen_seed": {
+      "seed": "te",
+      "steps": [],
+      "generated_ids": [
+        7,
+        5
+      ],
+      "generated_text": "te",
+      "halt_reason": "UNSEEN_PREFIX"
+    }
+  },
+  "checks": {
+    "greedy_from_cat_writes_a_training_document_verbatim": true,
+    "greedy_from_single_character_completes_a_document": true,
+    "fixed_draw_sampling_writes_the_other_training_document": true,
+    "unseen_seed_halts_with_explicit_reason_and_zero_tokens": true,
+    "both_runs_stop_on_the_newline_token": true,
+    "prefix_grows_by_exactly_one_token_per_step": true,
+    "every_step_records_distribution_and_selection": true,
+    "generated_texts_are_confined_to_training_documents": true,
+    "selection_rule_changes_output_without_changing_the_model": true,
+    "generated_token_becomes_part_of_the_next_prefix": true,
+    "model_table_and_vocabulary_unchanged": true
+  },
+  "passed": true,
+  "scope": "A generation loop over a memorized count table. Output is confined to verbatim training text; unseen prefixes halt with UNSEEN_PREFIX. No neural weights, no generalization, no held-out quality claim, no Qwen adaptation."
+}

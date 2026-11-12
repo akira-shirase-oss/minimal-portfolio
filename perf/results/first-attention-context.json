@@ -1,0 +1,609 @@
+{
+  "recorded_utc": "2026-11-11T20:22:19.894Z",
+  "kind": "Attention-weighted whole-prefix context for next-token prediction; mechanism demonstration with declared vectors, no training",
+  "code_base_commit": "8576315ae51ae804eaaa1ea0c601ac66bd26af4c",
+  "working_tree_status": "?? tools/attention-context.mjs\n?? tools/inspect-attention-context.mjs",
+  "source_sha256": {
+    "tools/character-tokenizer.mjs": "a587fdfe8946dbd2e58f8800aab52171e4745f5bd7534a9922f1e01ece4de52a",
+    "tools/next-token-scores.mjs": "f67bd75f0547393f1ceac3b2e747707920c6afacd3523e7c9dfdb441d63865c0",
+    "tools/last-token-embeddings.mjs": "867b4a2173bb4814ecafc3427b7c2979aae55a67d0d8b87318697d3a977f2fd5",
+    "tools/attention-context.mjs": "b6776e22828ab41581581ee2fdf475ce656b561663b698112058f6f07469bf2d",
+    "tools/inspect-attention-context.mjs": "328a4559d2de2e4ad62936e9f21cf4832ac32f144856a70f647f3dfe6ac33895",
+    "perf/fixtures/tiny-text-tokens-v1.json": "5f0da3975eb088f255311d118defb93c3afb1157e1c65de06f019d4a87c07a86"
+  },
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368,
+    "runtime": "v24.18.0"
+  },
+  "fixture_version": "tiny-text-tokens-v1",
+  "vocabulary": [
+    {
+      "id": 0,
+      "token": "\n"
+    },
+    {
+      "id": 1,
+      "token": " "
+    },
+    {
+      "id": 2,
+      "token": "."
+    },
+    {
+      "id": 3,
+      "token": "a"
+    },
+    {
+      "id": 4,
+      "token": "c"
+    },
+    {
+      "id": 5,
+      "token": "e"
+    },
+    {
+      "id": 6,
+      "token": "s"
+    },
+    {
+      "id": 7,
+      "token": "t"
+    }
+  ],
+  "architecture": {
+    "input": "Whole prefix; the last position queries all positions including itself",
+    "projections": "Identity: position vectors are used directly as queries, keys, and values",
+    "token_vectors": "Declared unit-circle directions, one per token ID; author-chosen, not learned",
+    "position_vectors": "Declared [sin(p), cos(p)] per position, added on demand in the order demos",
+    "output_head": {
+      "weights": [
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0.5,
+          0.5
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          -0.5,
+          -0.5
+        ],
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "origin": "Same frozen author-chosen head as the embedding lab",
+      "trained": false
+    },
+    "attention_implemented": true,
+    "single_head": true,
+    "trained_parameters": 0
+  },
+  "demonstrations": {
+    "cat_sa_weights": {
+      "prefix": "cat sa",
+      "token_ids": [
+        4,
+        3,
+        7,
+        1,
+        6,
+        3
+      ],
+      "positions_used": false,
+      "per_position": [
+        {
+          "position": 0,
+          "token": "c",
+          "score": 0.7071067811865476,
+          "weight": 0.21747760567960564
+        },
+        {
+          "position": 1,
+          "token": "a",
+          "score": 1,
+          "weight": 0.29148516182028295
+        },
+        {
+          "position": 2,
+          "token": "t",
+          "score": -1,
+          "weight": 0.03944822693421788
+        },
+        {
+          "position": 3,
+          "token": " ",
+          "score": 0,
+          "weight": 0.10723139844021312
+        },
+        {
+          "position": 4,
+          "token": "s",
+          "score": -0.7071067811865475,
+          "weight": 0.05287244530539744
+        },
+        {
+          "position": 5,
+          "token": "a",
+          "score": 1,
+          "weight": 0.29148516182028295
+        }
+      ],
+      "context": [
+        -0.5259817169922035,
+        0.407279763993583
+      ],
+      "scores": [
+        0.5259817169922035,
+        -0.407279763993583,
+        -0.05935097649931026,
+        -0.5259817169922035,
+        0.05935097649931026,
+        -0.46663074049289327,
+        0.46663074049289327,
+        0.407279763993583
+      ],
+      "probabilities": [
+        0.19502270388184906,
+        0.07669637927716315,
+        0.10861215095178454,
+        0.06811194134737938,
+        0.12230100271289757,
+        0.07227682399554163,
+        0.18378470765438204,
+        0.17319429017900265
+      ]
+    },
+    "prefix_pair_sharing_last_token": {
+      "cat_a": {
+        "prefix": "cat a",
+        "token_ids": [
+          4,
+          3,
+          7,
+          1,
+          3
+        ],
+        "positions_used": false,
+        "per_position": [
+          {
+            "position": 0,
+            "token": "c",
+            "score": 0.7071067811865476,
+            "weight": 0.22961807477951626
+          },
+          {
+            "position": 1,
+            "token": "a",
+            "score": 1,
+            "weight": 0.3077570284757169
+          },
+          {
+            "position": 2,
+            "token": "t",
+            "score": -1,
+            "weight": 0.04165038461681943
+          },
+          {
+            "position": 3,
+            "token": " ",
+            "score": 0,
+            "weight": 0.1132174836522304
+          },
+          {
+            "position": 4,
+            "token": "a",
+            "score": 1,
+            "weight": 0.3077570284757169
+          }
+        ],
+        "context": [
+          -0.5553441185245678,
+          0.4858397446237901
+        ],
+        "scores": [
+          0.5553441185245678,
+          -0.4858397446237901,
+          -0.03475218695038884,
+          -0.5553441185245678,
+          0.03475218695038884,
+          -0.5205919315741789,
+          0.5205919315741789,
+          0.4858397446237901
+        ],
+        "probabilities": [
+          0.1972195758250336,
+          0.06962570633079346,
+          0.1093136639523115,
+          0.06495076160592993,
+          0.11718170620484003,
+          0.0672476219173277,
+          0.19048348905455853,
+          0.18397747510920512
+        ]
+      },
+      "tea": {
+        "prefix": "tea",
+        "token_ids": [
+          7,
+          5,
+          3
+        ],
+        "positions_used": false,
+        "per_position": [
+          {
+            "position": 0,
+            "token": "t",
+            "score": -1,
+            "weight": 0.09003057317038046
+          },
+          {
+            "position": 1,
+            "token": "e",
+            "score": 1.1102230246251565e-16,
+            "weight": 0.24472847105479764
+          },
+          {
+            "position": 2,
+            "token": "a",
+            "score": 1,
+            "weight": 0.6652409557748218
+          }
+        ],
+        "context": [
+          -0.5797843235807721,
+          0.23368600071624587
+        ],
+        "scores": [
+          0.5797843235807721,
+          -0.23368600071624587,
+          -0.17304916143226312,
+          -0.5797843235807721,
+          0.17304916143226312,
+          -0.406735162148509,
+          0.406735162148509,
+          0.23368600071624587
+        ],
+        "probabilities": [
+          0.20767568109351175,
+          0.09206614747916332,
+          0.09782147682002885,
+          0.06513154474641013,
+          0.13827472611938504,
+          0.0774364927160878,
+          0.17467523956018632,
+          0.1469186914652268
+        ]
+      },
+      "last_token_predictor": {
+        "applies_to_prefixes": [
+          "cat a",
+          "tea"
+        ],
+        "shared_last_token_id": 3,
+        "input_token_id": 3,
+        "embedding": [
+          -0.7071067811865475,
+          0.7071067811865476
+        ],
+        "scores": [
+          0.7071067811865475,
+          -0.7071067811865476,
+          5.551115123125783e-17,
+          -0.7071067811865475,
+          -5.551115123125783e-17,
+          -0.7071067811865475,
+          0.7071067811865475,
+          0.7071067811865476
+        ],
+        "probabilities": [
+          0.21206714719156336,
+          0.05155707230599273,
+          0.10456367075366586,
+          0.05155707230599274,
+          0.10456367075366585,
+          0.05155707230599274,
+          0.21206714719156336,
+          0.2120671471915634
+        ]
+      }
+    },
+    "order_blindness": {
+      "cat_no_positions": {
+        "prefix": "cat ",
+        "token_ids": [
+          4,
+          3,
+          7,
+          1
+        ],
+        "positions_used": false,
+        "per_position": [
+          {
+            "position": 0,
+            "token": "c",
+            "score": -0.7071067811865475,
+            "weight": 0.09461437865611591
+          },
+          {
+            "position": 1,
+            "token": "a",
+            "score": 0,
+            "weight": 0.19188883883173555
+          },
+          {
+            "position": 2,
+            "token": "t",
+            "score": -2.220446049250313e-16,
+            "weight": 0.1918888388317355
+          },
+          {
+            "position": 3,
+            "token": " ",
+            "score": 1,
+            "weight": 0.5216079436804131
+          }
+        ],
+        "context": [
+          0.2742181354410749,
+          0.36883251409719087
+        ],
+        "scores": [
+          -0.2742181354410749,
+          -0.36883251409719087,
+          0.32152532476913287,
+          0.2742181354410749,
+          -0.32152532476913287,
+          -0.047307189328058,
+          0.047307189328058,
+          0.36883251409719087
+        ],
+        "probabilities": [
+          0.09136871321126315,
+          0.0831202816268602,
+          0.16577750762987553,
+          0.15811765131737107,
+          0.0871469630796393,
+          0.11464198056417887,
+          0.12601846431611205,
+          0.17380843825469974
+        ]
+      },
+      "tac_no_positions": {
+        "prefix": "tac ",
+        "token_ids": [
+          7,
+          3,
+          4,
+          1
+        ],
+        "positions_used": false,
+        "per_position": [
+          {
+            "position": 0,
+            "token": "t",
+            "score": -2.220446049250313e-16,
+            "weight": 0.1918888388317355
+          },
+          {
+            "position": 1,
+            "token": "a",
+            "score": 0,
+            "weight": 0.19188883883173555
+          },
+          {
+            "position": 2,
+            "token": "c",
+            "score": -0.7071067811865475,
+            "weight": 0.09461437865611591
+          },
+          {
+            "position": 3,
+            "token": " ",
+            "score": 1,
+            "weight": 0.5216079436804131
+          }
+        ],
+        "context": [
+          0.2742181354410749,
+          0.36883251409719087
+        ],
+        "scores": [
+          -0.2742181354410749,
+          -0.36883251409719087,
+          0.32152532476913287,
+          0.2742181354410749,
+          -0.32152532476913287,
+          -0.047307189328058,
+          0.047307189328058,
+          0.36883251409719087
+        ],
+        "probabilities": [
+          0.09136871321126315,
+          0.0831202816268602,
+          0.16577750762987553,
+          0.15811765131737107,
+          0.0871469630796393,
+          0.11464198056417887,
+          0.12601846431611205,
+          0.17380843825469974
+        ]
+      }
+    },
+    "order_with_positions": {
+      "cat_positions": {
+        "prefix": "cat ",
+        "token_ids": [
+          4,
+          3,
+          7,
+          1
+        ],
+        "positions_used": true,
+        "per_position": [
+          {
+            "position": 0,
+            "token": "c",
+            "score": -1.1311125046603128,
+            "weight": 0.03688645915036858
+          },
+          {
+            "position": 1,
+            "token": "a",
+            "score": -0.23890289497787415,
+            "weight": 0.09002200430167577
+          },
+          {
+            "position": 2,
+            "token": "t",
+            "score": 1.688829754730451,
+            "weight": 0.6188028859025345
+          },
+          {
+            "position": 3,
+            "token": " ",
+            "score": 0.7995130139805147,
+            "weight": 0.25428865064542105
+          }
+        ],
+        "context": [
+          1.1911393101477605,
+          -0.6178264817623793
+        ],
+        "scores": [
+          -1.1911393101477605,
+          0.6178264817623793,
+          0.2866564141926906,
+          1.1911393101477605,
+          -0.2866564141926906,
+          0.9044828959550699,
+          -0.9044828959550699,
+          -0.6178264817623793
+        ],
+        "probabilities": [
+          0.02775911055951476,
+          0.16944525353798068,
+          0.12167576209950495,
+          0.3006187092464416,
+          0.06858315774842841,
+          0.22569539961311524,
+          0.03697420505927613,
+          0.04924840213573824
+        ]
+      },
+      "tac_positions": {
+        "prefix": "tac ",
+        "token_ids": [
+          7,
+          3,
+          4,
+          1
+        ],
+        "positions_used": true,
+        "per_position": [
+          {
+            "position": 0,
+            "token": "t",
+            "score": 0.5169316069163095,
+            "weight": 0.292625162188967
+          },
+          {
+            "position": 1,
+            "token": "a",
+            "score": -0.23890289497787415,
+            "weight": 0.1374222054120682
+          },
+          {
+            "position": 2,
+            "token": "c",
+            "score": 0.04078564315382881,
+            "weight": 0.18177079336939087
+          },
+          {
+            "position": 3,
+            "token": " ",
+            "score": 0.7995130139805147,
+            "weight": 0.38818183902957376
+          }
+        ],
+        "context": [
+          0.5381610179969967,
+          0.07167519557154499
+        ],
+        "scores": [
+          -0.5381610179969967,
+          -0.07167519557154499,
+          0.30491810678427084,
+          0.5381610179969967,
+          -0.30491810678427084,
+          0.23324291121272583,
+          -0.23324291121272583,
+          0.07167519557154499
+        ],
+        "probabilities": [
+          0.06908991068197275,
+          0.11015566834357096,
+          0.16053112267238803,
+          0.2027007484220734,
+          0.08723901241400164,
+          0.14942769628210004,
+          0.09372142482348962,
+          0.12713441636040357
+        ]
+      }
+    },
+    "same_token_different_positions": {
+      "token": "t",
+      "positions": [
+        2,
+        6
+      ],
+      "vector_at_2": [
+        1.616404208012229,
+        -1.12325361773369
+      ],
+      "vector_at_6": [
+        0.4276912829876215,
+        0.2530635054638184
+      ]
+    }
+  },
+  "checks": {
+    "seven_prefixes_encoded_inside_vocabulary": true,
+    "weights_are_normalized_distributions": true,
+    "order_demo_multisets_differ_only_by_order": true,
+    "attention_is_order_blind_without_position_information": true,
+    "position_vectors_make_order_visible": true,
+    "same_token_at_different_positions_gets_different_vectors": true,
+    "attention_prefers_the_positions_holding_the_query_token": true,
+    "last_token_predictor_reproduces_the_recorded_limitation": true,
+    "attention_separates_prefixes_that_share_their_last_token": true,
+    "attention_weights_vary_across_positions": true,
+    "declared_embedding_rows_are_distinct": true,
+    "vocabulary_and_head_unchanged": true
+  },
+  "passed": true,
+  "scope": "A mechanism demonstration of attention-style context, not a transformer. Declared token and position vectors, identity projections, single head, no training, no multi-layer, no causal mask beyond prefix length, no held-out quality measurement, no text generation, no Qwen adaptation."
+}
