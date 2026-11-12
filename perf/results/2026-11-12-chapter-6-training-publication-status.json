@@ -1,0 +1,21 @@
+{
+  "recorded_utc": "2026-11-12T16:42:00Z",
+  "kind": "Publication status: chapter 6 trained attention weights section",
+  "scope": "Chapter 6 gained the trained-attention section: three-arm run on same-last-token prefixes (blind baseline ~1.75, frozen-head attention ~1.35 plateau, embeddings+head converged to 0.0009 with 85.2% weight on the discriminative space). Index, roadmap, README, and blog updated.",
+  "evidence": [
+    "perf/results/first-attention-training.json",
+    "perf/results/first-attention-training-independent-check.json",
+    "perf/results/2026-11-12-chapter-6-training-content-check.json",
+    "perf/results/2026-11-12T164008026Z-site-sweep.json"
+  ],
+  "checks": {
+    "zola_build": "126 pages, 0 orphans",
+    "content_check": "17/17 passed, 2914 internal links, 0 broken",
+    "site_sweep": "1000063 requests, 162 URLs, 0 non-200s, p99=15.969ms",
+    "live_verification": "Chapter 6 serves the Training attention weights section and 85.2% figure on 404human.dev; track index 200"
+  },
+  "commits": { "content_and_evidence": "d502fdb" },
+  "deployment_url": "https://4142eb4a.akira-shirase-oss.pages.dev",
+  "branch": "main",
+  "honest_limits": "16-32 parameters, 3 training examples, declared position vectors, identity Q/K/V, single head, no generation under the trained model. Not a transformer; no Qwen adaptation."
+}
