@@ -1,0 +1,27 @@
+{
+  "recorded_utc": "2026-11-12T00:31:30Z",
+  "kind": "Publication status: chapter 6 attention + generation sections",
+  "scope": "Chapter 6 gained two executed sections: the attention mechanism (declared vectors, order-blindness proof, position vectors) and the generation loop (verbatim-training-text limit). Index, roadmap, README, and blog updated.",
+  "evidence": [
+    "perf/results/first-attention-context.json",
+    "perf/results/first-attention-context-independent-check.json",
+    "perf/results/first-text-generation.json",
+    "perf/results/first-text-generation-independent-check.json",
+    "perf/results/2026-11-11-chapter-6-content-check.json",
+    "perf/results/2026-11-11-chapter-6-content-check-correction.json",
+    "perf/results/2026-11-12T123058798Z-site-sweep.json"
+  ],
+  "checks": {
+    "zola_build": "125 pages, 0 orphans",
+    "content_check": "19/19 passed, 2894 internal links, 0 broken (corrected run; false negative preserved)",
+    "site_sweep": "1000063 requests, 161 URLs, 0 non-200s, p99=13.542ms",
+    "live_verification": "Chapter 6 page serves both new sections on 404human.dev; track index 200"
+  },
+  "commits": {
+    "lab_files": "b04af80 (parallel-session commit swept the lab tools + lab evidence into main)",
+    "content_and_receipts": "0396fdf"
+  },
+  "deployment_url": "https://13a44134.akira-shirase-oss.pages.dev",
+  "branch": "main",
+  "honest_limits": "Attention demo uses declared (not learned) vectors, identity projections, single head, no training. Generator recites memorized training text; no neural generation. No Qwen/LLM weight changes anywhere."
+}
