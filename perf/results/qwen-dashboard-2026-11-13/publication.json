@@ -64,8 +64,10 @@
   "all_markers_passed": true,
   "full_static_load_sweep_passed": false,
   "full_static_load_sweep_note": "Original and continuation failed on local client address allocation; updated chapter completed one million requests in the continuation. Original failures preserved.",
-  "source_pushed_through": "396d260",
-  "later_receipt_sync": "Blocked: SSH agent refused signing; existing GitHub CLI credentials lack repository push permission. No account settings changed.",
+  "source_pushed_through": "b9c7b93",
   "live_content_matches_pushed_learning_source": true,
-  "deployed_commit_full": "2f76d64e822dbeadeccc6c87e1fa1997508a7530"
+  "deployed_commit_full": "2f76d64e822dbeadeccc6c87e1fa1997508a7530",
+  "initial_receipt_sync_failure": "Blocked: SSH agent refused signing; existing GitHub CLI credentials lack repository push permission. No account settings changed.",
+  "receipt_sync_status": "SSH became available again; all learning, load and initial publication receipts pushed successfully.",
+  "receipt_sync_resolved_utc": "2026-11-13T17:03:38.880838+00:00"
 }
