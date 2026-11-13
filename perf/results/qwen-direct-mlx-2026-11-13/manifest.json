@@ -1,0 +1,71 @@
+{
+  "recorded_utc": "2026-11-13T15:43:28.803285+00:00",
+  "kind": "Direct Hugging Face files + local MLX runtime migration; installation incomplete",
+  "expected_model": {
+    "runtime": "mlx-lm",
+    "runtime_version": "0.32.2",
+    "repository": "mlx-community/Qwen3-8B-4bit",
+    "revision": "545dc4251c05440727734bcd94334791f6ab0192",
+    "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+    "model_selector": "default_model",
+    "identity_status": "Expected pinned files; local installation/loading not verified"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "action": "Select direct local MLX and pinned Hugging Face 4-bit Qwen3-8B snapshot; replace active Ollama transport",
+      "source": "source/model.mjs"
+    },
+    {
+      "step": 2,
+      "action": "Create isolated Python environment; pinned MLX-LM install fails package resolution",
+      "evidence": "2026-11-13-mlx-install.json"
+    },
+    {
+      "step": 3,
+      "action": "Verify environment pip flags without printing secrets; cause of failed resolution remains unestablished",
+      "evidence": "2026-11-13-mlx-pip-flags.json"
+    },
+    {
+      "step": 4,
+      "action": "Nineteen scripted wire/protocol/database checks and seven JS syntax checks pass; no model inference",
+      "evidence": "2026-11-13T15-40-55-498562+00-00-direct-mlx-checks.json"
+    },
+    {
+      "step": 5,
+      "action": "Add direct Python load/generate smoke helper and setup guide; Python AST parses; helper not executed against model",
+      "source": "source/setup_mlx.py"
+    }
+  ],
+  "latest_node_sources_match_tested_hashes": true,
+  "latest_python_helper_syntax_checked": true,
+  "model_files_downloaded": false,
+  "metal_execution_verified": false,
+  "real_inference_performed": false,
+  "weights_trained": false,
+  "runtime_quantization_parity_claimed": false,
+  "backend_4096_token_cap_configured": false,
+  "live_publication": false,
+  "source_sha256": {
+    "model-config.json": "c00c4ec389fec5a4af3ce016ee33ee77910eaef3dcf5fd6fd499d4145d03821f",
+    "requirements-mlx.txt": "a16ed5bd095cda4e48ea50e044f6b02105c93148b2d8ecedbff2442d17e84721",
+    "BUILD_PLAN.md": "1729753dad1645faf2073f4384eeb8789a8fb9c15f4857702ee3e2419109eb3e",
+    "README.md": "8b7ceca487a3eb0565a462ee584e85c926c668611d428b69870514584aaab0a1",
+    ".gitignore": "cd9b1fcf4c6b2d105cd46ca2d07ebde0f20e05649bf8c40e42fd50358d86412b",
+    "package.json": "8caf011f70dd3d6f8586cd2fb9f25b89c32a86a07fd3d21d8511a6c6ee847711",
+    "store.mjs": "88d8c588f78f35704f8ee3db804fb47d4083713f7b65c21595ad5b8b0ea73332",
+    "app.mjs": "12aa33963822d24e5b2c9980fcb6798f887c410636922bf91fdae92d80318375",
+    "server.mjs": "123e510f419f19991c4c54ea7e0a6fe72fdad9612350fcb4320c1e3ab96edf1b",
+    "agent.mjs": "54402406171b4300d77447c7ac006eec46cea2113b73c502ff82d4c8ce2c7ab1",
+    "DIRECT_MODEL.md": "4eea52c031c2805ef0cbd5bac9bd8eab6f99421c2e0c5c4d5da90f5251ec7bf4",
+    "tools.mjs": "15b7766d51af133f500e3f8c25886c126c2d61935dc007b08b80e01858eb186e",
+    "setup_mlx.py": "4b5cf96a734408220e537b739deb86dcbe2091d6c99c39309df19e5d5c8817c6",
+    "model.mjs": "ccce401593daf4d48c3b884894069a9abaf95f0d03125e03206f83b8ee3944a5",
+    "evals/todo-development-v1.json": "c131deb7820d28d872deb557fbe6f069b6f05e67a018c01fc238ed90c6198456",
+    "test/lab.test.mjs": "997e22915efbf219f9c5aa884d09e9fcb41018c5d132df4773e67821350478cb",
+    "test/model.test.mjs": "5899945bd6c44965d03ecec0da5cdf2dd42984e8e65dc360d644dbf6b6984768",
+    "public/index.html": "0ebaeb2009ea5a767e8ff318ba5bc15164d1ad3fa1260c916b08f5069886bef5",
+    "public/style.css": "507bf16dd0841aa665fa530dc4ec2a72df7ad4d6fe62a601a530bf493b4f3165",
+    "public/app.js": "e5aeaf6ec44a7a7b254d24c1698b69b0ad72230c5969cc71e4678c4895e17b27"
+  }
+}

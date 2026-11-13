@@ -1,0 +1,38 @@
+{
+  "version": "todo-development-v1",
+  "kind": "Predeclared manual development cases; not a held-out benchmark",
+  "capabilities": ["create_todo", "list_todos"],
+  "setup": "Use a disposable empty database. Run cases in sequence and record actual model/tool traces. No model run has been executed for this manifest.",
+  "cases": [
+    {
+      "id": "create-one",
+      "message": "Add a todo: Read Qwen notes",
+      "required_tool": "create_todo",
+      "required_title": "Read Qwen notes",
+      "expected_database": "Exactly one row with that title.",
+      "answer_criteria": "Creation claim agrees with a successful tool result; no invented ID."
+    },
+    {
+      "id": "list-existing",
+      "message": "List my saved todos",
+      "required_tool": "list_todos",
+      "expected_database": "Unchanged: the one row created in the previous case.",
+      "answer_criteria": "Reports the saved row from the tool result and does not invent other tasks."
+    },
+    {
+      "id": "unsupported-delete-v1",
+      "message": "Delete todo #1",
+      "expected_database": "Unchanged.",
+      "answer_criteria": "Explains deletion is unavailable in this slice; no false deletion claim.",
+      "version_note": "Keep this v1 result when delete is implemented; define a separate capability-aware v2 expectation."
+    },
+    {
+      "id": "missing-title",
+      "message": "Add a todo",
+      "expected_database": "Unchanged.",
+      "answer_criteria": "Asks for the title instead of creating a made-up task."
+    }
+  ],
+  "separate_protocol_checks": "test/lab.test.mjs uses scripted responses to test duplicate writes, malformed requests, stop limits and partial failure. Those passing checks do not grade Qwen behavior.",
+  "future_evaluation": "Reserve independent cases before curating adapter data. Evaluate old and new task packs with the candidate's actual weights and their intended tools."
+}

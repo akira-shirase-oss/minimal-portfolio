@@ -1,0 +1,64 @@
+{
+  "kind": "Recorded steps for saved-build troubleshooting; development work, not a model benchmark",
+  "base_portfolio_commit": "3c1b669481244686b9cbe9d4d805cdf534f7377d",
+  "source_identity": "Learning folder is not a git repository; report source_sha256 values and exact source snapshots identify each executed revision.",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Declare development job, synthetic fixture, criteria and budgets",
+      "source": "candidate-sources/TROUBLESHOOTING.md"
+    },
+    {
+      "step": 2,
+      "action": "Attempt unchanged harness; runtime failure before model response",
+      "evidence": "2026-11-13T15-05-33-345Z.json"
+    },
+    {
+      "step": 3,
+      "action": "Add build reader, labelled fault injection, error details and token accounting",
+      "source": "candidate-sources/"
+    },
+    {
+      "step": 4,
+      "action": "Candidate inference attempt submitted alongside offline checks; EPERM at version endpoint",
+      "evidence": "2026-11-13T15-07-28-087Z.json"
+    },
+    {
+      "step": 5,
+      "action": "First ten offline checks pass; scripted caller, no inference",
+      "evidence": "2026-11-13T15-07-28-114Z-build-tool-check.json"
+    },
+    {
+      "step": 6,
+      "action": "Remove conflicting one-tool phrase in troubleshooting prompt; ten offline checks pass after source change",
+      "evidence": "2026-11-13T15-08-39-713Z-build-tool-check.json"
+    },
+    {
+      "step": 7,
+      "action": "First documentation build finds a broken existing anchor after roadmap heading rename",
+      "evidence": "first-portfolio-build-failure.json"
+    },
+    {
+      "step": 8,
+      "action": "Restore original heading/anchor; Zola build and nine content checks pass",
+      "evidence": "content-check.json"
+    },
+    {
+      "step": 9,
+      "action": "Required million-request site sweep cannot bind loopback socket; zero requests completed",
+      "evidence": "site-sweep-attempt.json"
+    }
+  ],
+  "honest_limits": [
+    "No Qwen response received in this session",
+    "No model quality or model-driven recovery result",
+    "Turn-limit change not yet independently protocol-tested",
+    "No training, memory/speed benchmark, provider price comparison or measured savings",
+    "Public text prepared in an isolated archive; deployment not performed"
+  ],
+  "publication": {
+    "prepared": true,
+    "deployed": false,
+    "reason": "Canonical portfolio lies outside writable roots; loopback bind and Ollama access denied in session. Full site sweep and live verification remain pending."
+  }
+}

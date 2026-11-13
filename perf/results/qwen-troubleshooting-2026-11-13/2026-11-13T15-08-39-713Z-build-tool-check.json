@@ -1,0 +1,111 @@
+{
+  "recorded_utc": "2026-11-13T15:08:39.713Z",
+  "kind": "Offline deterministic tool checks and injected-failure drill; no model calls",
+  "runtime": "v24.18.0",
+  "machine": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "memory_bytes": 34359738368
+  },
+  "command": "node labs/qwen-tool-use/check-build-result.mjs",
+  "model_inference_performed": false,
+  "weights_changed": false,
+  "source_sha256": {
+    "check-build-result.mjs": "f9236432dfd28e19a0217b3c6c0191212c792213cb6ce96b916016af85ae1109",
+    "read-build-result.mjs": "cf31ff6b324d56faf9c7c69c772ea0c0ac4b13ad3d7a97161fbe5387fc1be71c",
+    "build-results.json": "81cdd8819c946c8b3428fa6c716993d3bbae93bef73b3779de1a0e0d1733143a",
+    "lookup-project.mjs": "265b26a2fae213d03f74e354a323578c4063fba19be41e1d55e5003cead3b70e",
+    "project-notes.json": "c05017925747efa1f34dc8d041531106b390d864fc480e24365e6cf871809617",
+    "run.mjs": "3e7ac80d01ed3222d6520538185a9a05f7c087e8c18d074a1b6401ebc044b23f",
+    "TROUBLESHOOTING.md": "7390f36b64e8aa2eb4da67fc2d3cd3e93890219dc55d2d98b171bacc1c4be60d"
+  },
+  "checks": {
+    "original_note_remains_available": {
+      "passed": true
+    },
+    "example_has_a_specific_build_failure": {
+      "passed": true
+    },
+    "example_cannot_be_mistaken_for_live_status": {
+      "passed": true
+    },
+    "unknown_project_is_a_non_retryable_error": {
+      "passed": true
+    },
+    "malformed_arguments_are_rejected": {
+      "passed": true
+    },
+    "object_prototype_names_are_not_projects": {
+      "passed": true
+    },
+    "returned_data_cannot_mutate_future_reads": {
+      "passed": true
+    },
+    "injected_failure_is_explicit_and_retryable": {
+      "passed": true
+    },
+    "retry_can_read_the_original_failed_build": {
+      "passed": true
+    },
+    "failure_state_does_not_leak_between_runs": {
+      "passed": true
+    }
+  },
+  "trace": [
+    {
+      "caller": "scripted test code, not a model",
+      "tool": "lookup_project",
+      "arguments": {
+        "project_name": "portfolio"
+      },
+      "result": {
+        "note": {
+          "name": "minimal-portfolio",
+          "site": "https://404human.dev/",
+          "build_command": "zola build",
+          "deploy_command": "wrangler pages deploy public --project-name akira-shirase-oss --branch main",
+          "git_push_deploys": false,
+          "explanation": "Git push uploads source to GitHub. Build locally with Zola, then upload the built public directory with Wrangler CLI to publish.",
+          "source": "akira-shirase-oss/minimal-portfolio/README.md, Publishing section",
+          "note_date": "2026-11-07"
+        }
+      }
+    },
+    {
+      "caller": "scripted test code, not a model",
+      "tool": "read_build_result",
+      "arguments": {
+        "project_name": "portfolio"
+      },
+      "result": {
+        "error": {
+          "code": "TEMPORARY_UNAVAILABLE",
+          "message": "Injected teaching failure: saved build reader temporarily unavailable.",
+          "retryable": true,
+          "injected": true
+        }
+      }
+    },
+    {
+      "caller": "scripted test code, not a model",
+      "tool": "read_build_result",
+      "arguments": {
+        "project_name": "portfolio"
+      },
+      "result": {
+        "build": {
+          "fixture_kind": "synthetic teaching example, not a live build or outage",
+          "build_id": "portfolio-example-001",
+          "project_name": "portfolio",
+          "command": "zola build",
+          "exit_code": 1,
+          "error": "Broken internal link: @/learn/model-engineering/missing-example.md",
+          "deployment_started": false,
+          "source": "labs/qwen-tool-use/build-results.json"
+        }
+      }
+    }
+  ],
+  "passed": true,
+  "limitations": "This tests our tool code and one scripted retry, not Qwen tool selection, diagnosis, recovery, harness stop limits, latency, memory, costs, or held-out quality."
+}

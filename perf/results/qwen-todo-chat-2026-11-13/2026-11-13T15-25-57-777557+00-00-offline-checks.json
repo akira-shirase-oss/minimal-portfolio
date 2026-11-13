@@ -1,0 +1,60 @@
+{
+  "recorded_utc": "2026-11-13T15:25:57.778407+00:00",
+  "kind": "In-process handler/harness/SQLite checks using scripted model responses; not browser or Qwen evaluation",
+  "command": "node --test test/lab.test.mjs",
+  "runtime": "v24.18.0",
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "syntax_checks": [
+    {
+      "file": "server.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "app.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "agent.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "store.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "tools.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "public/app.js",
+      "exit_code": 0,
+      "stderr": ""
+    }
+  ],
+  "test_exit_code": 0,
+  "stdout": "\u2714 creation receipts prevent duplicate rows across a database restart (4.709792ms)\n\u2714 tool validation rejects wrong tools, empty titles and extra fields without writes (0.301334ms)\n\u2714 titles are stored as data, including SQL-like text; list has an explicit cap (0.4225ms)\n\u2714 scripted tool round trip reaches SQLite and supplies its real result to the next request (1.100042ms)\n\u2714 repeated create requests in one assistant response do not duplicate the row (0.462834ms)\n\u2714 invalid model arguments return an error that a later valid call can correct (0.393042ms)\n\u2714 model loop and tool-call limits stop repeated calls with incomplete status (0.459541ms)\n\u2714 empty and truncated replies are incomplete and never execute truncated tool requests (0.24875ms)\n\u2714 runtime failure before a response leaves token usage unknown and does not create tasks (0.277ms)\n\u2714 a saved action survives a failed follow-up answer and remains visible in the trace (0.285541ms)\n\u2714 malformed runtime responses fail honestly rather than crashing report accounting (0.171833ms)\n\u2714 HTTP handler replays one request ID and rejects reuse for a different message (12.109583ms)\n\u2714 HTTP handler enforces one in-flight chat, validates input and serves local assets (1.552708ms)\n\u2139 tests 13\n\u2139 suites 0\n\u2139 pass 13\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 74.957084\n",
+  "stderr": "",
+  "model_inference_performed": false,
+  "browser_test_performed": false,
+  "cost_savings_measured": false,
+  "passed": true,
+  "source_sha256": {
+    "README.md": "41beaa065ef103a1b0265e02e29639a7b4b3f2cc11d9e2d56ec26ee704eef6e5",
+    ".gitignore": "c5049c183f87267ff36ee98b52517e1f78670639f3a060baa89d4093a555f59b",
+    "package.json": "8caf011f70dd3d6f8586cd2fb9f25b89c32a86a07fd3d21d8511a6c6ee847711",
+    "store.mjs": "88d8c588f78f35704f8ee3db804fb47d4083713f7b65c21595ad5b8b0ea73332",
+    "app.mjs": "336694420596f1063496a93687466eb10f31ffcc2b89b6d9d4be05917677c52e",
+    "server.mjs": "1d57da22c2b723d123c3e7c22db0dd32d2c1304b758fd374e402ed833097fa6a",
+    "agent.mjs": "4331ca4e836679deb50eb8dbe0b39cba6822a58657d859e47309ac2f36ab5971",
+    "tools.mjs": "15b7766d51af133f500e3f8c25886c126c2d61935dc007b08b80e01858eb186e",
+    "test/lab.test.mjs": "c1ae23833ad2e11fe66903d8bd94a4e9faea2d5be4c79565a3903e9582652aaa",
+    "public/index.html": "447450e3d1e6a5ef9dca3d84bfd92ccd86c6a64830e49de1134a7d2a021ee439",
+    "public/style.css": "507bf16dd0841aa665fa530dc4ec2a72df7ad4d6fe62a601a530bf493b4f3165",
+    "public/app.js": "e5aeaf6ec44a7a7b254d24c1698b69b0ad72230c5969cc71e4678c4895e17b27"
+  }
+}

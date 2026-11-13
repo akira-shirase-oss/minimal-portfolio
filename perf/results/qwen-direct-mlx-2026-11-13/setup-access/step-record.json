@@ -1,0 +1,53 @@
+{
+  "recorded_utc": "2026-11-13T15:51:09.384621+00:00",
+  "kind": "Actual start attempt: network prerequisites and permission policy block runtime setup",
+  "user_authorized_start": true,
+  "runtime_state": {
+    "installed": false
+  },
+  "model_manifest_exists": false,
+  "dns_probes": [
+    {
+      "host": "pypi.org",
+      "reachable": false,
+      "error": "URLError: [Errno 8] nodename nor servname provided, or not known"
+    },
+    {
+      "host": "huggingface.co",
+      "reachable": false,
+      "error": "URLError: [Errno 8] nodename nor servname provided, or not known"
+    }
+  ],
+  "pip_config_probes": {
+    "global.no-index_configured": false,
+    "install.no-index_configured": false,
+    "global.index-url_configured": false,
+    "install.index-url_configured": false
+  },
+  "cache_probes": {
+    "matching_pip_wheels": 0,
+    "huggingface_hub_cache_exists": false,
+    "uv_cache_exists": false
+  },
+  "network_enabled_install_request": {
+    "outcome": "rejected_before_command_execution",
+    "reason": "Granular approval policy has sandbox_approval=false; cannot ask for escalated permissions",
+    "command": "<lab>/.venv/bin/python -m pip install --index-url https://pypi.org/simple -r <lab>/requirements-mlx.txt"
+  },
+  "narrower_permission_request_tool_available": false,
+  "handoff_command": "bash labs/qwen-todo-chat/start-direct-model.sh",
+  "launcher_syntax_check_passed": true,
+  "launcher_executed": false,
+  "model_downloaded": false,
+  "inference_performed": false,
+  "training_performed": false,
+  "browser_verification_performed": false,
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "source_sha256": {
+    "start-direct-model.sh": "0f94ee311dad2d2bd1a5f56e411fe0766733ee20c01b173602d2c1f750b79bdf",
+    "requirements-mlx.txt": "a16ed5bd095cda4e48ea50e044f6b02105c93148b2d8ecedbff2442d17e84721",
+    "setup_mlx.py": "4b5cf96a734408220e537b739deb86dcbe2091d6c99c39309df19e5d5c8817c6",
+    "model-config.json": "c00c4ec389fec5a4af3ce016ee33ee77910eaef3dcf5fd6fd499d4145d03821f",
+    "DIRECT_MODEL.md": "d044bb1effa78937b90ce8afeff72906ff77b629259674cf93c100e2b8d4eccc"
+  }
+}

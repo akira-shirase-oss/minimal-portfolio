@@ -1,0 +1,13 @@
+{
+  "recorded_utc": "2026-11-13T16:31:27.263451+00:00",
+  "kind": "One direct MLX text smoke run; not tool evaluation or a benchmark",
+  "repository": "mlx-community/Qwen3-8B-4bit",
+  "revision": "545dc4251c05440727734bcd94334791f6ab0192",
+  "question": "Reply with just READY.",
+  "answer": "READY.",
+  "max_tokens": 16,
+  "wall_seconds": 4.629036166996229,
+  "inference_performed": true,
+  "weights_changed": false,
+  "answer_quality": "not_evaluated"
+}

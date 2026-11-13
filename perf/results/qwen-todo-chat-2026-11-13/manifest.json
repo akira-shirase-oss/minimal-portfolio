@@ -1,0 +1,52 @@
+{
+  "kind": "Local-only todo chat first slice; code/protocol evidence, not a Qwen benchmark",
+  "capabilities_implemented": [
+    "create_todo",
+    "list_todos"
+  ],
+  "planned": [
+    "update/delete",
+    "CRM tasks",
+    "compound workflows",
+    "real adapter training and retention evaluation"
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "action": "Choose one browser chat/harness growing from todo CRUD to CRM; preserve old task cases",
+      "source": "source/BUILD_PLAN.md"
+    },
+    {
+      "step": 2,
+      "action": "Implement create/list UI, harness, validation, SQLite and creation receipts",
+      "source": "source/"
+    },
+    {
+      "step": 3,
+      "action": "Run six syntax checks and thirteen in-process checks with scripted model responses",
+      "evidence": "2026-11-13T15-25-57-777557+00-00-offline-checks.json"
+    },
+    {
+      "step": 4,
+      "action": "Attempt real server launch; EPERM before serving HTTP or reaching Qwen",
+      "evidence": "2026-11-13-server-launch.json"
+    },
+    {
+      "step": 5,
+      "action": "Declare manual development cases before any real model run",
+      "source": "source/evals/todo-development-v1.json"
+    },
+    {
+      "step": 6,
+      "action": "Review prompt freshness: an old chat result is not current database evidence. Repeat thirteen protocol checks; no real model run.",
+      "evidence": "2026-11-13T15-29-50-583875+00-00-freshness-review-checks.json"
+    }
+  ],
+  "model_weights_changed": false,
+  "model_identity": "Configured tag qwen3:8b; current installed digest not verified",
+  "browser_verified": false,
+  "model_behavior_verified": false,
+  "cost_savings_measured": false,
+  "private_application_data_included": false,
+  "public_content_status": "prepared, not deployed"
+}

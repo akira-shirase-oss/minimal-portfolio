@@ -1,0 +1,30 @@
+{
+  "recorded_utc": "2026-11-13T15:29:50.584842+00:00",
+  "kind": "Scripted protocol/database checks after clarifying that list results must be fresh for each request",
+  "change": "Prompt review, not a measured Qwen behavior improvement",
+  "command": "node --test test/lab.test.mjs",
+  "runtime": "v24.18.0",
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "test_exit_code": 0,
+  "stdout": "\u2714 creation receipts prevent duplicate rows across a database restart (7.070042ms)\n\u2714 tool validation rejects wrong tools, empty titles and extra fields without writes (0.320208ms)\n\u2714 titles are stored as data, including SQL-like text; list has an explicit cap (0.347708ms)\n\u2714 scripted tool round trip reaches SQLite and supplies its real result to the next request (0.97975ms)\n\u2714 repeated create requests in one assistant response do not duplicate the row (0.399375ms)\n\u2714 invalid model arguments return an error that a later valid call can correct (0.370291ms)\n\u2714 model loop and tool-call limits stop repeated calls with incomplete status (0.470875ms)\n\u2714 empty and truncated replies are incomplete and never execute truncated tool requests (0.251375ms)\n\u2714 runtime failure before a response leaves token usage unknown and does not create tasks (0.416625ms)\n\u2714 a saved action survives a failed follow-up answer and remains visible in the trace (0.271875ms)\n\u2714 malformed runtime responses fail honestly rather than crashing report accounting (0.164958ms)\n\u2714 HTTP handler replays one request ID and rejects reuse for a different message (18.696041ms)\n\u2714 HTTP handler enforces one in-flight chat, validates input and serves local assets (2.121ms)\n\u2139 tests 13\n\u2139 suites 0\n\u2139 pass 13\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 84.19675\n",
+  "stderr": "",
+  "model_inference_performed": false,
+  "browser_test_performed": false,
+  "passed": true,
+  "source_sha256": {
+    "BUILD_PLAN.md": "fdccc552164f7cbcc991e97c274d2c64abd8b8799d73877368e2aafc796a6a93",
+    "README.md": "41beaa065ef103a1b0265e02e29639a7b4b3f2cc11d9e2d56ec26ee704eef6e5",
+    ".gitignore": "c5049c183f87267ff36ee98b52517e1f78670639f3a060baa89d4093a555f59b",
+    "package.json": "8caf011f70dd3d6f8586cd2fb9f25b89c32a86a07fd3d21d8511a6c6ee847711",
+    "store.mjs": "88d8c588f78f35704f8ee3db804fb47d4083713f7b65c21595ad5b8b0ea73332",
+    "app.mjs": "336694420596f1063496a93687466eb10f31ffcc2b89b6d9d4be05917677c52e",
+    "server.mjs": "1d57da22c2b723d123c3e7c22db0dd32d2c1304b758fd374e402ed833097fa6a",
+    "agent.mjs": "24e04cb80ed08557e7ff0d97b6867e3fc69fee3b2987a1177fa13bb261109ccd",
+    "tools.mjs": "15b7766d51af133f500e3f8c25886c126c2d61935dc007b08b80e01858eb186e",
+    "evals/todo-development-v1.json": "c131deb7820d28d872deb557fbe6f069b6f05e67a018c01fc238ed90c6198456",
+    "test/lab.test.mjs": "c1ae23833ad2e11fe66903d8bd94a4e9faea2d5be4c79565a3903e9582652aaa",
+    "public/index.html": "447450e3d1e6a5ef9dca3d84bfd92ccd86c6a64830e49de1134a7d2a021ee439",
+    "public/style.css": "507bf16dd0841aa665fa530dc4ec2a72df7ad4d6fe62a601a530bf493b4f3165",
+    "public/app.js": "e5aeaf6ec44a7a7b254d24c1698b69b0ad72230c5969cc71e4678c4895e17b27"
+  }
+}

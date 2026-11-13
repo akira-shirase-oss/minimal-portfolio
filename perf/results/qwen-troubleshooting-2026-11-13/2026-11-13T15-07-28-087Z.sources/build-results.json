@@ -1,0 +1,12 @@
+{
+  "portfolio": {
+    "fixture_kind": "synthetic teaching example, not a live build or outage",
+    "build_id": "portfolio-example-001",
+    "project_name": "portfolio",
+    "command": "zola build",
+    "exit_code": 1,
+    "error": "Broken internal link: @/learn/model-engineering/missing-example.md",
+    "deployment_started": false,
+    "source": "labs/qwen-tool-use/build-results.json"
+  }
+}

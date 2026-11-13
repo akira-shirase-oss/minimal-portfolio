@@ -1,0 +1,31 @@
+{
+  "started_utc": "2026-11-13T15:05:33.345Z",
+  "kind": "One local tool-use baseline smoke run, not training or a reliability benchmark",
+  "model": "qwen3:8b",
+  "runtime": "v24.18.0",
+  "options": {
+    "temperature": 0,
+    "seed": 42,
+    "num_ctx": 4096,
+    "num_predict": 256
+  },
+  "think": false,
+  "question": "Why did my portfolio fail to publish? Use the saved project note and latest build result.",
+  "source_sha256": {
+    "run.mjs": "7499cb39945f78237ccf7f0231fc9613e21222d655b41bea60dc83a5be6bee58",
+    "lookup-project.mjs": "265b26a2fae213d03f74e354a323578c4063fba19be41e1d55e5003cead3b70e",
+    "project-notes.json": "c05017925747efa1f34dc8d041531106b390d864fc480e24365e6cf871809617"
+  },
+  "trace": [],
+  "final_answer": null,
+  "tool_executions": 0,
+  "limits": {
+    "model_turns": 3,
+    "total_tool_calls": 4,
+    "request_timeout_ms": 45000
+  },
+  "weights_changed": false,
+  "status": "runtime_error",
+  "error": "TypeError: fetch failed",
+  "wall_seconds": 0.034326
+}

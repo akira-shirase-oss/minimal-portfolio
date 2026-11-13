@@ -1,0 +1,34 @@
+{
+  "recorded_utc": "2026-11-13T15:28:35.706236+00:00",
+  "kind": "Actual local HTTP server launch attempt; not a scripted error",
+  "command": "node labs/qwen-todo-chat/server.mjs",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": {
+    "status": "server_start_failed",
+    "code": "EPERM",
+    "message": "listen EPERM: operation not permitted 127.0.0.1:3210"
+  },
+  "source_sha256": {
+    "BUILD_PLAN.md": "fdccc552164f7cbcc991e97c274d2c64abd8b8799d73877368e2aafc796a6a93",
+    "README.md": "41beaa065ef103a1b0265e02e29639a7b4b3f2cc11d9e2d56ec26ee704eef6e5",
+    ".gitignore": "c5049c183f87267ff36ee98b52517e1f78670639f3a060baa89d4093a555f59b",
+    "package.json": "8caf011f70dd3d6f8586cd2fb9f25b89c32a86a07fd3d21d8511a6c6ee847711",
+    "store.mjs": "88d8c588f78f35704f8ee3db804fb47d4083713f7b65c21595ad5b8b0ea73332",
+    "app.mjs": "336694420596f1063496a93687466eb10f31ffcc2b89b6d9d4be05917677c52e",
+    "server.mjs": "1d57da22c2b723d123c3e7c22db0dd32d2c1304b758fd374e402ed833097fa6a",
+    "agent.mjs": "4331ca4e836679deb50eb8dbe0b39cba6822a58657d859e47309ac2f36ab5971",
+    "tools.mjs": "15b7766d51af133f500e3f8c25886c126c2d61935dc007b08b80e01858eb186e",
+    "evals/todo-development-v1.json": "c131deb7820d28d872deb557fbe6f069b6f05e67a018c01fc238ed90c6198456",
+    "test/lab.test.mjs": "c1ae23833ad2e11fe66903d8bd94a4e9faea2d5be4c79565a3903e9582652aaa",
+    "public/index.html": "447450e3d1e6a5ef9dca3d84bfd92ccd86c6a64830e49de1134a7d2a021ee439",
+    "public/style.css": "507bf16dd0841aa665fa530dc4ec2a72df7ad4d6fe62a601a530bf493b4f3165",
+    "public/app.js": "e5aeaf6ec44a7a7b254d24c1698b69b0ad72230c5969cc71e4678c4895e17b27"
+  },
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "browser_test_performed": false,
+  "model_inference_performed": false,
+  "first_broken_boundary": "HTTP server cannot bind loopback socket",
+  "production_stability_claimed": false,
+  "cost_savings_measured": false
+}

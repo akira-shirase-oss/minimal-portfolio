@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-11-13T15:11:20.519270+00:00",
+  "kind": "First isolated portfolio build: real documentation regression, not a synthetic fixture",
+  "base_commit": "3c1b669481244686b9cbe9d4d805cdf534f7377d",
+  "command": "zola --root <isolated-archive> build",
+  "exit_code": 1,
+  "error": "Found 1 broken internal anchor link: @/learn/model-engineering/roadmap.md#what-comes-next-9-november-2026 from content/posts/why-im-learning-how-models-learn.md",
+  "source_sha256": {
+    "content/learn/model-engineering/the-harness-around-the-model.md": "890d75a1be578ed9f9904fe6d376a551ef7006619c6b6729a0d1e90027f7be79",
+    "content/learn/model-engineering/roadmap.md": "b713352ab30410ac837fc3b19f07a276f73469b9015ce4e030e6ee15b770e0d1",
+    "content/learn/model-engineering/_index.md": "8e1bc6174245c5ca9d4f707a035e82308279a3157a3439c1034977ef242ccf56",
+    "content/posts/the-assistant-failed-before-the-model.md": "e789c2a311f95b4440ffeb8afd461d875f72176bc573ab82381d577030369793"
+  },
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "model_inference_performed": false,
+  "deployment_performed": false
+}

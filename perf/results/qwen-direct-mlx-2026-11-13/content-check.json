@@ -1,0 +1,23 @@
+{
+  "recorded_utc": "2026-11-13T15:44:11.953580+00:00",
+  "kind": "Isolated public text build/checks, not live model/browser verification",
+  "zola_build": {
+    "pages": 128,
+    "sections": 10,
+    "orphans": 0,
+    "exit_code": 0
+  },
+  "checks": {
+    "direct_runtime_anchor": true,
+    "earlier_todo_anchor_preserved": true,
+    "nineteen_scripted_checks_reported": true,
+    "setup_failure_is_explicit": true,
+    "no_fallback_reported": true,
+    "track_names_direct_backend": true,
+    "roadmap_names_direct_backend": true,
+    "blog_records_unfinished_setup": true,
+    "private_runtime_files_excluded": true
+  },
+  "passed": true,
+  "published": false
+}

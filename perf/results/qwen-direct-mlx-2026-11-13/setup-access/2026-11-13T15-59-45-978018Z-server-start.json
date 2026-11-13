@@ -1,0 +1,18 @@
+{
+  "recorded_utc": "2026-11-13T15:59:45.978018+00:00",
+  "kind": "Actual local chat server start requested by user",
+  "command": "node labs/qwen-todo-chat/server.mjs",
+  "exit_code": 1,
+  "error": {
+    "status": "server_start_failed",
+    "code": "EPERM",
+    "message": "listen EPERM: operation not permitted 127.0.0.1:3210"
+  },
+  "http_check": "Denied by session before verification",
+  "owned_server_started": false,
+  "other_existing_server_state": "unknown because local requests were denied",
+  "model_inference_performed": false,
+  "server_source_sha256": "123e510f419f19991c4c54ea7e0a6fe72fdad9612350fcb4320c1e3ab96edf1b",
+  "new_escalation_requested": false,
+  "reason": "Existing policy rejection already established that sandbox escalation is disabled."
+}

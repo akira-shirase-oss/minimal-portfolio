@@ -1,0 +1,45 @@
+{
+  "started_utc": "2026-11-13T15:07:28.087Z",
+  "kind": "One local tool-use inference attempt, not training or a reliability benchmark",
+  "model": "qwen3:8b",
+  "runtime": "v24.18.0",
+  "options": {
+    "temperature": 0,
+    "seed": 42,
+    "num_ctx": 4096,
+    "num_predict": 256
+  },
+  "think": false,
+  "question": "For the saved portfolio build example, why did publication not happen, and what should I check next? Use the saved project note and build result.",
+  "mode": "saved_build_troubleshooting",
+  "injected_build_failure": true,
+  "source_sha256": {
+    "run.mjs": "bc52ad46c178baad4793b133d397231560e106c44e57ec44254ae762ee8de5d8",
+    "lookup-project.mjs": "265b26a2fae213d03f74e354a323578c4063fba19be41e1d55e5003cead3b70e",
+    "project-notes.json": "c05017925747efa1f34dc8d041531106b390d864fc480e24365e6cf871809617",
+    "read-build-result.mjs": "cf31ff6b324d56faf9c7c69c772ea0c0ac4b13ad3d7a97161fbe5387fc1be71c",
+    "build-results.json": "81cdd8819c946c8b3428fa6c716993d3bbae93bef73b3779de1a0e0d1733143a"
+  },
+  "trace": [],
+  "final_answer": null,
+  "tool_executions": 0,
+  "limits": {
+    "model_turns": 4,
+    "total_tool_calls": 4,
+    "request_timeout_ms": 45000
+  },
+  "weights_changed": false,
+  "failed_request": {
+    "path": "/api/version",
+    "cause_code": "EPERM"
+  },
+  "status": "runtime_error",
+  "error": "TypeError: fetch failed",
+  "error_code": "EPERM",
+  "wall_seconds": 0.015547167000000002,
+  "model_responses": 0,
+  "usage": {
+    "prompt_tokens": null,
+    "output_tokens": null
+  }
+}

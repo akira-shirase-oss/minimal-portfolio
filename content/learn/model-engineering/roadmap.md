@@ -2,7 +2,7 @@
 title = "The model-engineering learning roadmap"
 description = "The path from one prediction to training, data pipelines, harnesses, evaluation, and better model versions."
 date = 2026-11-06
-updated = 2026-11-10
+updated = 2026-11-13
 weight = 0
 
 [extra]
@@ -14,9 +14,34 @@ I want to understand how to build and improve models. Blog writing and personali
 
 The route is now **learn by building**: make a small working piece, run it, inspect the result, understand a failure, then improve it. Mathematics comes in when it helps explain the behavior; repeated arithmetic and pass/fail recall questions are not prerequisites for practical work.
 
+## Current practical focus — 13 November 2026
+
+One local browser chat will grow from **todo CRUD to CRM tasks and compound
+workflows**, with the model/harness/database boundary visible. The
+[first create/list implementation](@/learn/model-engineering/the-harness-around-the-model.md#one-local-chat-from-todos-to-crm-13-november)
+now runs through local MLX with pinned Hugging Face files, without Ollama.
+Twenty-five scripted checks and four real development cases passed. The local
+dashboard shows actual tasks, saved runs, runtime status and per-query prompts,
+responses, validation, database effects and timings. [The dated step record](@/learn/model-engineering/the-harness-around-the-model.md#a-running-dashboard-and-query-breakdown-13-november)
+preserves the initial setup failures and subsequent recovery. Update/delete,
+CRM, adapter training, held-out quality and measured savings remain planned.
+
+Keep the earlier lookup, saved-build and tiny-model experiments as references.
+Preserve old task cases when adding tools or training adapters, and evaluate old
+and new behavior with each workflow's intended tools. Saved records, conversation
+context and learned weights are different mechanisms. Measure task quality,
+recovery, time, memory and total cost before claiming stability or savings.
+Record every step, including failures, in chapters and dated experiment records;
+use blog reflections for larger lessons. The public portfolio stays text/code;
+the interactive lab runs separately on the local computer.
+
 ## What comes next — 9 November 2026
 
-The current sequence is topics **4 through 8**: how learning goes wrong, data a model can learn from, a tiny language model, training we can inspect and resume, and adapting an existing model. [Topic 4 has failure-mode comparisons](@/learn/model-engineering/how-learning-goes-wrong.md), and [topic 5 has a data audit and duplicate-leakage split demonstration](@/learn/model-engineering/data-a-model-can-learn-from.md). [Topic 6 now includes a last-token embedding predictor after the tokenizer, count model, and score update, plus an attention mechanism with position vectors, a generation loop, and trained attention weights](@/learn/model-engineering/from-text-to-a-tiny-language-model.md). The attention run used declared vectors — order blindness without positions was demonstrated directly — and the generator recites verbatim training text. A three-arm training run then taught attention weights on same-last-token prefixes: the fully trained arm converged to all three targets with 85% of weight on the discriminative space position. Broader model training remains ahead; these first teaching examples do not establish mastery or replace broader data-quality work.
+This dated section records the earlier route. The 13 November focus above now
+guides the next practical work; the original heading remains so existing links
+continue to work.
+
+The sequence agreed then was topics **4 through 8**: how learning goes wrong, data a model can learn from, a tiny language model, training we can inspect and resume, and adapting an existing model. [Topic 4 has failure-mode comparisons](@/learn/model-engineering/how-learning-goes-wrong.md), and [topic 5 has a data audit and duplicate-leakage split demonstration](@/learn/model-engineering/data-a-model-can-learn-from.md). [Topic 6 now includes a last-token embedding predictor after the tokenizer, count model, and score update, plus an attention mechanism with position vectors, a generation loop, and trained attention weights](@/learn/model-engineering/from-text-to-a-tiny-language-model.md). The attention run used declared vectors — order blindness without positions was demonstrated directly — and the generator recites verbatim training text. A three-arm training run then taught attention weights on same-last-token prefixes: the fully trained arm converged to all three targets with 85% of weight on the discriminative space position. Broader model training remains ahead; these first teaching examples do not establish mastery or replace broader data-quality work.
 
 For each topic, the lesson starts with a plain explanation and a small example. The assistant implements the experiment and handles the calculations. We inspect the code, outputs, and failures together to understand what each part does, why it matters, and what a change actually helped. Deep mathematical derivations are optional; the numbers needed to explain an observation still get explained.
 

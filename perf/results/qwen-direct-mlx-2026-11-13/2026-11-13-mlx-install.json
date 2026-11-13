@@ -1,0 +1,13 @@
+{
+  "recorded_utc": "2026-11-13T15:36:55.970775+00:00",
+  "kind": "Isolated MLX dependency setup attempt",
+  "python": "3.14.6",
+  "venv_creation_exit_code": 0,
+  "venv_creation_stderr": "",
+  "model_download_performed": false,
+  "inference_performed": false,
+  "install_command": "<lab>/.venv/bin/python -m pip install --disable-pip-version-check --no-cache-dir --retries 0 --timeout 10 mlx-lm==0.32.2",
+  "install_exit_code": 1,
+  "stdout": "",
+  "stderr": "ERROR: Could not find a version that satisfies the requirement mlx-lm==0.32.2 (from versions: none)\nERROR: No matching distribution found for mlx-lm==0.32.2\n"
+}

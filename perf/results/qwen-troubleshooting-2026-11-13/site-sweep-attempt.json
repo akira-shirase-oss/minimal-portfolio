@@ -1,0 +1,14 @@
+{
+  "recorded_utc": "2026-11-13T15:11:56.680889+00:00",
+  "kind": "Required one-million-request site-sweep attempt on isolated source",
+  "planned_requests": 1000000,
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "node:events:487\n      throw er; // Unhandled 'error' event\n      ^\n\nError: listen EPERM: operation not permitted 127.0.0.1:58900\n    at Server.setupListenHandle [as _listen2] (node:net:1987:21)\n    at listenInCluster (node:net:2066:12)\n    at node:net:2275:7\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\nEmitted 'error' event on Server instance at:\n    at emitErrorNT (node:net:2045:8)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {\n  code: 'EPERM',\n  errno: -1,\n  syscall: 'listen',\n  address: '127.0.0.1',\n  port: 58900\n}\n\nNode.js v24.18.0\n",
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "base_commit": "3c1b669481244686b9cbe9d4d805cdf534f7377d",
+  "full_load_passed": false,
+  "model_inference_performed": false,
+  "status": "blocked_before_first_request",
+  "completed_requests": 0
+}

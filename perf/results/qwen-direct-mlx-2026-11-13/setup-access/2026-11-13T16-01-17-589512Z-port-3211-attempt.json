@@ -1,0 +1,11 @@
+{
+  "recorded_utc": "2026-11-13T16:01:17.589512+00:00",
+  "kind": "User-requested alternate-port check",
+  "command": "TODO_PORT=3211 node labs/qwen-todo-chat/server.mjs",
+  "exit_code": 1,
+  "error": "listen EPERM: operation not permitted 127.0.0.1:3211",
+  "owned_server_started": false,
+  "port_change_fixed_issue": false,
+  "model_inference_performed": false,
+  "new_escalation_requested": false
+}

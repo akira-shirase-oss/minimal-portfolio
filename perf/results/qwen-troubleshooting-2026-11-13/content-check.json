@@ -1,0 +1,32 @@
+{
+  "recorded_utc": "2026-11-13T15:11:56.612454+00:00",
+  "kind": "Isolated portfolio build and content checks, not live publication",
+  "base_commit": "3c1b669481244686b9cbe9d4d805cdf534f7377d",
+  "zola_build": {
+    "exit_code": 0,
+    "pages": 127,
+    "sections": 10,
+    "orphans": 0
+  },
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "checks": {
+    "chapter_has_new_dated_step": true,
+    "chapter_labels_synthetic_data": true,
+    "chapter_reports_actual_access_error": true,
+    "chapter_separates_offline_from_model": true,
+    "chapter_does_not_claim_savings": true,
+    "original_roadmap_anchor_preserved": true,
+    "new_chapter_anchor_exists": true,
+    "blog_reports_separate_real_link_failure": true,
+    "track_has_new_focus_and_limits": true
+  },
+  "passed": true,
+  "deployment_performed": false,
+  "live_verification_performed": false,
+  "source_sha256": {
+    "content/learn/model-engineering/the-harness-around-the-model.md": "890d75a1be578ed9f9904fe6d376a551ef7006619c6b6729a0d1e90027f7be79",
+    "content/learn/model-engineering/roadmap.md": "090f50f935a541a01707c985170a8a9f858e51f1bdd17e0494b9a6796a8112dc",
+    "content/learn/model-engineering/_index.md": "8e1bc6174245c5ca9d4f707a035e82308279a3157a3439c1034977ef242ccf56",
+    "content/posts/the-assistant-failed-before-the-model.md": "8be600116f37b2c16f289e26d998ab2b14df3eb7dcc7ad5abbb6bb8fe4701504"
+  }
+}

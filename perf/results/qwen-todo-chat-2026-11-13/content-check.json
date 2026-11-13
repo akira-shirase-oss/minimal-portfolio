@@ -1,0 +1,27 @@
+{
+  "recorded_utc": "2026-11-13T15:30:39.388279+00:00",
+  "kind": "Isolated portfolio source build/content checks; not browser/model/live verification",
+  "base_commit": "3c1b669481244686b9cbe9d4d805cdf534f7377d",
+  "build": {
+    "exit_code": 0,
+    "pages": 128,
+    "sections": 10,
+    "orphans": 0
+  },
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "checks": {
+    "new_chapter_section_and_anchor": true,
+    "create_list_scope_explicit": true,
+    "scripted_checks_not_model_quality": true,
+    "actual_launch_failure_recorded": true,
+    "old_new_retention_is_evaluated": true,
+    "old_roadmap_anchor_preserved": true,
+    "track_and_roadmap_match_user_direction": true,
+    "blog_reports_no_live_model_run": true,
+    "no_private_data_in_source_copy": true
+  },
+  "passed": true,
+  "model_inference_performed": false,
+  "browser_test_performed": false,
+  "deployed": false
+}

@@ -1,0 +1,74 @@
+{
+  "recorded_utc": "2026-11-13T15:40:55.538948+00:00",
+  "kind": "Scripted protocol/SQLite tests after replacing active Ollama transport with direct local MLX",
+  "runtime": "node v24.18.0",
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "syntax_checks": [
+    {
+      "file": "server.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "app.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "agent.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "store.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "tools.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "model.mjs",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "file": "public/app.js",
+      "exit_code": 0,
+      "stderr": ""
+    }
+  ],
+  "python_ast_check_passed": true,
+  "test_command": "node --test test/lab.test.mjs test/model.test.mjs",
+  "test_exit_code": 0,
+  "stdout": "\u2714 creation receipts prevent duplicate rows across a database restart (6.09675ms)\n\u2714 tool validation rejects wrong tools, empty titles and extra fields without writes (0.348375ms)\n\u2714 titles are stored as data, including SQL-like text; list has an explicit cap (0.360834ms)\n\u2714 scripted tool round trip reaches SQLite and supplies its real result to the next request (1.0065ms)\n\u2714 repeated create requests in one assistant response do not duplicate the row (0.452791ms)\n\u2714 invalid model arguments return an error that a later valid call can correct (0.418708ms)\n\u2714 model loop and tool-call limits stop repeated calls with incomplete status (0.490792ms)\n\u2714 empty and truncated replies are incomplete and never execute truncated tool requests (0.244041ms)\n\u2714 runtime failure before a response leaves token usage unknown and does not create tasks (0.256792ms)\n\u2714 a saved action survives a failed follow-up answer and remains visible in the trace (0.266583ms)\n\u2714 malformed runtime responses fail honestly rather than crashing report accounting (0.162416ms)\n\u2714 HTTP handler replays one request ID and rejects reuse for a different message (11.968875ms)\n\u2714 HTTP handler enforces one in-flight chat, validates input and serves local assets (2.453584ms)\n\u2714 OpenAI-compatible tool arguments become validated JSON data and usage stays explicit (0.795333ms)\n\u2714 wire history preserves call/result IDs and serializes argument objects once (0.287042ms)\n\u2714 malformed JSON, missing IDs, duplicate IDs and malformed choices fail before tool execution (0.142458ms)\n\u2714 transport calls only the configured local MLX endpoint and passes cancellation (10.460083ms)\n\u2714 HTTP errors propagate with no fallback to Ollama or a hosted model (0.31825ms)\n\u2714 scripted MLX wire response -> harness -> SQLite -> wire tool result -> answer (2.302208ms)\n\u2139 tests 19\n\u2139 suites 0\n\u2139 pass 19\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 77.196\n",
+  "stderr": "",
+  "model_inference_performed": false,
+  "browser_test_performed": false,
+  "model_download_performed": false,
+  "passed": true,
+  "source_sha256": {
+    "model-config.json": "c00c4ec389fec5a4af3ce016ee33ee77910eaef3dcf5fd6fd499d4145d03821f",
+    "requirements-mlx.txt": "a16ed5bd095cda4e48ea50e044f6b02105c93148b2d8ecedbff2442d17e84721",
+    "BUILD_PLAN.md": "fdccc552164f7cbcc991e97c274d2c64abd8b8799d73877368e2aafc796a6a93",
+    "README.md": "41beaa065ef103a1b0265e02e29639a7b4b3f2cc11d9e2d56ec26ee704eef6e5",
+    ".gitignore": "cd9b1fcf4c6b2d105cd46ca2d07ebde0f20e05649bf8c40e42fd50358d86412b",
+    "package.json": "8caf011f70dd3d6f8586cd2fb9f25b89c32a86a07fd3d21d8511a6c6ee847711",
+    "store.mjs": "88d8c588f78f35704f8ee3db804fb47d4083713f7b65c21595ad5b8b0ea73332",
+    "app.mjs": "12aa33963822d24e5b2c9980fcb6798f887c410636922bf91fdae92d80318375",
+    "server.mjs": "123e510f419f19991c4c54ea7e0a6fe72fdad9612350fcb4320c1e3ab96edf1b",
+    "agent.mjs": "54402406171b4300d77447c7ac006eec46cea2113b73c502ff82d4c8ce2c7ab1",
+    "DIRECT_MODEL.md": "5faa7ecce21e9d856e1bcadaf378fc64793a26651a1061dca5177bc4a7f4daf1",
+    "tools.mjs": "15b7766d51af133f500e3f8c25886c126c2d61935dc007b08b80e01858eb186e",
+    "setup_mlx.py": "82530fdc5bf09200ecb307985c4ff12e75f4a96bd8d772b4f663ee2f2451f485",
+    "model.mjs": "ccce401593daf4d48c3b884894069a9abaf95f0d03125e03206f83b8ee3944a5",
+    "evals/todo-development-v1.json": "c131deb7820d28d872deb557fbe6f069b6f05e67a018c01fc238ed90c6198456",
+    "test/lab.test.mjs": "997e22915efbf219f9c5aa884d09e9fcb41018c5d132df4773e67821350478cb",
+    "test/model.test.mjs": "5899945bd6c44965d03ecec0da5cdf2dd42984e8e65dc360d644dbf6b6984768",
+    "public/index.html": "0ebaeb2009ea5a767e8ff318ba5bc15164d1ad3fa1260c916b08f5069886bef5",
+    "public/style.css": "507bf16dd0841aa665fa530dc4ec2a72df7ad4d6fe62a601a530bf493b4f3165",
+    "public/app.js": "e5aeaf6ec44a7a7b254d24c1698b69b0ad72230c5969cc71e4678c4895e17b27"
+  }
+}

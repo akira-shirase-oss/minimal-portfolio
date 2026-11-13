@@ -1,0 +1,12 @@
+{
+  "portfolio": {
+    "name": "minimal-portfolio",
+    "site": "https://404human.dev/",
+    "build_command": "zola build",
+    "deploy_command": "wrangler pages deploy public --project-name akira-shirase-oss --branch main",
+    "git_push_deploys": false,
+    "explanation": "Git push uploads source to GitHub. Build locally with Zola, then upload the built public directory with Wrangler CLI to publish.",
+    "source": "akira-shirase-oss/minimal-portfolio/README.md, Publishing section",
+    "note_date": "2026-11-07"
+  }
+}
