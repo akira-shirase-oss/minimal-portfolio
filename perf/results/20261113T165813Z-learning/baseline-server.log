@@ -1,0 +1,9 @@
+Building site...
+-> Creating 126 pages (0 orphan) and 10 sections
+Done in 178ms.
+
+Listening for changes in /private/var/folders/sb/mn20kb4x125493sdz6s5bbpr0000gn/T/404human-learning-load-k_q6p0jd/baseline/{zola.toml,content,static,templates}
+Press Ctrl+C to stop
+
+Web server is available at http://127.0.0.1:1151 (bound to 127.0.0.1:1151)
+

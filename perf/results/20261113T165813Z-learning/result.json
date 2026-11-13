@@ -1,0 +1,588 @@
+{
+  "started_utc": "20261113T165813Z",
+  "commit": "911037e50eac2b0b04d0a02e39862565ef98bee6",
+  "baseline_commit": "cf7cb8eddc932601eef815e3238a44eafe8d62cb",
+  "source_sha256": "e561c37113335ba7f34b94c702a158099cea9a5be2218939366d07a3f1eabfc6",
+  "working_tree_status": [],
+  "machine": {
+    "platform": "darwin",
+    "release": "27.0.0",
+    "arch": "arm64",
+    "cpu": "Apple M2 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 34359738368
+  },
+  "zola": "zola 0.23.6",
+  "scope": "Local Zola development server, HTTP/1.1 keepalive. Not Cloudflare capacity or production evidence.",
+  "file_descriptor_limit": {
+    "required_soft_minimum": 4096,
+    "soft_before": 4096,
+    "hard": 9223372036854775807,
+    "soft_after": 4096,
+    "adjusted": false,
+    "scope": "This process and its children only; no system or shell-profile settings changed."
+  },
+  "thresholds": {
+    "failed_requests": 0,
+    "non_2xx_responses": 0,
+    "minimum_rps": 500,
+    "maximum_p99_ms": 1000,
+    "homepage_rps_ratio_min": 0.75,
+    "homepage_p99_ratio_max": 2,
+    "homepage_p99_allowance_ms": 25
+  },
+  "phases": [
+    {
+      "name": "baseline-home",
+      "path": "/",
+      "requests": 50000,
+      "concurrency": 32,
+      "exit_code": 0,
+      "completed": 50000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 33914.47,
+      "p95_ms": 4.0,
+      "p99_ms": 5.0,
+      "seconds": 1.474,
+      "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+    },
+    {
+      "name": "candidate-home",
+      "path": "/",
+      "requests": 50000,
+      "concurrency": 32,
+      "exit_code": 0,
+      "completed": 50000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 36182.54,
+      "p95_ms": 4.0,
+      "p99_ms": 5.0,
+      "seconds": 1.382,
+      "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+    },
+    {
+      "name": "homepage-records-c256",
+      "path": "/",
+      "requests": 1000000,
+      "concurrency": 256,
+      "exit_code": 0,
+      "completed": 1000000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 33950.97,
+      "p95_ms": 15.0,
+      "p99_ms": 25.0,
+      "seconds": 29.454,
+      "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+    },
+    {
+      "name": "training-loop-c256",
+      "path": "/learn/model-engineering/our-first-training-loop/",
+      "requests": 1000000,
+      "concurrency": 256,
+      "exit_code": 0,
+      "completed": 1000000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 29843.01,
+      "p95_ms": 18.0,
+      "p99_ms": 51.0,
+      "seconds": 33.509,
+      "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+    },
+    {
+      "name": "overfitting-c256",
+      "path": "/learn/model-engineering/how-learning-goes-wrong/",
+      "requests": 1000000,
+      "concurrency": 256,
+      "exit_code": 0,
+      "completed": 1000000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 40702.27,
+      "p95_ms": 9.0,
+      "p99_ms": 14.0,
+      "seconds": 24.569,
+      "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+    },
+    {
+      "name": "data-c256",
+      "path": "/learn/model-engineering/data-a-model-can-learn-from/",
+      "requests": 1000000,
+      "concurrency": 256,
+      "exit_code": 0,
+      "completed": 1000000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 18680.15,
+      "p95_ms": 53.0,
+      "p99_ms": 98.0,
+      "seconds": 53.533,
+      "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+    },
+    {
+      "name": "text-model-c256",
+      "path": "/learn/model-engineering/from-text-to-a-tiny-language-model/",
+      "requests": 1000000,
+      "concurrency": 256,
+      "exit_code": 0,
+      "completed": 1000000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 12912.67,
+      "p95_ms": 52.0,
+      "p99_ms": 81.0,
+      "seconds": 77.443,
+      "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+    },
+    {
+      "name": "harness-c256",
+      "path": "/learn/model-engineering/the-harness-around-the-model/",
+      "requests": 1000000,
+      "concurrency": 256,
+      "exit_code": 0,
+      "completed": 1000000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 30410.89,
+      "p95_ms": 14.0,
+      "p99_ms": 21.0,
+      "seconds": 32.883
+    },
+    {
+      "name": "learning-c8",
+      "path": "/learn/",
+      "requests": 200000,
+      "concurrency": 8,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 86819.16,
+      "p95_ms": 0.0,
+      "p99_ms": 0.0,
+      "seconds": 2.304
+    },
+    {
+      "name": "track-c64",
+      "path": "/learn/model-engineering/",
+      "requests": 200000,
+      "concurrency": 64,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 87837.49,
+      "p95_ms": 1.0,
+      "p99_ms": 4.0,
+      "seconds": 2.277
+    },
+    {
+      "name": "chapter-c256",
+      "path": "/learn/model-engineering/weights-predictions-and-loss/",
+      "requests": 200000,
+      "concurrency": 256,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 54002.52,
+      "p95_ms": 8.0,
+      "p99_ms": 9.0,
+      "seconds": 3.704
+    },
+    {
+      "name": "gradients-c256",
+      "path": "/learn/model-engineering/gradients-and-weight-updates/",
+      "requests": 200000,
+      "concurrency": 256,
+      "exit_code": 0,
+      "completed": 200000.0,
+      "failed": 0.0,
+      "non_2xx": 0,
+      "rps": 47784.29,
+      "p95_ms": 9.0,
+      "p99_ms": 13.0,
+      "seconds": 4.185
+    },
+    {
+      "name": "roadmap-c1024",
+      "path": "/learn/model-engineering/roadmap/",
+      "requests": 200000,
+      "concurrency": 1024,
+      "exit_code": 49,
+      "completed": null,
+      "failed": null,
+      "non_2xx": 0,
+      "rps": null,
+      "p95_ms": null,
+      "p99_ms": null,
+      "seconds": null
+    }
+  ],
+  "checks": [
+    {
+      "name": "load-generator open-file headroom",
+      "passed": true,
+      "detail": {
+        "required_soft_minimum": 4096,
+        "soft_before": 4096,
+        "hard": 9223372036854775807,
+        "soft_after": 4096,
+        "adjusted": false,
+        "scope": "This process and its children only; no system or shell-profile settings changed."
+      }
+    },
+    {
+      "name": "content /learn/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 9680
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 14436
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/roadmap/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 23795
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/weights-predictions-and-loss/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 19549
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/gradients-and-weight-updates/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 26153
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/our-first-training-loop/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 39403
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/how-learning-goes-wrong/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 33133
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/data-a-model-can-learn-from/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 28843
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/from-text-to-a-tiny-language-model/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 69809
+      }
+    },
+    {
+      "name": "content /learn/model-engineering/the-harness-around-the-model/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 47603
+      }
+    },
+    {
+      "name": "content /posts/why-im-learning-how-models-learn/",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "bytes": 34366
+      }
+    },
+    {
+      "name": "baseline-home",
+      "passed": true,
+      "detail": {
+        "name": "baseline-home",
+        "path": "/",
+        "requests": 50000,
+        "concurrency": 32,
+        "exit_code": 0,
+        "completed": 50000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 33914.47,
+        "p95_ms": 4.0,
+        "p99_ms": 5.0,
+        "seconds": 1.474,
+        "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+      }
+    },
+    {
+      "name": "candidate-home",
+      "passed": true,
+      "detail": {
+        "name": "candidate-home",
+        "path": "/",
+        "requests": 50000,
+        "concurrency": 32,
+        "exit_code": 0,
+        "completed": 50000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 36182.54,
+        "p95_ms": 4.0,
+        "p99_ms": 5.0,
+        "seconds": 1.382,
+        "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+      }
+    },
+    {
+      "name": "homepage regression",
+      "passed": true,
+      "detail": {
+        "baseline_rps": 33914.47,
+        "candidate_rps": 36182.54,
+        "baseline_p99_ms": 5.0,
+        "candidate_p99_ms": 5.0
+      }
+    },
+    {
+      "name": "homepage-records-c256",
+      "passed": true,
+      "detail": {
+        "name": "homepage-records-c256",
+        "path": "/",
+        "requests": 1000000,
+        "concurrency": 256,
+        "exit_code": 0,
+        "completed": 1000000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 33950.97,
+        "p95_ms": 15.0,
+        "p99_ms": 25.0,
+        "seconds": 29.454,
+        "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+      }
+    },
+    {
+      "name": "training-loop-c256",
+      "passed": true,
+      "detail": {
+        "name": "training-loop-c256",
+        "path": "/learn/model-engineering/our-first-training-loop/",
+        "requests": 1000000,
+        "concurrency": 256,
+        "exit_code": 0,
+        "completed": 1000000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 29843.01,
+        "p95_ms": 18.0,
+        "p99_ms": 51.0,
+        "seconds": 33.509,
+        "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+      }
+    },
+    {
+      "name": "overfitting-c256",
+      "passed": true,
+      "detail": {
+        "name": "overfitting-c256",
+        "path": "/learn/model-engineering/how-learning-goes-wrong/",
+        "requests": 1000000,
+        "concurrency": 256,
+        "exit_code": 0,
+        "completed": 1000000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 40702.27,
+        "p95_ms": 9.0,
+        "p99_ms": 14.0,
+        "seconds": 24.569,
+        "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+      }
+    },
+    {
+      "name": "data-c256",
+      "passed": true,
+      "detail": {
+        "name": "data-c256",
+        "path": "/learn/model-engineering/data-a-model-can-learn-from/",
+        "requests": 1000000,
+        "concurrency": 256,
+        "exit_code": 0,
+        "completed": 1000000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 18680.15,
+        "p95_ms": 53.0,
+        "p99_ms": 98.0,
+        "seconds": 53.533,
+        "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+      }
+    },
+    {
+      "name": "text-model-c256",
+      "passed": true,
+      "detail": {
+        "name": "text-model-c256",
+        "path": "/learn/model-engineering/from-text-to-a-tiny-language-model/",
+        "requests": 1000000,
+        "concurrency": 256,
+        "exit_code": 0,
+        "completed": 1000000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 12912.67,
+        "p95_ms": 52.0,
+        "p99_ms": 81.0,
+        "seconds": 77.443,
+        "reused_from": "perf/results/20261113T165341Z-learning/result.json"
+      }
+    },
+    {
+      "name": "harness-c256",
+      "passed": true,
+      "detail": {
+        "name": "harness-c256",
+        "path": "/learn/model-engineering/the-harness-around-the-model/",
+        "requests": 1000000,
+        "concurrency": 256,
+        "exit_code": 0,
+        "completed": 1000000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 30410.89,
+        "p95_ms": 14.0,
+        "p99_ms": 21.0,
+        "seconds": 32.883
+      }
+    },
+    {
+      "name": "learning-c8",
+      "passed": true,
+      "detail": {
+        "name": "learning-c8",
+        "path": "/learn/",
+        "requests": 200000,
+        "concurrency": 8,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 86819.16,
+        "p95_ms": 0.0,
+        "p99_ms": 0.0,
+        "seconds": 2.304
+      }
+    },
+    {
+      "name": "track-c64",
+      "passed": true,
+      "detail": {
+        "name": "track-c64",
+        "path": "/learn/model-engineering/",
+        "requests": 200000,
+        "concurrency": 64,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 87837.49,
+        "p95_ms": 1.0,
+        "p99_ms": 4.0,
+        "seconds": 2.277
+      }
+    },
+    {
+      "name": "chapter-c256",
+      "passed": true,
+      "detail": {
+        "name": "chapter-c256",
+        "path": "/learn/model-engineering/weights-predictions-and-loss/",
+        "requests": 200000,
+        "concurrency": 256,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 54002.52,
+        "p95_ms": 8.0,
+        "p99_ms": 9.0,
+        "seconds": 3.704
+      }
+    },
+    {
+      "name": "gradients-c256",
+      "passed": true,
+      "detail": {
+        "name": "gradients-c256",
+        "path": "/learn/model-engineering/gradients-and-weight-updates/",
+        "requests": 200000,
+        "concurrency": 256,
+        "exit_code": 0,
+        "completed": 200000.0,
+        "failed": 0.0,
+        "non_2xx": 0,
+        "rps": 47784.29,
+        "p95_ms": 9.0,
+        "p99_ms": 13.0,
+        "seconds": 4.185
+      }
+    },
+    {
+      "name": "roadmap-c1024",
+      "passed": false,
+      "detail": {
+        "name": "roadmap-c1024",
+        "path": "/learn/model-engineering/roadmap/",
+        "requests": 200000,
+        "concurrency": 1024,
+        "exit_code": 49,
+        "completed": null,
+        "failed": null,
+        "non_2xx": 0,
+        "rps": null,
+        "p95_ms": null,
+        "p99_ms": null,
+        "seconds": null
+      }
+    }
+  ],
+  "passed": false,
+  "continuation": {
+    "receipt": "perf/results/20261113T165341Z-learning/result.json",
+    "receipt_sha256": "e159cebc35fa46d801658271792b43731c5a54d90791b2564c2119fc556081bb",
+    "previous_run_passed": false,
+    "previous_failure": "harness-c256: {'name': 'harness-c256', 'path': '/learn/model-engineering/the-harness-around-the-model/', 'requests': 1000000, 'concurrency': 256, 'exit_code': 49, 'completed': None, 'failed': None, 'non_2xx': 0, 'rps': None, 'p95_ms': None, 'p99_ms': None, 'seconds': None}",
+    "note": "Successful unchanged phases are reused, not rerun. Prior failures remain failures in their original receipt. Remaining phases use a fresh listener port without changing system TCP settings."
+  },
+  "error": "roadmap-c1024: {'name': 'roadmap-c1024', 'path': '/learn/model-engineering/roadmap/', 'requests': 200000, 'concurrency': 1024, 'exit_code': 49, 'completed': None, 'failed': None, 'non_2xx': 0, 'rps': None, 'p95_ms': None, 'p99_ms': None, 'seconds': None}",
+  "finished_utc": "2026-11-13T16:58:59.827016+00:00"
+}
