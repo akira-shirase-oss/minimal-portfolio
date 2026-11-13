@@ -62,6 +62,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--baseline-ref", required=True)
     parser.add_argument("--port", type=int, default=1121)
+    parser.add_argument("--resume-result", type=Path, help="Reuse only successful phases with identical site source, baseline, settings and thresholds; preserve the failed receipt.")
     args = parser.parse_args()
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     output = ROOT / "perf" / "results" / (stamp + "-learning")
@@ -94,6 +95,19 @@ def main():
     }
     processes = []
     logs = []
+    previous = None
+    if args.resume_result:
+        previous = json.loads(args.resume_result.read_text())
+        for key in ("source_sha256", "baseline_commit", "thresholds", "zola", "machine"):
+            if previous.get(key) != result.get(key):
+                raise RuntimeError("Cannot reuse a phase with changed " + key)
+        result["continuation"] = {
+            "receipt": str(args.resume_result),
+            "receipt_sha256": hashlib.sha256(args.resume_result.read_bytes()).hexdigest(),
+            "previous_run_passed": previous.get("passed"),
+            "previous_failure": previous.get("error"),
+            "note": "Successful unchanged phases are reused, not rerun. Prior failures remain failures in their original receipt. Remaining phases use a fresh listener port without changing system TCP settings.",
+        }
 
     def save():
         (output / "result.json").write_text(json.dumps(result, indent=2) + "\n")
@@ -122,6 +136,15 @@ def main():
             raise RuntimeError(name + ": " + str(detail))
 
     def phase(label, base, path, count, concurrency):
+        if previous:
+            saved = next((p for p in previous.get("phases", []) if p["name"] == label), None)
+            if saved and saved["path"] == path and saved["requests"] == count and saved["concurrency"] == concurrency and saved["exit_code"] == 0 and saved["completed"] == count and saved["failed"] == 0 and saved["non_2xx"] == 0 and saved["rps"] >= 500 and saved["p99_ms"] <= 1000:
+                reused = {**saved, "reused_from": str(args.resume_result)}
+                result["phases"].append(reused)
+                save()
+                print(json.dumps({"name": label, "reused_successful_receipt": str(args.resume_result)}), flush=True)
+                check(label, True, reused)
+                return reused
         run = subprocess.run(["ab", "-n", str(count), "-c", str(concurrency), "-k", "-r", "-s", "10", base + path], capture_output=True, text=True)
         (output / (label + ".txt")).write_text(run.stdout + "\n" + run.stderr)
 
