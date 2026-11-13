@@ -1,0 +1,71 @@
+{
+  "recorded_utc": "2026-11-13T17:01:48.159975+00:00",
+  "deployed_commit": "2f76d64",
+  "deployment_url": "https://b9b7c830.akira-shirase-oss.pages.dev",
+  "cloudflare_deployed": true,
+  "live_checks": [
+    {
+      "url": "https://404human.dev/learn/model-engineering/the-harness-around-the-model/",
+      "status": 200,
+      "bytes": 47791,
+      "sha256": "6c550832c268e23bc4064615455c8b474ba3dbc5825472304fd42f8e8efc4935",
+      "markers": {
+        "A running dashboard and query breakdown": true,
+        "Twenty-five scripted checks passed": true,
+        "3.776": true
+      },
+      "edge_cache_status": "DYNAMIC"
+    },
+    {
+      "url": "https://404human.dev/learn/model-engineering/",
+      "status": 200,
+      "bytes": 14618,
+      "sha256": "4f767873af16fd3d5ae183bed7d889dde2d99fca0942bb5e2a0d5aed7933df31",
+      "markers": {
+        "a running local Qwen dashboard": true
+      },
+      "edge_cache_status": "DYNAMIC"
+    },
+    {
+      "url": "https://404human.dev/learn/model-engineering/roadmap/",
+      "status": 200,
+      "bytes": 23970,
+      "sha256": "e3e8361e094f2cf28ca46cd70c081518f2387699d8f4367694cd29fb6ae2523b",
+      "markers": {
+        "Twenty-five scripted checks and four real development cases passed": true
+      },
+      "edge_cache_status": "DYNAMIC"
+    },
+    {
+      "url": "https://404human.dev/posts/one-chat-from-todos-to-crm/",
+      "status": 200,
+      "bytes": 14006,
+      "sha256": "16f985d156d0cf16ca82e64112c13d9a043e43d922073ce20cc9d60adeb64993",
+      "markers": {
+        "no": true,
+        "14px": true,
+        "Where I messed up": true,
+        "READY.": true
+      },
+      "edge_cache_status": "DYNAMIC"
+    },
+    {
+      "url": "https://404human.dev/posts/the-assistant-failed-before-the-model/",
+      "status": 200,
+      "bytes": 12534,
+      "sha256": "dee3e063c9ea80a92aadc244831603c517498c65900d0047d73d9667b6e0cb37",
+      "markers": {
+        "failed before": true,
+        "EPERM": true
+      },
+      "edge_cache_status": "DYNAMIC"
+    }
+  ],
+  "all_markers_passed": true,
+  "full_static_load_sweep_passed": false,
+  "full_static_load_sweep_note": "Original and continuation failed on local client address allocation; updated chapter completed one million requests in the continuation. Original failures preserved.",
+  "source_pushed_through": "396d260",
+  "later_receipt_sync": "Blocked: SSH agent refused signing; existing GitHub CLI credentials lack repository push permission. No account settings changed.",
+  "live_content_matches_pushed_learning_source": true,
+  "deployed_commit_full": "2f76d64e822dbeadeccc6c87e1fa1997508a7530"
+}
