@@ -295,7 +295,7 @@ remain available to assistive technology. Other wide tables scroll within the
 page; their first column is no longer pinned over neighbouring text.
 
 ```
-cd ~/Desktop/Learning/akira-shirase-oss/minimal-portfolio
+cd ~/Desktop/Learning/akira-shirase-oss/site/minimal-portfolio
 zola serve
 ```
 
