@@ -1,0 +1,9 @@
+{
+  "runtime": "mlx-lm",
+  "runtime_version": "0.32.2",
+  "repository": "mlx-community/Qwen3-8B-4bit",
+  "revision": "545dc4251c05440727734bcd94334791f6ab0192",
+  "endpoint": "http://127.0.0.1:8080/v1/chat/completions",
+  "model_selector": "default_model",
+  "identity_status": "Expected configuration; actual download identity is in .models/model-manifest.json"
+}

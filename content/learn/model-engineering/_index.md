@@ -81,7 +81,11 @@ query-processing breakdowns, 25 scripted checks and four actual development
 queries. Create/list work in these examples; update/delete, CRM and adapter
 training remain planned. These smoke results do not establish held-out quality
 or cost savings. Every step, including failures and UI changes, is retained for
-revision.
+revision. [The latest steps](@/learn/model-engineering/the-harness-around-the-model.md#reading-one-request-then-making-it-faster-13-november)
+read one request stage by stage and explain where facts should live. They then
+measure a harness change: single saves took 0.81 s instead of 1.59 s on
+development cases. The same run caught a grader bug and a compound request that
+fails in both versions.
 
 **Earlier learning sequence, agreed 9 November 2026:** topics 4–8, from how learning goes wrong through adapting an existing model. [Topic 4 has failure-mode comparisons](@/learn/model-engineering/how-learning-goes-wrong.md), and [topic 5 has a data audit and split-leakage demonstration](@/learn/model-engineering/data-a-model-can-learn-from.md). [Topic 6 now spans tokens, count probabilities, adjustable scores, a last-token predictor with learned input embeddings, an attention mechanism with position vectors, a generation loop, and trained attention weights](@/learn/model-engineering/from-text-to-a-tiny-language-model.md). On 11 November, [topic 7 ran its first interrupt/resume proof](@/learn/model-engineering/training-runs-we-can-inspect-and-resume.md) and [topic 8 its first adapter-vs-fine-tune contrast](@/learn/model-engineering/adapting-an-existing-model.md). Broader text-model training and real-model checkpointing/adaptation remain ahead. Explanations, examples, code, recorded results, and revision notes are added as we cover them.
 

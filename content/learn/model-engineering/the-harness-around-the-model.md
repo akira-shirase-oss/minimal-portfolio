@@ -8,16 +8,19 @@ weight = 9
 [extra]
 kind = "chapter"
 chapter = 9
-status = "local MLX dashboard running; 25 scripted checks and four live development cases passed; update/delete and tuning planned"
+status = "code-written confirmations halve single-save time on development cases; 27 scripted checks pass; a compound request fails in both versions; update/delete and tuning planned"
 +++
 
 We are moving to learning by building useful pieces and investigating their behavior. The earlier numerical chapters remain references. This is the first practical slice of a local assistant we can improve together.
 
 **Current build, 13 November:** Qwen now runs directly through local MLX. The
 browser dashboard has Chat, Tasks, Run history, Local model and Overview screens.
-[The latest step record](#a-running-dashboard-and-query-breakdown-13-november)
-includes the setup recovery, real tool calls, timings and limitations. The older
-Ollama lookup below remains a dated baseline.
+[The dashboard step record](#a-running-dashboard-and-query-breakdown-13-november)
+includes the setup recovery, real tool calls, timings and limitations.
+[The latest steps](#reading-one-request-then-making-it-faster-13-november) read
+one request stage by stage, explain where facts should live, and measure a
+harness change. They also record a grader bug and a real compound-request
+failure. The older Ollama lookup below remains a dated baseline.
 
 The question was: **“What command publishes my portfolio, and does pushing to GitHub publish it? Use my saved project note.”**
 
@@ -479,3 +482,177 @@ things. This app has changed its harness and observability; its weights have not
 been tuned. Next, read the real create trace together, add update/delete using
 exact IDs, and keep these cases as regression evidence. CRM, held-out quality,
 peak memory and comparative operating costs remain planned.
+
+## Reading one request, then making it faster, 13 November
+
+This section starts by reading one saved request closely. It then makes one
+change and measures it against the old behavior. The
+[comparison records, grader fix and source snapshot](https://github.com/akira-shirase-oss/minimal-portfolio/tree/main/perf/results/qwen-confirm-shortcut-2026-11-13)
+are saved. The weights did not change.
+
+### Step 1: read one real request from start to finish
+
+This is the saved `Add a todo: Inspect query breakdown` record from the
+dashboard run above ([create.json](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/qwen-dashboard-2026-11-13/create.json)).
+
+| # | What happened | Time |
+| --- | --- | --- |
+| 1 | The message arrived: 35 characters | |
+| 2 | The harness sent Qwen the instructions (711 characters), the message and two tool descriptions: **421 tokens** | |
+| 3 | Qwen replied with a tool request, not text: `create_todo` with `{"title": "Inspect query breakdown"}` | 2.646 s |
+| 4 | The harness checked the arguments: one non-empty title of at most 160 characters, nothing extra. Passed | 0.011 ms |
+| 5 | SQLite saved row #2, one row changed | 0.868 ms |
+| 6 | The result went back to Qwen, with everything resent: **501 tokens** | |
+| 7 | Qwen wrote: *The todo "Inspect query breakdown" has been added with ID 2.* | 1.129 s |
+| | **Total: 922 tokens in, 38 out** | **3.776 s** |
+
+Three things stand out:
+
+1. **Qwen never touched the database.** It asked; our code checked and acted.
+2. **Nearly all the waiting was the model:** 3.775 of 3.776 seconds. Checks and
+   SQLite together took under one millisecond. Speed comes from fewer or shorter
+   model calls, not faster application code.
+3. **The message was the smallest part of the prompt.** Instructions and tool
+   descriptions made up most of the 421 tokens, and they are sent again on
+   every call.
+
+### Step 2: decide where facts live
+
+That third point is the memory problem in small form. "Remembering" in a system
+like this is not one thing:
+
+| Kind | Where it lives | Holds | Lasts |
+| --- | --- | --- | --- |
+| Weights | The model file, or a trained adapter | Skills: which tool to call, how to read messy text, a writing style | Until retrained |
+| Records | SQLite | Exact facts: todos now; customers, orders and invoices later | Until changed |
+| Fact notes (planned) | SQLite, with source, date and approval | Facts learned from a message, kept as suggestions until a person approves them | Until changed |
+| Working context | The prompt for one call | Only what this step needs | One request |
+
+Data that changes every day belongs in records, fetched by tools when a step
+needs it. Weights are the wrong place: retraining daily is impractical, and
+memorised facts go stale.
+
+Pasting everything into the prompt also costs memory. While reading a prompt,
+every token leaves a stored *key* and *value* at every layer, so later tokens
+can look back at it. This is the attention from [chapter 6](@/learn/model-engineering/from-text-to-a-tiny-language-model.md),
+and the stored notes are called the **KV cache**. Using this model's own
+configuration file:
+
+**memory per token = 2 × 36 × 8 × 128 × 2 bytes = 147,456 bytes**
+
+- **2:** one key and one value per token
+- **36:** the model's layers; each one stores its own notes
+- **8:** key-value heads per layer, separate look-back channels
+- **128:** numbers in each note
+- **2 bytes:** the size of each number, assuming the usual 16-bit cache
+
+So 1,000 tokens need about 141 MiB, and the full 40,960-token window about
+5.6 GiB, on top of the 4.6 GB weight file. Every new output token also looks
+back over all of them. This is a calculation from the configuration, not a
+measurement ([saved calculation](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/qwen-weights-header-2026-11-13.json)).
+A small model is also easier to distract with irrelevant rows. A planned
+experiment will measure both effects: the same question with a few relevant
+facts versus hundreds of pasted records.
+
+### Step 3: let code write what it already knows
+
+In step 1, Qwen's second call only wrote a sentence. The harness already had
+every fact in it from the saved row. So when a **whole run is exactly one
+successful `create_todo`**, the code now writes the confirmation and skips that
+call:
+
+```js
+function writeConfirmation(report, results) {
+  if (report.tool_calls !== 1 || results.length !== 1) return null;
+  const [{ name, result }] = results;
+  if (name !== "create_todo" || result?.error || !result?.todo) return null;
+  return `Added todo #${result.todo.id}: "${result.todo.title}".`;
+}
+```
+
+Lists, refusals, rejected arguments and multi-call runs still get model-written
+answers. Each record now says whether the answer came from the model or from
+this template. The setting can be switched off, so the old and new behavior can
+run side by side. Twenty-seven scripted checks passed: the earlier 25 plus two
+new ones for this rule.
+
+### Step 4: declare the comparison, then run it
+
+The cases, pass criteria and protocol were written down before any run
+([confirm-shortcut-v1.json](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/qwen-confirm-shortcut-2026-11-13/source/evals/confirm-shortcut-v1.json)):
+
+- The same five messages, in order, in one chat session per version, so the
+  chat history behaves as it does in the browser. Four messages repeat the
+  earlier dashboard cases. A new fifth one probes the change's known risk.
+- **A** = Qwen writes every answer; **B** = code confirms single saves.
+- Three repetitions per version, in alternating order (A B, B A, A B), each
+  using a fresh temporary database that starts with todo #1. Medians are reported.
+- One uncounted warm-up request first, because the model server loads the
+  weights on its first request.
+
+The first attempt stopped at its health check: the model server and dashboard
+had stopped, and the runner refuses to start without a healthy model. No cases
+ran. Both were restarted with the documented commands.
+
+### Step 5: results
+
+Medians of three runs, on development cases only:
+
+| Message | A: model writes | B: code confirms | Passed |
+| --- | --- | --- | --- |
+| `Add a todo: Inspect query breakdown` | 1.59 s · 2 calls · 922 tokens in | **0.81 s · 1 call · 421 tokens in** | 3/3 both |
+| `List my saved todos` | 3.01 s · 61 tokens out | 3.94 s · 80 tokens out | 3/3 both |
+| `Create a todo` | 1.83 s | 1.91 s | 3/3 both |
+| `Delete todo #1` | 0.87 s | 1.00 s | 3/3 both |
+| `Add a todo: Call the bakery, then tell me how many todos I have` | 2.94 s · 1,876 tokens in | 1.49 s · 900 tokens in | **0/3 both** |
+| Whole five-message session | 10.25 s | **9.15 s** | |
+
+A single save took about half the time and 54% fewer input tokens. The
+confirmation's ID is copied from the database row, so it cannot be misreported.
+
+### Step 6: the grader was wrong
+
+The first summary said every case passed, including the bakery message.
+Reading the saved answers showed otherwise. The check looked for the number 3
+anywhere in the answer to confirm the count. It found it in **"todo #3"**,
+the new row's ID. No count had been given.
+
+The check now requires a stated count, such as "3 todos". The saved answers
+were re-graded without rerunning the model: 0 of 3 in both versions. The
+original summary is kept next to the corrected one, with the
+[re-grading script](https://github.com/akira-shirase-oss/minimal-portfolio/blob/main/perf/results/qwen-confirm-shortcut-2026-11-13/regrade.mjs).
+A PASS is only as good as the check behind it.
+
+### Step 7: a real failure and a side effect
+
+**The failure.** In all six bakery runs, in both versions, Qwen saved the
+whole sentence `Call the bakery, then tell me how many todos I have` as the
+title and never answered the question. The new rule did not cause this. It
+is a model-and-harness problem to fix next, and the case stays in the suite.
+
+**The side effect.** In version A, the list answers were identical across
+three runs. In B, they varied from 58 to 114 output tokens, and the median list
+took about 0.9 s longer. A likely cause is that Qwen no longer sees its own
+earlier reply in the history to copy the style from. That is a hypothesis to
+test, not a demonstrated cause.
+
+**Warm and cold timing.** The first counted request took 4.30 s; the same
+request later took 1.58 s. The server most likely reuses work when prompts
+start the same way. A single cold measurement, like the 3.776 s in step 1,
+cannot be compared with warm ones. That is why this run used a warm-up,
+repetitions and alternating order.
+
+### Revision notes and next step
+
+- Read the trace stage by stage. Model calls dominate the time, and repeated
+  instructions dominate the tokens.
+- Store facts in records and fetch them per step. Weights hold skills.
+- When code already knows the answer, let code say it. Each skipped model call
+  saves its time and tokens.
+- Declare criteria first, and check the grader as well as the model.
+- One change can shift behavior elsewhere. Rerun the old cases every time.
+
+Version B stays on. These are development cases, not held-out evaluation, and
+no weights changed. Next: make the bakery message work, with the title holding
+only the task and the count answered, and keep it as a regression case. Then
+add update and delete by exact ID.

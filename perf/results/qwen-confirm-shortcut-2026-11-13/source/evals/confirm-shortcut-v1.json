@@ -1,0 +1,39 @@
+{
+  "version": "confirm-shortcut-v1",
+  "declared_utc": "2026-11-13",
+  "kind": "Development comparison on real local Qwen; declared before any run. Not a held-out benchmark.",
+  "change": "When a whole run is exactly one successful create_todo, code writes the confirmation from the saved row and skips the follow-up Qwen call.",
+  "arms": {
+    "A_model_writes": { "confirmWrites": false, "meaning": "Previous behavior: Qwen writes every final answer." },
+    "B_code_confirms": { "confirmWrites": true, "meaning": "New behavior: code confirms a single successful create." }
+  },
+  "protocol": {
+    "path": "In-process createApp HTTP handler (same code path as the browser), real MLX-LM server at 127.0.0.1:8080, fresh in-memory SQLite per session seeded with todo #1 'Read Qwen notes'.",
+    "sessions": "One chat session per arm per repetition; cases run in order inside that session so history behaves as in the browser.",
+    "repetitions": 3,
+    "order": "Counterbalanced to limit warm-cache bias: rep 1 A then B, rep 2 B then A, rep 3 A then B.",
+    "summary_statistic": "Median per case and arm, with min and max shown.",
+    "warm_up": "One uncounted request before the first case, because the MLX server loads weights on its first request. Added after the first attempt stopped at the health check (server down, zero cases run)."
+  },
+  "amendments": [
+    "2026-11-13 after run 2026-11-13T17-51-22Z: the compound count check matched the todo ID (\"#3\") and wrongly passed 6/6. Grader fixed to require a stated count; saved answers re-graded (regrade.mjs, summary.regraded.json): 0/3 in both arms. Original grades preserved.",
+    "Observation, not a v1 criterion: in all 6 compound runs Qwen saved the whole sentence 'Call the bakery, then tell me how many todos I have' as the title. A v2 case should require the title to exclude the follow-up instruction."
+  ],
+  "cases": [
+    { "id": "create", "message": "Add a todo: Inspect query breakdown",
+      "criteria": "Exactly one successful create_todo; rows +1 with that exact title; answer contains the saved ID and title.",
+      "expected_effect": "B uses 1 model call instead of 2; less time and fewer prompt tokens." },
+    { "id": "list", "message": "List my saved todos",
+      "criteria": "A list_todos call; rows unchanged; answer contains every saved title.",
+      "expected_effect": "No shortcut in either arm (reads keep model-written answers). Regression check." },
+    { "id": "missing-title", "message": "Create a todo",
+      "criteria": "No tool call; rows unchanged; answer mentions a title (keyword check, human review).",
+      "expected_effect": "Same in both arms. Regression check." },
+    { "id": "unsupported-delete", "message": "Delete todo #1",
+      "criteria": "No write; rows unchanged; answer says deletion is unavailable (keyword check, human review).",
+      "expected_effect": "Same in both arms. Regression check." },
+    { "id": "compound", "message": "Add a todo: Call the bakery, then tell me how many todos I have",
+      "criteria": "Rows +1 with a title containing 'bakery'; answer contains the correct total count after creation.",
+      "expected_effect": "NEW case, added to probe the shortcut's known risk: if Qwen creates first and would list next, B ends the run early and may drop the count. A may pass or fail on its own merits." }
+  ]
+}

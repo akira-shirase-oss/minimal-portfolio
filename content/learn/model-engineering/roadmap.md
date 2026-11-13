@@ -26,6 +26,18 @@ responses, validation, database effects and timings. [The dated step record](@/l
 preserves the initial setup failures and subsequent recovery. Update/delete,
 CRM, adapter training, held-out quality and measured savings remain planned.
 
+**Later on 13 November:** [the next steps](@/learn/model-engineering/the-harness-around-the-model.md#reading-one-request-then-making-it-faster-13-november)
+read one request stage by stage and set the memory design: records for facts,
+weights for skills, per-step context. They then let code write confirmations
+for single saves. On development cases, a save took 0.81 s instead of 1.59 s,
+with 421 input tokens instead of 922. The run also exposed a grader bug and a
+compound request that fails in both versions. The CRM step will follow the
+shape of real small-business work: clients, orders, line items and invoice
+drafts, with totals computed by code and emails treated as untrusted input.
+[Chapter 8](@/learn/model-engineering/adapting-an-existing-model.md#qwen-s-real-weight-file-13-november)
+explains why improving Qwen means training a separate adapter, not editing the
+4-bit weight file.
+
 Keep the earlier lookup, saved-build and tiny-model experiments as references.
 Preserve old task cases when adding tools or training adapters, and evaluate old
 and new behavior with each workflow's intended tools. Saved records, conversation

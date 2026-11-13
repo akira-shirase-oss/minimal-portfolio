@@ -1,0 +1,86 @@
+{
+ "recorded_utc": "2026-11-13T18:16:24.415511+00:00",
+ "kind": "Read-only header inspection of the local Qwen weight file; no tensor data loaded, no weights changed",
+ "model": {
+  "repository": "mlx-community/Qwen3-8B-4bit",
+  "revision": "545dc4251c05440727734bcd94334791f6ab0192",
+  "model_safetensors_bytes": 4607835174,
+  "model_safetensors_sha256": "f2d29621aab300336ad645567ff38c42aac755513006ef4e8a579cf7ef5256d8"
+ },
+ "tensor_count": 907,
+ "dtype_counts": {
+  "BF16": 653,
+  "U32": 254
+ },
+ "quantization": {
+  "group_size": 64,
+  "bits": 4
+ },
+ "example_tensors": {
+  "model.layers.0.mlp.gate_proj.biases": {
+   "dtype": "BF16",
+   "shape": [
+    12288,
+    64
+   ]
+  },
+  "model.layers.0.mlp.gate_proj.scales": {
+   "dtype": "BF16",
+   "shape": [
+    12288,
+    64
+   ]
+  },
+  "model.layers.0.mlp.gate_proj.weight": {
+   "dtype": "U32",
+   "shape": [
+    12288,
+    512
+   ]
+  }
+ },
+ "example_matrix": {
+  "rows": 12288,
+  "packed_u32_columns": 512,
+  "values_per_u32": 8,
+  "columns": 4096,
+  "values": 50331648
+ },
+ "lora_rank_8_example": {
+  "formula": "rows*r + r*columns",
+  "r": 8,
+  "new_values": 131072,
+  "fraction_of_matrix": 0.0026041666666666665
+ },
+ "config": {
+  "num_hidden_layers": 36,
+  "num_attention_heads": 32,
+  "num_key_value_heads": 8,
+  "head_dim": 128,
+  "hidden_size": 4096,
+  "max_position_embeddings": 40960
+ },
+ "kv_cache_calculation": {
+  "formula": "2 * layers * kv_heads * head_dim * bytes_per_value",
+  "bytes_per_value_assumed": 2,
+  "bytes_per_token": 147456,
+  "bytes_per_1000_tokens": 147456000,
+  "bytes_at_max_positions": 6039797760,
+  "status": "calculation from config, not a measurement"
+ },
+ "mlx_lm_lora_help_first_lines": [
+  "usage: python -m mlx_lm [-h] [--model MODEL] [--train] [--data DATA]",
+  "                        [--fine-tune-type {lora,dora,full}]",
+  "                        [--optimizer {adam,adamw,muon,sgd,adafactor}]",
+  "                        [--mask-prompt] [--num-layers NUM_LAYERS]",
+  "                        [--batch-size BATCH_SIZE] [--iters ITERS]",
+  "                        [--val-batches VAL_BATCHES]",
+  "                        [--learning-rate LEARNING_RATE]",
+  "                        [--steps-per-report STEPS_PER_REPORT]",
+  "                        [--steps-per-eval STEPS_PER_EVAL]",
+  "                        [--grad-accumulation-steps GRAD_ACCUMULATION_STEPS]",
+  "                        [--resume-adapter-file RESUME_ADAPTER_FILE]",
+  "                        [--adapter-path ADAPTER_PATH]"
+ ],
+ "training_run": false
+}
