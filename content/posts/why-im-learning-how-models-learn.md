@@ -16,7 +16,7 @@ So that's where this learning track starts.
 
 ## The question got smaller
 
-The first conversation was about a model for UpliftAI. We talked about collecting articles, using existing datasets, and running a small model locally. I want to explore that in a separate learning project.
+The first conversation was about a model for a work project. We talked about collecting articles, using existing datasets, and running a small model locally. I want to explore that in a separate learning project.
 
 Then I kept pulling the question back. I want to understand the training itself: what changes, how data reaches the model, how we test it, and how we decide whether a candidate is better.
 
