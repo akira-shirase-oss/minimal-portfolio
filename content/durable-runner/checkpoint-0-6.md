@@ -15,7 +15,7 @@ tests = 96
 goal = "Close the gap review's Highs, chiefly the journal's per-record fsync, without ever losing an acknowledged job, and make the runner fit a 2 GB server."
 built = "Group commit on a journal writer thread, a writer that poisons itself on a failed write or fsync, crash-safe compaction with a binary checksummed snapshot, streamed restart, an API key on every mutating route, confined backups, full disk as a clean 503, and bounds on every queue, page and index."
 proof = ["kill -9 drills across three passes: 142 rounds, 0 acknowledged jobs lost", "compaction at 100k runs: 2.4–2.5 s → 0.10–0.17 s", "restart memory at 800k runs: 4,334 → 1,200 MiB", "an older truncation bug found in the third pass; its fix merged late, unreviewed", "the sustained 1M battery has not been re-run"]
-code = "akira-shirase-oss/durable-runner · main @ 5e99465 (last reviewed at ed29802)"
+code = "akira-shirase-oss/durable-runner · main @ e4f08fe (last reviewed at ed29802)"
 +++
 
 A diary is only as good as the habit of closing it. If you write a page, then forget whether you
