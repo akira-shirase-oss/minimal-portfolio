@@ -1,6 +1,6 @@
 +++
 title = "V0–V2: a voice assistant that keeps three notebooks"
-description = "Day one of the Personal Voice Agent: push-to-talk on a Mac, Apple's on-device speech and model, and a Rust service that records what it heard, what it guessed and what it did as three separate things. The automated checks pass. An independent review then found five serious ways it breaks at the edges."
+description = "Day one of the Personal Voice Agent: push-to-talk on a Mac, Apple's on-device speech and model, and a Rust service that records what it heard, what it guessed and what it did as three separate things. The automated checks pass. An independent review then found five serious ways it breaks at the edges, and seventeen fixes, each with a test that failed first, merged the same evening."
 date = 2026-11-16T22:49:00Z
 
 [extra]
@@ -8,15 +8,14 @@ kind = "experiment"
 milestone = "V0–V2"
 step = "build"
 short_title = "First release, built and reviewed"
-# Rust tests at c744552, counted in the independent review's gate run (22+2+21+9+1+2+11).
-# The Swift side adds 28 more; see the entry.
-tests = 68
+# No tests count here: the review counted 68 Rust + 28 Swift at c744552, and the fix round
+# merged since then adds tests whose total no commit records.
 
 [extra.summary]
 goal = "A push-to-talk assistant that runs entirely on the Mac, keeps heard, inferred and executed as separate records, and can't act in your name without asking."
 built = "A pure Rust session domain, a session service the app launches as a child process with a crash-safe turn ledger, a SwiftUI app with on-device recognition, model and voice, and a player that refuses audio from a turn you interrupted."
-proof = ["68 Rust and 28 Swift tests, gate exit 0 three times in a review", "100,000 interrupts: 0 stale audio chunks played", "350 kill -9s in review: every log valid, nothing acknowledged lost", "speaking to first audio p95 2,203 ms, missing the 2,000 ms budget", "review: 5 High findings, fixes on a branch, not merged"]
-code = "akira-shirase-oss/personal-voice-agent · main @ c744552"
+proof = ["68 Rust and 28 Swift tests, gate exit 0 three times in a review", "100,000 interrupts: 0 stale audio chunks played", "350 kill -9s in review: every log valid, nothing acknowledged lost", "speaking to first audio p95 2,036 ms on the fixed build, just over the 2,000 ms budget", "review: 5 High findings; 17 fixes merged, not yet re-reviewed"]
+code = "akira-shirase-oss/personal-voice-agent · main @ 5da3b38 (reviewed at c744552)"
 +++
 
 Telling a friend "remind me to call the dentist" is different from them calling the dentist for you.
@@ -82,13 +81,17 @@ was shared with other builds the whole day.
 
 That still **misses the 2,000 ms p95 budget**. The slow part is the model's first sentence (p95
 2,073 ms). The reviewer re-ran it from a quiet machine and got p95 2,223 ms, so it's the model, not
-the busy laptop.
+the busy laptop. After the fixes, the evidence was re-run from the committed code: median 1,549 ms,
+p95 2,036 ms at a load average of 15 to 19, all 18 turns completed. Closer, still over.
 
 The service's own load runs were small smokes: 50,000 ledger appends (p99 27.0 ms, gate 50 ms),
 2,000 appends with a disk sync each (p99 13.4 ms, gate 20 ms) and 100,000 turn events (reply-turn
 p99 4.4 ms, gate 10 ms). The first turn-event run failed and is kept: on the overloaded machine a 5 ms
 test deadline also caught ordinary turns, and the test client waited forever for speech that was
-never coming.
+never coming. In the re-run after the fixes, the two ledger smokes failed (p99 554 ms and 155 ms)
+while other processes hammered the same disk at up to 3,751 transfers a second. Those are kept too.
+Run back to back against the old build under the same conditions, the two overlapped round for round,
+so it's the contended disk, not a regression.
 
 ## Where I messed up
 
@@ -114,23 +117,28 @@ boundary and the disk meet. Five High findings, all reproduced:
 Two of my tests were weaker than their names. I loosened the on-device end-to-end test to stop
 load-related flakes, and overshot: it then passed with the model path broken. The 8-thread player
 stress test never actually produced the race it claimed to rule out. The code was right by
-inspection, but the test didn't prove it.
+inspection, but the test didn't prove it. And my evidence files named commits that didn't contain the
+code they measured, because I'd run them before committing. They now name the commit that holds it.
+
+All of it was fixed the same evening: seventeen fixes, merged to `main`, each with a test shown failing
+without it. The "done" check is now a classifier of sentence structure instead of a phrase list, a
+`forget` command deletes the heard transcripts a consent scope covers, and a stalled service can no
+longer hold the microphone open.
 
 ## What it doesn't do yet
 
-- **The fixes aren't on `main`.** A fix round for these findings is being written on a branch right
-  now. Until it's merged and checked again, the bugs above are in the published code.
+- **The fixes haven't been re-reviewed.** They're merged, with tests, but no second reviewer has
+  attacked them yet. Until one does, they're my word.
 - **The live drills need a person with a microphone:** push-to-talk, the real stop time on the
   speakers, barge-in, revocation, a crash, the model being unavailable. Then 100 consented
   utterances, quiet and noisy, and three one-hour sessions.
 - **Echo cancellation is limited.** Capture and playback use separate audio engines, so the echo
   canceller can't hear what the assistant is saying. One shared engine is owed in code.
-- **Heard transcripts are kept forever**, with no way to delete them, in this build.
 - **The million-unit load runs haven't run.** The rule is a load average below about 6; today it sat
   between 25 and 160.
 - No memory, no personal voice and no tools. Those are V3 and V4, with their own contracts.
 
 ## Up next
 
-Merge the fix round once the full gate passes and a second reviewer has re-checked it. Then the live
-microphone drills, then the model's first-sentence latency.
+A second review of the fix round. Then the live microphone drills, then the model's first-sentence
+latency.

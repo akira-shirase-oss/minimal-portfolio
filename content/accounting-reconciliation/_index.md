@@ -40,9 +40,9 @@ accounting software and never connects to a bank.
 
 ## Where it stands
 
-Promoted to a project on 2026-11-16 from a brief, and started the same evening. The first three
-slices of R0 are on `main`: the pure domain, a strict streaming CSV reader, and the database schema
-with its staged import. The ship gate needs one or two practising accountants willing to pilot it with
+Promoted to a project on 2026-11-16 from a brief, and started the same evening. Four slices of R0 are
+on `main`: the pure domain, a strict streaming CSV reader, the database schema with its staged import,
+and a command line with a seeded statement generator. The ship gate needs one or two practising accountants willing to pilot it with
 a real month, and they haven't been found yet.
 
 The README on `main` still says "no code yet"; the code arrived a few minutes later.

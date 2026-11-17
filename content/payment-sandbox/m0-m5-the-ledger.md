@@ -15,7 +15,7 @@ tests = 138
 goal = "A payment sandbox whose simulated balances can always be explained by an immutable double-entry journal, and which never charges twice, whatever crashes."
 built = "A pure money and accounting domain, a journal guarded by database triggers, scoped sandbox keys, two-phase payments with an identity committed before the network call, a separate simulator process, a recovery reconciler, signed webhooks with a leased deliverer, and explain-balance."
 proof = ["138 tests at the end of M5, including 4 fault-injection drills", "reviewer's chaos run: 128 kill -9s, 13 clock jumps, 3 restores, 0 double charges", "64 concurrent refunds of 10 against 300 captured: exactly 30 admitted", "five accounting Highs from the review, fixed on main the same evening", "load: smokes only, two missed their latency gate"]
-code = "akira-shirase-oss/payment-sandbox · main @ ed64527"
+code = "akira-shirase-oss/payment-sandbox · main @ d4a9919"
 +++
 
 If your bank app shows £50 but nobody can say where it came from, it's not a balance. It's a
@@ -104,16 +104,15 @@ books without breaking a test:
   summed to −150 against a balance of −350, because a posting that took an earlier number but
   committed later was skipped. An explanation is now of one database snapshot, so every page agrees.
 
-All five were fixed on `main` the same evening. One of those fixes went out with the gate red, over
+All five were fixed on `main` the same evening, and so were the review's three card-number findings.
+The sandbox refuses anything that looks like a real card number, but the first guard missed eight
+common shapes, like dots, full-width digits and slashes; it now joins digits across short separators
+and checks every 13-to-19-digit window. A card number sent as a JSON number used to be echoed back in
+the error, and one in the URL path or the request-id header reached the logs; neither happens now. One of those fixes went out with the gate red, over
 a lint warning, and `main` was green again about a minute and a half later.
 
 ## What it doesn't do yet
 
-- **Card-number guarding still has two gaps.** The sandbox refuses anything that looks like a real
-  card number. The review stored eight shapes the first guard missed, like dots, full-width digits and
-  slashes; the guard now joins digits across short separators and checks every 13-to-19-digit window,
-  and all eight are refused. Still open: a number sent as a JSON number is echoed back in the error,
-  and one in a URL path or request-id header can reach the logs.
 - **Other Mediums are open.** The simulator's control endpoints (faults, the clock) have no
   authentication and are built into the release binary, and any read-only key can ask for expensive
   reconciliation reports with no rate limit.
@@ -125,5 +124,5 @@ a lint warning, and `main` was green again about a minute and a half later.
 
 ## Up next
 
-Close the last two card-guard findings, fix the docs, then M6: a hosted checkout and a dashboard, built with
+Fix the docs and the open Mediums, then M6: a hosted checkout and a dashboard, built with
 SvelteKit, Tailwind and shadcn-svelte.

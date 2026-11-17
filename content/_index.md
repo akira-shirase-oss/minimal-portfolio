@@ -53,7 +53,7 @@ log = "ai-operations-layer/_index.md"
 
 [[extra.now]]
 process = "voice-agent"
-what = "A Mac voice assistant that keeps heard, inferred and executed apart — built, reviewed, fixes in progress, mic drills owed."
+what = "A Mac voice assistant that keeps heard, inferred and executed apart — built, reviewed, seventeen fixes merged; mic drills owed."
 link = "@/personal-voice-agent/_index.md"
 log = "personal-voice-agent/_index.md"
 
@@ -105,10 +105,10 @@ status = "spine only"
 
 [[extra.projects]]
 name = "Personal Voice Agent"
-about = "Push-to-talk on a Mac, all on-device, with heard, inferred and executed kept apart. First release built; a review found five High bugs whose fixes are on a branch; live mic drills owed."
+about = "Push-to-talk on a Mac, all on-device, with heard, inferred and executed kept apart. First release built; a review found five High bugs, and the fixes merged the same evening, not yet re-reviewed; live mic drills owed."
 link = "@/personal-voice-agent/_index.md"
 year = 2026
-status = "fixing"
+status = "in progress"
 
 [[extra.projects]]
 name = "AI Operations Layer"
@@ -119,7 +119,7 @@ status = "in progress"
 
 [[extra.projects]]
 name = "Payment Sandbox"
-about = "Simulated money, real double-entry accounting enforced by PostgreSQL. M0–M5 built and drilled, five review Highs fixed; checkout and dashboard next; full load runs owed."
+about = "Simulated money, real double-entry accounting enforced by PostgreSQL. M0–M5 built and drilled, the review's five Highs and card-number findings fixed; checkout and dashboard next; full load runs owed."
 link = "@/payment-sandbox/_index.md"
 year = 2026
 status = "in progress"
@@ -133,7 +133,7 @@ status = "exploration"
 
 [[extra.projects]]
 name = "Backend Platform"
-about = "A self-hosted control plane for small apps. The first milestone's spine and drill are built, and its own evidence memo recommends staying parked."
+about = "A self-hosted control plane for small apps. The first milestone's spine and drill are built; a review sent the spine back to fix first, and its own evidence memo recommends staying parked."
 link = "@/backend-platform/_index.md"
 year = 2026
 status = "parked"

@@ -5,7 +5,7 @@ template = "progress.html"
 
 [extra]
 # Update this whenever a row changes. It's the time the rows were checked against each repo's main.
-as_of = "2026-11-16 21:10 EST"
+as_of = "2026-11-16 21:20 EST"
 
 groups = [
   { id = "built", title = "The built projects", about = "Roadmaps done or nearly done. 2026-11-16 was their security and reliability pass: an outside gap review, then fix rounds, each checked by a second reviewer." },
@@ -93,9 +93,9 @@ name = "Payment Sandbox"
 what = "Simulated money, real accounting: a double-entry journal PostgreSQL won't let anyone edit, two-phase payments against a separate simulated network, and signed webhooks."
 repo = "payment-sandbox"
 log = "payment-sandbox/_index.md"
-stage = "M0–M5 built and drilled. The review's fix round is landing on main: all five accounting Highs fixed, and the card guard widened."
+stage = "M0–M5 built and drilled. The review's fix round has landed on main: all five accounting Highs and the three card-number findings fixed."
 review = "M0–M5: the lifecycle is solid, five accounting Highs to fix before M6. All five are now fixed on main. The reviewer's own chaos run found no double charge."
-owed = "Two card-guard gaps (a card number sent as a JSON number is echoed back; one in a path or request-id header can be logged); docs that claim too much; all seven full million-request load runs; a scripted restore rehearsal."
+owed = "Open Mediums (unauthenticated simulator control endpoints in the release binary, unbounded-cost reports); docs that claim too much; all seven full million-request load runs; a scripted restore rehearsal."
 next = "M6: a hosted checkout and a dashboard, on SvelteKit, Tailwind and shadcn-svelte."
 
 [[extra.projects]]
@@ -117,10 +117,10 @@ name = "Personal Voice Agent"
 what = "A push-to-talk voice assistant for the Mac, all on-device, that keeps heard, inferred and executed apart and can't act in your name."
 repo = "personal-voice-agent"
 log = "personal-voice-agent/_index.md"
-stage = "First release (V0–V2) built, not shippable. The review's fix round is on a branch, not merged."
-review = "V0–V2: the core holds (350 kill -9s, nothing acknowledged lost), but five High app, process and disk bugs, including a silent assistant after a crash and a microphone left recording."
-owed = "Merging and re-reviewing the fixes; live microphone drills that need a person; the model's first-sentence latency (p95 2,203 ms against a 2,000 ms budget); one shared audio engine for echo cancellation; the million-unit load runs."
-next = "Merge the fix round, then the live drills."
+stage = "First release (V0–V2) built, not shippable. The review's fix round (seventeen fixes, each with a test that failed first) merged on 2026-11-16."
+review = "V0–V2: the core holds (350 kill -9s, nothing acknowledged lost), but five High app, process and disk bugs, including a silent assistant after a crash and a microphone left recording. The fixes haven't been re-reviewed yet."
+owed = "A second review of the fixes; live microphone drills that need a person; the model's first-sentence latency (p95 2,036 ms on the fixed build, against a 2,000 ms budget); one shared audio engine for echo cancellation; the million-unit load runs."
+next = "Re-review the fixes, then the live drills."
 
 [[extra.projects]]
 id = "intent-studio"
@@ -141,7 +141,7 @@ name = "Accounting Reconciliation"
 what = "Every bank line matched, excluded or an exception, each decision explained and chained into an audit trail. It never moves money."
 repo = "accounting-reconciliation"
 log = "accounting-reconciliation/_index.md"
-stage = "R0 started: the pure domain, a strict CSV reader, and the database schema with a staged import."
+stage = "R0 started: the pure domain, a strict CSV reader, the database schema with a staged import, and a command line with a seeded statement generator."
 review = "None yet."
 owed = "The server skeleton, the kill-mid-import and database-down drills, the 1,000,000-line import, and a review; one or two practising accountants for the ship gate; a model provider for real runs."
 next = "Finish R0, then a review."
@@ -153,10 +153,10 @@ name = "Native Workspace"
 what = "An optional, read-only macOS workbench for the services, starting with Service Monitor."
 repo = "native-workspace"
 log = "native-workspace/_index.md"
-stage = "Exploration. N0 slices 1–2: the Swift package, a pure core, a GET-only transport, adapter tests and CI. No app window yet."
+stage = "Exploration. N0 slices 1–3: the Swift package, a pure core, a GET-only transport, the Service Monitor adapter, a first window, a replay tool and CI."
 review = "None yet."
-owed = "The native shell (N1); a read-only viewer token from Service Monitor; the pre-registered comparison against the terminal that decides whether it continues."
-next = "Finish N0, then N1."
+owed = "The 1,000,000-event replay on a quiet machine; profiler traces of the fixed event-list freeze; the native shell (N1); a read-only viewer token from Service Monitor; the pre-registered comparison against the terminal that decides whether it continues."
+next = "Finish N0's evidence, then N1."
 
 [[extra.projects]]
 id = "backend-platform"
@@ -166,8 +166,8 @@ what = "A self-hosted control plane for small apps, assembled from proven compon
 repo = "backend-platform"
 log = "backend-platform/_index.md"
 stage = "Parked, as a future horizon. B0 built: the spine, the partial-provisioning drill, the control API, the first load scenario and the evidence memo."
-review = "None yet. Its own B0 memo recommends staying parked and shipping a starter template."
-owed = "A decision on the memo; a quiet-machine 100,000-request baseline and the 1,000,000-request run (both smokes so far missed on a busy laptop)."
+review = "B0 review: the memo is accepted with corrections; the spine is fix first, with two Highs (the server's database role could get around the append-only log; the memo left out the accounts work) and two duplicate paths the drill didn't cover."
+owed = "The review's fixes and a corrected memo; a decision on it; a quiet-machine 100,000-request baseline and the 1,000,000-request run (both smokes so far missed on a busy laptop)."
 next = "Nothing past B0 unless the project is unparked."
 +++
 

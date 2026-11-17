@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "first release built, not shippable: review fixes on a branch, live mic drills owed"
+status = "first release built, not shippable: review fixes merged, not yet re-reviewed; live mic drills owed"
 short_title = "Voice Agent"
 # The project's own roadmap (docs/ROADMAP.md). Its first release is V0–V2 as one unit (D-012),
 # so this log treats it as one milestone.
@@ -15,7 +15,7 @@ milestones = [
   { id = "V3", name = "memory and personal voice", about = "Memory you can review, trace to its source and delete, and a personal-voice profile gated on consent and a usage-rights review." },
   { id = "V4", name = "controlled tools", about = "One reversible local tool, then reviewed external actions that name their recipient and leave an audit record." },
 ]
-up_next = { milestone = "V0–V2", step = "fixes", title = "The review's fix round (on a branch, not merged yet), then the live microphone drills" }
+up_next = { milestone = "V0–V2", step = "drills", title = "A second review of the merged fixes, then the live microphone drills" }
 +++
 
 **Personal Voice Agent** is a voice assistant that learns how you talk without taking actions in your
@@ -34,8 +34,9 @@ provider, no API keys, no stored audio.
 
 Started on 2026-11-16. The first release (V0–V2) is built and its automated checks pass. It is **not
 usable yet**: an independent review found five serious bugs where the app, the background process and
-the disk meet, and their fixes are still on a branch. The live microphone drills need a person, the
-model misses its speed budget, and the full million-event load runs haven't run.
+the disk meet. Their fixes, seventeen in all, merged the same evening and haven't been re-reviewed.
+The live microphone drills need a person, the model misses its speed budget, and the full
+million-event load runs haven't run.
 
 The code is public at
 [akira-shirase-oss/personal-voice-agent](https://github.com/akira-shirase-oss/personal-voice-agent).

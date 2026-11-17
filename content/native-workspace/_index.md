@@ -17,7 +17,7 @@ milestones = [
   { id = "N4", name = "one controlled action", about = "After promotion only: one reversible action, pausing or resuming a monitor, with exact confirmation." },
   { id = "N5", name = "signed release", about = "After promotion only: signing, notarization and signed updates." },
 ]
-up_next = { milestone = "N0", step = "N0", title = "Finish the spine, then the native shell (N1)" }
+up_next = { milestone = "N0", step = "N0", title = "Finish N0's evidence (the million-event replay, profiler traces), then the native shell (N1)" }
 +++
 
 **Native Workspace** is an experiment: a Mac app for looking into the other projects' services, starting
@@ -34,8 +34,9 @@ what it may do. The first versions can only read.
 there's a promotion gate: a comparison, written down before it's run, of this app against doing the
 same investigation in the terminal. If the app doesn't win, the project honestly stays a concept.
 
-Started on 2026-11-16. The first two slices of N0 are on `main`: the Swift package, its pure core, the
-read-only transport and the Service Monitor adapter's tests. There's no app window yet.
+Started on 2026-11-16. Three slices of N0 are on `main`: the Swift package, its pure core, the
+read-only transport, the Service Monitor adapter, a first window, and a drill against real copies of
+Service Monitor and Durable Runner. There's been no independent review yet.
 
 The code is public at
 [akira-shirase-oss/native-workspace](https://github.com/akira-shirase-oss/native-workspace).

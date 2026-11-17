@@ -90,7 +90,8 @@ acknowledged job was lost. MiniBTC's node that got stuck at block 128 now catche
 
 The new projects got the same treatment where they had code to review. Payment Sandbox's five
 accounting Highs and the AI Operations Layer's six Highs were all fixed on `main` the same
-evening. The Voice Agent's five Highs are being fixed on a branch.
+evening, and the Voice Agent's seventeen fixes merged soon after, not yet re-reviewed. Backend
+Platform's first review accepted its memo with corrections and sent the spine back to fix first.
 
 ## Where I messed up
 
@@ -125,7 +126,8 @@ attack it, not just read the diff.
   averages mostly in the tens and sometimes in the hundreds, and the rule for a full run is below
   about 6. Every project owes its million-request runs, on a quiet machine,
   with machine and commit recorded. The [progress page](@/progress/_index.md) lists them.
-- **Two fix sets aren't merged:** Colophon's security branch and the Voice Agent's fix round.
+- **Colophon's security branch isn't merged**, and the Voice Agent's merged fixes haven't had their
+  second review.
 - **Durable Runner** still has a truncation bug and a red sustained-load gate.
 - **Service Monitor's** SQLite advisory is waiting on an upstream release.
 - **None of the seven new projects is usable yet.** Some are a few hours old.

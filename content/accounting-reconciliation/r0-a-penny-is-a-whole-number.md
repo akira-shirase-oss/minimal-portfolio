@@ -1,6 +1,6 @@
 +++
 title = "R0: a penny is a whole number"
-description = "Day one of Accounting Reconciliation: money as exact integers parsed digit by digit, a line state machine where every wrong move is a named refusal, a CSV reader that refuses a bad file whole, by row number, and a decision log the database itself chains and won't let anyone edit. Three slices of the spine; no matching, drills or load yet."
+description = "Day one of Accounting Reconciliation: money as exact integers parsed digit by digit, a line state machine where every wrong move is a named refusal, a CSV reader that refuses a bad file whole, by row number, and a decision log the database itself chains and won't let anyone edit. Four slices of the spine; no matching, drills or load yet."
 date = 2026-11-17T01:41:00Z
 
 [extra]
@@ -13,7 +13,7 @@ short_title = "A penny is a whole number"
 goal = "Start the spine of a reconciliation tool whose numbers can't drift and whose decisions can't be quietly rewritten."
 built = "A pure domain crate (checked integer money, strict dates, normalization, a tuple hash per line, the line state machine, balanced matches, a hash-chained decision record with a verifier), a strict streaming CSV reader with the first statement profile, and the PostgreSQL schema with three roles, an append-only chained decision log and a staged import, plus the gate and CI."
 proof = ["property tests: formatting and parsing money round-trip exactly; overflow and 20-digit amounts are refused", "any way of chunking an upload reads exactly as one piece does", "every refusal named, with row numbers, up to 1,000 per file", "the decision log refuses UPDATE, DELETE and TRUNCATE, even for its owner", "no matching, drills or load run yet"]
-code = "akira-shirase-oss/accounting-reconciliation · main @ f36c2b6"
+code = "akira-shirase-oss/accounting-reconciliation · main @ 49a90cc"
 +++
 
 Ask a computer what 0.1 + 0.2 is, in the usual way, and it says 0.30000000000000004. That's fine for a
@@ -24,7 +24,7 @@ So the first rule here: money is a whole number.
 
 ## What I built
 
-Three slices of R0, the spine:
+Four slices of R0, the spine:
 
 - **Money as checked whole numbers** of the smallest unit, using a table of how many decimal places each
   currency has. Amounts are parsed digit by digit, never through floating point. Overflow is refused,
@@ -55,6 +55,11 @@ Three slices of R0, the spine:
 - **The staged import**: rows are staged in batches under a lease, then flipped to complete one account at
   a time. A repeated file gets the earlier import back, and a duplicate line is recorded with a pointer to
   the line it duplicates.
+- **A command line and a data generator.** `recon` sets up the roles and the locked-down database,
+  applies the schema, walks every client's chain and names the first broken link, and replays the log
+  against the stored state. A seeded generator writes the same bytes for the same seed: statements with
+  references, quoted narrations, running balances and identical same-day twins, in USD, JPY and KWD.
+  The drills and load runs will use it.
 
 ## How it works (the short version)
 
@@ -84,7 +89,7 @@ those need the database and the import pipeline.
 
 ## Where I messed up
 
-Nothing worth a confession yet: three slices in under half an hour, and no review. The one honest slip
+Nothing worth a confession yet: four slices in about half an hour, and no review. The one honest slip
 is the README, which still says "contract documents only; no code yet" on `main`.
 
 ## What it doesn't do yet
