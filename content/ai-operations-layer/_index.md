@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "A0 done (final check after a second review), A1 partly; the 1M-event run owed; A2 next"
+status = "A0 done (final check after a second review), A1 partly; the first 1M-event run missed on a busy machine; a quiet run owed"
 short_title = "AI Ops Layer"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -37,7 +37,7 @@ Started on 2026-11-16. The spine (A0) is done: two independent reviews and their
 final check that says so. A1 is partly done: a reference host with injectable faults runs the
 contract's failure cases end to end, and the console, now on the shared Tailwind and shadcn-svelte
 kit, is checked in a real browser. The only load evidence is two small smokes from the first day, so
-the million-event run is owed.
+the first million-event run missed on a busy machine, and a quiet run is owed.
 
 The code is public at
 [akira-shirase-oss/ai-operations-layer](https://github.com/akira-shirase-oss/ai-operations-layer).

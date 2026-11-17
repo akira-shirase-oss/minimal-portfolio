@@ -93,9 +93,9 @@ name = "Payment Sandbox"
 what = "Simulated money, real accounting: a double-entry journal PostgreSQL won't let anyone edit, two-phase payments against a separate simulated network, and signed webhooks."
 repo = "payment-sandbox"
 log = "payment-sandbox/_index.md"
-stage = "M0–M6 built: three fix rounds, then a hosted checkout and an inspection dashboard. main at cba229f, CI green. The project's rule keeps every milestone in progress until its full load run."
+stage = "M0–M6 built: three fix rounds, then a hosted checkout and an inspection dashboard. CI green at cba229f; the first checkout smokes passed after two harness failures (main at d0c6729). The project's rule keeps every milestone in progress until its full load run."
 review = "M6 review: fix first (a restore could charge twice), then ship after the fix."
-owed = "Every full ≥1,000,000-request run for M0–M6 (the checkout scenario has never run); saturation runs for unmeasured defaults; a few small open items."
+owed = "Every full ≥1,000,000-request run for M0–M6; saturation runs for unmeasured defaults; a few small open items."
 next = "The full load runs, starting with the checkout, then M7."
 
 [[extra.projects]]
@@ -105,9 +105,9 @@ name = "AI Operations Layer"
 what = "Telemetry that tells the truth about AI operations: one timeline per request, with lost events shown as gaps."
 repo = "ai-operations-layer"
 log = "ai-operations-layer/_index.md"
-stage = "A0 done; A1 partly. main at 6e9a14b, 141 Rust tests and 12 browser journeys, CI green."
+stage = "A0 done; A1 partly. 141 Rust tests and 12 browser journeys, CI green at 6e9a14b. The first 1,000,000-event run (630f533, busy machine) missed: 36,580 events shed, ingest p95 152 ms vs 100. main at 3071b24."
 review = "Second review: fix first; final check: A0 done."
-owed = "The 1,000,000-event run on a quiet machine with an independent baseline; two security residuals, to be described once fixed."
+owed = "A 1,000,000-event run on a quiet machine with an independent baseline; two security residuals, to be described once fixed."
 next = "The million-event run, then A2: Durable Runner as the first real host."
 
 [[extra.projects]]

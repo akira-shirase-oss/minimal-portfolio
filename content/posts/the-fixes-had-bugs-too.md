@@ -69,7 +69,8 @@ All of them are fixed on `main`, and each fix has a test that fails without it.
 - **MiniBTC's CI failed** on its very last commit, at the dependency-audit step, and I don't know why
   yet.
 - **Still owed**: a million checks for Service Monitor (at 20 a second that's about 14 hours), every full
-  load run for Payment Sandbox, the AI Operations Layer's million-event run, Native Workspace's replay,
+  load run for Payment Sandbox, a quiet re-run of the AI Operations Layer's million-event run (the first
+  missed on a busy machine), Native Workspace's replay,
   the Voice Agent's live microphone drills, and Intent Studio's latency-budget decision.
 - Some of the last fixes haven't had a re-review yet. The [progress page](@/progress/_index.md) says which.
 

@@ -15,7 +15,7 @@ tests = 141
 goal = "Finish the first review's fixes, survive a second review, and close A0 honestly."
 built = "Refused events reported as gaps, emission order within a source, an SDK circuit breaker, audit writes on their own pool, the console on the shared Tailwind and shadcn-svelte kit, and the second review's fixes: one bad event refused by name, keys checked before bodies are read, write-stall deadlines, and redaction across 13 secret shapes."
 proof = ["a NUL in one event no longer loses its batch", "unauthenticated 1 MB bodies on 256 connections: memory 6.4 → 266.0 MiB before, 6.4 → 12.3 MiB after", "a fresh health check answered at once with the connection cap full of non-readers (before: no answer in 60 s)", "final check: A0 done", "141 Rust tests and 12 browser journeys green in CI"]
-code = "akira-shirase-oss/ai-operations-layer · main @ 6e9a14b"
+code = "akira-shirase-oss/ai-operations-layer · main @ 3071b24 (A0 closed at 6e9a14b)"
 +++
 
 One wrong character shouldn't cost you a hundred right ones. In my collector, it did.
@@ -85,12 +85,19 @@ failure of a chaos test on the way was never explained; later runs passed.
 
 ## What it doesn't do yet
 
-- **No million-event run.** The only load evidence is still the two small smokes from the first day.
-  The ≥1,000,000-event run on a quiet machine is owed, with an independent baseline.
+- **The first million-event run missed.** At `630f533`, on a machine whose load average went from about 6
+  to 28 when another project's test suite started, 999,630 events were offered and 963,050 accepted,
+  and every accepted event was stored. But 3,658 batches (36,580 events) were shed with an answer,
+  which counts as lost against a gate of zero, and ingest p95 was 152 ms against 100 (p99 229 ms against
+  250). On the query side, 62 of 1,501 timeline reads failed. It's kept as a miss, and a quiet-machine
+  run is still owed, with an independent baseline.
+- **My own fix broke the first attempt.** Putting the collector's counters behind an admin scope made
+  the run script's final read get a 403, and the script then threw the whole result away. It now uses
+  an admin token for that one read.
 - **Two security residuals** from the second review are open; I'll describe them once fixed.
 - The steps table's outcome badge can leave the screen at 1,280 pixels, and joined services' event
   counts wait for schema version 2.
 
 ## Up next
 
-The million-event run, then A2: Durable Runner as the first real host.
+A million-event run on a quiet machine, then A2: Durable Runner as the first real host.

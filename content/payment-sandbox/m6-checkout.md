@@ -15,7 +15,7 @@ tests = 236
 goal = "Close the reviews' open findings, then ship the first useful release: a hosted checkout and a dashboard that let a test store take simulated payments and inspect them."
 built = "Fair-share limits for reports, recovery and webhook delivery; transport limits on all three servers; a journal rule that survives a restore into another database cluster; sealed cursors; a protections manifest checked at startup; and M6, a SvelteKit checkout and dashboard."
 proof = ["236 Rust tests and 14 browser journeys passing in the review's gate run", "the restore double charge: 2 authorizations and 2 captures before the fix, 1 and 1 after", "M6 review after the fix: ship", "CI green at cba229f", "no full million-request run yet"]
-code = "akira-shirase-oss/payment-sandbox · main @ cba229f"
+code = "akira-shirase-oss/payment-sandbox · main @ d0c6729"
 +++
 
 Restoring from a backup is supposed to take you back in time. It isn't supposed to let you buy the
@@ -90,10 +90,16 @@ Two of my second-round fixes were incomplete the first time (the cursor sealing 
 check) and needed a second pass. The browser journeys caught a gap in the content security policy and
 a "Not paid" label that contained the word "paid". And one CI run broke on a lockfile.
 
+**My load scripts made card numbers.** The first checkout smokes failed because the scenarios built
+project slugs and idempotency keys from a 13-digit millisecond timestamp, and the card-number guard,
+correctly, refused them as card-shaped: about one project in four at setup, and 498 of 2,011 requests in
+the second try. The keys now put letters between their parts, so no run of digits gets long enough.
+
 ## What it doesn't do yet
 
 - **No full load runs.** Every milestone from M0 to M6 owes its ≥1,000,000-request run on a quiet
-  machine, and the checkout scenario has never run at all, not even as a smoke. Some defaults are
+  machine. The checkout scenario has only had its first smokes: two failed on the harness, then one
+  passed with 0 failures, alongside a payment-lifecycle check, on a busy machine. Some defaults are
   labelled "chosen, not measured" until saturation runs exist.
 - **A few small items are open:** two Lows (one of them by design), one partly fixed performance Low,
   and four minor notes. I'll describe any security-relevant one once it's fixed.

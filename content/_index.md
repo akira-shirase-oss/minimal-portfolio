@@ -47,7 +47,7 @@ log = "payment-sandbox/_index.md"
 
 [[extra.now]]
 process = "ai-ops-layer"
-what = "Telemetry that admits what it didn't see: one timeline per AI operation, with lost events shown as gaps — A0 done; the million-event run owed."
+what = "Telemetry that admits what it didn't see: one timeline per AI operation, with lost events shown as gaps — A0 done; the first million-event run missed on a busy machine."
 link = "@/ai-operations-layer/_index.md"
 log = "ai-operations-layer/_index.md"
 
@@ -112,7 +112,7 @@ status = "in progress"
 
 [[extra.projects]]
 name = "AI Operations Layer"
-about = "One honest timeline per AI operation, gaps shown as gaps. A0 done after two reviews; the million-event run is owed; A2 next."
+about = "One honest timeline per AI operation, gaps shown as gaps. A0 done after two reviews; the first million-event run missed on a busy machine and a quiet run is owed; A2 next."
 link = "@/ai-operations-layer/_index.md"
 year = 2026
 status = "in progress"
