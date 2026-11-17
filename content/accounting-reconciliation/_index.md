@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "R0 (the spine) started; the ship gate needs one or two real accountants, not yet found"
+status = "R0 built (a 1M-line run on a CI runner, no errors); review: fix first, fix round running; the ship gate needs one or two real accountants"
 short_title = "Reconciliation"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -21,7 +21,7 @@ milestones = [
   { id = "R8", name = "India", about = "GSTR-2B import, matching by GSTIN and invoice number, UPI references and Tally." },
   { id = "R9", name = "PDF statements", about = "An isolated PDF worker with per-bank layout profiles." },
 ]
-up_next = { milestone = "R0", step = "server", title = "The rest of the spine: the server skeleton, the drills and the million-line import" }
+up_next = { milestone = "R0", step = "fixes", title = "Finish the review's fix round, then R1: imports and the normalized schema" }
 +++
 
 **Accounting Reconciliation** is a workspace for small accounting firms and freelance accountants. You

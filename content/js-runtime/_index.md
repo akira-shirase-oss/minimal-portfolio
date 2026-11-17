@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "roadmap complete; security pass done (four fix rounds, final review: ship), then a verification round with CI, under review — the million-scale load evidence is owed again"
+status = "roadmap complete; security round and two follow-ups merged, final review: ship, 156 tests, CI green — the M7 load numbers predate the changes"
 short_title = "jsrt"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, pinned deno_core + V8, the rt.* namespace, an error taxonomy where every way a run ends has its own exit code, and an isolate watchdog that can actually kill a CPU-bound script." },

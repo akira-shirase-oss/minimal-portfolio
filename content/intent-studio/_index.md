@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "I0 (the lead-intake spine) built; first review: no lead lost, but fix first; gate not passed until the full load runs; no website generation yet"
+status = "I0 (the lead-intake spine) built; review: fix first, fix round running; gate not passed until the full load runs; no website generation yet"
 short_title = "Intent Studio"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -18,7 +18,7 @@ milestones = [
   { id = "I5", name = "evidence battery", about = "A 50-brief battery, page-weight budgets, and checks on real phones." },
   { id = "I6", name = "pilot and ship gate", about = "Three real client sites, each signed off, each receiving a real inquiry." },
 ]
-up_next = { milestone = "I0", step = "fixes", title = "Fix the review's findings, then the quiet-machine baseline and the 1M-submission run" }
+up_next = { milestone = "I0", step = "fixes", title = "Finish the fix round, then the quiet-machine baseline and the 1M-submission run" }
 +++
 
 **Intent Studio** turns a small service business's brief into a working website: designed, tested and

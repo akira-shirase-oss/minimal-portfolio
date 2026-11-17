@@ -28,7 +28,7 @@ milestones = [
   { id = "P7", name = "audience and speed", about = "Site visitors with real sign-in and per-project roles, content gated by row-level security, and the five demo sites driving the performance hunt." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P7", step = "v01", title = "Fix the branch review's two Highs, green CI, then merge, the 24-hour soak and version 0.1" }
+up_next = { milestone = "P7", step = "v01", title = "Finish the security branch's fixes and CI, then merge, the 24-hour soak and version 0.1" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).

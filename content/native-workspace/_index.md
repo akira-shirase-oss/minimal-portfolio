@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "optional exploration; N0 built, under its first independent review, gate not passed until the 1M-event replay — a project only if it passes a promotion gate after N2"
+status = "optional exploration; N0 built, review: fix first, fix round running; gate not passed until the 1M-event replay — a project only if it passes a promotion gate after N2"
 short_title = "Native Workspace"
 # The milestones from the project's docs/ROADMAP.md. N0–N2 are exploration; N3–N5 only after promotion.
 milestones = [
@@ -17,7 +17,7 @@ milestones = [
   { id = "N4", name = "one controlled action", about = "After promotion only: one reversible action, pausing or resuming a monitor, with exact confirmation." },
   { id = "N5", name = "signed release", about = "After promotion only: signing, notarization and signed updates." },
 ]
-up_next = { milestone = "N0", step = "review", title = "The independent review and the million-event replay, then the native shell (N1)" }
+up_next = { milestone = "N0", step = "fixes", title = "Finish the fix round and the million-event replay, then the native shell (N1)" }
 +++
 
 **Native Workspace** is an experiment: a Mac app for looking into the other projects' services, starting
