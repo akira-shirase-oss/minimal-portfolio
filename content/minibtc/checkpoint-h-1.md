@@ -1,7 +1,7 @@
 +++
 title = "Checkpoint H.1: four review rounds, and a node stuck at block 128"
 description = "An outside gap review found that a block failing halfway through could leave the chain half-applied, and that the project's own gate had probably never passed. Four fix rounds later the gate passes with 249 tests. Each round's review found something new, including a header flood that ate 4.7 GB of memory and a fix that left any node more than 128 blocks behind stuck forever."
-date = 2026-11-17T01:40:00Z
+date = 2026-11-16T20:40:00-05:00
 
 [extra]
 kind = "failure"
@@ -14,7 +14,7 @@ tests = 249
 [extra.summary]
 goal = "Close the consensus, peer-to-peer and wallet gaps an outside review found, with every round re-checked live by a second reviewer before the next."
 built = "Atomic block apply, per-block spend checks, merkle-mutation detection at every level, difficulty and BIP30/34 rules enforced in validation, reorgs judged at the fork point, bounded block and header intake, address-keyed bans, and an MCP spend gate where only the owner's signature approves."
-proof = ["executed tests 167 → 214 → 231 → 242 → 249, and the full gate passes", "header flood: memory 6 MB → 4.7 GB before the fix, under 10 MB after", "the node stuck at block 128 now catches up 1,000 blocks in 17 s", "devnet demo 22/22 on all round-4 code", "fourth review: the catch-up fixes hold live; one Medium left"]
+proof = ["executed tests 167 → 214 → 231 → 242 → 249, and the full gate passes", "header flood: memory 6 MB → 4.7 GB before the fix, 5,984–11,344 KB after", "the node stuck at block 128 now catches up 1,000 blocks in 17 s", "devnet demo 22/22 on all round-4 code", "fourth review: the catch-up fixes hold live; one Medium left"]
 code = "akira-shirase-oss/miniBTC-chain · main @ d007ae5"
 +++
 
@@ -69,10 +69,13 @@ penalised and then banned. Memory stays flat no matter how fast they send.
   dependency audit.
 - **Reverting a fix breaks its test.** The reviewer took fixes back out one at a time: for example, 2
   of 3 tests failed without atomic apply, and 4 of 5 without the per-block coin view.
-- **Reindex holds.** After round 2, rebuilding the chain from disk reached the right tip in 10 of 10
-  runs, including runs killed with `kill -9` at six different points.
+- **Reindex holds.** After round 2, two separate checks: a scripted reindex reached the right tip in
+  10 of 10 runs, and a node killed with `kill -9` at six different points came back on the same tip
+  each time.
 - **The header flood is fixed on a real socket.** Across five flood variants, peak memory stayed
-  between 5,984 and 11,344 KB, and the flooding peer got banned.
+  between 5,984 and 11,344 KB (the fourth pass saw 7.7 to 9.9 MB). The flooding peer was banned in
+  four of the five variants; the fifth, a 6,000-header side branch, is penalised rather than banned, by
+  design.
 - **The devnet demo passes 22 of 22 checks** on all of round 4's code, including a node catching up
   600 blocks in 11 seconds, at a load average around 73.
 - **The fourth review closed the stall live**, on real sockets with release binaries: a 1,000-block
@@ -113,11 +116,14 @@ test with a node 1,000 blocks behind gets stuck at 128 without the fix.
 
 ## What it doesn't do yet
 
-- **A ban doesn't hang up.** The fourth review found that banning a peer removes it from the peer
-  table and blocks reconnects, but its open connection keeps being read. So the flood defence rests on
-  the memory bounds, not the ban. (Medium.)
-- **A peer can stall sync for a minute.** One that sends real headers and then withholds the blocks
-  holds its requests for the full 60-second timeout without a penalty. (Low.)
+- **A ban doesn't hang up, on `main`.** The fourth review found that banning a peer removes it from
+  the peer table and blocks reconnects, but its open connection keeps being read. So the flood
+  defence rests on the memory bounds, not the ban. (Medium.)
+- **A peer can stall sync for a minute, on `main`.** One that sends real headers and then withholds
+  the blocks holds its requests for the full 60-second timeout without a penalty. (Low.)
+- **Fixes for both are in progress on a branch** that isn't pushed yet. In its own live loopback
+  evidence, a banned flooder's connection closes in 3.5 ms, and a node starved by a withholding peer
+  gets its first block after 9 seconds instead of 87. Nobody has reviewed it.
 - **The load evidence is old.** The last million-scale run was 6M operations on 2026-11-10, and the
   explorer and wallet UI have only seen a smoke run (100,000 and 20,000 requests). Both are owed again
   on this code, on a quiet machine.
@@ -130,5 +136,5 @@ test with a node 1,000 blocks behind gets stuck at 128 without the fix.
 
 ## Up next
 
-Close the connection on a ban and penalise withholding peers. Then CI, the 1M-operation and UI load
-runs at `HEAD`, and a README that matches the code.
+Push and review the branch that closes banned connections and rotates away from withholding peers.
+Then CI, the 1M-operation and UI load runs at `HEAD`, and a README that matches the code.

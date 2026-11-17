@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "blueprint complete; security pass: four rounds merged, the fourth review confirms the fixes live — load runs at HEAD owed"
+status = "blueprint complete; four security rounds merged and confirmed live, one Medium and one Low open (fixes on an unpushed branch) — load runs at HEAD owed"
 short_title = "MiniBTC"
 milestones = [
   { id = "P0", name = "foundations", about = "Workspace, contract docs, chain params, architecture checks.", done = true },
@@ -26,5 +26,5 @@ milestones = [
   { id = "P13b", name = "wallet entropy hardening", about = "Coldcard-class weak-RNG attack test: low-entropy seeds collide; real generator verified full-width.", done = true },
   { id = "H", name = "hardening", about = "An outside gap review of the finished chain; fix rounds each re-checked live by a second reviewer; then the million-operation and UI load evidence re-run at HEAD." },
 ]
-up_next = { milestone = "H", step = "H.2", title = "Close a banned peer's connection, then CI and the load runs at HEAD" }
+up_next = { milestone = "H", step = "H.2", title = "Push and review the ban and withholding fixes, then CI and the load runs at HEAD" }
 +++

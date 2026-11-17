@@ -147,7 +147,7 @@ status = "preview live"
 
 [[extra.projects]]
 name = "MiniBTC"
-about = "A Bitcoin-style blockchain built from scratch in Rust — consensus, UTXO set, P2P, mining, an HD wallet, JSON-RPC, an explorer and an MCP server that can inspect the chain and draft payments but never spend without a human. Every blueprint gate passed; four security rounds on 2026-11-16, the gate green at 249 tests; load runs at HEAD owed."
+about = "A Bitcoin-style blockchain built from scratch in Rust — consensus, UTXO set, P2P, mining, an HD wallet, JSON-RPC, an explorer and an MCP server that can inspect the chain and draft payments but never spend without a human. The blueprint is built; its own gate, found red on 2026-11-16, now passes at 249 tests after four security rounds; load runs at HEAD owed."
 link = "@/minibtc/_index.md"
 year = 2026
 status = "hardening"
