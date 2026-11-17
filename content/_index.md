@@ -133,7 +133,7 @@ status = "exploration"
 
 [[extra.projects]]
 name = "Backend Platform"
-about = "A self-hosted control plane for small apps. The first milestone's spine and drill are built; a review sent the spine back to fix first, and its own evidence memo recommends staying parked."
+about = "A self-hosted control plane for small apps. The first milestone's spine and drill are built; a review sent the spine back to fix first and its fixes are landing; its own evidence memo recommends staying parked."
 link = "@/backend-platform/_index.md"
 year = 2026
 status = "parked"

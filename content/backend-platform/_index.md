@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "parked (future horizon); B0 built, review says fix the spine first — its own memo recommends staying parked"
+status = "parked (future horizon); B0 built; review: memo accepted with corrections, spine fix first — the fix round is landing, not re-reviewed"
 short_title = "Backend Platform"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -19,7 +19,7 @@ milestones = [
   { id = "B6", name = "load and isolation evidence", about = "A million control-API requests and a million app-facing requests, with isolation measured." },
   { id = "B7", name = "external validation and ship gate", about = "Three independent teams run the operations script." },
 ]
-up_next = { milestone = "B0", step = "B0", title = "Fix the review's findings and correct the memo, then a decision; quiet-machine load runs owed" }
+up_next = { milestone = "B0", step = "fixes", title = "Finish the fix round and correct the memo, a second review, then the decision; quiet-machine load runs owed" }
 +++
 
 **Backend Platform** is a self-hosted backend for one organization's small apps: deployment,
@@ -40,7 +40,7 @@ starts unless that changes.
 
 An independent review accepted the memo with corrections and sent the spine back to fix first: the
 server's database role could get around the append-only event log, and two duplicate paths weren't
-covered by the drill. Both load smokes ran on a busy laptop, missed their thresholds and are kept as
+covered by the drill. The fix round is landing on `main` and hasn't been re-reviewed. Both load smokes ran on a busy laptop, missed their thresholds and are kept as
 evidence. A quiet-machine baseline and the million-request run are owed.
 
 The code is public at
