@@ -1,6 +1,6 @@
 +++
 title = "I0: a contact form that kept every lead in its drills"
-description = "Day one of Intent Studio starts at the boring end: the contact form. A lead and the job of telling the owner are saved together, the notifier retries for most of a day, and in every drill and every valid load run with the provider down, every acknowledged lead was kept and delivered. Two of the load runs missed their latency targets on a busy laptop; the milestone is under its first independent review."
+description = "Day one of Intent Studio starts at the boring end: the contact form. A lead and the job of telling the owner are saved together, the notifier retries for most of a day, and in every drill and every valid load run with the provider down, every acknowledged lead was kept and delivered. Two of the load runs missed their latency targets on a busy laptop. The first independent review found no lost, duplicated or falsely acknowledged lead, and still said fix first."
 date = 2026-11-16T20:55:00-05:00
 
 [extra]
@@ -106,11 +106,17 @@ accepted.
 - **I0's gate isn't passed.** The intake budget has to come from a quiet-machine baseline, which
   hasn't been possible yet. That baseline, the 100,000-submission run against it, and the
   1,000,000-submission run are owed.
-- **Its first independent review is running.** Every project reviewed today had High findings, so I
-  expect some.
+- **Its first independent review says fix first.** The core promise held under every test the
+  reviewer could run: a success is only ever sent after the lead and its notification job have
+  committed together, and no lead was lost, duplicated or falsely acknowledged. But it isn't ready for
+  a public form. A client can hold connections open forever, because there's no header-read timeout,
+  idle timeout or connection cap. Bots that fill the honeypot still use up the site's quota, so 60 junk
+  posts a minute lock real visitors out. And the outbox lease is fenced per process rather than per
+  claim, so a late result from an earlier attempt can overwrite a newer one and leave a notification
+  stuck pending for good.
 - **It's blocked on people.** Three pilot clients, a model provider and a spending cap, a privacy
   notice and a data-processing agreement with each client, and deploy access to their sites.
 
 ## Up next
 
-Fix what the review finds, run the quiet-machine baseline, then I1.
+Fix the review's findings, run the quiet-machine baseline, then I1.

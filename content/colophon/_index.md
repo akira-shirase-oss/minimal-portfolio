@@ -28,7 +28,7 @@ milestones = [
   { id = "P7", name = "audience and speed", about = "Site visitors with real sign-in and per-project roles, content gated by row-level security, and the five demo sites driving the performance hunt." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P7", step = "v01", title = "Green CI and a review for the security branch, then merge, the 24-hour soak and version 0.1" }
+up_next = { milestone = "P7", step = "v01", title = "Fix the branch review's two Highs, green CI, then merge, the 24-hour soak and version 0.1" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -288,7 +288,7 @@ members flow live; the other four demo sites can only ever see public rows.
 including a magic-link account takeover. `main`'s Rust job is green again and its testbed runs
 again, but `main`'s CI still fails on one flaky testbed spec. The security fixes, each with a test
 that failed first, are on a pushed branch whose CI has failed on every push from two code failures
-being fixed; an independent review of the branch is running.
+being fixed. Its independent review says fix first: two of the fixes opened new High holes.
 
 **Now building (P7):** the security merge, then the 24-hour stress run, the usability gate and an
 independent install — then version 0.1.

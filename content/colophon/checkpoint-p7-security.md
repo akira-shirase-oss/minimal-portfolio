@@ -1,6 +1,6 @@
 +++
 title = "Checkpoint P7: a takeover in one request, and a CI that still isn't green"
-description = "An outside gap review found 56 gaps in Colophon, 14 of them High, starting with a magic-link bug that let anyone take over a member's account with one request. Repairs got main's Rust job green after nearly two weeks red, though its testbed still failed one flaky spec. The security fixes, each with a test that failed before it, sit on a pushed branch whose CI has failed on every push; its independent review is running."
+description = "An outside gap review found 56 gaps in Colophon, 14 of them High, starting with a magic-link bug that let anyone take over a member's account with one request. Repairs got main's Rust job green after nearly two weeks red, though its testbed still failed one flaky spec. The security fixes, each with a test that failed before it, sit on a pushed branch whose CI has failed on every push. Its independent review says fix first: ten of the eleven fixes close their hole, and two of them opened new ones."
 date = 2026-11-16T20:50:00-05:00
 
 [extra]
@@ -14,7 +14,7 @@ tests = 770
 [extra.summary]
 goal = "Find what a careful attacker or an unlucky operator would hit first, fix the worst of it with a failing test for each, and get main's own checks running again."
 built = "On main: the CI and testbed fixes, a cache-tag fix for hyphenated collections, and the Studio's first-run work. On a branch: a magic-link origin allowlist, an explicit opt-in for private destinations, bounded sign-in and GraphQL work, token-free logs, a role-checked database trigger, revalidating media URLs, TLS for managed Postgres, an SSE budget and an MIT licence."
-proof = ["770 Rust tests green on main in three gate runs, up to the testbed", "main's CI at 94e63c0 still failed: testbed 52 of 53, one flaky spec", "11 code fixes on the branch, each with a test that failed first, plus npm bumps and the licence", "the branch's CI failed on every push, from two code failures being fixed", "load smokes only, on a busy machine, and three of them missed"]
+proof = ["770 Rust tests green on main in three gate runs, up to the testbed", "main's CI at 94e63c0 still failed: testbed 52 of 53, one flaky spec", "11 code fixes on the branch, each with a test that failed first, plus npm bumps and the licence", "the branch's CI failed on every push, from two code failures being fixed", "branch review: fix first, two new Highs caused by the fixes", "load smokes only, on a busy machine, and three of them missed"]
 code = "akira-shirase-oss/colophon-cms · main @ 94e63c0 (fixes on fix/security-2026-11-16 @ cf26b95)"
 +++
 
@@ -118,8 +118,13 @@ budget that's checked before the expensive part starts.
 
 ## What it doesn't do yet
 
-- **The security fixes aren't on `main`.** They're on a pushed branch whose CI is red for the two
-  reasons above, and an independent review of it is running. Until it merges, the published `main`
+- **The security fixes aren't on `main`, and the branch's review says fix first.** Ten of the eleven
+  fixes close the path they were written for, and every test the reviewer replayed on its parent
+  commit fails there. But two fixes opened new holes, both High. The GraphQL limit now parses a query
+  before checking membership, and the parser can crash the whole server on deeply nested input, so
+  anyone who can sign in can reach a crash that only members could reach before. And the magic-link
+  ceiling of 100 links a minute per project can be used up by one anonymous client, after which nobody
+  in that project can get a sign-in link. Until the branch is fixed and merged, the published `main`
   still has the magic-link takeover.
 - **High gaps still open:** a restore doesn't change delivery job keys, there's no real CDN adapter,
   and media isn't backed up or restorable to a point in time. Media caching is only partly fixed: the
@@ -138,5 +143,5 @@ the five Low items it left were fixed the same evening.
 
 ## Up next
 
-Green CI and the independent review for the security branch, then merge. Then the testbed
+Fix the two new Highs and get the branch's CI green, then a second review and the merge. Then the testbed
 flake, the load smokes and L-case runs on a quiet machine, and the 24-hour soak before 0.1.

@@ -168,7 +168,7 @@ status = "hardened"
 
 [[extra.projects]]
 name = "Colophon CMS"
-about = "A content management system that can prove what it published and survives being killed at any moment. Rust and Svelte, open source, every step logged here. Security fixes on a branch: its CI is red from two code failures being fixed, and its review is running."
+about = "A content management system that can prove what it published and survives being killed at any moment. Rust and Svelte, open source, every step logged here. Security fixes on a branch: its CI is red from two code failures being fixed, and its review says fix first."
 link = "@/colophon/_index.md"
 year = 2026
 status = "in progress"
