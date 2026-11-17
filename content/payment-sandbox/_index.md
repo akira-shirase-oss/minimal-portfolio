@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "M0–M5 built, functional gates pass; two fix rounds merged, a second review running — in progress until the full 1M load runs"
+status = "M0–M6 built; M6 review: ship after the restore double-charge fix; every full 1M load run owed"
 short_title = "Payment Sandbox"
 # The milestones from the project's docs/ROADMAP.md. M0–M5 are one row here: they were built
 # together on the first day, and the roadmap holds them all at "in progress" until the full load runs.
@@ -16,7 +16,7 @@ milestones = [
   { id = "M7", name = "developer product", about = "A CLI, a TypeScript SDK, a scenario library and dataset resets." },
   { id = "M8", name = "billing direction", about = "Asynchronous outcomes, authorization expiry on virtual time, then settlement, fees, payouts and disputes." },
 ]
-up_next = { milestone = "M0–M5", step = "review", title = "The second review, then M6: checkout and the dashboard" }
+up_next = { milestone = "M6", step = "load", title = "The full million-request runs for M0–M6, starting with the checkout; then M7" }
 +++
 
 **Payment Sandbox** is a place to test a shop's payments without a real payment provider, real cards
@@ -34,12 +34,11 @@ Every response says `Sandbox-Simulated: true`. Nothing in it can be redeemed for
 ## Where it stands
 
 Started on 2026-11-16. Milestones M0 to M5 are built and drilled: process kills, clock jumps and a
-backup restore, with no double charge in any of them. An independent review asked for one fix round
-before the next milestone. The five Highs and five Mediums are fixed on `main`; a second round on the
-four remaining Mediums is under way (one fixed so far), and none of it has been re-reviewed yet. The project's own rule keeps
-M0 to M5 "in progress" until each has a committed full load run. The load runs so far are small
-smokes on a busy machine; every full million-request run is still owed. M6, the checkout and
-dashboard, is next.
+backup restore, with no double charge in any of them. Three fix rounds closed the first reviews' open
+findings, and on 2026-11-17 M6 shipped a hosted checkout and an inspection dashboard. Its review found
+that a restore from an older backup could charge twice; that's fixed, and the review says ship. The
+project's own rule keeps every milestone "in progress" until its full ≥1,000,000-request run is
+committed, and none has run yet.
 
 The code is public at
 [akira-shirase-oss/payment-sandbox](https://github.com/akira-shirase-oss/payment-sandbox).

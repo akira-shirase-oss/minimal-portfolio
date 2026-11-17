@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "A0 built and re-closed after its fix round, A1 partly; a second review running — the 1M-event run owed"
+status = "A0 done (final check after a second review), A1 partly; the 1M-event run owed; A2 next"
 short_title = "AI Ops Layer"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -16,7 +16,7 @@ milestones = [
   { id = "A3", name = "controlled recovery", about = "Scoped, audited retry and reconcile through adapters that own execution, never a generic \"run again\"." },
   { id = "A4", name = "quality and adoption", about = "Measured overhead, retention cost, sampling and export, and estimated-versus-reconciled cost." },
 ]
-up_next = { milestone = "A1", step = "A1", title = "The second review, then A2: Durable Runner as the first real host" }
+up_next = { milestone = "A1", step = "A1", title = "The million-event run, then A2: Durable Runner as the first real host" }
 +++
 
 **AI Operations Layer** is an add-on for applications that call AI models. When something goes wrong
@@ -33,12 +33,11 @@ collector stores them in PostgreSQL, and a SvelteKit console draws them.
 
 ## Where it stands
 
-Started on 2026-11-16. The spine (A0) is built and A1 is partly done: a reference host with
-injectable faults runs the contract's failure cases end to end, and the console is checked in a real
-browser. An independent review found six High problems with timeline honesty and ingestion. They and six of
-its Mediums were fixed on `main` the same evening, not yet re-reviewed, and the test for one of the
-Highs is flaky in CI. Two small load smokes stored every event but missed the ingest latency
-target on a heavily loaded laptop; the million-event run is owed.
+Started on 2026-11-16. The spine (A0) is done: two independent reviews and their fix rounds, and a
+final check that says so. A1 is partly done: a reference host with injectable faults runs the
+contract's failure cases end to end, and the console, now on the shared Tailwind and shadcn-svelte
+kit, is checked in a real browser. The only load evidence is two small smokes from the first day, so
+the million-event run is owed.
 
 The code is public at
 [akira-shirase-oss/ai-operations-layer](https://github.com/akira-shirase-oss/ai-operations-layer).

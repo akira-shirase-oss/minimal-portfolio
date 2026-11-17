@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "roadmap complete; security round and two follow-ups merged, final review: ship, 156 tests, CI green — the M7 load numbers predate the changes"
+status = "roadmap complete; security pass done, final check: ship; the M7 load battery re-run on the hardened build, all six pass"
 short_title = "jsrt"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, pinned deno_core + V8, the rt.* namespace, an error taxonomy where every way a run ends has its own exit code, and an isolate watchdog that can actually kill a CPU-bound script." },
@@ -19,5 +19,5 @@ milestones = [
   { id = "M7", name = "load and ship", about = "The workspace load standard applied to the runtime itself: cold start on 1,000 scripts, 1,000,000 op calls, 1,000,000+ HTTP requests through rt.serve, a one-hour soak — committed results with machine and commit; misses kept, laptop numbers stay lab numbers.", done = true },
   { id = "H", name = "hardening", about = "An outside gap review read the finished runtime the way an attacker would; fix rounds each re-checked by a second reviewer; then the million-scale evidence re-run on the hardened build." },
 ]
-up_next = { milestone = "H", step = "H.2", title = "Re-run the million-scale load evidence on the hardened build" }
+up_next = { milestone = "H", step = "H.3", title = "The webhook drill on the current build, then the four missing load scenarios" }
 +++

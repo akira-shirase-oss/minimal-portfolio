@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "parked (future horizon); B0 built, its fix round merged, the memo accepted with corrections (D-036) — next: the starter template, B1-T"
+status = "parked (future horizon); B0 done, the memo accepted with corrections (D-036); next: the starter template, B1-T, planned, not built"
 short_title = "Backend Platform"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -34,15 +34,11 @@ databases on purpose, so one outage can't take all of them down.
 ## Where it stands
 
 **Parked, as a future horizon.** On 2026-11-16 development started on every planned project, so the
-first milestone, B0, was built: the engineering spine with CI, a drill for half-finished provisioning,
-the first load scenario, and an evidence memo. The memo's answer, written from today's measurements,
-is to **stay parked** and meet the need with a copyable starter template instead. Nothing past B0
-starts unless that changes.
-
-An independent review accepted the memo with corrections and sent the spine back to fix first: the
-server's database role could get around the append-only event log, and two duplicate paths weren't
-covered by the drill. The fix round is landing on `main` and hasn't been re-reviewed. Both load smokes ran on a busy laptop, missed their thresholds and are kept as
-evidence. A quiet-machine baseline and the million-request run are owed.
+first milestone, B0, was built: the engineering spine with CI, drills for half-finished provisioning,
+the first load scenario, and an evidence memo. An independent review accepted the memo with
+corrections and sent the spine back; the fix round is done, though no one has re-reviewed it. The
+corrected memo is accepted: the next step is a copy-and-own starter template, not a platform, and
+everything past it stays parked. A quiet-machine baseline and the million-request run are owed.
 
 The code is public at
 [akira-shirase-oss/backend-platform](https://github.com/akira-shirase-oss/backend-platform).
