@@ -104,9 +104,10 @@ The reviewers kept finding bugs that my fixes had created:
   submits for over 6 seconds.
 - **MiniBTC:** a reindex that failed at random, then a bounded header table that left any node more
   than 128 blocks behind stuck forever.
-- **Payment Sandbox, the AI Operations Layer and the Voice Agent:** reviews found ways to bend the
-  books, timelines that looked more certain than their evidence, and a microphone that stayed on after
-  push-to-talk.
+
+The new projects' first reviews found their own: ways to bend Payment Sandbox's books, AI Operations
+Layer timelines that looked more certain than their evidence, and a Voice Agent microphone that kept
+recording after push-to-talk ended.
 
 One fix went out with the gate red, because the command that pushed it didn't stop on the gate's exit
 status. The rule now is plain: read the exit code itself, never through a pipe or a filter.
