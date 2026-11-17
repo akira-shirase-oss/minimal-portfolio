@@ -76,8 +76,9 @@ An independent review read the memo and the spine the same evening, and each got
 
 **The memo: accept with corrections.** "Stay parked" is well supported. Its High: the memo said the
 platform's rules forbid it from supplying accounts, and then left accounts out of the starter-template
-option. But the rule forbids a *shared accounts service*, not copied code. The corrected template
-option includes a copy-and-own accounts kit. The memo also stated the products' planned servers as if
+option. But the rule forbids a *shared accounts service*, not copied code. The review's corrected
+version of the template option includes a copy-and-own accounts kit; the memo itself isn't corrected
+yet. The memo also stated the products' planned servers as if
 they were already deployed, and misreported the smokes: my "requests" counted 2,000 setup writes, and
 the first smoke's failures were pool timeouts, not shedding.
 
@@ -126,8 +127,8 @@ can carry it. Self-hosted platforms in this direction also want about 4 GB of me
 each product is planned to run on a 2 GB server. So the memo recommends a copyable starter template for
 now, and lists what would change the answer. The decision on it is still recorded as pending.
 
-Owed: the rest of the fix round (drills that produce the two duplicate paths, the log-capture test,
-the corrected memo) and a second review of it; a quiet-machine run of the 100,000-request baseline; and
+Owed: the rest of the fix round (the log-capture test and the corrected memo) and a second review of
+all of it; a quiet-machine run of the 100,000-request baseline; and
 the 1,000,000-request run.
 
 ## Up next
