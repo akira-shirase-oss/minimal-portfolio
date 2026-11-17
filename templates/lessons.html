@@ -21,7 +21,7 @@
     {%- for lesson in lessons %}
     <li>
       <a href="{{ lesson.permalink }}">{{ lesson.title }}</a>
-      <small>· <time datetime="{{ lesson.date }}">{{ lesson.date | date(format="%Y-%m-%d") }}</time></small>
+      <small>· <time datetime="{{ lesson.date }}">{{ lesson.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time></small>
       {%- if lesson.description %}<br><small>{{ lesson.description }}</small>{% endif %}
     </li>
     {%- endfor %}

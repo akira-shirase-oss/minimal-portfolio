@@ -56,7 +56,7 @@
             <p><a href="{{ entry.permalink }}">Read the full entry →</a></p>
           </details></td>
           <td width="90" align="right">{{ entry.extra.tests | default(value="") }}</td>
-          <td width="110" align="right"><time datetime="{{ entry.date }}">{{ entry.date | date(format="%Y-%m-%d") }}</time></td>
+          <td width="110" align="right"><time datetime="{{ entry.date }}">{{ entry.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time></td>
         </tr>
       {%- endfor %}
       {%- if has_next %}

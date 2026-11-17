@@ -61,7 +61,7 @@
       {%- if project.log %}
       {%- set log = get_section(path=project.log) %}
       <dt>Build log</dt><dd><a href="{{ log.permalink }}">{{ log.extra.short_title or log.title }} build log</a>
-        {%- if log.pages %} · latest: <a href="{{ log.pages[0].permalink }}">{{ log.pages[0].extra.short_title or log.pages[0].title }}</a> <small>(<time datetime="{{ log.pages[0].date }}">{{ log.pages[0].date | date(format="%Y-%m-%d") }}</time>)</small>{% endif %}</dd>
+        {%- if log.pages %} · latest: <a href="{{ log.pages[0].permalink }}">{{ log.pages[0].extra.short_title or log.pages[0].title }}</a> <small>(<time datetime="{{ log.pages[0].date }}">{{ log.pages[0].date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>)</small>{% endif %}</dd>
       {%- endif %}
     </dl>
   </fieldset>

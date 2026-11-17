@@ -6,7 +6,7 @@ date = 2026-11-17T01:47:00Z
 [extra]
 kind = "experiment"
 milestone = "B0"
-step = "B0"
+step = "memo"
 short_title = "The spine, and a memo that says wait"
 
 [extra.summary]

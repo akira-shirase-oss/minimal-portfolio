@@ -3,7 +3,7 @@
 {% block ticker %}
 {#- The status ticker: the text is written once in data-ticker; the CSS draws
     two copies from it and slides the track by half its width. -#}
-<div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ page.extra.kind | default(value="post") }} · {{ page.date | date(format="%Y-%m-%d") }} · {{ page.reading_time }} min read &nbsp;●&nbsp; written up, numbers included &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+<div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ page.extra.kind | default(value="post") }} · {{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }} · {{ page.reading_time }} min read &nbsp;●&nbsp; written up, numbers included &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
 <hr>
 {% endblock ticker %}
 
@@ -12,7 +12,7 @@
   {#- Filled by series-page.html for build-log entries; empty for normal posts. #}
   {%- block series_line %}{% endblock series_line %}
   <p><small>
-    <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+    <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
     · {{ page.reading_time }} min read
     {%- if page.extra.kind %} · <code>{{ page.extra.kind }}</code>{% endif %}
   </small></p>

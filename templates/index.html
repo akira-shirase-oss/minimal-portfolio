@@ -74,7 +74,7 @@
       {%- set href = item.link | default(value="") %}
     {%- endif %}
       <tr>
-        <td><span class="mobile-label" aria-hidden="true">PID: </span><code>10{{ loop.index }}</code></td>
+        <td><span class="mobile-label" aria-hidden="true">PID: </span><code>{{ 100 + loop.index }}</code></td>
         <td><span class="mobile-label" aria-hidden="true">PROCESS: </span><b>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</b></td>
         <td><span class="mobile-label" aria-hidden="true">STATE: </span>{{ "always" if item.writing else ("running" if item.log else "complete") }}</td>
         <td>

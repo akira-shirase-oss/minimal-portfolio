@@ -6,7 +6,7 @@ date = 2026-11-17T02:05:00Z
 [extra]
 kind = "experiment"
 milestone = "N0"
-step = "N0"
+step = "spine"
 short_title = "A client that can only ask"
 
 [extra.summary]

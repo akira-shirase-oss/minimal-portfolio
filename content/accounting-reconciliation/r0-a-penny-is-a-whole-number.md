@@ -6,7 +6,7 @@ date = 2026-11-17T01:41:00Z
 [extra]
 kind = "experiment"
 milestone = "R0"
-step = "R0"
+step = "spine"
 short_title = "A penny is a whole number"
 
 [extra.summary]

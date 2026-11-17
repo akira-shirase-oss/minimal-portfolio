@@ -6,7 +6,7 @@ date = 2026-11-17T01:55:00Z
 [extra]
 kind = "experiment"
 milestone = "I0"
-step = "I0"
+step = "intake"
 short_title = "Leads that survive"
 
 [extra.summary]
