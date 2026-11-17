@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "A0 built, A1 partly; review Highs fixed on main — the 1M-event run owed, Durable Runner as first host next"
+status = "A0 built, A1 partly; review Highs and six Mediums fixed, not re-reviewed — the 1M-event run owed, Durable Runner as first host next"
 short_title = "AI Ops Layer"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -16,7 +16,7 @@ milestones = [
   { id = "A3", name = "controlled recovery", about = "Scoped, audited retry and reconcile through adapters that own execution, never a generic \"run again\"." },
   { id = "A4", name = "quality and adoption", about = "Measured overhead, retention cost, sampling and export, and estimated-versus-reconciled cost." },
 ]
-up_next = { milestone = "A1", step = "A1", title = "Finish A1 and the review's remaining Mediums, then A2: Durable Runner as the first real host" }
+up_next = { milestone = "A1", step = "A1", title = "The last Medium, a steady flood test and a second review, then A2: Durable Runner as the first real host" }
 +++
 
 **AI Operations Layer** is an add-on for applications that call AI models. When something goes wrong
@@ -35,8 +35,9 @@ collector stores them in PostgreSQL, and a SvelteKit console draws them.
 
 Started on 2026-11-16. The spine (A0) is built and A1 is partly done: a reference host with
 injectable faults runs the contract's failure cases end to end, and the console is checked in a real
-browser. An independent review found six High problems with timeline honesty and ingestion, all fixed
-on `main` the same evening. Two small load smokes stored every event but missed the ingest latency
+browser. An independent review found six High problems with timeline honesty and ingestion. They and six of
+its Mediums were fixed on `main` the same evening, not yet re-reviewed, and the test for one of the
+Highs is flaky in CI. Two small load smokes stored every event but missed the ingest latency
 target on a heavily loaded laptop; the million-event run is owed.
 
 The code is public at

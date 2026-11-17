@@ -112,7 +112,7 @@ status = "in progress"
 
 [[extra.projects]]
 name = "AI Operations Layer"
-about = "One honest timeline per AI operation, gaps shown as gaps. Spine built, six review Highs fixed; the million-event run is owed."
+about = "One honest timeline per AI operation, gaps shown as gaps. Spine built; six review Highs and six Mediums fixed, not yet re-reviewed; the million-event run is owed."
 link = "@/ai-operations-layer/_index.md"
 year = 2026
 status = "in progress"
