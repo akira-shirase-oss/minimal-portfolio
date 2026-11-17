@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "feature-complete — 24-hour soak evidence committed"
+status = "feature-complete; security pass merged (final review: ship) — release-build 1M run and a fresh soak owed"
 short_title = "Service Monitor"
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, contract-first domain types, the honest-states dashboard shell." },
@@ -16,7 +16,8 @@ milestones = [
   { id = "M4", name = "operate", about = "Retention, disk guardrails, backup and restore, and running on its own host." },
   { id = "M5", name = "ship", about = "Auth, the rest of the SSRF hardening, load runs, and a release someone else can install." },
   { id = "M6", name = "parity", about = "Every gap the retired monitor knew — real certificate classification, per-monitor sensitivity, the four incident times, a mutating dashboard, honest charts, a drift-checked guide, exit codes, mutation testing, and maintenance windows." },
-  { id = "M7", name = "deferred items, closed", about = "Email alerts as a second outbox channel, a real dashboard login, and a rising-load drill that checks the monitor's story against a real app's own ground truth." },
+  { id = "M7", name = "deferred items, closed", about = "Email alerts as a second outbox channel, a real dashboard login, and a rising-load drill that checks the monitor's story against a real app's own ground truth.", done = true },
+  { id = "H", name = "hardening", about = "An outside gap review before the monitor moves to its own server; fix rounds each re-checked by a second reviewer; then the owed load evidence on a release build of the hardened code." },
 ]
-up_next = { milestone = "done", step = "—", title = "M0–M7 built and the 24-hour soak evidenced — every owed gate has committed results" }
+up_next = { milestone = "H", step = "H.2", title = "≥1M checks and API requests on a release build, then the 24-hour soak on the hardened build" }
 +++
