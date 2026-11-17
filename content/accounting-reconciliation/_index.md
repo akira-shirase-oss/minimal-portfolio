@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "R0 built (a 1M-line run on a CI runner, no errors); review: fix first, fix round running; the ship gate needs one or two real accountants"
+status = "R0 done (second review: done); a million lines in 8.28 s on the laptop; R1 next; the ship gate needs one or two real accountants"
 short_title = "Reconciliation"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -21,7 +21,7 @@ milestones = [
   { id = "R8", name = "India", about = "GSTR-2B import, matching by GSTIN and invoice number, UPI references and Tally." },
   { id = "R9", name = "PDF statements", about = "An isolated PDF worker with per-bank layout profiles." },
 ]
-up_next = { milestone = "R0", step = "fixes", title = "Finish the review's fix round, then R1: imports and the normalized schema" }
+up_next = { milestone = "R1", step = "R1", title = "Import profiles, OFX, invoices and bills, and revisions instead of overwrites" }
 +++
 
 **Accounting Reconciliation** is a workspace for small accounting firms and freelance accountants. You
@@ -40,12 +40,11 @@ accounting software and never connects to a bank.
 
 ## Where it stands
 
-Promoted to a project on 2026-11-16 from a brief, and started the same evening. Four slices of R0 are
-on `main`: the pure domain, a strict streaming CSV reader, the database schema with its staged import,
-and a command line with a seeded statement generator. The ship gate needs one or two practising accountants willing to pilot it with
-a real month, and they haven't been found yet.
-
-The README on `main` still says "no code yet"; the first code arrived 30 minutes after it.
+Promoted to a project on 2026-11-16 from a brief. R0, the spine, is done: a streamed import server
+that never shows a half-imported file, two crash drills, an audit chain the database itself guards and
+anchors outside, and a 1,000,000-line import on a GitHub runner and on the laptop. Its review said fix
+first, and the second pass says done. The ship gate needs one or two practising accountants willing to
+pilot it with a real month, and they haven't been found yet.
 
 The code is public at
 [akira-shirase-oss/accounting-reconciliation](https://github.com/akira-shirase-oss/accounting-reconciliation).

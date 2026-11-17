@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "optional exploration; N0 built, review: fix first, fix round running; gate not passed until the 1M-event replay — a project only if it passes a promotion gate after N2"
+status = "optional exploration; N0 review fixes done, a second pass verified most, three follow-ups since unreviewed; N0 in progress until the 1M-event replay runs"
 short_title = "Native Workspace"
 # The milestones from the project's docs/ROADMAP.md. N0–N2 are exploration; N3–N5 only after promotion.
 milestones = [
@@ -17,7 +17,7 @@ milestones = [
   { id = "N4", name = "one controlled action", about = "After promotion only: one reversible action, pausing or resuming a monitor, with exact confirmation." },
   { id = "N5", name = "signed release", about = "After promotion only: signing, notarization and signed updates." },
 ]
-up_next = { milestone = "N0", step = "fixes", title = "Finish the fix round and the million-event replay, then the native shell (N1)" }
+up_next = { milestone = "N0", step = "replay", title = "The million-event replay, then the native shell (N1)" }
 +++
 
 **Native Workspace** is an experiment: a Mac app for looking into the other projects' services, starting
@@ -34,10 +34,11 @@ what it may do. The first versions can only read.
 there's a promotion gate: a comparison, written down before it's run, of this app against doing the
 same investigation in the terminal. If the app doesn't win, the project honestly stays a concept.
 
-Started on 2026-11-16. Three slices of N0 are on `main`: the Swift package, its pure core, the
-read-only transport, the Service Monitor adapter, a first window, and a drill against real copies of
-Service Monitor and Durable Runner. Its first independent review is running, and the million-event
-replay is owed on a quiet machine.
+Started on 2026-11-16. N0 is built: the Swift package, its pure core, the read-only transport, the
+Service Monitor adapter, a first window, and drills against real copies of Service Monitor and Durable
+Runner. Its review's fixes are done and a second pass verified them; three follow-up fixes came after
+that pass and haven't been reviewed. N0 stays in progress until the
+million-event replay runs on a quiet machine.
 
 The code is public at
 [akira-shirase-oss/native-workspace](https://github.com/akira-shirase-oss/native-workspace).

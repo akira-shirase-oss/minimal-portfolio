@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "I0 (the lead-intake spine) built; review: fix first, fix round running; gate not passed until the full load runs; no website generation yet"
+status = "I0 done pending the latency-budget decision; the 100k and 1M runs pass; no website generation yet"
 short_title = "Intent Studio"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -18,7 +18,7 @@ milestones = [
   { id = "I5", name = "evidence battery", about = "A 50-brief battery, page-weight budgets, and checks on real phones." },
   { id = "I6", name = "pilot and ship gate", about = "Three real client sites, each signed off, each receiving a real inquiry." },
 ]
-up_next = { milestone = "I0", step = "fixes", title = "Finish the fix round, then the quiet-machine baseline and the 1M-submission run" }
+up_next = { milestone = "I0", step = "budget", title = "The latency-budget decision, then I1" }
 +++
 
 **Intent Studio** turns a small service business's brief into a working website: designed, tested and
@@ -32,13 +32,12 @@ notification service is down.
 
 ## Where it stands
 
-Started on 2026-11-16 with milestone I0, the lead-intake spine, because it needs no client. The form
-endpoint, the durable inbox, the notifier and a read-only operator inbox are built, and every drill
-passes in CI. In every valid load run with the provider down, every acknowledged lead was kept and
-delivered, but two runs missed their latency targets on a busy laptop, so the gate isn't passed until
-a quiet-machine baseline and the full runs exist. Its first independent review found no lost lead
-but said fix first, for three issues that are being fixed and will be described once merged. Nothing
-generates a website yet, and the ship gate needs three real pilot clients, who haven't been found.
+Started on 2026-11-16 with milestone I0, the lead-intake spine, because it needs no client. The
+review's eighteen findings are fixed, and the 100,000- and 1,000,000-submission runs, with the
+notification provider down throughout, stored every acknowledged lead exactly once. The final check
+calls I0 done, pending one decision: the intake latency budget, set from the quiet-machine baselines.
+Nothing generates a website yet, and the ship gate needs three real pilot clients, who haven't been
+found.
 
 The code is public at
 [akira-shirase-oss/intent-studio](https://github.com/akira-shirase-oss/intent-studio).

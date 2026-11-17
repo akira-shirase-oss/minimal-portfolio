@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "building — D4: frame v2, security round and two follow-ups merged, final review: ship, 146 tests; the sustained-load gate waits on the 1M battery"
+status = "building — D4: the sustained gate is green (1M of 1M accepted), final review: ship; the rest of the battery and a second-developer restore owed"
 short_title = "Durable Runner"
 milestones = [
   { id = "D0", name = "model", about = "The state machine: transitions, invalid states, identities, limits — deterministic tests under a fake clock.", done = true },
@@ -15,7 +15,7 @@ milestones = [
   { id = "D3", name = "maintain", about = "Compaction into generations, seven-day terminal expiry, backup and restore, bounded diagnostics.", done = true },
   { id = "D4", name = "ship", about = "CLI and inspection UI, a pilot workflow, the load plan — and a second developer restores a real directory." },
 ]
-up_next = { milestone = "D4", step = "load", title = "The 1M sustained battery on a quiet machine" }
+up_next = { milestone = "D4", step = "restore", title = "A second developer restores a real journal directory, unaided" }
 
 [[extra.planned]]
 milestone = "D4"

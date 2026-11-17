@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "first release built, not shippable: second fix round merged, a third review has two items being fixed; live mic drills owed"
+status = "first release built, not shippable: four review rounds, the last merge not yet reviewed; live mic drills owed"
 short_title = "Voice Agent"
 # The project's own roadmap (docs/ROADMAP.md). Its first release is V0–V2 as one unit (D-012),
 # so this log treats it as one milestone.
@@ -15,7 +15,7 @@ milestones = [
   { id = "V3", name = "memory and personal voice", about = "Memory you can review, trace to its source and delete, and a personal-voice profile gated on consent and a usage-rights review." },
   { id = "V4", name = "controlled tools", about = "One reversible local tool, then reviewed external actions that name their recipient and leave an audit record." },
 ]
-up_next = { milestone = "V0–V2", step = "fixes", title = "The third review's two items, then the live microphone drills" }
+up_next = { milestone = "V0–V2", step = "drills", title = "A review of the last merge, then the live microphone drills" }
 +++
 
 **Personal Voice Agent** is a voice assistant that learns how you talk without taking actions in your
@@ -33,11 +33,10 @@ provider, no API keys, no stored audio.
 ## Where it stands
 
 Started on 2026-11-16. The first release (V0–V2) is built and its automated checks pass. It is **not
-usable yet**: an independent review found five serious bugs where the app, the background process and
-the disk meet. Seventeen fixes merged the same evening; a second review confirmed four of the five
-Highs closed and said fix first again, and a second fix round is running.
-The live microphone drills need a person, the model misses its speed budget, and the full
-million-event load runs haven't run.
+usable yet**. Four independent review rounds and their fixes closed the crash, microphone, disk and
+revocation findings; the last merge hasn't been reviewed. The completion-claim guard now has a held-out
+score: 7% of claims get no disclosure, all of them in answers to plain questions. The live microphone
+drills need a person, the model misses its speed budget, and the million-unit runs haven't run.
 
 The code is public at
 [akira-shirase-oss/personal-voice-agent](https://github.com/akira-shirase-oss/personal-voice-agent).
