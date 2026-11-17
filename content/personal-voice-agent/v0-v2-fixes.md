@@ -82,8 +82,8 @@ All four are fixed.
 - **Claims in answers to plain questions** are the accepted residual: the 7% above. It's documented in
   the project's own decisions, not hidden.
 - **None of the 11 live microphone drills has run.** They need a person: push-to-talk, the real stop
-  time, barge-in, revocation, a crash, the model unavailable, and the new one, quitting with a hung
-  service. Then 100 consented utterances and three one-hour sessions.
+  time, barge-in, revocation, a crash, the model unavailable, the 100 consented utterances and three
+  one-hour sessions, and the new one, quitting with a hung service.
 - **Latency still misses.** End of turn to first audio is p95 2,036 ms against a 2,000 ms budget, and
   the slow part is the model's first sentence.
 - **The ledger smokes failed** on a contended disk (p99 554 ms against 50, and 155 ms against 20), and

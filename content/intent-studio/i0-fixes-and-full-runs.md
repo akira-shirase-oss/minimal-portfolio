@@ -28,9 +28,8 @@ The review found eighteen things in I0: 3 High, 7 Medium and 8 Low. All of them 
 - **Connections can't be held open.** There was no header-read timeout, no idle timeout and no cap, and
   the body was read before anything was refused. Now there's a cap of 1,024 connections taken before
   accept, a 10-second header-read timeout that also closes idle keep-alive sockets, a 10-second
-  write-stall deadline, at most 1,000 requests and 5 minutes per connection, and at most 64
-  connections per address (per /64 for IPv6). The body is read only after load shedding and rate
-  limits.
+  write-stall deadline, at most 1,000 requests and 5 minutes per connection, and a per-address
+  connection limit. The body is read only after load shedding and rate limits.
 - **Bots can't spend a site's quota.** Junk posts that filled the honeypot still used up the site's
   rate limit, so 60 a minute locked real visitors out. Now only a valid lead for a known site is
   charged, an unknown site gets a 404 and creates nothing, and a resend gets its token back.

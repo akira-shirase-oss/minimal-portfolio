@@ -14,7 +14,7 @@ tests = 806
 [extra.summary]
 goal = "Merge the security fixes with green CI and an independent review, and describe each hole now that its fix is on main."
 built = "Magic links that only go to listed origins and are bounded per client then per recipient, a GraphQL pre-scan and limits checked before any work, per-account guess ceilings, an explicit opt-in for private destinations, project deletion that covers every table, role-checked owner triggers, token-free logs, revalidating media, bounded public live streams, and an MIT licence."
-proof = ["a 6,008-character nested GraphQL document from a non-member: 422, server still up", "final check of the merge: ship", "CI found two real bugs on the way: receipts read across two snapshots, and Studio live hints lost", "main's first CI attempt missed one smoke (p99 427.85 ms vs 200); a rerun passed; the miss is unexplained", "806 tests across the Rust and stack jobs in CI"]
+proof = ["a 6,008-character nested GraphQL document from a non-member: 422, server still up", "final check of the merge: ship", "CI found two real bugs on the way: receipts read across two snapshots, and Studio live hints lost", "main's first CI attempt missed one smoke (p99 427.84 ms vs 200); a rerun passed; the miss is unexplained", "806 tests across the Rust and stack jobs in CI"]
 code = "akira-shirase-oss/colophon-cms · main @ c1479c5"
 +++
 
@@ -43,7 +43,7 @@ These are the holes and their fixes, all on `main` now:
 - **Private destinations are an explicit opt-in** (D-149). The guard against webhooks pointed at internal
   addresses switched itself off whenever the server listened on loopback, which is exactly how it runs
   behind a reverse proxy. The worker also ignores proxy settings from its environment.
-- **Deleting a project deletes everything.** It missed six tables, so deleting a project that used them
+- **Deleting a project now deletes the six tables it missed.** Before, it skipped them, so deleting a project that used them
   failed, and visitor data stayed behind. The application can no longer call deletion itself.
 - **Owner permissions can't be forged** (D-155, D-168). A database trigger that protects owner
   permissions trusted a setting the application could change, so the app could delete all 13 owner-role
@@ -77,7 +77,7 @@ links, password checks and queries now all have a budget, checked before the exp
 - **Tests.** CI at `c1479c5` ran 462 tests in the Rust job and 344 in the stack job, plus 55 testbed
   specs, 131 Studio server tests and 102 Studio browser tests.
 - **`main`'s CI isn't settled.** `main` hadn't had a green run since 2026-10-31. At `c1479c5` the first
-  attempt failed on one load smoke, `session steady`, at p99 427.85 ms against 200 ms, on a 4-core GitHub
+  attempt failed on one load smoke, `session steady`, at p99 427.84 ms against 200 ms, on a 4-core GitHub
   runner (8,002 requests, none failed). A rerun on a different runner passed every smoke, with that one
   at p99 53.504 ms. The house rule is that a failing run is evidence, not something to re-run until
   green, so I'm treating the miss as open until it's explained.
@@ -101,11 +101,9 @@ that isn't a superuser.
 
 ## What it doesn't do yet
 
-- **Known limits.** The review left three Lows, accepted as known limits. Two are documented: a flood
-  from many separate IPv6 /64 blocks can still fill a project's sign-in-link ceiling, which is why the
-  ceiling is configurable; and while an attacker holds an account's guess ceiling, its owner on a new
-  device waits up to an hour, though known devices still work. The third isn't documented yet, so I'll
-  describe it once it is.
+- **Known limits.** Three Lows from the review remain, accepted as known limits; the repository's
+  [CHANGELOG](https://github.com/akira-shirase-oss/colophon-cms/blob/main/CHANGELOG.md) lists its known
+  limitations.
 - **The original gap review has other items**, several of them High, outside this merge. I'll describe
   any security one once it's fixed.
 - **Evidence owed:** million-request runs for the changed audience, assets and media scenarios, a real

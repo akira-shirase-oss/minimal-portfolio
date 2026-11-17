@@ -36,8 +36,10 @@ collector stores them in PostgreSQL, and a SvelteKit console draws them.
 Started on 2026-11-16. The spine (A0) is done: two independent reviews and their fix rounds, and a
 final check that says so. A1 is partly done: a reference host with injectable faults runs the
 contract's failure cases end to end, and the console, now on the shared Tailwind and shadcn-svelte
-kit, is checked in a real browser. The only load evidence is two small smokes from the first day, so
-the first million-event run missed on a busy machine, and a quiet run is owed.
+kit, is checked in a real browser. The load evidence so far: two small ingest smokes from the first
+day; a 1,000,000-event retention sweep; a PostgreSQL restart drill with every acknowledged event
+stored; and the first 1,000,000-event ingest run, which missed its thresholds on a busy machine. A
+quiet-machine run is owed.
 
 The code is public at
 [akira-shirase-oss/ai-operations-layer](https://github.com/akira-shirase-oss/ai-operations-layer).

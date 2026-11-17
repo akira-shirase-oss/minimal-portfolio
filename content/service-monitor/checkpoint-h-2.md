@@ -54,7 +54,8 @@ stranger a small, fixed allowance and takes it back when they stop moving.
 
 - **The reviews.** At the start of this round: ship, but fix the login throttle and the connection
   deadline before the droplet faces the internet. After the next round: ship for the loopback install,
-  but fix the write stall first. After that: **ship**. Nothing above Info is open from those passes.
+  but fix the write stall first. After that: **ship**. Apart from one Low, documented as a gate (below),
+  nothing above Info is open from those passes.
 - **The write-stall fix, live.** With the connection cap filled by clients that never read, a fresh GET
   was answered 200 after 12.1 seconds. Before, it never was.
 - **A million API reads**, on a release build at `304edd5` on my development Mac (12 cores), with 32
@@ -80,8 +81,8 @@ And three branch CI runs failed on documentation lint warnings before merging.
 - **A million checks hasn't run.** The monitor's ceiling is 20 checks a second, so a million takes at
   least 13.9 hours. A 120-second ceiling probe gave 800 passed and 800 missed. How to get a million-check
   run is an open question in the SaaS plan.
-- **One Low from the review is documented as a gate** that has to close before webhooks are offered to
-  tenants. I'll describe it once it's fixed.
+- **One Low from the review is open**, documented as a gate that has to close before webhooks are offered
+  to tenants (D-017). I'll describe it once it's fixed.
 - **RUSTSEC-2026-0459** is still a dated exception, re-checked by 2026-12-16, waiting on an `sqlx`
   release. The exposure is assessed as negligible, and owner-only files, which that assessment relies
   on, are now enforced.

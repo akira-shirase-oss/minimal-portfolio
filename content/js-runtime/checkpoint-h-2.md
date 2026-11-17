@@ -15,7 +15,7 @@ tests = 156
 goal = "Close the security review's follow-up findings, then re-run the whole M7 load battery on the hardened build, since the old numbers predated every fix."
 built = "Slots that slow readers can't pin, a heap limit that ends a run instead of aborting V8, a callback heap bomb that exits 6, a fence check before any filesystem touch, a FIFO-proof readText, misspelt manifest keys refused, and a re-run harness that records the load average."
 proof = ["final check at 8baba4d: ship", "serve 1M: 1,000,000 ok, 86,620 rps, p99 467 µs", "saturation 1M at 128 connections: 85,875 rps, p99 1,780 µs", "webhook 1M: 50,629 rps, exactly one key stored", "1-hour soak: 1,439,460 iterations, 0 fetch errors, pending timers 9 → 9"]
-code = "akira-shirase-oss/js-runtime · main @ ad04128 (runtime code unchanged since 8baba4d)"
+code = "akira-shirase-oss/js-runtime · main @ 40f3699 (runtime code unchanged since 8baba4d)"
 +++
 
 Old benchmark numbers are like an old map. They were true once, but the roads have moved since.

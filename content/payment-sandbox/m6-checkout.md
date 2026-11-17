@@ -1,6 +1,6 @@
 +++
 title = "M6: a checkout, a dashboard, and a restore that charged twice"
-description = "Three fix rounds closed every open finding from the first reviews, then M6 shipped a hosted checkout and an inspection dashboard. Its review found that restoring an older backup could make a payment charge twice. That's fixed, and the review says ship. Every full load run is still owed."
+description = "Three fix rounds closed all but a few Lows from the first reviews, then M6 shipped a hosted checkout and an inspection dashboard. Its review found that restoring an older backup could make a payment charge twice. That's fixed, and the review says ship. Every full load run is still owed."
 date = 2026-11-17T02:40:00-05:00
 
 [extra]
@@ -23,7 +23,7 @@ same thing twice.
 
 ## What I built
 
-**Three fix rounds** closed what the first reviews had left open:
+**Three fix rounds** closed all but a few Lows of what the first reviews had left open:
 
 - **One project can't slow the rest.** Reports have a per-project budget (429 with `Retry-After`) and
   concurrency caps, and the simulator's reads no longer run on its writer. Recovery takes projects in
@@ -75,8 +75,8 @@ paying again with the same scenario replays the network's own record instead of 
   this is the baseline.
 - **The restore rehearsal** dumps the database with `pg_dump` into a fresh one and checks that
   reconciliation, balances and explanations come out the same and that the owner's `UPDATE` is
-  refused. The final check ran it live on a fresh cluster: 12 of 12 late lines were refused. No run
-  output from the rehearsal is committed yet.
+  refused. Separately, the reviewer's own reproduction on a restored copy, after the protection fixes,
+  had 12 of 12 late lines refused. No run output from the rehearsal script itself is committed yet.
 
 ## Where I messed up
 

@@ -1,6 +1,6 @@
 +++
 title = "Checkpoint H.2: the fix that banned the honest peer"
-description = "The fourth review's two findings are fixed, a security verification pass and CI landed, and then the fifth review caught my new peer scoring getting an honest peer banned in about three minutes. Fixed, a final check says ship, and the million-operation load runs at the reviewed build all pass. The CI run on the very last commit failed, and I don't know why yet."
+description = "The fourth review's two findings are fixed, a security verification pass and CI landed, and then the fifth review caught my new peer scoring getting an honest peer banned in about three minutes. Fixed, a final check says ship, and the million-operation load runs at the reviewed build all pass, though the chain run measured only rejections. The CI run on the very last commit failed, and I don't know why yet."
 date = 2026-11-17T06:19:00-05:00
 
 [extra]
@@ -14,7 +14,7 @@ tests = 290
 [extra.summary]
 goal = "Close the fourth review's two peer-to-peer findings, run the security verification checklist against every surface, add CI, and re-run the million-operation load at the reviewed build."
 built = "A ban that closes the connection, block requests rotated away from withholders, owner-only key files, deadlines and caps on every web surface, a push-only mempool rule, CI with a required dependency audit, and a fix for the peer scoring that blamed honest peers."
-proof = ["a banned flooder's socket closed in 3.52 ms (before: never)", "behind a block withholder, first block at +9 s instead of +87 s", "final check at 3844afd: ship", "6 of 6 load runs at 1,000,000 operations each pass at 3844afd", "CI failed on the head commit at the dependency-audit step: cause not known yet"]
+proof = ["a banned flooder's socket closed in 3.52 ms (before: never)", "behind a block withholder, first block at +9 s instead of +87 s", "final check at 3844afd: ship", "6 of 6 load runs at 1,000,000 operations each pass at 3844afd; the chain run measured only rejections", "CI failed on the head commit at the dependency-audit step: cause not known yet"]
 code = "akira-shirase-oss/miniBTC-chain · main @ eefa6c9 (final check at 3844afd)"
 +++
 
@@ -77,8 +77,9 @@ can say so with a new `notfound` message. The peer delivering best is never scor
 | chain | 2,277,096 validations/s |
 | RPC | 54,655 requests/s, 1,000,000 of 1,000,000 ok |
 
-  The chain run passes on the rejection path only (no valid blocks in it), so it measures how fast
-  bad blocks are turned away, not how fast good ones connect.
+  The chain run measured only rejections (`valid=0`, no valid blocks in it), so it passes on throughput
+  only: it says how fast bad blocks are turned away, not how fast good ones connect. That scenario is
+  being fixed.
 - **The web surfaces at a million requests each.** The explorer served 1,000,000 requests at
   34,564.84 a second, p99 2 ms, and the wallet UI 1,000,000 at 9,021.41 a second, p99 2 ms. There's no
   threshold for these yet. About 0.1% failed in each, roughly one per connection the server closed at
@@ -95,7 +96,7 @@ silent, and my node scored them for it. Live, an honest peer was banned in about
 fifth review caught it, and the "only blame someone who promised" rule above fixed it.
 
 **P14 left gaps in its own bounds.** There was no write deadline, so 64 clients that never read could
-lock out the RPC for 45 seconds and the explorer for 60. Now there's a 10-second write-stall deadline
+lock out the RPC and the explorer for as long as they stayed connected. Now there's a 10-second write-stall deadline
 and a limit of 1,000 requests per connection. The `Host` check also ignored case, and a missing
 `Host` header wasn't refused; both are fixed, and peer score is capped.
 

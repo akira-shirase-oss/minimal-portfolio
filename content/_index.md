@@ -29,7 +29,7 @@ log = "js-runtime/_index.md"
 
 [[extra.now]]
 process = "minibtc"
-what = "A Bitcoin-style blockchain built from scratch in Rust — consensus through the wallet UI; final check: ship, 6 of 6 million-op load runs pass."
+what = "A Bitcoin-style blockchain built from scratch in Rust — consensus through the wallet UI; final check: ship; 6 of 6 million-op load runs pass, though the chain run measured only rejections."
 link = "@/minibtc/_index.md"
 log = "minibtc/_index.md"
 
@@ -126,7 +126,7 @@ status = "in progress"
 
 [[extra.projects]]
 name = "Native Workspace"
-about = "An optional, read-only macOS workbench for the services. N0's review fixes are done and verified; the million-event replay is owed; it continues only if it beats the terminal at one investigation."
+about = "An optional, read-only macOS workbench for the services. N0's review fixes are done, verified by a second pass, with three later follow-ups not yet reviewed; the million-event replay is owed; it continues only if it beats the terminal at one investigation."
 link = "@/native-workspace/_index.md"
 year = 2026
 status = "exploration"
@@ -147,7 +147,7 @@ status = "preview live"
 
 [[extra.projects]]
 name = "MiniBTC"
-about = "A Bitcoin-style blockchain built from scratch in Rust — consensus, UTXO set, P2P, mining, an HD wallet, JSON-RPC, an explorer and an MCP server that can inspect the chain and draft payments but never spend without a human. Security pass done, final check: ship; 6 of 6 million-op load runs pass; CI on the head commit failed at the audit step, cause unknown."
+about = "A Bitcoin-style blockchain built from scratch in Rust — consensus, UTXO set, P2P, mining, an HD wallet, JSON-RPC, an explorer and an MCP server that can inspect the chain and draft payments but never spend without a human. Security pass done, final check: ship; 6 of 6 million-op load runs pass, the chain run on rejections only (being fixed); CI on the head commit failed at the audit step, cause unknown."
 link = "@/minibtc/_index.md"
 year = 2026
 status = "hardened"

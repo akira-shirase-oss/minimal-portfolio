@@ -34,8 +34,8 @@ Every response says `Sandbox-Simulated: true`. Nothing in it can be redeemed for
 ## Where it stands
 
 Started on 2026-11-16. Milestones M0 to M5 are built and drilled: process kills, clock jumps and a
-backup restore, with no double charge in any of them. Three fix rounds closed the first reviews' open
-findings, and on 2026-11-17 M6 shipped a hosted checkout and an inspection dashboard. Its review found
+backup restore, with no double charge in any of them. Three fix rounds closed all but a few Lows from the
+first reviews, and on 2026-11-17 M6 shipped a hosted checkout and an inspection dashboard. Its review found
 that a restore from an older backup could charge twice; that's fixed, and the review says ship. The
 project's own rule keeps every milestone "in progress" until its full ≥1,000,000-request run is
 committed, and none has run yet.

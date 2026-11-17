@@ -40,7 +40,8 @@ before, though not always below the quiet threshold:
   On 2026-11-10 it failed, with half the submits refused.
 - **jsrt's M7 battery, re-run on the hardened build**: all six pass, at 3 to 5% below the old throughput,
   with better tail latency on serve.
-- **MiniBTC**: 6 of 6 million-operation runs pass.
+- **MiniBTC**: 6 of 6 million-operation runs pass, though the chain scenario measured only rejections,
+  so it passes on throughput only; that scenario is being fixed.
 - **Intent Studio**: a million lead submissions with the notification provider down the whole time;
   every acknowledged lead stored exactly once.
 - **Accounting Reconciliation**: a million bank lines in 8.28 seconds on the laptop.

@@ -75,7 +75,9 @@ flip leaves nothing visible; a rerun produces exactly the lines an uninterrupted
   The laptop was faster overall but had the worst p99, at a load average of about 12 to 15. Runner
   numbers are CI observations, laptop numbers are development observations, and neither is capacity.
 - **Tests.** CI ran 110 (108 workspace tests plus the 2 drills), up from 62.
-- **The review.** First pass: fix first, with 2 High, 5 Medium and 9 Low. Second pass: **done**.
+- **The review.** First pass: fix first, with 2 High, 5 Medium and 9 Low. Second pass: **done**, with
+  two new Lows, fixed afterwards. Those last fixes came after the second pass and haven't been
+  re-reviewed.
 
 ## Where I messed up
 
@@ -88,7 +90,6 @@ margins on a loaded machine.
 - **No matching.** R0 is the spine: imports, the chain and the drills. Matching, the exception queue
   and review screens start at R1.
 - **Two measurements are owed**: a 50 MiB file of wide rows with its memory, and a very large account.
-- **One Low security residual** is open; I'll describe it once it's fixed.
 - **No accountants yet.** The ship gate needs one or two to close a real month on it.
 
 ## Up next

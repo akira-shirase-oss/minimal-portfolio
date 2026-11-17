@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "optional exploration; N0 review fixes done and verified; N0 in progress until the 1M-event replay runs"
+status = "optional exploration; N0 review fixes done, a second pass verified most, three follow-ups since unreviewed; N0 in progress until the 1M-event replay runs"
 short_title = "Native Workspace"
 # The milestones from the project's docs/ROADMAP.md. N0–N2 are exploration; N3–N5 only after promotion.
 milestones = [
@@ -36,7 +36,8 @@ same investigation in the terminal. If the app doesn't win, the project honestly
 
 Started on 2026-11-16. N0 is built: the Swift package, its pure core, the read-only transport, the
 Service Monitor adapter, a first window, and drills against real copies of Service Monitor and Durable
-Runner. Its review's fixes are done and a second pass verified them. N0 stays in progress until the
+Runner. Its review's fixes are done and a second pass verified them; three follow-up fixes came after
+that pass and haven't been reviewed. N0 stays in progress until the
 million-event replay runs on a quiet machine.
 
 The code is public at
