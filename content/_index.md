@@ -119,7 +119,7 @@ status = "in progress"
 
 [[extra.projects]]
 name = "Payment Sandbox"
-about = "Simulated money, real double-entry accounting enforced by PostgreSQL. M0–M5 built and drilled, the review's five Highs and card-number findings fixed; checkout and dashboard next; full load runs owed."
+about = "Simulated money, real double-entry accounting enforced by PostgreSQL. M0–M5 built and drilled; the review's five Highs and five Mediums fixed, a second round on four Mediums under way; full load runs owed."
 link = "@/payment-sandbox/_index.md"
 year = 2026
 status = "in progress"

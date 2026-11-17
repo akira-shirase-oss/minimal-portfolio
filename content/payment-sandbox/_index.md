@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "M0–M5 built, functional gates pass; review Highs fixed — in progress until the full 1M load runs; M6 next"
+status = "M0–M5 built, functional gates pass; first fix round in (5 Highs, 5 Mediums), a second running — in progress until the full 1M load runs"
 short_title = "Payment Sandbox"
 # The milestones from the project's docs/ROADMAP.md. M0–M5 are one row here: they were built
 # together on the first day, and the roadmap holds them all at "in progress" until the full load runs.
@@ -16,7 +16,7 @@ milestones = [
   { id = "M7", name = "developer product", about = "A CLI, a TypeScript SDK, a scenario library and dataset resets." },
   { id = "M8", name = "billing direction", about = "Asynchronous outcomes, authorization expiry on virtual time, then settlement, fees, payouts and disputes." },
 ]
-up_next = { milestone = "M0–M5", step = "load", title = "The full million-request runs and the open Mediums, then M6: checkout and the dashboard" }
+up_next = { milestone = "M0–M5", step = "fixes", title = "The second fix round on four Mediums, a second review, then M6: checkout and the dashboard" }
 +++
 
 **Payment Sandbox** is a place to test a shop's payments without a real payment provider, real cards
@@ -35,7 +35,8 @@ Every response says `Sandbox-Simulated: true`. Nothing in it can be redeemed for
 
 Started on 2026-11-16. Milestones M0 to M5 are built and drilled: process kills, clock jumps and a
 backup restore, with no double charge in any of them. An independent review asked for one fix round
-before the next milestone, and its High findings are fixed on `main`. The project's own rule keeps
+before the next milestone. The five Highs and five Mediums are fixed on `main`; a second round on the
+four remaining Mediums is under way, and none of it has been re-reviewed yet. The project's own rule keeps
 M0 to M5 "in progress" until each has a committed full load run. The load runs so far are small
 smokes on a busy machine; every full million-request run is still owed. M6, the checkout and
 dashboard, is next.
