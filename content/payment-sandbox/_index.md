@@ -36,7 +36,7 @@ Every response says `Sandbox-Simulated: true`. Nothing in it can be redeemed for
 Started on 2026-11-16. Milestones M0 to M5 are built and drilled: process kills, clock jumps and a
 backup restore, with no double charge in any of them. An independent review asked for one fix round
 before the next milestone. The five Highs and five Mediums are fixed on `main`; a second round on the
-four remaining Mediums is under way, and none of it has been re-reviewed yet. The project's own rule keeps
+four remaining Mediums is under way (one fixed so far), and none of it has been re-reviewed yet. The project's own rule keeps
 M0 to M5 "in progress" until each has a committed full load run. The load runs so far are small
 smokes on a busy machine; every full million-request run is still owed. M6, the checkout and
 dashboard, is next.

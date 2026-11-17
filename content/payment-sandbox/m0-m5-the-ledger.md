@@ -16,7 +16,7 @@ tests = 138
 goal = "A payment sandbox whose simulated balances can always be explained by an immutable double-entry journal, and which never charges twice, whatever crashes."
 built = "A pure money and accounting domain, a journal guarded by database triggers, scoped sandbox keys, two-phase payments with an identity committed before the network call, a separate simulator process, a recovery reconciler, signed webhooks with a leased deliverer, and explain-balance."
 proof = ["138 tests at the end of M5 in 2 of the reviewer's 3 gate runs; the other failed a flaky test", "reviewer's chaos run: 128 kill -9s, 13 clock jumps, 3 restores, 0 double charges", "64 concurrent refunds of 10 against 300 captured: exactly 30 admitted", "five accounting Highs and five Mediums from the review, fixed on main the same evening", "load: smokes only, 9 of 16 failed their thresholds"]
-code = "akira-shirase-oss/payment-sandbox · main @ 1756a3c"
+code = "akira-shirase-oss/payment-sandbox · main @ 8ac070f"
 +++
 
 If your bank app shows £50 but nobody can say where it came from, it's not a balance. It's a
@@ -124,11 +124,11 @@ tests on a slow runner: a property test, and a lock-timeout test that is now fix
 
 ## What it doesn't do yet
 
-- **Four Mediums are open, and a second fix round on them is under way.** Any read-only key can ask
-  for expensive reconciliation reports with no rate limit; the simulator's control endpoints (faults,
-  the clock) have no authentication and are built into the release binary; the reconciler reads
-  uncertain operations one at a time across every project, so one project can hold up the rest; and
-  one project's dead webhook endpoint can slow delivery for everyone. Four Lows are open too.
+- **A second fix round on four Mediums is under way.** Its first fix has landed: the simulator's and
+  the test store's control endpoints (faults, the clock) now need credentials. Three are still open:
+  any read-only key can ask for expensive reconciliation reports with no rate limit; the reconciler
+  reads uncertain operations one at a time across every project, so one project can hold up the rest;
+  and one project's dead webhook endpoint can slow delivery for everyone. Four Lows are open too.
 - **None of the fixes has had a second review yet.**
 - **"Done" now waits for load.** The review caught the roadmap calling M2 to M5 done while their
   status cells said planned, and claiming account checkpoints that were never built. The rule now
