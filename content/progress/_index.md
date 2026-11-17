@@ -5,7 +5,7 @@ template = "progress.html"
 
 [extra]
 # Update this whenever a row changes. It's the time the rows were checked against each repo's main.
-as_of = "2026-11-16 21:20 EST"
+as_of = "2026-11-16 21:15 EST"
 
 groups = [
   { id = "built", title = "The built projects", about = "Roadmaps done or nearly done. 2026-11-16 was their security and reliability pass: an outside gap review, then fix rounds, each checked by a second reviewer." },
