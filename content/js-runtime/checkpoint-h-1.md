@@ -1,7 +1,7 @@
 +++
-title = "Checkpoint H.1: four fix rounds, and two fixes that opened new holes"
-description = "An outside gap review found scripts could reach the engine's own internals and redirects could walk past the allowlist. Four fix rounds closed them, each checked by a second reviewer, who caught two of my own fixes creating new ways to jam the server. 84 tests became 130. The million-request evidence now predates the code and has to be re-run."
-date = 2026-11-16T23:30:00Z
+title = "Checkpoint H.1: four fix rounds, and three fixes that opened new holes"
+description = "An outside gap review found scripts could reach the engine's own internals and redirects could walk past the allowlist. Four fix rounds closed them, each checked by a second reviewer, who caught three of my own fixes creating new ways to jam the server. 84 tests became 130, then 140 in a late verification round that's under review now. The million-request evidence predates the code and has to be re-run."
+date = 2026-11-16T18:30:00-05:00
 
 [extra]
 kind = "failure"
@@ -9,21 +9,21 @@ milestone = "H"
 step = "H.1"
 short_title = "Security pass: four rounds"
 # 130 at ab1bfa2, run twice in the fourth review pass (74 + 25 + 11 + 20); 140 at cb40ddf, as recorded
-# in the late verification merge, which hasn't been reviewed.
+# in the late verification merge, now under independent review.
 tests = 140
 
 [extra.summary]
 goal = "Close the holes an outside gap review found in the sandbox, the network fence, the module loader and rt.serve, with every fix re-checked by someone who didn't write it."
 built = "No Deno globals, a net grant re-checked on every redirect hop and pinned to public addresses, a loader that only treats .js and .mjs as code, one deadline over a whole fetch, redacted fetch errors, and rt.serve limits that slow and idle clients can't hold forever."
 proof = ["tests 84 → 110 → 120 → 125 → 130 across the four rounds, 140 after a late verification round", "final review verdict: ship, with 3 Low items left", "with 256 idle sockets held open, a GET still answers in 1–7 ms", "the M7 million-request numbers predate these fixes: re-run owed"]
-code = "akira-shirase-oss/js-runtime · main @ cb40ddf (last reviewed at ab1bfa2)"
+code = "akira-shirase-oss/js-runtime · main @ f035c90 (last reviewed at ab1bfa2)"
 +++
 
 Picture a bouncer who checks your name at the door, then waves you through when you come back from
 the smoking area with a different face. That was `rt.fetch` and redirects. The front door was
 checked; the second door wasn't.
 
-jsrt's roadmap finished on 2026-11-10. Today an outside gap review went through it the way an
+jsrt's roadmap finished on 2026-11-06. Today an outside gap review went through it the way an
 attacker would, and found 24 gaps, 6 of them High.
 
 ## What I built
@@ -77,7 +77,8 @@ These are checks on a busy development laptop, not load runs. No load harness ra
 
 ## Where I messed up
 
-The second reviewer found that two of my own fixes created new ways to jam the server.
+The second reviewer found that three of my own fixes created new ways to jam the server, across two
+rounds, and two of the Medium findings came from my fixes too.
 
 **Round 1's queue.** I added a queue of 64 slots for requests, and a request took its slot as soon as
 its headers arrived. So 64 clients could each say "here comes 100 bytes", send 2, and hold every
@@ -100,23 +101,26 @@ longest-idle eviction.
 - **The million-scale evidence is stale.** The 1,000,000-request `rt.serve` run (90,251 requests a
   second, p99 608 µs) ran on 2026-11-06, before all of this. Serve 1M, the saturation probe, the
   webhook 1M run, the soak and the cold-start run have to be re-run on this build, on a quiet machine.
-  The roadmap says so. The README's status line still quotes the old numbers without that note.
+  The roadmap and the README's "Still open" section both say so.
 - **The final review left three Low findings.** An attacker could steer eviction toward honest
   connections (in one run, a download that paused for 1.5 s was cut off after 678,428 of 16,777,216
   bytes). The minimum-rate rule also cut small slow bodies, turning a 30-second deadline into about 5
   seconds. And the 200 ms drain of a refused body helps one refused client, not many at once. The
-  late verification round below takes on the first two; nobody has re-checked them yet.
+  late verification round below takes on the first two; its review is still running.
 - **Three of the gap review's Highs are still open.** The 10-second default timeout still kills
   long-running serve apps and the supervisor never restarts a worker; SIGTERM drops requests in
   flight; and worker logs aren't redacted or tagged with a run id.
-- **The late verification round isn't reviewed.** It merged at the end of the day: a regression test
+- **The late verification round is still under review.** It merged at the end of the day: a regression test
   for every defence on the security checklist that wasn't yet proven, each shown failing first. The
   loader now refuses remote, `data:` and `blob:` imports, fetch is capped at 32 in flight per run, the
   V8 heap limit ends a run cleanly with exit 6 instead of a crash, refusal messages name no host paths,
   and `unsafe` code is forbidden outside the supervisor's documented blocks. It also adds a pinned
-  toolchain, a gate script and CI on Linux and macOS: 140 tests.
+  toolchain, a gate script and CI on Linux and macOS: 140 tests. Its first CI run on `main` failed on
+  Linux: the memory-bomb test never wrote to the memory it allocated, and Linux doesn't count untouched
+  pages as resident, so the supervisor's memory budget never fired. The bomb now writes every chunk,
+  and CI is green on both systems.
 
 ## Up next
 
-An independent review of the verification round, then re-run the million-scale load evidence on the
+Finish the independent review of the verification round, then re-run the million-scale load evidence on the
 hardened build and publish it with machine and commit, misses included.
