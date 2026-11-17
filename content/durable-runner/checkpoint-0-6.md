@@ -123,7 +123,7 @@ about 480 MB of history that only a rewrite can remove, and I haven't rewritten 
   and the size of their batch (frame version 2, with version 1 still readable), so a damaged length
   stops startup instead of being trusted. It merged at the end of the day with about a dozen more
   fixes: restore under the journal lock, deadlines on engine replies, a SIGTERM drain, reads behind a
-  key with a read-only option, owner-only journal files, handler calls with no redirects or proxies, a
+  key unless opened on loopback, with a read-only key, owner-only journal files, handler calls with no redirects or proxies, a
   strict CSP for the inspector, and hosted CI. Its own `kill -9` drill harness ran 36 kills with
   25,201 acknowledged submits and lost none. No reviewer has attacked any of it yet.
 - **The sustained load gate is still red.** Group commit was the named root cause, and it's in. In
@@ -133,7 +133,7 @@ about 480 MB of history that only a rewrite can remove, and I haven't rewritten 
 - **A 2 GB server is tight.** With a seven-day duplicate window and scheduled compaction, the sizing
   works out to about 3.9 one-step 1 KiB jobs a second.
 - **Not done:** step outputs and a retry/dead-letter policy, a second developer restoring a real
-  journal unaided, a Linux memory measurement, and the SaaS layer.
+  journal unaided, a Linux memory measurement, rate limits on reads, and the SaaS layer.
 
 ## Up next
 
