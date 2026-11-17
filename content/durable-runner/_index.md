@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "building — D4 ship gate: sustained load red, root-causing"
+status = "building — D4: three reviewed rounds, no acknowledged job lost; a late round (incl. the truncation fix) merged, unreviewed; sustained-load gate still red"
 short_title = "Durable Runner"
 milestones = [
   { id = "D0", name = "model", about = "The state machine: transitions, invalid states, identities, limits — deterministic tests under a fake clock.", done = true },
@@ -15,12 +15,12 @@ milestones = [
   { id = "D3", name = "maintain", about = "Compaction into generations, seven-day terminal expiry, backup and restore, bounded diagnostics.", done = true },
   { id = "D4", name = "ship", about = "CLI and inspection UI, a pilot workflow, the load plan — and a second developer restores a real directory." },
 ]
-up_next = { milestone = "D4", step = "load", title = "The sustained-load gate — red twice, solo included; the fsync ceiling is being root-caused" }
+up_next = { milestone = "D4", step = "load", title = "A review of the late round, then the 1M sustained battery on a quiet machine" }
 
 [[extra.planned]]
 milestone = "D4"
 step = "load"
-title = "Sustained load inside the latency gate — per-record fsync ceiling under investigation"
+title = "Sustained load inside the latency gate — group commit landed, re-run owed"
 
 [[extra.planned]]
 milestone = "D4"

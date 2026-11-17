@@ -18,6 +18,7 @@
   <nav aria-label="Site"><p>
     [ <a href="#running">Running now</a> ]
     [ <a href="#projects">Projects</a> ]
+    [ <a href="{{ get_url(path='@/progress/_index.md') }}">Progress</a> ]
     [ <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a> ]
     [ <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a> ]
     [ <a href="{{ get_url(path='@/lessons/_index.md') }}">Lessons</a> ]
@@ -59,6 +60,8 @@
   <h2>Running now</h2>
   <p>What’s actually in flight — drawn the way it’s thought about: as live processes, not as a bio.</p>
   <p><code>$ ps aux | grep -v idle</code></p>
+  <p>Each project's stage, latest review verdict and what's still owed are on the
+  <a href="{{ get_url(path='@/progress/_index.md') }}">progress page</a>.</p>
   <table class="mobile-records" role="table" aria-label="Running now" border="1" width="100%">
     <thead>
       <tr><th scope="col" width="60">PID</th><th scope="col" width="160">PROCESS</th><th scope="col" width="110">STATE</th><th scope="col">WHAT</th></tr>
@@ -71,7 +74,7 @@
       {%- set href = item.link | default(value="") %}
     {%- endif %}
       <tr>
-        <td><span class="mobile-label" aria-hidden="true">PID: </span><code>10{{ loop.index }}</code></td>
+        <td><span class="mobile-label" aria-hidden="true">PID: </span><code>{{ 100 + loop.index }}</code></td>
         <td><span class="mobile-label" aria-hidden="true">PROCESS: </span><b>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</b></td>
         <td><span class="mobile-label" aria-hidden="true">STATE: </span>{{ "always" if item.writing else ("running" if item.log else "complete") }}</td>
         <td>
@@ -282,9 +285,13 @@
   <details>
     <summary><b>Is any of this usable yet?</b></summary>
     <p>Honestly labelled: Colophon is pre-0.1 — it runs on my laptop and CI, and its own site says so.
-    The service monitor has an installed release and its 24-hour soak is evidenced. jsrt's roadmap
-    is done — host, capabilities and supervisor, all with committed load numbers. Nothing here is
-    marketed ahead of its evidence.</p>
+    The service monitor has an installed release and a 24-hour soak on an earlier build (salvaged; its
+    latency and memory series were lost); after the
+    2026-11-16 security pass its million-check run and a fresh soak are owed. jsrt's roadmap is done,
+    and its load numbers have to be re-run on the hardened build. The seven newer projects started
+    code on 2026-11-16 and none of them is usable yet. The <a href="{{ get_url(path='@/progress/_index.md') }}">progress
+    page</a> has every project's stage, review verdict and what's owed. Nothing here is marketed ahead
+    of its evidence.</p>
   </details>
   <details>
     <summary><b>Why Rust?</b></summary>

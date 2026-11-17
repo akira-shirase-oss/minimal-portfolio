@@ -28,7 +28,7 @@ milestones = [
   { id = "P7", name = "audience and speed", about = "Site visitors with real sign-in and per-project roles, content gated by row-level security, and the five demo sites driving the performance hunt." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P7", step = "v01", title = "The 24-hour soak, then version 0.1" }
+up_next = { milestone = "P7", step = "v01", title = "Fix the branch review's two Highs, green CI, then merge, the 24-hour soak and version 0.1" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -284,7 +284,19 @@ row-level security inside the delivery read rather than application filtering. M
 shared cache, so a gated row can never be served to or stored for a stranger. The Draft demo site runs the
 members flow live; the other four demo sites can only ever see public rows.
 
-**Now building (P7):** the 24-hour stress run, the usability gate and an independent install — then version 0.1.
+**A security pass is under way (2026-11-16).** An outside gap review found 56 gaps, 14 of them High. `main`'s Rust job is green again and its testbed runs
+again, but `main`'s CI still fails on one flaky testbed spec. The security fixes, each with a test
+that failed first, are on a pushed branch whose CI has failed on every push from two code failures
+being fixed. Its independent review says fix first: it found two new High-severity issues in the
+fixes, which are being fixed. Security details will be written up once the fixes are merged.
+
+**Now building (P7):** the security merge, then the 24-hour stress run, the usability gate and an
+independent install — then version 0.1.
+
+**The landing page** lives in its own repository,
+[akira-shirase-oss/colophon-landing](https://github.com/akira-shirase-oss/colophon-landing), and is
+live as a preview at [colophon-landing.pages.dev](https://colophon-landing.pages.dev). Its own domain,
+colophon.404human.dev, isn't attached yet.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12

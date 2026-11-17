@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{#- The progress page: every project on one page, from `extra.projects` in
+    content/progress/_index.md. Each project names its group, its repo and,
+    optionally, its build log; the latest entry is read from the log itself,
+    so it can't go stale. Everything else is typed in and dated by
+    `extra.as_of` — update it with the build logs. #}
+
+{% block ticker %}
+<div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● progress · {{ section.extra.projects | length }} projects &nbsp;●&nbsp; as of {{ section.extra.as_of }} &nbsp;●&nbsp; stage, review, owed, next &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+<hr>
+{% endblock ticker %}
+
+{% block content %}
+{%- set projects = section.extra.projects | default(value=[]) %}
+<article>
+  <p><small>progress · {{ projects | length }} projects · as of <code>{{ section.extra.as_of }}</code></small></p>
+  <h1>{{ section.title }}</h1>
+  {%- if section.description %}
+  <p>{{ section.description }}</p>
+  {%- endif %}
+  <div class="post-body">{{ section.content | safe }}</div>
+</article>
+
+<section aria-label="Every project at a glance">
+  <h2>At a glance</h2>
+  <table class="mobile-records" role="table" aria-label="Every project at a glance" border="1" width="100%">
+    <thead>
+      <tr><th scope="col" width="180">Project</th><th scope="col">Stage</th><th scope="col">Latest independent review</th></tr>
+    </thead>
+    <tbody>
+    {%- for project in projects %}
+      <tr>
+        <td><span class="mobile-label" aria-hidden="true">Project: </span><b><a href="#{{ project.id }}">{{ project.name }}</a></b></td>
+        <td><span class="mobile-label" aria-hidden="true">Stage: </span>{{ project.stage }}</td>
+        <td><span class="mobile-label" aria-hidden="true">Latest independent review: </span>{{ project.review }}</td>
+      </tr>
+    {%- endfor %}
+    </tbody>
+  </table>
+</section>
+
+<hr>
+
+{%- for group in section.extra.groups %}
+{%- set members = [p for p in projects if p.group == group.id] %}
+{%- if members %}
+<section aria-labelledby="group-{{ group.id }}">
+  <h2 id="group-{{ group.id }}">{{ group.title }}</h2>
+  {%- if group.about %}<p>{{ group.about }}</p>{% endif %}
+  {%- for project in members %}
+  <fieldset id="{{ project.id }}">
+    <legend><b>{{ project.name }}</b></legend>
+    <p>{{ project.what }}</p>
+    <dl>
+      <dt>Stage</dt><dd>{{ project.stage }}</dd>
+      <dt>Latest independent review</dt><dd>{{ project.review }}</dd>
+      <dt>Owed</dt><dd>{{ project.owed }}</dd>
+      <dt>Next</dt><dd>{{ project.next }}</dd>
+      <dt>Code</dt><dd><a href="https://github.com/akira-shirase-oss/{{ project.repo }}">github.com/akira-shirase-oss/{{ project.repo }}</a>{% if project.live %} · live at <a href="{{ project.live }}">{{ project.live | replace(from="https://", to="") }}</a>{% endif %}</dd>
+      {%- if project.log %}
+      {%- set log = get_section(path=project.log) %}
+      <dt>Build log</dt><dd><a href="{{ log.permalink }}">{{ log.extra.short_title or log.title }} build log</a>
+        {%- if log.pages %} · latest: <a href="{{ log.pages[0].permalink }}">{{ log.pages[0].extra.short_title or log.pages[0].title }}</a> <small>(<time datetime="{{ log.pages[0].date }}">{{ log.pages[0].date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>)</small>{% endif %}</dd>
+      {%- endif %}
+    </dl>
+  </fieldset>
+  {%- endfor %}
+</section>
+<hr>
+{%- endif %}
+{%- endfor %}
+
+<p><a href="{{ get_url(path='@/_index.md') }}">← Home</a> · <a href="{{ get_url(path='@/build-log/_index.md') }}">All build logs</a></p>
+{% endblock content %}

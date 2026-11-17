@@ -225,7 +225,7 @@ real material to write.
 
 ## Add a build-log entry
 
-There are five build logs: `content/colophon/` (the main project), `content/service-monitor/`, `content/js-runtime/`, `content/minibtc/` and `content/durable-runner/`. Entries live in their log's folder, not in `posts/`. The status ticker and `/build-log/` show each log's newest entry, in the order of `logs` in `content/_index.md`; `/build-log/` draws one panel per log. `/colophon/` and the other logs group every entry under its milestone. Previous/next links and the "Service Monitor build log › M0 · 0.4" line above the title are added automatically.
+There are twelve build logs: `content/colophon/` (the main project), `content/service-monitor/`, `content/js-runtime/`, `content/minibtc/` and `content/durable-runner/` for the built projects, and, since 2026-11-16, `content/payment-sandbox/`, `content/ai-operations-layer/`, `content/personal-voice-agent/`, `content/intent-studio/`, `content/accounting-reconciliation/`, `content/native-workspace/` and `content/backend-platform/` for the projects that started code that day. Entries live in their log's folder, not in `posts/`. The status ticker and `/build-log/` show each log's newest entry, in the order of `logs` in `content/_index.md`; `/build-log/` draws one panel per log. `/colophon/` and the other logs group every entry under its milestone. Previous/next links and the "Service Monitor build log › M0 · 0.4" line above the title are added automatically.
 
 **A new build log** is a folder with an `_index.md` using `template = "series.html"` and `page_template = "series-page.html"` (copy `content/colophon/_index.md`, including its `extra.short_title`, `status` and `milestones`), a line in `logs` in both `content/_index.md` and `content/build-log/_index.md`, and a `[[extra.now]]` block with `log = "<folder>/_index.md"` in `content/_index.md`.
 
@@ -320,6 +320,10 @@ All in `content/_index.md`:
 
 Elsewhere:
 
+- **Progress** (`/progress/`): every project's stage, latest independent-review verdict, what's owed and
+  what's next, as `[[extra.projects]]` blocks in `content/progress/_index.md`, drawn by
+  `templates/progress.html`. Each block names its repo and build log; the latest entry is read from the
+  log. Update `as_of` and the rows whenever a build-log entry changes a project's state.
 - **Writing** (the post list) fills itself from `content/posts/`, newest first.
 - **Contact links** (X, GitHub, email): the `[extra]` part of `zola.toml`. The Contact section only appears once at least one is filled in.
 - **Site name, description and author:** the top of `zola.toml`.
