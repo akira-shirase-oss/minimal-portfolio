@@ -175,7 +175,7 @@ status = "in progress"
 
 [[extra.projects]]
 name = "Service Monitor"
-about = "Keeps an eye on your websites and tells you, honestly, when something breaks. Written in Rust, built in the open. Feature-complete, security pass merged; its own million-check run and a fresh soak are owed."
+about = "Keeps an eye on your websites and tells you, honestly, when something breaks. Written in Rust, built in the open. Feature-complete, security pass merged, a late round with CI not yet reviewed; its own million-check run and a fresh soak are owed."
 link = "@/service-monitor/_index.md"
 year = 2026
 status = "hardened"

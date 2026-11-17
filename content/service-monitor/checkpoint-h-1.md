@@ -1,21 +1,22 @@
 +++
 title = "Checkpoint H.1: the security pass, and the fixes that needed fixing"
-description = "A gap review found the 2 GiB disk cap held on one database connection out of four, webhook secrets in the logs and holes in the SSRF guard. Four fix rounds later the last reviewer says ship, tests went from 137 to 215, and three of the fixes turned out to have created bugs of their own. The million-check run and a fresh soak are still owed, and one SQLite advisory waits on an upstream release."
-date = 2026-11-16T23:45:00Z
+description = "A gap review found the 2 GiB disk cap held on one database connection out of four, webhook secrets in the logs and holes in the SSRF guard. Four reviewed fix rounds later the last reviewer said ship, tests went from 137 to 215, and several of the fixes turned out to have created bugs of their own. A late verification round with hosted CI merged too, not yet reviewed. The million-check run and a fresh soak are still owed, and one SQLite advisory waits on an upstream release."
+date = 2026-11-16T18:45:00-05:00
 
 [extra]
 kind = "failure"
 milestone = "H"
 step = "H.1"
 short_title = "Security pass: four rounds"
-# Executed tests at main 9c51ff1, from the fourth review pass's gate run.
-tests = 215
+# 215 executed at 9c51ff1 in the fourth review pass's gate run; 253 at ceb7339, "pass locally and
+# in CI" per the late verification merge, which hasn't been reviewed.
+tests = 253
 
 [extra.summary]
 goal = "Close the gaps an outside review found before the monitor goes on its own server, with each fix round re-checked by a second reviewer."
 built = "A disk ceiling on every pooled connection, secret-free logs and alerts, an SSRF guard over the full special-purpose address tables, a readiness check that goes red when an internal task dies, bounded retention, strict config, a graceful SIGTERM, a hardened systemd unit and an MIT licence."
-proof = ["tests 137 → 176 → 194 → 204 → 215 across the review passes", "final review verdict: ship", "an old store boots under the new binary unchanged", "backup drill passed on its own ports", "1M-check run and 24-hour soak on this build: owed"]
-code = "akira-shirase-oss/monitoring-service · main @ 9c51ff1"
+proof = ["tests 137 → 176 → 194 → 204 → 215 across the review passes, 253 after a late round", "final review verdict: ship; the late round isn't reviewed yet", "an old store boots under the new binary unchanged", "backup drill passed on its own ports", "1M-check run and 24-hour soak on this build: owed"]
+code = "akira-shirase-oss/monitoring-service · main @ ceb7339 (last reviewed at 9c51ff1)"
 +++
 
 A smoke alarm with a full battery is useless if it's in the wrong room. The monitor had a 2 GiB disk
@@ -80,26 +81,37 @@ No load harness ran today: the machine's load average was far too high for numbe
 
 ## Where I messed up
 
-Three of my fixes created bugs, and the reviewers caught all three:
+Several of my fixes created bugs, and the reviewers caught them:
 
 - **I silenced the alarm I was building.** Round 1 refused private targets when you register a
   monitor. But I recorded a refusal *at probe time*, like a redirect to a local name or a DNS answer
   that turns private later, as an ordinary missed check. So the most suspicious case never paged
   anyone. Reverted the same day: probe-time refusals page again.
-- **My restart limits made one bad boot permanent.** Round 3 capped restarts at 5 in 10 minutes, with
-  a 3-second delay. One slow dependency at boot used them up in about 20 seconds, and the unit stayed
-  failed for good. It now backs off from 15 seconds to 10 minutes.
+- **My disk cap locked a full store.** The cap itself was right, but a store already at it could
+  never free space, because cleaning up needs room to write. Retention now frees space first, from a
+  reserve.
+- **My restart limits would have made one bad boot permanent.** Round 3 capped restarts at 5 in 10
+  minutes, with a 3-second delay. By the reviewer's reading of the unit file, one slow dependency at
+  boot would have used them up in about 20 seconds and left the unit failed for good. There was no
+  Linux host to run it on, so that's a derived result, not an observed one. It now backs off from 15
+  seconds to 10 minutes.
 - **A frozen process looked like a stalled one.** The stall watchdog couldn't tell a process that was
-  paused from outside (and fine when resumed) from one that was genuinely stuck. Fixed in round 4.
+  paused from outside (and fine when resumed) from one that was genuinely stuck. Round 4 only partly
+  fixed it: with 100 monitors, a long freeze still ended in an exit. The late round replaces it with a
+  heartbeat based on progress, not yet reviewed.
 
-Smaller ones: an old `.gitignore` rule silently hid a new route from the commit, the strict config
-parser broke the env template's inline comments, and the template's placeholder admin token was
-accepted as a real one.
+Smaller ones that fixes caused: the strict config parser refused a value starting with `#` and broke
+the env template's inline comments, the public readiness check showed a raw retention error, the
+space reserve ratcheted upward, and the mount dependency in the systemd unit turned a failed mount
+into a failure systemd won't retry. Two more weren't caused by fixes: an old `.gitignore` rule
+silently hid a new route from the commit, and the env template's placeholder admin token was accepted
+as a real one.
 
 And the drill itself was dangerous. The backup drill ran `kill -9` on whatever was listening on its
 port, and on my Mac that's my real, running monitor, so the reviewers refused to run it. The drill now
-has its own ports and never kills anything by port number. The load harness still defaults to the
-live port, which would point it at an installed monitor; its fix is on a branch.
+has its own ports and never kills anything by port number. The load harness still defaulted to the
+live port, which would have pointed it at an installed monitor; the last review rated that a Medium,
+and the late round gives each harness its own guarded port.
 
 ## What it doesn't do yet
 
@@ -109,16 +121,18 @@ live port, which would point it at an installed monitor; its fix is on a branch.
 - **One SQLite advisory is waiting on upstream.** `RUSTSEC-2026-0459` is fixed in SQLite 3.54.0, but
   the patched `libsqlite3-sys` can't be used until `sqlx` allows it. There's a dated exception in the
   dependency policy, and the gate fails on its own after 2026-12-16 if nothing has changed.
-- **Four Low findings from the last pass are open.** After a long freeze with 100 monitors the
-  scheduler wrote 962 catch-up misses in one go and exited, so that fix is incomplete. A failed disk
-  mount isn't retried by systemd, a helper script could signal a reused process id, and `--help`
-  exits with code 2.
+- **The last review's five findings have fixes nobody has checked.** One Medium (the harness port)
+  and four Lows: after a long freeze with 100 monitors the scheduler wrote 962 catch-up misses in one
+  go and exited, a failed disk mount isn't retried by systemd, a helper script could signal a reused
+  process id, and `--help` exits with code 2. A late verification round merged fixes for all five,
+  each with a test shown failing first, along with login rate limits, sessions bound to the admin
+  token, an idle limit, owner-only files, no webhook redirects and hosted CI. It records 253 tests
+  passing locally and in CI. No reviewer has attacked it yet.
 - **The systemd unit has never run on a real Linux host.** That's the first thing to do on the
   droplet.
-- **CI and the guarded load-harness ports are on a branch** that's pushed but not merged.
 - Accounts and multi-tenancy for the SaaS version are a plan, not code.
 
 ## Up next
 
-Merge the verification branch with CI, run the monitor's own ≥1M checks on a release build, then
-the 24-hour soak on the hardened build, then the droplet.
+An independent review of the late round. Then the monitor's own ≥1M checks on a release build, the
+24-hour soak on the hardened build, and the droplet.
