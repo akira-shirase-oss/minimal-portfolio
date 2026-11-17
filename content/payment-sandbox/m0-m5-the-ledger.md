@@ -119,7 +119,7 @@ The flaky gate and a disabled webhook endpoint that kept getting delivery attemp
 
 `main`'s CI went red three times along the way. One fix went out with the gate red over a lint
 warning, and `main` was green again about a minute and a half later. Two more red runs were flaky
-tests on a slow runner, a property test and a lock-timeout test, both since fixed. CI is green at
+tests on a slow runner: a property test, and a lock-timeout test that is now fixed. CI is green at
 `1756a3c`.
 
 ## What it doesn't do yet
