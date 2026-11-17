@@ -1,21 +1,22 @@
 +++
 title = "V0–V2: a voice assistant that keeps three notebooks"
-description = "Day one of the Personal Voice Agent: push-to-talk on a Mac, Apple's on-device speech and model, and a Rust service that records what it heard, what it guessed and what it did as three separate things. The automated checks pass. An independent review then found five serious ways it breaks at the edges, and seventeen fixes, each with a test that failed first, merged the same evening."
-date = 2026-11-16T22:49:00Z
+description = "Day one of the Personal Voice Agent: push-to-talk on a Mac, Apple's on-device speech and model, and a Rust service that records what it heard, what it guessed and what it did as three separate things. The automated checks pass. An independent review then found five serious ways it breaks at the edges. Seventeen fixes merged the same evening; the second review closed four of the five Highs and said fix first again."
+date = 2026-11-16T17:49:00-05:00
 
 [extra]
 kind = "experiment"
 milestone = "V0–V2"
 step = "build"
 short_title = "First release, built and reviewed"
-# No tests count here: the review counted 68 Rust + 28 Swift at c744552, and the fix round
-# merged since then adds tests whose total no commit records.
+# Rust tests at 5da3b38 from the second review pass's gate run (exit 0); the Swift side ran
+# 39 tests in 8 suites. The first review counted 68 Rust + 28 Swift at c744552.
+tests = 85
 
 [extra.summary]
 goal = "A push-to-talk assistant that runs entirely on the Mac, keeps heard, inferred and executed as separate records, and can't act in your name without asking."
 built = "A pure Rust session domain, a session service the app launches as a child process with a crash-safe turn ledger, a SwiftUI app with on-device recognition, model and voice, and a player that refuses audio from a turn you interrupted."
-proof = ["68 Rust and 28 Swift tests, gate exit 0 three times in a review", "100,000 interrupts: 0 stale audio chunks played", "350 kill -9s in review: every log valid, nothing acknowledged lost", "speaking to first audio p95 2,036 ms on the fixed build, just over the 2,000 ms budget", "review: 5 High findings; 17 fixes merged, not yet re-reviewed"]
-code = "akira-shirase-oss/personal-voice-agent · main @ 5da3b38 (reviewed at c744552)"
+proof = ["68 Rust and 28 Swift tests, gate exit 0 three times in a review", "100,000 interrupts: 0 stale audio chunks played", "350 kill -9s in review: every log valid, nothing acknowledged lost", "speaking to first audio p95 2,036 ms on the fixed build, just over the 2,000 ms budget", "second review: four of five Highs closed; fix first, a second fix round running"]
+code = "akira-shirase-oss/personal-voice-agent · main @ 5da3b38 (reviewed twice: c744552, 5da3b38)"
 +++
 
 Telling a friend "remind me to call the dentist" is different from them calling the dentist for you.
@@ -87,8 +88,8 @@ p95 2,036 ms at a load average of 15 to 19, all 18 turns completed. Closer, stil
 The service's own load runs were small smokes: 50,000 ledger appends (p99 27.0 ms, gate 50 ms),
 2,000 appends with a disk sync each (p99 13.4 ms, gate 20 ms) and 100,000 turn events (reply-turn
 p99 4.4 ms, gate 10 ms). The first turn-event run failed and is kept: on the overloaded machine a 5 ms
-test deadline also caught ordinary turns, and the test client waited forever for speech that was
-never coming. In the re-run after the fixes, the two ledger smokes failed (p99 554 ms and 155 ms)
+test deadline also caught ordinary turns, and the test client waited for speech that was never coming
+until it hit its 10-second receive timeout and panicked. In the re-run after the fixes, the two ledger smokes failed (p99 554 ms and 155 ms)
 while other processes hammered the same disk at up to 3,751 transfers a second. Those are kept too.
 Run back to back against the old build under the same conditions, the two overlapped round for round,
 so it's the contended disk, not a regression.
@@ -120,25 +121,45 @@ stress test never actually produced the race it claimed to rule out. The code wa
 inspection, but the test didn't prove it. And my evidence files named commits that didn't contain the
 code they measured, because I'd run them before committing. They now name the commit that holds it.
 
-All of it was fixed the same evening: seventeen fixes, merged to `main`, each with a test shown failing
-without it. The "done" check is now a classifier of sentence structure instead of a phrase list, a
-`forget` command deletes the heard transcripts a consent scope covers, and a stalled service can no
-longer hold the microphone open.
+Seventeen fixes merged the same evening, each with a test shown failing without it, covering 18 of
+the review's 20 findings. The "done" check became a classifier of sentence structure instead of a
+phrase list, a `forget` command deletes the heard transcripts a consent scope covers, and a service
+that hangs during a turn can no longer hold the microphone open.
+
+**Then the second review said fix first again.** It confirmed four of the five Highs closed (the
+silent restart, SIGPIPE, the quick tap and the full-disk revocation), plus the second-instance fix,
+each failing without its fix. What it found still wrong:
+
+- **The "done" check still misses most real phrasings.** Off its test sentences, 32 of 40 ordinary
+  completion claims were still spoken: "Priya has been notified." "Dinner is booked for 8." "$50
+  sent to Priya." And 7 of 17 plain sentences got replaced by the disclaimer. With no tools in this
+  release nothing can actually be done, but the rule says the assistant must never claim it was.
+- **A service that hangs between turns isn't noticed.** The app shows ready and push-to-talk silently
+  does nothing. Quit, and the hung child keeps its lock, so every relaunch says another copy is
+  already running.
+- **"Delete history" leaves the last two transcripts** in the model's short recap, so they can reach
+  the next prompt.
+- **My docs left out two failed smokes**, the ledger runs above, and said the review's findings were
+  fixed.
+
+A second fix round is running.
 
 ## What it doesn't do yet
 
-- **The fixes haven't been re-reviewed.** They're merged, with tests, but no second reviewer has
-  attacked them yet. Until one does, they're my word.
+- **The second fix round isn't done.** The four findings above are open on `main`, along with two
+  older Lows: a flood of malformed lines can stretch deadlines, and the app still hard-codes
+  "Executed" and the protocol still lists an external-effect field meant for a later release.
 - **The live drills need a person with a microphone:** push-to-talk, the real stop time on the
   speakers, barge-in, revocation, a crash, the model being unavailable. Then 100 consented
   utterances, quiet and noisy, and three one-hour sessions.
 - **Echo cancellation is limited.** Capture and playback use separate audio engines, so the echo
   canceller can't hear what the assistant is saying. One shared engine is owed in code.
-- **The million-unit load runs haven't run.** The rule is a load average below about 6; today it sat
-  between 25 and 160.
+- **The million-unit load runs and a long soak haven't run.** The rule is a load average below about
+  6; today's runs sat between 15 and 160. The benchmark's own memory went from 41.8 to 48.9 MB over
+  three rounds, which is what a long soak has to settle.
 - No memory, no personal voice and no tools. Those are V3 and V4, with their own contracts.
 
 ## Up next
 
-A second review of the fix round. Then the live microphone drills, then the model's first-sentence
-latency.
+The second fix round and another review. Then the live microphone drills, then the model's
+first-sentence latency.

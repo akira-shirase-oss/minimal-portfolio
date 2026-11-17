@@ -53,7 +53,7 @@ log = "ai-operations-layer/_index.md"
 
 [[extra.now]]
 process = "voice-agent"
-what = "A Mac voice assistant that keeps heard, inferred and executed apart — built, reviewed, seventeen fixes merged; mic drills owed."
+what = "A Mac voice assistant that keeps heard, inferred and executed apart — two reviews, a second fix round running; mic drills owed."
 link = "@/personal-voice-agent/_index.md"
 log = "personal-voice-agent/_index.md"
 
@@ -105,7 +105,7 @@ status = "spine only"
 
 [[extra.projects]]
 name = "Personal Voice Agent"
-about = "Push-to-talk on a Mac, all on-device, with heard, inferred and executed kept apart. First release built; a review found five High bugs, and the fixes merged the same evening, not yet re-reviewed; live mic drills owed."
+about = "Push-to-talk on a Mac, all on-device, with heard, inferred and executed kept apart. First release built; seventeen fixes merged, and a second review said fix first again; live mic drills owed."
 link = "@/personal-voice-agent/_index.md"
 year = 2026
 status = "in progress"
