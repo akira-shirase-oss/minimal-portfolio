@@ -59,7 +59,7 @@ log = "personal-voice-agent/_index.md"
 
 [[extra.now]]
 process = "intent-studio"
-what = "Client brief to published website, starting with a contact form that kept every lead in its drills."
+what = "Client brief to published website, starting with a contact form that kept every lead in its drills; first review says fix first."
 link = "@/intent-studio/_index.md"
 log = "intent-studio/_index.md"
 
@@ -71,7 +71,7 @@ log = "accounting-reconciliation/_index.md"
 
 [[extra.now]]
 process = "native-workspace"
-what = "An optional, read-only Mac workbench for the services — an exploration that has to beat the terminal to continue."
+what = "An optional, read-only Mac workbench for the services — N0 built and under review; it has to beat the terminal to continue."
 link = "@/native-workspace/_index.md"
 log = "native-workspace/_index.md"
 

@@ -86,7 +86,7 @@ own gate runs.
 | Service Monitor | 4 | 137 → 215 | ship, 1 Medium and 4 Low items left |
 | MiniBTC | 4 | 167 → 249 | the fixes hold live, 1 Medium and 1 Low left |
 | Durable Runner | 3 | 26 → 96 | no acknowledged job lost, an older High found |
-| Colophon | 0 so far | 770 on `main` | the branch's review is running |
+| Colophon | 1, on a branch | 770 on `main` | fix first: 10 of 11 fixes hold, 2 opened new Highs |
 
 Durable Runner's reviewers killed it with `kill -9` in 142 rounds across three passes, and not one
 acknowledged job was lost. MiniBTC's node that got stuck at block 128 now catches up 1,000 blocks in
@@ -97,7 +97,9 @@ Operations Layer's six Highs were fixed on `main` the same evening. The Voice Ag
 merged, and its second review said fix first again: the crash, microphone and full-disk Highs are
 closed, but the "never say it's done without proof" guard still speaks 32 of 40 ordinary completion
 phrasings it wasn't tested on. Backend Platform's review accepted its memo with corrections and sent
-the spine back.
+the spine back. Intent Studio's first review found no lost, duplicated or falsely acknowledged lead,
+and still said fix first, for connections that can be held open, honeypot bots that spend a site's
+quota, and a loosely fenced outbox lease.
 
 ## Where I messed up
 
@@ -113,6 +115,8 @@ The reviewers kept finding bugs that my fixes had created:
   submits for over 6 seconds.
 - **MiniBTC:** a reindex that failed at random, then a bounded header table that left any node more
   than 128 blocks behind stuck forever.
+- **Colophon:** the GraphQL limit made a parser crash reachable by anyone who can sign in, and the new
+  sign-in-link ceiling can be used up by one anonymous client.
 
 The new projects' first reviews found their own: ways to bend Payment Sandbox's books, AI Operations
 Layer timelines that looked more certain than their evidence, and a Voice Agent microphone that kept
@@ -128,17 +132,17 @@ got its Rust job green, but the `main` run still failed in the testbed, 52 of 53
 
 The fixes still waiting for their second reader:
 
-- **Colophon's security branch.** Its CI has failed on every push, from two code failures being fixed:
-  a packaging test that didn't expect the new licence file, and a rate-limit test that got a 200 where
-  it expected a 429. An independent review of the branch is running.
+- **Colophon's security branch.** Its review said fix first, and its CI has failed on every push, from
+  two code failures being fixed: a packaging test that didn't expect the new licence file, and a
+  rate-limit test that got a 200 where it expected a 429.
 - **jsrt's verification round**, merged with CI. Its first Linux run failed and was fixed; the review
   is running.
 - **Service Monitor's and Durable Runner's late rounds**, both merged tonight without a review yet.
 - **Payment Sandbox's, the AI Operations Layer's and Backend Platform's fix rounds**, and the Voice
   Agent's second round, which is still being written.
 - **MiniBTC's fixes for its last Medium and Low**, which are on a branch that isn't pushed.
-- **Intent Studio's and Native Workspace's first milestones**, which are built and under their first
-  independent review.
+- **Intent Studio's fixes** for its first review, and **Native Workspace's first milestone**, built and
+  under its first independent review.
 
 And the evidence still owed:
 
