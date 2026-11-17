@@ -1,7 +1,7 @@
 +++
 title = "R0: a penny is a whole number"
 description = "Day one of Accounting Reconciliation: money as exact integers parsed digit by digit, a line state machine where every wrong move is a named refusal, a CSV reader that refuses a bad file whole, by row number, and a decision log the database itself chains and won't let anyone edit. Four slices of the spine; no matching, drills or load yet."
-date = 2026-11-17T01:41:00Z
+date = 2026-11-16T21:06:00-05:00
 
 [extra]
 kind = "experiment"
@@ -94,7 +94,7 @@ is the README, which still says "contract documents only; no code yet" on `main`
 
 ## What it doesn't do yet
 
-- **No server yet.** The Axum skeleton and the seeded data generator are the rest of R0.
+- **No server yet.** The Axum skeleton is the rest of R0's building; the data generator is done.
 - **No matching**, no exception queue, no review screens, no model.
 - **No drills or load.** R0's own gate asks for a `kill -9` at 20 points while staging 200,000 rows (each
   import complete or invisible), a database-down drill, and a 1,000,000-line import with throughput and

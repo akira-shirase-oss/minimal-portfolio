@@ -21,7 +21,7 @@ milestones = [
   { id = "R8", name = "India", about = "GSTR-2B import, matching by GSTIN and invoice number, UPI references and Tally." },
   { id = "R9", name = "PDF statements", about = "An isolated PDF worker with per-bank layout profiles." },
 ]
-up_next = { milestone = "R0", step = "R0", title = "The rest of the spine: the server skeleton, the drills and the million-line import" }
+up_next = { milestone = "R0", step = "server", title = "The rest of the spine: the server skeleton, the drills and the million-line import" }
 +++
 
 **Accounting Reconciliation** is a workspace for small accounting firms and freelance accountants. You
@@ -45,7 +45,7 @@ on `main`: the pure domain, a strict streaming CSV reader, the database schema w
 and a command line with a seeded statement generator. The ship gate needs one or two practising accountants willing to pilot it with
 a real month, and they haven't been found yet.
 
-The README on `main` still says "no code yet"; the code arrived a few minutes later.
+The README on `main` still says "no code yet"; the first code arrived 30 minutes after it.
 
 The code is public at
 [akira-shirase-oss/accounting-reconciliation](https://github.com/akira-shirase-oss/accounting-reconciliation).

@@ -1,7 +1,7 @@
 +++
 title = "N0: a client that can only ask"
-description = "Day one of the Native Workspace exploration: a network layer that can't send anything but a bodyless GET, a freshness rule that won't call stale data live, and a first window. That window's event list froze the app for over a minute under load; an AppKit table fixed it."
-date = 2026-11-17T02:05:00Z
+description = "Day one of the Native Workspace exploration: a network layer that can't send anything but a bodyless GET, a freshness rule that won't call stale data live, and a first window. That window's event list froze the app for over a minute under load; an AppKit table fixed it. N0 is built and under its first independent review; its million-event replay is owed."
+date = 2026-11-16T21:05:00-05:00
 
 [extra]
 kind = "experiment"
@@ -12,8 +12,8 @@ short_title = "A client that can only ask"
 [extra.summary]
 goal = "Lay the spine of a native Mac workbench that reads the other services honestly: bounded, read-only, never claiming to be live when it isn't."
 built = "A SwiftPM package with a pure core, a GET-only transport with its own hard deadline, the Service Monitor adapter, credential handling, a first SwiftUI window, a headless replay tool, architecture checks and CI."
-proof = ["the architecture check is proven able to fail, 33 planted violations", "the first event list froze the main thread for 72 s and 79 s; with an AppKit table: 0 hangs, worst wait 62 ms", "real Service Monitor and Durable Runner killed 5 times: 0 events lost, 0 duplicates", "the 1,000,000-event replay is owed on a quiet machine"]
-code = "akira-shirase-oss/native-workspace · main @ f232c6a"
+proof = ["75 XCTest cases, two of them stated skips; the architecture check proven able to fail, 33 planted violations", "the first event list froze the main thread for 72 s and 79 s; with an AppKit table: 0 hangs, worst wait 41 ms in Instruments", "real Service Monitor and Durable Runner killed 5 times: 0 events lost, 0 duplicates", "1,000-point package drill passed; the 1,000,000-event replay is owed on a quiet machine"]
+code = "akira-shirase-oss/native-workspace · main @ b0e3554"
 +++
 
 The safest visitor is one who physically can't touch anything. You can let them walk around the
@@ -54,26 +54,31 @@ expired token never looks like a healthy service.
 
 ## Does it actually work?
 
-- **The checks can fail.** The architecture check's self-test plants each violation and proves the
-  check catches it: 33 cases. Slice 1 recorded 37 test cases for the core; later slices added more,
-  and their total isn't recorded, so I'm not quoting one.
+- **Tests and checks.** The roadmap records 75 XCTest cases, two of them skipped with their reason
+  stated (the Keychain round trip needs the signed app; the real-service drill runs only under its
+  driver). The architecture check's self-test plants each violation and proves the check catches it:
+  33 cases.
 - **Against the real services.** A drill builds scratch copies of Service Monitor and Durable Runner
   from their `main` branches, runs them on their own ports, and kills and restarts them while the app's
-  model watches. Five cycles passed: data went stale 0.01 to 1.7 seconds after each kill and live again
-  1.8 to 3.0 seconds after each restart, with 30 events acknowledged, none lost and no duplicate rows,
-  also after reopening the store. The two failed runs before it are kept and explained.
+  model watches. Five cycles passed on a clean commit: data went stale 0.01 to 1.9 seconds after each
+  kill and live again 1.2 to 7.6 seconds after each restart, with 29 events acknowledged, none lost and
+  no duplicate rows, also after reopening the store. The two failed runs before it are kept and
+  explained.
 - **Against a stand-in service.** A package-level drill kills and restarts a fixture service at random
-  points (100 times in CI) and checks nothing shows as live while it's down. It passed with the Mac's
-  load average at 88.
+  points (100 times in CI) and checks nothing shows as live while it's down. The 1,000-point version
+  passed too: 737 seconds at load averages of 21 to 66, 98,469 events, none lost, every request a GET.
+  Its first attempt hung for about 46 minutes, because starting the fixture server had no time limit.
+  That miss is kept, and both start and stop are bounded now.
 
 ## Where I messed up
 
 **The first window froze for over a minute.** Under the fixture load (1,000 events a second, with
 10,000-event bursts), the first event list, a SwiftUI `List`, stalled the main thread for 72 seconds,
-then 79, and peaked at 1.7 to 2.0 GB of memory. Sampling the process found it in SwiftUI's automatic
-row heights for inserted rows, which cost more the bigger the batch. The list is now an AppKit
-`NSTableView` with fixed row heights. Same load: 0 hangs, a worst main-thread wait of 62 ms, and an
-83 MB peak. The old list is still behind a switch, so the freeze can be reproduced.
+then 79, and peaked at 1.7 to 2.0 GB of memory. Instruments put 100% of 15,666 main-thread samples in
+the list's row diffing, 78% of them building a hosting view for each inserted row. (I first called it
+quadratic; that was an overstatement.) The list is now an AppKit `NSTableView` with fixed row heights.
+Same load: 0 hangs and an 83 MB peak, and in the Instruments trace afterwards a worst main-thread wait
+of 41 ms over 76,631 events. The old list is still behind a switch, so the freeze can be reproduced.
 
 **My 2-second deadline was really 4.** The system's networking layer stretched the timeout to about 4
 seconds when a response had no `Content-Type`, because content sniffing waits for body bytes. The
@@ -85,16 +90,16 @@ disagreeing with "ready". Fixed.
 ## What it doesn't do yet
 
 - **The full replay hasn't run.** The script refuses to start the 1,000,000-event run at a load average
-  of 6 or more, and today never got there.
-- **No profiler traces.** The Instruments traces of the freeze, before and after, are owed: on the busy
-  machine the tracer once hung at its time limit and once never launched the app. Both misses are kept.
+  of 6 or more, and the load never fell below 16 today.
+- **The first independent review is running**, so these results are mine until it reports.
 - **The Keychain test is skipped** in an unsigned test process, with its reason printed. The signed app
   target that can run it comes later.
 - **It's waiting on Service Monitor** for a read-only viewer token. Today Service Monitor has one admin
   token, so the exploration only talks to a local instance, under a development-only exception.
-- **No independent review yet**, and no comparison against the terminal. That comparison decides
-  whether this becomes a project at all.
+- **No comparison against the terminal yet.** That comparison decides whether this becomes a project
+  at all.
 
 ## Up next
 
-Finish N0's evidence, then N1: menus, shortcuts and accessibility for the native shell.
+Fix what the review finds and run the full replay on a quiet machine. Then N1: menus, shortcuts and
+accessibility for the native shell.
