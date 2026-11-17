@@ -140,7 +140,7 @@ status = "parked"
 
 [[extra.projects]]
 name = "Colophon landing page"
-about = "Colophon's own landing page and blog, a separate Astro site. Live as a preview at colophon-landing.pages.dev; its own domain is still being set up."
+about = "Colophon's own landing page and blog, a separate Astro site. Live as a preview at colophon-landing.pages.dev; its own domain isn't attached yet."
 link = "https://colophon-landing.pages.dev"
 year = 2026
 status = "preview live"
@@ -168,7 +168,7 @@ status = "hardened"
 
 [[extra.projects]]
 name = "Colophon CMS"
-about = "A content management system that can prove what it published and survives being killed at any moment. Rust and Svelte, open source, every step logged here. Security fixes on a branch awaiting review."
+about = "A content management system that can prove what it published and survives being killed at any moment. Rust and Svelte, open source, every step logged here. Security fixes on a branch: its CI is red from two code failures being fixed, and its review is running."
 link = "@/colophon/_index.md"
 year = 2026
 status = "in progress"
