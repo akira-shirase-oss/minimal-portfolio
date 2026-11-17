@@ -12,8 +12,8 @@ short_title = "Leads that survive"
 [extra.summary]
 goal = "Make the website's contact form the most reliable part of the product: every acknowledged lead stored, every owner eventually told, even when the notification provider is down."
 built = "A pure lead-intake domain, a lead and its notification job saved in one statement, a leased notifier with a day-long retry schedule, rate limits and a honeypot, an operator inbox in SvelteKit, failure drills against the release binary, and a k6 load scenario."
-proof = ["50 a second for a minute with the provider refusing throughout: 2,851 leads acknowledged, 2,851 stored", "every notification delivered once the provider came back", "p99 402 ms against a 100 ms target, on a busy laptop: committed as a miss", "no independent review of the code yet"]
-code = "akira-shirase-oss/intent-studio · main @ a5e0d6f"
+proof = ["50 a second for a minute with the provider refusing throughout: 2,851 leads acknowledged, 2,851 stored", "every notification delivered once the provider came back", "p99 402 ms against a 100 ms target, on a busy laptop: committed as a miss", "the first burst run is kept as invalid: a stray probe of mine shared its database", "no independent review of the code yet"]
+code = "akira-shirase-oss/intent-studio · main @ 5df19c5"
 +++
 
 The most expensive bug a small business's website can have isn't a broken layout. It's a customer who
@@ -79,14 +79,21 @@ minute only reaches 64 minutes by the seventh wait, about an hour in total on av
 outage would have killed most notifications. It now grows four times per attempt, up to a 6-hour cap:
 8.8 to 17.7 hours of waiting in total.
 
-And the README still says "contract documents only; no code yet", which stopped being true a few hours after it was written.
+**My own probe poisoned a load run.** The first burst run, 250 submissions a second, looked fine on
+the intake side (p99 64.8 ms, every one of 14,251 leads stored). But a manual latency probe I'd
+started earlier was still running, missed by my clean-up command, and connected to the same reused
+database. Its notifier claimed outbox rows and "delivered" them to an in-memory stand-in: the real
+provider fixture accepted 577, while 14,251 rows were marked delivered. So the run's notification
+numbers describe a different process. It's kept, marked invalid. The load script now creates a fresh
+database for every run and only passes if the rows marked delivered equal what the provider actually
+accepted.
 
 ## What it doesn't do yet
 
 - **It doesn't build websites.** Briefs, facts, components, the model, previews and launch are
   milestones I1 to I3.
-- **I0 isn't finished.** The provider-down run at 100,000 submissions and the 5× burst baseline haven't
-  run, and the realism check needs a quiet-machine re-run.
+- **I0's load evidence isn't finished.** The burst run needs a valid rerun, the realism check needs a
+  quiet machine, and the 1,000,000-submission run is owed.
 - **No independent review yet.** Every project that was reviewed today had High findings. This one
   hasn't had its turn.
 - **It's blocked on people.** Three pilot clients, a model provider and a spending cap, a privacy

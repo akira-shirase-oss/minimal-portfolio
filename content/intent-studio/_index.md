@@ -37,7 +37,5 @@ endpoint, the durable inbox, the notifier and a read-only operator inbox are bui
 load check is committed as a miss. Nothing generates a website yet, and there has been no independent
 review of the code. The ship gate needs three real pilot clients, who haven't been found.
 
-The README on `main` still says "no code yet"; the code moved faster than the docs.
-
 The code is public at
 [akira-shirase-oss/intent-studio](https://github.com/akira-shirase-oss/intent-studio).

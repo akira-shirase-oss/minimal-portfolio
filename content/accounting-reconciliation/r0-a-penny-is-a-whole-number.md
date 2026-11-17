@@ -1,6 +1,6 @@
 +++
 title = "R0: a penny is a whole number"
-description = "Day one of Accounting Reconciliation: money as exact integers parsed digit by digit, a line state machine where every wrong move is a named refusal, a decision log whose verifier names the first broken link, and a CSV reader that refuses a bad file whole, by row number. Two slices of the spine; no database or matching yet."
+description = "Day one of Accounting Reconciliation: money as exact integers parsed digit by digit, a line state machine where every wrong move is a named refusal, a CSV reader that refuses a bad file whole, by row number, and a decision log the database itself chains and won't let anyone edit. Three slices of the spine; no matching, drills or load yet."
 date = 2026-11-17T01:41:00Z
 
 [extra]
@@ -11,9 +11,9 @@ short_title = "A penny is a whole number"
 
 [extra.summary]
 goal = "Start the spine of a reconciliation tool whose numbers can't drift and whose decisions can't be quietly rewritten."
-built = "A pure domain crate (checked integer money, strict dates, normalization, a tuple hash per line, the line state machine, balanced matches, a hash-chained decision record with a verifier) and a strict streaming CSV reader with the first statement profile, plus the gate and CI."
-proof = ["property tests: formatting and parsing money round-trip exactly; overflow and 20-digit amounts are refused", "any way of chunking an upload reads exactly as one piece does", "every refusal named, with row numbers, up to 1,000 per file", "no database, import pipeline, drills or load run yet"]
-code = "akira-shirase-oss/accounting-reconciliation · main @ b8eedcd"
+built = "A pure domain crate (checked integer money, strict dates, normalization, a tuple hash per line, the line state machine, balanced matches, a hash-chained decision record with a verifier), a strict streaming CSV reader with the first statement profile, and the PostgreSQL schema with three roles, an append-only chained decision log and a staged import, plus the gate and CI."
+proof = ["property tests: formatting and parsing money round-trip exactly; overflow and 20-digit amounts are refused", "any way of chunking an upload reads exactly as one piece does", "every refusal named, with row numbers, up to 1,000 per file", "the decision log refuses UPDATE, DELETE and TRUNCATE, even for its owner", "no matching, drills or load run yet"]
+code = "akira-shirase-oss/accounting-reconciliation · main @ f36c2b6"
 +++
 
 Ask a computer what 0.1 + 0.2 is, in the usual way, and it says 0.30000000000000004. That's fine for a
@@ -24,7 +24,7 @@ So the first rule here: money is a whole number.
 
 ## What I built
 
-Two slices of R0, the spine:
+Three slices of R0, the spine:
 
 - **Money as checked whole numbers** of the smallest unit, using a table of how many decimal places each
   currency has. Amounts are parsed digit by digit, never through floating point. Overflow is refused,
@@ -45,6 +45,16 @@ Two slices of R0, the spine:
 - **The first statement profile**: it checks the header exactly, parses dates and plain decimals without
   floats, requires the account's currency, refuses zero amounts, computes each row's hash and the file's
   SHA-256, and reports up to 1,000 refused rows by code and row number while counting all of them.
+- **The database schema**: firms, users, clients, accounts, imports, statement lines, duplicates and the
+  decision log. The database enforces the rules itself. Every reference carries the firm, so a cross-firm
+  reference fails even as raw SQL. The decision log refuses `UPDATE`, `DELETE` and `TRUNCATE`, for its
+  owner too, and a trigger the application can't bypass chains each record to the previous one per
+  client. Lines only become visible when their import flips to complete, in the same transaction.
+- **Three database roles**: one that only creates databases, one that only migrates, and the server's,
+  which owns nothing and can't change the schema or create temporary tables.
+- **The staged import**: rows are staged in batches under a lease, then flipped to complete one account at
+  a time. A repeated file gets the earlier import back, and a duplicate line is recorded with a pointer to
+  the line it duplicates.
 
 ## How it works (the short version)
 
@@ -62,6 +72,10 @@ It's early, so the honest list is short:
   and 20-digit amounts are refused.
 - **Chunking doesn't matter.** A property test proves that any way of splitting any input into chunks
   reads exactly the same as reading it in one piece, which is what a streaming reader has to promise.
+- **The chain survives the tricks it was tested against.** Every database function pins its search path, and a test plants a
+  hostile `public.sha256` function to show it wins in an unpinned context but can't reach the chain. The
+  server checks its own role at startup, and that check is shown to fail for the owner, the superuser and
+  an unpinned function.
 - **The gate is real**: toolchain pin, formatting, lints as errors, the architecture rules with a
   self-test proving each can fail, the tests and a dependency audit, run in CI.
 
@@ -70,14 +84,13 @@ those need the database and the import pipeline.
 
 ## Where I messed up
 
-Nothing worth a confession yet: two slices, a few minutes apart, no review. The one honest slip is the
-README, which still says "contract documents only; no code yet" on `main`.
+Nothing worth a confession yet: three slices in under half an hour, and no review. The one honest slip
+is the README, which still says "contract documents only; no code yet" on `main`.
 
 ## What it doesn't do yet
 
-- **No database.** The PostgreSQL schema with firm tenancy, append-only triggers and the hash chain is
-  the rest of R0.
-- **No import pipeline**, no matching, no exception queue, no review screens, no model.
+- **No server yet.** The Axum skeleton and the seeded data generator are the rest of R0.
+- **No matching**, no exception queue, no review screens, no model.
 - **No drills or load.** R0's own gate asks for a `kill -9` at 20 points while staging 200,000 rows (each
   import complete or invisible), a database-down drill, and a 1,000,000-line import with throughput and
   memory recorded.
@@ -86,5 +99,5 @@ README, which still says "contract documents only; no code yet" on `main`.
 
 ## Up next
 
-The rest of R0: the schema, the staging import, the drills and the million-line import. Then an
-independent review.
+The rest of R0: the server skeleton, the drills and the million-line import. Then an independent
+review.

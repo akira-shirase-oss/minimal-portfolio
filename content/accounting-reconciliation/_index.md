@@ -21,7 +21,7 @@ milestones = [
   { id = "R8", name = "India", about = "GSTR-2B import, matching by GSTIN and invoice number, UPI references and Tally." },
   { id = "R9", name = "PDF statements", about = "An isolated PDF worker with per-bank layout profiles." },
 ]
-up_next = { milestone = "R0", step = "R0", title = "The rest of the spine: schema, staging import, drills and the million-line import" }
+up_next = { milestone = "R0", step = "R0", title = "The rest of the spine: the server skeleton, the drills and the million-line import" }
 +++
 
 **Accounting Reconciliation** is a workspace for small accounting firms and freelance accountants. You
@@ -40,9 +40,10 @@ accounting software and never connects to a bank.
 
 ## Where it stands
 
-Promoted to a project on 2026-11-16 from a brief, and started the same evening. The first two slices of
-R0 are on `main`: the pure domain and a strict streaming CSV reader. The ship gate needs one or two
-practising accountants willing to pilot it with a real month, and they haven't been found yet.
+Promoted to a project on 2026-11-16 from a brief, and started the same evening. The first three
+slices of R0 are on `main`: the pure domain, a strict streaming CSV reader, and the database schema
+with its staged import. The ship gate needs one or two practising accountants willing to pilot it with
+a real month, and they haven't been found yet.
 
 The README on `main` still says "no code yet"; the code arrived a few minutes later.
 

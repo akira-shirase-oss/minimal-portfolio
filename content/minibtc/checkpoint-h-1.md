@@ -1,6 +1,6 @@
 +++
 title = "Checkpoint H.1: four review rounds, and a node stuck at block 128"
-description = "An outside gap review found that a block failing halfway through could leave the chain half-applied, and that the project's own gate had probably never passed. Four fix rounds closed 11 High gaps. Each round's review found something new, including a header flood that ate 4.7 GB of memory and a fix that left any node more than 128 blocks behind stuck forever."
+description = "An outside gap review found that a block failing halfway through could leave the chain half-applied, and that the project's own gate had probably never passed. Four fix rounds later the gate passes with 249 tests. Each round's review found something new, including a header flood that ate 4.7 GB of memory and a fix that left any node more than 128 blocks behind stuck forever."
 date = 2026-11-17T01:40:00Z
 
 [extra]
@@ -8,12 +8,13 @@ kind = "failure"
 milestone = "H"
 step = "H.1"
 short_title = "Security pass: four rounds"
-# No executed full-suite count is recorded for round 4 yet; the entry gives the per-round counts.
+# Executed tests at main d007ae5: scripts/check.sh exit 0 in the fourth review pass.
+tests = 249
 
 [extra.summary]
 goal = "Close the consensus, peer-to-peer and wallet gaps an outside review found, with every round re-checked live by a second reviewer before the next."
 built = "Atomic block apply, per-block spend checks, merkle-mutation detection at every level, difficulty and BIP30/34 rules enforced in validation, reorgs judged at the fork point, bounded block and header intake, address-keyed bans, and an MCP spend gate where only the owner's signature approves."
-proof = ["executed tests 167 → 214 → 231 → 242 across the first three rounds", "header flood: memory 6 MB → 4.7 GB before the fix, peak about 11 MB after", "the catch-up stall at block 128 found live, then fixed with a test that fails without it", "devnet demo 22/22 on all round-4 code", "fourth review pass still running: no verdict yet"]
+proof = ["executed tests 167 → 214 → 231 → 242 → 249, and the full gate passes", "header flood: memory 6 MB → 4.7 GB before the fix, under 10 MB after", "the node stuck at block 128 now catches up 1,000 blocks in 17 s", "devnet demo 22/22 on all round-4 code", "fourth review: the catch-up fixes hold live; one Medium left"]
 code = "akira-shirase-oss/miniBTC-chain · main @ d007ae5"
 +++
 
@@ -63,9 +64,9 @@ penalised and then banned. Memory stays flat no matter how fast they send.
 
 ## Does it actually work?
 
-- **Executed tests went from 167 to 214, then 231, then 242** through the first three rounds, each
-  count from the reviewer's own runs, twice per round. Round 4 adds seven more test functions; its
-  full-suite run hasn't been recorded yet.
+- **Executed tests went from 167 to 214, then 231, 242 and 249**, each count from the reviewer's own
+  gate runs. At `main` the whole gate passes: tests, the architecture check, the secrets check and the
+  dependency audit.
 - **Reverting a fix breaks its test.** The reviewer took fixes back out one at a time: for example, 2
   of 3 tests failed without atomic apply, and 4 of 5 without the per-block coin view.
 - **Reindex holds.** After round 2, rebuilding the chain from disk reached the right tip in 10 of 10
@@ -74,6 +75,9 @@ penalised and then banned. Memory stays flat no matter how fast they send.
   between 5,984 and 11,344 KB, and the flooding peer got banned.
 - **The devnet demo passes 22 of 22 checks** on all of round 4's code, including a node catching up
   600 blocks in 11 seconds, at a load average around 73.
+- **The fourth review closed the stall live**, on real sockets with release binaries: a 1,000-block
+  catch-up in 17 seconds, a 5,000-block one in 72 seconds with no peer dropped, and the
+  2,150-versus-2,350-block fork resolved in 31 seconds. Header floods stayed between 7.7 and 9.9 MB.
 
 All of this is on my development Mac, a 12-core M2 Pro, shared with other builds. No load runs today.
 
@@ -109,8 +113,11 @@ test with a node 1,000 blocks behind gets stuck at 128 without the fix.
 
 ## What it doesn't do yet
 
-- **Round 4 hasn't been reviewed.** The fourth pass is still running; until it reports, the 128-block
-  fix is mine, not checked.
+- **A ban doesn't hang up.** The fourth review found that banning a peer removes it from the peer
+  table and blocks reconnects, but its open connection keeps being read. So the flood defence rests on
+  the memory bounds, not the ban. (Medium.)
+- **A peer can stall sync for a minute.** One that sends real headers and then withholds the blocks
+  holds its requests for the full 60-second timeout without a penalty. (Low.)
 - **The load evidence is old.** The last million-scale run was 6M operations on 2026-11-10, and the
   explorer and wallet UI have only seen a smoke run (100,000 and 20,000 requests). Both are owed again
   on this code, on a quiet machine.
@@ -123,5 +130,5 @@ test with a node 1,000 blocks behind gets stuck at 128 without the fix.
 
 ## Up next
 
-Read the fourth pass and fix what it finds. Then CI, the 1M-operation and UI load runs at `HEAD`, and
-a README that matches the code.
+Close the connection on a ban and penalise withholding peers. Then CI, the 1M-operation and UI load
+runs at `HEAD`, and a README that matches the code.
