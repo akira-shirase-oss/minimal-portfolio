@@ -114,6 +114,9 @@ a lint warning, and `main` was green again about a minute and a half later.
   slashes; the guard now joins digits across short separators and checks every 13-to-19-digit window,
   and all eight are refused. Still open: a number sent as a JSON number is echoed back in the error,
   and one in a URL path or request-id header can reach the logs.
+- **Other Mediums are open.** The simulator's control endpoints (faults, the clock) have no
+  authentication and are built into the release binary, and any read-only key can ask for expensive
+  reconciliation reports with no rate limit.
 - **Some docs claim too much.** The roadmap's status column still says "Planned" for finished
   milestones, and one row still names the simulator's old store.
 - **No full load runs.** Seven scenarios each owe a run of at least a million requests, on a quiet
