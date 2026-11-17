@@ -5,7 +5,7 @@
   "wrangler_version": "4.148.0",
   "project": "akira-shirase-oss",
   "branch": "main",
-  "command": "WRANGLER_LOG_PATH=/private/tmp/portfolio-wrangler-deploy-20261109.log WRANGLER_SEND_METRICS=false node /Users/vinaysandhu/.npm/_npx/4657ece8094f916a/node_modules/wrangler/bin/wrangler.js pages deploy public --project-name akira-shirase-oss --branch main --commit-hash b85bde0a8fb895e897ace2b51e4c31f7ad504581 --commit-message \"Publish overfitting and underfitting learning notes\"",
+  "command": "WRANGLER_LOG_PATH=/private/tmp/portfolio-wrangler-deploy-20261109.log WRANGLER_SEND_METRICS=false node ~/.npm/_npx/4657ece8094f916a/node_modules/wrangler/bin/wrangler.js pages deploy public --project-name akira-shirase-oss --branch main --commit-hash b85bde0a8fb895e897ace2b51e4c31f7ad504581 --commit-message \"Publish overfitting and underfitting learning notes\"",
   "exit_code": 1,
   "error": "Your auth token has expired and could not be refreshed because the Cloudflare auth server could not be reached. Wrangler reported stored credentials were left unchanged.",
   "auth_check": {

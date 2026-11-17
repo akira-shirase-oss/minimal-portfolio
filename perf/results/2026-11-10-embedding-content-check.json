@@ -12,7 +12,7 @@
   "served_source_sha256": "cba4b0691b21b9116fceb8773b65145da8b6ad2c88ce1dc99b7122537c86b54a",
   "kind": "Static built-site checks; not browser QA or HTTP load",
   "build": {
-    "command": "/Users/vinaysandhu/.local/bin/zola build",
+    "command": "~/.local/bin/zola build",
     "exit_code": 0,
     "pages_reported": 118,
     "sections_reported": 9
