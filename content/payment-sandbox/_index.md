@@ -6,21 +6,17 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "M0–M5 built; review fixes landing; M6 checkout and dashboard next — full 1M load runs owed"
+status = "M0–M5 built, functional gates pass; review Highs fixed — in progress until the full 1M load runs; M6 next"
 short_title = "Payment Sandbox"
-# The milestones from the project's docs/ROADMAP.md.
+# The milestones from the project's docs/ROADMAP.md. M0–M5 are one row here: they were built
+# together on the first day, and the roadmap holds them all at "in progress" until the full load runs.
 milestones = [
-  { id = "M0", name = "the spine", about = "Exact integer money, a chart of accounts, balanced entries, and a journal PostgreSQL won't let anyone edit or unbalance.", done = true },
-  { id = "M1", name = "projects and sandbox keys", about = "Projects, scoped sandbox keys stored only as hashes, revocation that bites on the next request, and projects that can't see each other.", done = true },
-  { id = "M2", name = "payment lifecycle", about = "Authorize, capture, void and refund as two-phase holds, with an identity committed before the simulated network is ever called.", done = true },
-  { id = "M3", name = "uncertain outcomes", about = "Lost replies and timeouts from the simulator, fenced readback, and a reconciler that settles what's uncertain.", done = true },
-  { id = "M4", name = "signed webhooks", about = "An outbox written with every state change, a leased deliverer, signatures with rotation, and a test store that fulfils exactly once.", done = true },
-  { id = "M5", name = "explain every balance", about = "A reconciliation report in both directions, and an explanation of any balance, posting by posting." },
+  { id = "M0–M5", name = "the ledger, payments, webhooks and explain", about = "Exact money and a journal PostgreSQL won't let anyone edit or unbalance; scoped sandbox keys; two-phase payments with an identity committed before the simulated network is called; uncertain outcomes settled by a reconciler; signed webhooks fulfilled exactly once; and an explanation of every balance. Functional gates pass; the project's own rule keeps them in progress until a full load run is committed." },
   { id = "M6", name = "first useful release", about = "A hosted checkout and a dashboard on SvelteKit, Tailwind and shadcn-svelte." },
   { id = "M7", name = "developer product", about = "A CLI, a TypeScript SDK, a scenario library and dataset resets." },
   { id = "M8", name = "billing direction", about = "Asynchronous outcomes, authorization expiry on virtual time, then settlement, fees, payouts and disputes." },
 ]
-up_next = { milestone = "M5", step = "fixes", title = "Finish the review's fix round, then M6: checkout and the dashboard" }
+up_next = { milestone = "M0–M5", step = "load", title = "The full million-request runs and the open Mediums, then M6: checkout and the dashboard" }
 +++
 
 **Payment Sandbox** is a place to test a shop's payments without a real payment provider, real cards
@@ -39,7 +35,8 @@ Every response says `Sandbox-Simulated: true`. Nothing in it can be redeemed for
 
 Started on 2026-11-16. Milestones M0 to M5 are built and drilled: process kills, clock jumps and a
 backup restore, with no double charge in any of them. An independent review asked for one fix round
-before the next milestone, and those fixes are landing on `main`. The load runs so far are small
+before the next milestone, and its High findings are fixed on `main`. The project's own rule keeps
+M0 to M5 "in progress" until each has a committed full load run. The load runs so far are small
 smokes on a busy machine; every full million-request run is still owed. M6, the checkout and
 dashboard, is next.
 

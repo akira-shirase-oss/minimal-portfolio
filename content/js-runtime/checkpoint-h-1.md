@@ -8,14 +8,15 @@ kind = "failure"
 milestone = "H"
 step = "H.1"
 short_title = "Security pass: four rounds"
-# Rust tests at main ab1bfa2, run twice in the fourth review pass (74 + 25 + 11 + 20).
-tests = 130
+# 130 at ab1bfa2, run twice in the fourth review pass (74 + 25 + 11 + 20); 140 at cb40ddf, as recorded
+# in the late verification merge, which hasn't been reviewed.
+tests = 140
 
 [extra.summary]
 goal = "Close the holes an outside gap review found in the sandbox, the network fence, the module loader and rt.serve, with every fix re-checked by someone who didn't write it."
 built = "No Deno globals, a net grant re-checked on every redirect hop and pinned to public addresses, a loader that only treats .js and .mjs as code, one deadline over a whole fetch, redacted fetch errors, and rt.serve limits that slow and idle clients can't hold forever."
-proof = ["tests 84 → 110 → 120 → 125 → 130 across the four rounds", "final review verdict: ship, with 3 Low items left", "with 256 idle sockets held open, a GET still answers in 1–7 ms", "the M7 million-request numbers predate these fixes: re-run owed"]
-code = "akira-shirase-oss/js-runtime · main @ ab1bfa2"
+proof = ["tests 84 → 110 → 120 → 125 → 130 across the four rounds, 140 after a late verification round", "final review verdict: ship, with 3 Low items left", "with 256 idle sockets held open, a GET still answers in 1–7 ms", "the M7 million-request numbers predate these fixes: re-run owed"]
+code = "akira-shirase-oss/js-runtime · main @ cb40ddf (last reviewed at ab1bfa2)"
 +++
 
 Picture a bouncer who checks your name at the door, then waves you through when you come back from
@@ -100,18 +101,22 @@ longest-idle eviction.
   second, p99 608 µs) ran on 2026-11-06, before all of this. Serve 1M, the saturation probe, the
   webhook 1M run, the soak and the cold-start run have to be re-run on this build, on a quiet machine.
   The roadmap says so. The README's status line still quotes the old numbers without that note.
-- **Three Low findings are left.** An attacker can steer eviction toward honest connections (in one
-  run, a download that paused for 1.5 s was cut off after 678,428 of 16,777,216 bytes). The
-  minimum-rate rule also cuts small slow bodies, turning a 30-second deadline into about 5 seconds.
-  And the 200 ms drain of a refused body helps one refused client, not many at once.
+- **The final review left three Low findings.** An attacker could steer eviction toward honest
+  connections (in one run, a download that paused for 1.5 s was cut off after 678,428 of 16,777,216
+  bytes). The minimum-rate rule also cut small slow bodies, turning a 30-second deadline into about 5
+  seconds. And the 200 ms drain of a refused body helps one refused client, not many at once. The
+  late verification round below takes on the first two; nobody has re-checked them yet.
 - **Three of the gap review's Highs are still open.** The 10-second default timeout still kills
   long-running serve apps and the supervisor never restarts a worker; SIGTERM drops requests in
   flight; and worker logs aren't redacted or tagged with a run id.
-- **No CI on `main` yet.** A verification branch, not merged, adds a toolchain pin, refuses remote,
-  `data:` and `blob:` imports, caps fetch at 32 in flight, proves environment proxies are ignored,
-  and turns a V8 out-of-memory crash into a clean exit. CI files are being written alongside it.
+- **The late verification round isn't reviewed.** It merged at the end of the day: a regression test
+  for every defence on the security checklist that wasn't yet proven, each shown failing first. The
+  loader now refuses remote, `data:` and `blob:` imports, fetch is capped at 32 in flight per run, the
+  V8 heap limit ends a run cleanly with exit 6 instead of a crash, refusal messages name no host paths,
+  and `unsafe` code is forbidden outside the supervisor's documented blocks. It also adds a pinned
+  toolchain, a gate script and CI on Linux and macOS: 140 tests.
 
 ## Up next
 
-Merge the verification branch after its gate and a review, add CI, then re-run the million-scale
-load evidence on the hardened build and publish it with machine and commit, misses included.
+An independent review of the verification round, then re-run the million-scale load evidence on the
+hardened build and publish it with machine and commit, misses included.

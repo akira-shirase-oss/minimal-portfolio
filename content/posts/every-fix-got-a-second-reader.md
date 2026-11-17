@@ -78,7 +78,7 @@ For the built projects, here's where the day ended. Test counts are from the rev
 
 | Project | Rounds | Tests | Last review |
 |---|---:|---:|---|
-| jsrt | 4 | 84 → 130 | ship, 3 Low items left |
+| jsrt | 4 | 84 → 130 | ship, 3 Low items left; a late round, unreviewed, adds CI and 10 tests |
 | Service Monitor | 4 | 137 → 215 | ship, 4 Low items left |
 | MiniBTC | 4 | 167 → 249 | the fixes hold live, 1 Medium left |
 | Durable Runner | 3 | 26 → 96 | no acknowledged job lost, an older High found |

@@ -5,8 +5,8 @@ date = 2026-11-16T23:20:00Z
 
 [extra]
 kind = "experiment"
-milestone = "M5"
-step = "M0–M5"
+milestone = "M0–M5"
+step = "build"
 short_title = "Fake money, real books"
 # Executed tests at a92e1f4 (the end of M5) in the independent review's run, including 4 fault-injection drills.
 tests = 138
@@ -15,7 +15,7 @@ tests = 138
 goal = "A payment sandbox whose simulated balances can always be explained by an immutable double-entry journal, and which never charges twice, whatever crashes."
 built = "A pure money and accounting domain, a journal guarded by database triggers, scoped sandbox keys, two-phase payments with an identity committed before the network call, a separate simulator process, a recovery reconciler, signed webhooks with a leased deliverer, and explain-balance."
 proof = ["138 tests at the end of M5, including 4 fault-injection drills", "reviewer's chaos run: 128 kill -9s, 13 clock jumps, 3 restores, 0 double charges", "64 concurrent refunds of 10 against 300 captured: exactly 30 admitted", "five accounting Highs from the review, fixed on main the same evening", "load: smokes only, two missed their latency gate"]
-code = "akira-shirase-oss/payment-sandbox · main @ d4a9919"
+code = "akira-shirase-oss/payment-sandbox · main @ 5c55fde"
 +++
 
 If your bank app shows £50 but nobody can say where it came from, it's not a balance. It's a
@@ -76,8 +76,9 @@ server can't write an unbalanced entry.
   jumps, 3 dump-and-restores and 19,820 network operations. No double charge, no lost capture, no
   duplicate fulfilment.
 
-The load runs were smokes on my development Mac (12 cores) while it was busy, recorded in the commit
-messages rather than as result files. Some passed: the uncertain-outcome run resolved all 120
+The load runs were smokes on my development Mac (Apple M2 Pro, 12 cores, 32 GB) while it was busy,
+on working trees with uncommitted changes. All sixteen smoke records are now committed, failures
+included, each with a note on what it showed. Some passed: the uncertain-outcome run resolved all 120
 uncertain payments (p99 98 ms), and explain-balance answered at p99 26 ms. Two missed. The payment
 lifecycle ran 3,121 requests with no failures and a clean reconciliation, but p99 was 635 ms against
 a 250 ms gate. Webhooks delivered 501 for 501 with no duplicates, but p95 was 120 ms against 100 ms.
@@ -116,8 +117,10 @@ a lint warning, and `main` was green again about a minute and a half later.
 - **Other Mediums are open.** The simulator's control endpoints (faults, the clock) have no
   authentication and are built into the release binary, and any read-only key can ask for expensive
   reconciliation reports with no rate limit.
-- **Some docs claim too much.** The roadmap's status column still says "Planned" for finished
-  milestones, and one row still names the simulator's old store.
+- **"Done" now waits for load.** The review caught the roadmap calling M2 to M5 done while their
+  status cells said planned, and claiming account checkpoints that were never built. The rule now
+  requires a committed full load run before anything is called done, so M0 to M5 read "in progress,
+  functional gates pass, full load run owed".
 - **No full load runs.** Seven scenarios each owe a run of at least a million requests, on a quiet
   machine, plus a scripted restore rehearsal.
 - **No screen yet.** Checkout and the dashboard are M6.
