@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "I0 (the lead-intake spine) in progress; no website generation yet — the ship gate needs three pilot clients"
+status = "I0 (the lead-intake spine) built, under its first independent review; gate not passed until the full load runs; no website generation yet"
 short_title = "Intent Studio"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -18,11 +18,11 @@ milestones = [
   { id = "I5", name = "evidence battery", about = "A 50-brief battery, page-weight budgets, and checks on real phones." },
   { id = "I6", name = "pilot and ship gate", about = "Three real client sites, each signed off, each receiving a real inquiry." },
 ]
-up_next = { milestone = "I0", step = "I0", title = "Finish the spine: the 100,000-submission provider-down run, the burst baseline, then a review" }
+up_next = { milestone = "I0", step = "review", title = "The independent review, then the quiet-machine baseline and the 1M-submission run" }
 +++
 
 **Intent Studio** turns a small service business's brief into a working website: designed, tested and
-published, with a contact form whose leads can't get lost.
+published, with a contact form built so leads don't get lost.
 
 The model does the proposing. The platform does the enforcing. Pages are built only from tested
 components. Every factual claim on a page has to be an approved fact with a source and an expiry date.
@@ -33,9 +33,11 @@ notification service is down.
 ## Where it stands
 
 Started on 2026-11-16 with milestone I0, the lead-intake spine, because it needs no client. The form
-endpoint, the durable inbox, the notifier and a read-only operator inbox are built. The first realism
-load check is committed as a miss. Nothing generates a website yet, and there has been no independent
-review of the code. The ship gate needs three real pilot clients, who haven't been found.
+endpoint, the durable inbox, the notifier and a read-only operator inbox are built, and every drill
+passes in CI. In every load run with the provider down, every acknowledged lead was kept and
+delivered, but two runs missed their latency targets on a busy laptop, so the gate isn't passed until
+a quiet-machine baseline and the full runs exist. Its first independent review is running. Nothing
+generates a website yet, and the ship gate needs three real pilot clients, who haven't been found.
 
 The code is public at
 [akira-shirase-oss/intent-studio](https://github.com/akira-shirase-oss/intent-studio).

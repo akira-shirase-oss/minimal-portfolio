@@ -1,7 +1,7 @@
 +++
-title = "I0: a contact form that can't lose a lead"
-description = "Day one of Intent Studio starts at the boring end: the contact form. A lead and the job of telling the owner are saved together, the notifier retries for most of a day, and a dead provider loses nothing. The first realism check stored and delivered every lead, and missed its latency target."
-date = 2026-11-17T01:55:00Z
+title = "I0: a contact form that kept every lead in its drills"
+description = "Day one of Intent Studio starts at the boring end: the contact form. A lead and the job of telling the owner are saved together, the notifier retries for most of a day, and in every drill and load run with the provider down, every acknowledged lead was kept and delivered. Two of the load runs missed their latency targets on a busy laptop; the milestone is under its first independent review."
+date = 2026-11-16T20:55:00-05:00
 
 [extra]
 kind = "experiment"
@@ -12,8 +12,8 @@ short_title = "Leads that survive"
 [extra.summary]
 goal = "Make the website's contact form the most reliable part of the product: every acknowledged lead stored, every owner eventually told, even when the notification provider is down."
 built = "A pure lead-intake domain, a lead and its notification job saved in one statement, a leased notifier with a day-long retry schedule, rate limits and a honeypot, an operator inbox in SvelteKit, failure drills against the release binary, and a k6 load scenario."
-proof = ["50 a second for a minute with the provider refusing throughout: 2,851 leads acknowledged, 2,851 stored", "every notification delivered once the provider came back", "p99 402 ms against a 100 ms target, on a busy laptop: committed as a miss", "the first burst run is kept as invalid: a stray probe of mine shared its database", "no independent review of the code yet"]
-code = "akira-shirase-oss/intent-studio · main @ 5df19c5"
+proof = ["50 a second for a minute with the provider refusing throughout: 2,851 leads acknowledged, 2,851 stored", "every notification delivered once the provider came back", "p99 402 ms against a 100 ms target, on a busy laptop: committed as a miss", "100,000 submissions with the provider down: 94,269 delivered = 94,269 accepted, 0 duplicates, but p99 109 ms missed", "the first burst run is kept as invalid: a stray probe of mine shared its database"]
+code = "akira-shirase-oss/intent-studio · main @ e1cc6f4"
 +++
 
 The most expensive bug a small business's website can have isn't a broken layout. It's a customer who
@@ -66,6 +66,17 @@ The first realism check ran 50 submissions a second for a minute, with the provi
   submission takes about 2 ms end to end. That's a reason to re-run it on a quiet machine, not a reason
   to call it a pass.
 
+Two more runs followed, on `5df19c5`:
+
+- **The burst rerun held.** 250 submissions a second, 15,001 in all, with the provider refusing
+  throughout: p50 1.2 ms, p99 15.3 ms, nothing dropped, every acknowledgment reconciled, and 14,251
+  rows delivered after recovery for 14,251 provider acceptances, 0 duplicates.
+- **The 100,000-submission provider-down run kept every lead but missed.** At 500 a second, every
+  acknowledged lead was stored exactly once, and 94,269 notifications were delivered for 94,269
+  provider acceptances, 0 duplicates. Three submissions got an honest 503, and two of those were
+  stored anyway, which a resend then finds by its fingerprint. But p99 was 109 ms against 100 ms and
+  771 iterations were dropped, at load averages from 16 to 78. It's committed as a miss.
+
 The operator inbox has a browser test at 1280 and 360 pixels wide: keyboard-only sign-in, a wrong
 password announced to screen readers, no sideways scrolling, sign-out ending the session on the server,
 and no lead content in the server log. The drills and the browser test are wired into the gate and CI.
@@ -92,13 +103,14 @@ accepted.
 
 - **It doesn't build websites.** Briefs, facts, components, the model, previews and launch are
   milestones I1 to I3.
-- **I0's load evidence isn't finished.** The burst run needs a valid rerun, the realism check needs a
-  quiet machine, and the 1,000,000-submission run is owed.
-- **No independent review yet.** Every project that was reviewed today had High findings. This one
-  hasn't had its turn.
+- **I0's gate isn't passed.** The intake budget has to come from a quiet-machine baseline, which
+  hasn't been possible yet. That baseline, the 100,000-submission run against it, and the
+  1,000,000-submission run are owed.
+- **Its first independent review is running.** Every project reviewed today had High findings, so I
+  expect some.
 - **It's blocked on people.** Three pilot clients, a model provider and a spending cap, a privacy
   notice and a data-processing agreement with each client, and deploy access to their sites.
 
 ## Up next
 
-Finish I0's load evidence, then a strict independent review of the spine, then I1.
+Fix what the review finds, run the quiet-machine baseline, then I1.

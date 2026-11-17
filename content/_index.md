@@ -59,7 +59,7 @@ log = "personal-voice-agent/_index.md"
 
 [[extra.now]]
 process = "intent-studio"
-what = "Client brief to published website, starting with a contact form that can't lose a lead."
+what = "Client brief to published website, starting with a contact form that kept every lead in its drills."
 link = "@/intent-studio/_index.md"
 log = "intent-studio/_index.md"
 
