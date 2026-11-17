@@ -1,6 +1,6 @@
 +++
-title = "Checkpoint P7: a takeover in one request, and a CI that still isn't green"
-description = "An outside gap review found 56 gaps in Colophon, 14 of them High, starting with a magic-link bug that let anyone take over a member's account with one request. Repairs got main's Rust job green after nearly two weeks red, though its testbed still failed one flaky spec. The security fixes, each with a test that failed before it, sit on a pushed branch whose CI has failed on every push. Its independent review says fix first: ten of the eleven fixes close their hole, and two of them opened new ones."
+title = "Checkpoint P7: a gap review, a security branch, and a CI that still isn't green"
+description = "An outside gap review found 56 gaps in Colophon, 14 of them High. Repairs got main's Rust job green after nearly two weeks red, though its testbed still failed one flaky spec. Eleven security fixes, each with a test that failed before it, sit on a pushed branch whose CI has failed on every push. Its independent review says fix first: two new High-severity issues in the fixes. I'll describe the security details once the fixes are merged."
 date = 2026-11-16T20:50:00-05:00
 
 [extra]
@@ -13,13 +13,12 @@ tests = 770
 
 [extra.summary]
 goal = "Find what a careful attacker or an unlucky operator would hit first, fix the worst of it with a failing test for each, and get main's own checks running again."
-built = "On main: the CI and testbed fixes, a cache-tag fix for hyphenated collections, and the Studio's first-run work. On a branch: a magic-link origin allowlist, an explicit opt-in for private destinations, bounded sign-in and GraphQL work, token-free logs, a role-checked database trigger, revalidating media URLs, TLS for managed Postgres, an SSE budget and an MIT licence."
-proof = ["770 Rust tests green on main in three gate runs, up to the testbed", "main's CI at 94e63c0 still failed: testbed 52 of 53, one flaky spec", "11 code fixes on the branch, each with a test that failed first, plus npm bumps and the licence", "the branch's CI failed on every push, from two code failures being fixed", "branch review: fix first, two new Highs caused by the fixes", "load smokes only, on a busy machine, and three of them missed"]
+built = "On main: the CI and testbed fixes, a cache-tag fix for hyphenated collections, and the Studio's first-run work. On a branch: eleven security fixes, npm advisory bumps and an MIT licence, described here once they merge."
+proof = ["770 Rust tests green on main in three gate runs, up to the testbed", "main's CI at 94e63c0 still failed: testbed 52 of 53, one flaky spec", "11 code fixes on the branch, each with a test that failed first, plus npm bumps and the licence", "the branch's CI failed on every push, from two code failures being fixed", "branch review: fix first, two new High-severity issues in the fixes", "load smokes only, on a busy machine, and three of them missed"]
 code = "akira-shirase-oss/colophon-cms · main @ 94e63c0 (fixes on fix/security-2026-11-16 @ cf26b95)"
 +++
 
-A spare key under the doormat is fine until someone else learns which doormat. Colophon's sign-in
-links had that problem: they went to whatever address the request asked for.
+A test suite nobody reads is a decoration. I had one of those, and didn't know it.
 
 Today an outside gap review read the whole project the way an attacker would. It found 56 gaps: 14
 High, 38 Medium, 4 Low. This entry is what happened next, including the part where my own checks
@@ -44,41 +43,22 @@ turned out to have been quietly not running.
 - **The Studio's first-run work landed** (D-147): a setup link that fills in the setup code, an
   installation endpoint, clearer builder, roles and invite screens, and no text smaller than 14 px.
 
-**On a branch, `fix/security-2026-11-16`**, pushed but not merged: 11 code fixes, npm bumps and the licence.
+**On a branch, `fix/security-2026-11-16`**, pushed but not merged: eleven security fixes for the gap
+review's findings, each with a test that fails without it, plus four npm advisory bumps and an MIT
+licence. The gap review's security findings are unfixed on `main`, so I'm not describing them here.
+Each one will get its write-up once its fix is merged.
 
-- **Magic links only go where the project says** (D-148). Before, anyone could request a sign-in link
-  for a victim's email with the return address set to their own site. The victim clicks, and the
-  attacker gets the token and the session. One request, full takeover. Now the return address has to
-  be on the project's own list, and a project with no list sends no links.
-- **Private destinations are an explicit opt-in** (D-149). The guard against webhooks pointed at
-  internal addresses switched itself off whenever the server listened on loopback, which is exactly
-  how it runs behind a local reverse proxy. Any member who could manage destinations could aim a
-  webhook at the cloud metadata address or the database.
-- **Bounded work for strangers.** Password checks are capped and run outside the database lock
-  (D-150): before, a flood of sign-ins made a delivery read answer 503. GraphQL queries are limited to
-  depth 16 and 512 fields before any transaction opens (D-151): a 650-character query held a worker
-  for 150 seconds. Anonymous live streams get their own budget, 8 per address (D-159).
-- **Smaller doors.** Sign-in tokens never appear in request logs (D-152). Magic links have a cooldown
-  and a per-project cap (D-153). Lockout is keyed so it can't be used to lock someone else out or to
-  learn which emails exist (D-154). A database trigger that protects owner permissions now checks the
-  role, not a setting the app could forge (D-155): before, the app could delete all 13 owner-role
-  permissions.
-- **Operations.** The database driver is built with TLS (D-156). The test proves only that it asks
-  the server for TLS; a real connection to a managed Postgres such as Neon, and full certificate
-  checking, are still unverified. Bare media addresses revalidate instead of being cached for a year; only content-hashed
-  addresses are immutable (D-157). Four npm advisories are bumped past. And Colophon is now MIT, with
-  the licence file committed (D-158).
+One fix I can describe, because it isn't a security hole: the database driver is now built with TLS,
+so managed Postgres can be reached. The test proves only that it asks the server for TLS; a real
+connection to a managed Postgres such as Neon, and full certificate checking, are still unverified.
 
 ## How it works (the short version)
 
-Most of the Highs share one shape: **a decision made from something the caller controls.** A return
-address in the request. A listen address that "looks local". A setting the application itself can
-change. The fixes move each decision onto something the caller can't touch: the project's own list,
-an explicit operator flag, the database role.
-
-The rest share another: **a stranger's request shouldn't cost more than a stranger is worth.**
-Password hashing is expensive on purpose, and a query language can ask for a lot. Both now have a
-budget that's checked before the expensive part starts.
+Every finding goes through the same loop. The fix lands on a short branch with a regression test, and
+the test has to fail on the commit before the fix, otherwise it isn't proving anything. Then the full
+gate runs, then an independent reviewer replays each test on its parent commit and attacks the fixed
+code, and only then does the branch merge. Security details are published after the merge, not
+before.
 
 ## Does it actually work?
 
@@ -89,10 +69,10 @@ budget that's checked before the expensive part starts.
 - **The testbed isn't green.** The last run had 1 of 53 specs failing. Three specs pass alone but can
   fail right after the outage spec, which kills the database's connections. That flake is still open,
   and it's why `main`'s own CI run failed.
-- **Every code fix on the branch has a test that failed first.** For example, the magic-link stack test answered
-  202 with a sign-in link pointing at `attacker.example` before the fix, where it must refuse.
-- **Load numbers are smokes, on a busy machine, and several missed.** With the password cap in, the
-  session scenario's p99 was 58 ms on one run and 347 ms on another, a miss against its 200 ms gate,
+- **Every code fix on the branch has a test that failed first.** The reviewer replayed each one on its
+  parent commit, and each failed there.
+- **Load numbers are smokes, on a busy machine, and several missed.** On the branch, the session
+  scenario's p99 was 58 ms on one run and 347 ms on another, a miss against its 200 ms gate,
   at load averages of 43 to 53. The audience run missed by a hair (p99 704 ms against 700). A
   10,000-request members run had zero failed requests, but its p99 was 1,176 ms against a 700 ms gate
   at load averages of 58 to 72: a miss. The assets run missed too, at 1.13 s against 500 ms. These
@@ -120,19 +100,14 @@ budget that's checked before the expensive part starts.
 
 - **The security fixes aren't on `main`, and the branch's review says fix first.** Ten of the eleven
   fixes close the path they were written for, and every test the reviewer replayed on its parent
-  commit fails there. But two fixes opened new holes, both High. The GraphQL limit now parses a query
-  before checking membership, and the parser can crash the whole server on deeply nested input, so
-  anyone who can sign in can reach a crash that only members could reach before. And the magic-link
-  ceiling of 100 links a minute per project can be used up by one anonymous client, after which nobody
-  in that project can get a sign-in link. Until the branch is fixed and merged, the published `main`
-  still has the magic-link takeover.
-- **High gaps still open:** a restore doesn't change delivery job keys, there's no real CDN adapter,
-  and media isn't backed up or restorable to a point in time. Media caching is only partly fixed: the
-  addresses revalidate now, but a media cache tag and a CDN purge are still to come. Product gaps too: draft preview, image
-  references in rich text that can point at missing files, release archives without the Studio, no
-  Markdown import, and no password reset or email verification for SaaS accounts.
-- **Medium ones:** webhooks aren't signed, draft-only media is publicly readable, and media intake
-  checks its 25-megapixel limit only after a full decode, with no decode deadline.
+  commit fails there. The independent review found two new High-severity issues in the fixes; they're
+  being fixed, and I'll describe them here once the fix is merged.
+- **Other High gaps still open:** a restore doesn't change delivery job keys, there's no real CDN
+  adapter, and media isn't backed up or restorable to a point in time. Product gaps too: draft
+  preview, image references in rich text that can point at missing files, release archives without
+  the Studio, no Markdown import, and no password reset or email verification for SaaS accounts.
+- **Some security findings, High and Medium, are still open on `main`** beyond the branch's eleven.
+  They'll be described here once they're fixed.
 - **Evidence owed:** the load smokes and the owed L-case runs on a quiet machine, a passing 24-hour
   soak, the usability sessions and an independent install, all before version 0.1.
 
@@ -143,5 +118,5 @@ the five Low items it left were fixed the same evening.
 
 ## Up next
 
-Fix the two new Highs and get the branch's CI green, then a second review and the merge. Then the testbed
+Fix the review's two new Highs and get the branch's CI green, then a second review and the merge. Then the testbed
 flake, the load smokes and L-case runs on a quiet machine, and the 24-hour soak before 0.1.

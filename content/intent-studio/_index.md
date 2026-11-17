@@ -37,8 +37,7 @@ endpoint, the durable inbox, the notifier and a read-only operator inbox are bui
 passes in CI. In every valid load run with the provider down, every acknowledged lead was kept and
 delivered, but two runs missed their latency targets on a busy laptop, so the gate isn't passed until
 a quiet-machine baseline and the full runs exist. Its first independent review found no lost lead
-but said fix first: connections can be held open, honeypot bots spend the quota, and the outbox lease
-is fenced too loosely. Nothing
+but said fix first, for three issues that are being fixed and will be described once merged. Nothing
 generates a website yet, and the ship gate needs three real pilot clients, who haven't been found.
 
 The code is public at

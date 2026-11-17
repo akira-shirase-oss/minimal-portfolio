@@ -133,7 +133,8 @@ about 480 MB of history that only a rewrite can remove, and I haven't rewritten 
 - **A 2 GB server is tight.** With a seven-day duplicate window and scheduled compaction, the sizing
   works out to about 3.9 one-step 1 KiB jobs a second.
 - **Not done:** step outputs and a retry/dead-letter policy, a second developer restoring a real
-  journal unaided, a Linux memory measurement, rate limits on reads, and the SaaS layer.
+  journal unaided, a Linux memory measurement, and the SaaS layer. One more security item from the
+  review is open, and I'll describe it once it's fixed.
 
 ## Up next
 

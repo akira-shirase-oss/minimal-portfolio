@@ -95,11 +95,9 @@ acknowledged job was lost. MiniBTC's node that got stuck at block 128 now catche
 The new projects with code got first reviews. Payment Sandbox's five accounting Highs and the AI
 Operations Layer's six Highs were fixed on `main` the same evening. The Voice Agent's seventeen fixes
 merged, and its second review said fix first again: the crash, microphone and full-disk Highs are
-closed, but the "never say it's done without proof" guard still speaks 32 of 40 ordinary completion
-phrasings it wasn't tested on. Backend Platform's review accepted its memo with corrections and sent
+closed, and the rest is being fixed in a second round. Backend Platform's review accepted its memo with corrections and sent
 the spine back. Intent Studio's first review found no lost, duplicated or falsely acknowledged lead,
-and still said fix first, for connections that can be held open, honeypot bots that spend a site's
-quota, and a loosely fenced outbox lease.
+and still said fix first, for three issues that are being fixed.
 
 ## Where I messed up
 
@@ -115,8 +113,8 @@ The reviewers kept finding bugs that my fixes had created:
   submits for over 6 seconds.
 - **MiniBTC:** a reindex that failed at random, then a bounded header table that left any node more
   than 128 blocks behind stuck forever.
-- **Colophon:** the GraphQL limit made a parser crash reachable by anyone who can sign in, and the new
-  sign-in-link ceiling can be used up by one anonymous client.
+- **Colophon:** its branch review found two new High-severity issues in the fixes. They're being
+  fixed, and I'll describe them in its build log once the fix is merged.
 
 The new projects' first reviews found their own: ways to bend Payment Sandbox's books, AI Operations
 Layer timelines that looked more certain than their evidence, and a Voice Agent microphone that kept

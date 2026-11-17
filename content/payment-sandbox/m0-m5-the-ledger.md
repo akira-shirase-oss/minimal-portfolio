@@ -125,10 +125,8 @@ tests on a slow runner: a property test, and a lock-timeout test that is now fix
 ## What it doesn't do yet
 
 - **A second fix round on four Mediums is under way.** Its first fix has landed: the simulator's and
-  the test store's control endpoints (faults, the clock) now need credentials. Three are still open:
-  any read-only key can ask for expensive reconciliation reports with no rate limit; the reconciler
-  reads uncertain operations one at a time across every project, so one project can hold up the rest;
-  and one project's dead webhook endpoint can slow delivery for everyone. Four Lows are open too.
+  the test store's control endpoints (faults, the clock) now need credentials. Three Mediums and four
+  Lows are still open; I'll describe them here once their fixes are merged.
 - **None of the fixes has had a second review yet.**
 - **"Done" now waits for load.** The review caught the roadmap calling M2 to M5 done while their
   status cells said planned, and claiming account checkpoints that were never built. The rule now

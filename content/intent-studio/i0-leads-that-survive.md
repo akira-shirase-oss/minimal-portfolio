@@ -33,7 +33,7 @@ Milestone I0, the spine, in four slices:
   its notification job in one database statement. It limits each address and each site, gives the
   database 3 seconds, and if it can't save, it answers 503 with `Retry-After`. It never says "thanks"
   for a lead it didn't keep.
-- **A notifier** with its own database connections, which claims jobs under a lease and counts each
+- **A notifier**, which claims jobs under a lease and counts each
   attempt when it claims it, so a crash can't make an attempt disappear.
 - **A provider stand-in** that can answer, fail with 503, hang, or accept and then hang.
 - **A read-only operator inbox**: sign in, see leads newest first with their notification state. A table
@@ -109,11 +109,8 @@ accepted.
 - **Its first independent review says fix first.** The core promise held under every test the
   reviewer could run: a success is only ever sent after the lead and its notification job have
   committed together, and no lead was lost, duplicated or falsely acknowledged. But it isn't ready for
-  a public form. A client can hold connections open forever, because there's no header-read timeout,
-  idle timeout or connection cap. Bots that fill the honeypot still use up the site's quota, so 60 junk
-  posts a minute lock real visitors out. And the outbox lease is fenced per process rather than per
-  claim, so a late result from an earlier attempt can overwrite a newer one and leave a notification
-  stuck pending for good.
+  a public form: the review found three issues that have to be fixed first. They're being fixed, and
+  I'll describe them here once the fixes are merged.
 - **It's blocked on people.** Three pilot clients, a model provider and a spending cap, a privacy
   notice and a data-processing agreement with each client, and deploy access to their sites.
 

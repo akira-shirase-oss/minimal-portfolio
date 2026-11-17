@@ -116,14 +116,9 @@ test with a node 1,000 blocks behind gets stuck at 128 without the fix.
 
 ## What it doesn't do yet
 
-- **A ban doesn't hang up, on `main`.** The fourth review found that banning a peer removes it from
-  the peer table and blocks reconnects, but its open connection keeps being read. So the flood
-  defence rests on the memory bounds, not the ban. (Medium.)
-- **A peer can stall sync for a minute, on `main`.** One that sends real headers and then withholds
-  the blocks holds its requests for the full 60-second timeout without a penalty. (Low.)
-- **Fixes for both are in progress on a branch** that isn't pushed yet. In its own live loopback
-  evidence, a banned flooder's connection closes in 3.5 ms, and a node starved by a withholding peer
-  gets its first block after 9 seconds instead of 87. Nobody has reviewed it.
+- **Two findings from the fourth review are open on `main`**, one Medium and one Low, both in the
+  peer-to-peer layer. Their fixes are in progress on a branch that isn't pushed or reviewed yet, and
+  I'll describe them here once they're merged.
 - **The load evidence is old.** The last million-scale run was 6M operations on 2026-11-10, and the
   explorer and wallet UI have only seen a smoke run (100,000 and 20,000 requests). Both are owed again
   on this code, on a quiet machine.
@@ -136,5 +131,4 @@ test with a node 1,000 blocks behind gets stuck at 128 without the fix.
 
 ## Up next
 
-Push and review the branch that closes banned connections and rotates away from withholding peers.
-Then CI, the 1M-operation and UI load runs at `HEAD`, and a README that matches the code.
+Push and review the branch with the fourth review's two fixes. Then CI, the 1M-operation and UI load runs at `HEAD`, and a README that matches the code.

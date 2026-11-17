@@ -284,11 +284,11 @@ row-level security inside the delivery read rather than application filtering. M
 shared cache, so a gated row can never be served to or stored for a stranger. The Draft demo site runs the
 members flow live; the other four demo sites can only ever see public rows.
 
-**A security pass is under way (2026-11-16).** An outside gap review found 56 gaps, 14 of them High,
-including a magic-link account takeover. `main`'s Rust job is green again and its testbed runs
+**A security pass is under way (2026-11-16).** An outside gap review found 56 gaps, 14 of them High. `main`'s Rust job is green again and its testbed runs
 again, but `main`'s CI still fails on one flaky testbed spec. The security fixes, each with a test
 that failed first, are on a pushed branch whose CI has failed on every push from two code failures
-being fixed. Its independent review says fix first: two of the fixes opened new High holes.
+being fixed. Its independent review says fix first: it found two new High-severity issues in the
+fixes, which are being fixed. Security details will be written up once the fixes are merged.
 
 **Now building (P7):** the security merge, then the 24-hour stress run, the usability gate and an
 independent install — then version 0.1.

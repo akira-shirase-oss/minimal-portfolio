@@ -105,11 +105,11 @@ longest-idle eviction.
 - **The final review left three Low findings.** An attacker could steer eviction toward honest
   connections (in one run, a download that paused for 1.5 s was cut off after 678,428 of 16,777,216
   bytes). The minimum-rate rule also cut small slow bodies, turning a 30-second deadline into about 5
-  seconds. And the 200 ms drain of a refused body helps one refused client, not many at once. The
-  late verification round below takes on the first two; its review is still running.
+  seconds. The late verification round below fixes those two on `main`; its review is still running.
+  The third Low is still open, and I'll describe it once it's fixed.
 - **Three of the gap review's Highs are still open.** The 10-second default timeout still kills
   long-running serve apps and the supervisor never restarts a worker; SIGTERM drops requests in
-  flight; and worker logs aren't redacted or tagged with a run id.
+  flight; and a third, a security finding about worker logs, will be described once it's fixed.
 - **The late verification round is still under review.** It merged at the end of the day: a regression test
   for every defence on the security checklist that wasn't yet proven, each shown failing first. The
   loader now refuses remote, `data:` and `blob:` imports, fetch is capped at 32 in flight per run, the

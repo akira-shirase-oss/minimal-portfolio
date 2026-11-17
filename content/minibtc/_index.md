@@ -26,5 +26,5 @@ milestones = [
   { id = "P13b", name = "wallet entropy hardening", about = "Coldcard-class weak-RNG attack test: low-entropy seeds collide; real generator verified full-width.", done = true },
   { id = "H", name = "hardening", about = "An outside gap review of the finished chain; fix rounds each re-checked live by a second reviewer; then the million-operation and UI load evidence re-run at HEAD." },
 ]
-up_next = { milestone = "H", step = "H.2", title = "Push and review the ban and withholding fixes, then CI and the load runs at HEAD" }
+up_next = { milestone = "H", step = "H.2", title = "Push and review the fixes for the fourth review's two findings, then CI and the load runs at HEAD" }
 +++

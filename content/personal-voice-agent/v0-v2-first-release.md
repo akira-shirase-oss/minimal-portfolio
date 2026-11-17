@@ -112,8 +112,9 @@ boundary and the disk meet. Five High findings, all reproduced:
 - **A revocation could be lost.** On a full disk, "stop using my microphone" failed to save, and on
   the next start consent came back as granted. Two copies of the app on the same data folder could
   also "recover" each other's live session.
-- **"Never say it's done without proof" was a word list.** The rule was enforced by 43 banned
-  phrases. 11 of 12 ordinary ways of saying it got through: "Payment sent." "Sent!"
+- **"Never say it's done without proof" was a word list**, and the review showed ordinary phrasings
+  getting past it. Its fix is only partly working yet (see below), so the details wait until it's
+  done.
 
 Two of my tests were weaker than their names. I loosened the on-device end-to-end test to stop
 load-related flakes, and overshot: it then passed with the model path broken. The 8-thread player
@@ -128,27 +129,16 @@ that hangs during a turn can no longer hold the microphone open.
 
 **Then the second review said fix first again.** It confirmed four of the five Highs closed (the
 silent restart, SIGPIPE, the quick tap and the full-disk revocation), plus the second-instance fix,
-each failing without its fix. What it found still wrong:
-
-- **The "done" check still misses most real phrasings.** Off its test sentences, 32 of 40 ordinary
-  completion claims were still spoken: "Priya has been notified." "Dinner is booked for 8." "$50
-  sent to Priya." And 7 of 17 plain sentences got replaced by the disclaimer. With no tools in this
-  release nothing can actually be done, but the rule says the assistant must never claim it was.
-- **A service that hangs between turns isn't noticed.** The app shows ready and push-to-talk silently
-  does nothing. Quit, and the hung child keeps its lock, so every relaunch says another copy is
-  already running.
-- **"Delete history" leaves the last two transcripts** in the model's short recap, so they can reach
-  the next prompt.
-- **My docs left out two failed smokes**, the ledger runs above, and said the review's findings were
-  fixed.
-
-A second fix round is running.
+each failing without its fix. It found the "never say it's done without proof" fix only partly
+working, plus two Medium issues still open, all three around the app, the background service and
+deletion. They're being fixed in a second round, and I'll describe them here once the fixes are
+merged. One finding I can name now, because it's about my writing rather than the code: my docs left
+out the two failed ledger smokes above, and said the review's findings were fixed.
 
 ## What it doesn't do yet
 
-- **The second fix round isn't done.** The four findings above are open on `main`, along with two
-  older Lows: a flood of malformed lines can stretch deadlines, and the app still hard-codes
-  "Executed" and the protocol still lists an external-effect field meant for a later release.
+- **The second fix round isn't done.** The second review's open findings are on `main`, along with
+  two older Lows from the first review. They'll be described once fixed.
 - **The live drills need a person with a microphone:** push-to-talk, the real stop time on the
   speakers, barge-in, revocation, a crash, the model being unavailable. Then 100 consented
   utterances, quiet and noisy, and three one-hour sessions.
