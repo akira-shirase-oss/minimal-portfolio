@@ -34,7 +34,7 @@ notification service is down.
 
 Started on 2026-11-16 with milestone I0, the lead-intake spine, because it needs no client. The form
 endpoint, the durable inbox, the notifier and a read-only operator inbox are built, and every drill
-passes in CI. In every load run with the provider down, every acknowledged lead was kept and
+passes in CI. In every valid load run with the provider down, every acknowledged lead was kept and
 delivered, but two runs missed their latency targets on a busy laptop, so the gate isn't passed until
 a quiet-machine baseline and the full runs exist. Its first independent review is running. Nothing
 generates a website yet, and the ship gate needs three real pilot clients, who haven't been found.

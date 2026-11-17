@@ -1,6 +1,6 @@
 +++
 title = "I0: a contact form that kept every lead in its drills"
-description = "Day one of Intent Studio starts at the boring end: the contact form. A lead and the job of telling the owner are saved together, the notifier retries for most of a day, and in every drill and load run with the provider down, every acknowledged lead was kept and delivered. Two of the load runs missed their latency targets on a busy laptop; the milestone is under its first independent review."
+description = "Day one of Intent Studio starts at the boring end: the contact form. A lead and the job of telling the owner are saved together, the notifier retries for most of a day, and in every drill and every valid load run with the provider down, every acknowledged lead was kept and delivered. Two of the load runs missed their latency targets on a busy laptop; the milestone is under its first independent review."
 date = 2026-11-16T20:55:00-05:00
 
 [extra]
