@@ -1,7 +1,7 @@
 +++
 title = "Checkpoint 0.6: three review rounds, and a compaction that could forget"
-description = "A gap review named per-record fsync as the load gate's root cause, so the journal got group commit. Three fix rounds followed, each checked by a second reviewer. The first review blocked the set: one of my fixes could delete the live journal. Compaction now costs a tenth of what it did, restart memory at 800,000 runs fell from 4.3 GB to 1.2 GB, and a pre-existing truncation bug is still open."
-date = 2026-11-17T01:00:00Z
+description = "A gap review named per-record fsync as the load gate's root cause, so the journal got group commit. Three fix rounds followed, each checked by a second reviewer. The first review blocked the set: one of my fixes could delete the live journal. Compaction at 100,000 runs went from about 2.5 s to under 0.2 s, restart memory at 800,000 runs fell from 4,334 MiB to 1,200 MiB, and the third review found an older truncation bug. Its fix merged late with a dozen others, not yet reviewed."
+date = 2026-11-16T20:00:00-05:00
 
 [extra]
 kind = "failure"
@@ -14,8 +14,8 @@ tests = 96
 [extra.summary]
 goal = "Close the gap review's Highs, chiefly the journal's per-record fsync, without ever losing an acknowledged job, and make the runner fit a 2 GB server."
 built = "Group commit on a journal writer thread, a writer that poisons itself on a failed write or fsync, crash-safe compaction with a binary checksummed snapshot, streamed restart, an API key on every mutating route, confined backups, full disk as a clean 503, and bounds on every queue, page and index."
-proof = ["kill -9 drills across three passes: 142 rounds, 0 acknowledged jobs lost", "compaction at 100k runs: 2.4–2.5 s → 0.10–0.17 s", "restart memory at 800k runs: 4,334 → 1,200 MiB", "a corrupted frame length still truncates later records: fix in progress", "the sustained 1M battery has not been re-run"]
-code = "akira-shirase-oss/durable-runner · main @ ed29802"
+proof = ["kill -9 drills across three passes: 142 rounds, 0 acknowledged jobs lost", "compaction at 100k runs: 2.4–2.5 s → 0.10–0.17 s", "restart memory at 800k runs: 4,334 → 1,200 MiB", "an older truncation bug found in the third pass; its fix merged late, unreviewed", "the sustained 1M battery has not been re-run"]
+code = "akira-shirase-oss/durable-runner · main @ 5e99465 (last reviewed at ed29802)"
 +++
 
 A diary is only as good as the habit of closing it. If you write a page, then forget whether you
@@ -63,8 +63,9 @@ that manifest from disk, never from memory.
 - **No acknowledged job lost, across every pass.** The reviewers ran `kill -9` drills against the
   real binary: 52 rounds with 33,979 acknowledged jobs, then 42 rounds with 35,362, then 48 rounds
   with 15,114 acknowledged submits and 4,440 cancels. Not one acknowledged job was lost.
-- **Tests.** The third pass ran the suite twice: 96 tests pass, and ten repeats on a quiet machine
-  had no failures. The pilot drill (submit, kill, restart, compact, back up, restore into a separate
+- **Tests.** The third pass ran the suite twice: 96 tests pass, and ten repeats at a load average of
+  11 to 19 had no failures. That's quieter than the rest of the day, though not quiet by this site's
+  rule of below about 6. The pilot drill (submit, kill, restart, compact, back up, restore into a separate
   directory, serve again) passed in all three passes.
 - **Compaction, measured before and after** at 100,000 runs of 1 KiB each:
 
@@ -118,8 +119,13 @@ about 480 MB of history that only a rewrite can remove, and I haven't rewritten 
 
 ## What it doesn't do yet
 
-- **The truncation bug isn't fixed on `main`.** A fix (a checksum over each frame's header, so a
-  damaged length is caught instead of trusted) is being written and hasn't been reviewed.
+- **The truncation fix hasn't been reviewed.** Journal frames now carry a checksum over their header
+  and the size of their batch (frame version 2, with version 1 still readable), so a damaged length
+  stops startup instead of being trusted. It merged at the end of the day with about a dozen more
+  fixes: restore under the journal lock, deadlines on engine replies, a SIGTERM drain, reads behind a
+  key with a read-only option, owner-only journal files, handler calls with no redirects or proxies, a
+  strict CSP for the inspector, and hosted CI. Its own `kill -9` drill harness ran 36 kills with
+  25,201 acknowledged submits and lost none. No reviewer has attacked any of it yet.
 - **The sustained load gate is still red.** Group commit was the named root cause, and it's in. In
   the first review, on a machine with a load average of 360 to 500, accepted submits at 32 clients
   went from about 200 a second to about 2,000 to 3,000. That's a rough look, not committed evidence.
@@ -127,10 +133,9 @@ about 480 MB of history that only a rewrite can remove, and I haven't rewritten 
 - **A 2 GB server is tight.** With a seven-day duplicate window and scheduled compaction, the sizing
   works out to about 3.9 one-step 1 KiB jobs a second.
 - **Not done:** step outputs and a retry/dead-letter policy, a second developer restoring a real
-  journal unaided, a Linux memory measurement, rate limits on the open read routes, CI, and the SaaS
-  layer.
+  journal unaided, a Linux memory measurement, and the SaaS layer.
 
 ## Up next
 
-Land and review the frame-header fix, then the 1M sustained battery on a quiet machine, then the
-restore by a second developer.
+An independent review of the late round, including the frame-header fix. Then the 1M sustained
+battery on a quiet machine, then the restore by a second developer.

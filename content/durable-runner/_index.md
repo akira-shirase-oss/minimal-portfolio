@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "building — D4: three review rounds merged, no acknowledged job lost; a truncation bug and the sustained-load gate still open"
+status = "building — D4: three reviewed rounds, no acknowledged job lost; a late round (incl. the truncation fix) merged, unreviewed; sustained-load gate still red"
 short_title = "Durable Runner"
 milestones = [
   { id = "D0", name = "model", about = "The state machine: transitions, invalid states, identities, limits — deterministic tests under a fake clock.", done = true },
@@ -15,7 +15,7 @@ milestones = [
   { id = "D3", name = "maintain", about = "Compaction into generations, seven-day terminal expiry, backup and restore, bounded diagnostics.", done = true },
   { id = "D4", name = "ship", about = "CLI and inspection UI, a pilot workflow, the load plan — and a second developer restores a real directory." },
 ]
-up_next = { milestone = "D4", step = "load", title = "The sustained-load gate: group commit is in; the 1M battery re-runs on a quiet machine after the frame-header fix" }
+up_next = { milestone = "D4", step = "load", title = "A review of the late round, then the 1M sustained battery on a quiet machine" }
 
 [[extra.planned]]
 milestone = "D4"

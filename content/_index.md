@@ -35,7 +35,7 @@ log = "minibtc/_index.md"
 
 [[extra.now]]
 process = "durable-runner"
-what = "Acknowledged work survives restarts — journaled, crash-tested, three review rounds with no acknowledged job lost; the sustained-load gate is still red until the 1M battery re-runs."
+what = "Acknowledged work survives restarts — journaled, crash-tested, three reviewed rounds with no acknowledged job lost, a late round awaiting review; the sustained-load gate is still red until the 1M battery re-runs."
 link = "@/durable-runner/_index.md"
 log = "durable-runner/_index.md"
 
