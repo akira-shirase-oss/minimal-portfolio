@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "A0 built, A1 partly; review Highs and six Mediums fixed, not re-reviewed — the 1M-event run owed, Durable Runner as first host next"
+status = "A0 built and re-closed after its fix round, A1 partly; a second review running — the 1M-event run owed"
 short_title = "AI Ops Layer"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
@@ -16,7 +16,7 @@ milestones = [
   { id = "A3", name = "controlled recovery", about = "Scoped, audited retry and reconcile through adapters that own execution, never a generic \"run again\"." },
   { id = "A4", name = "quality and adoption", about = "Measured overhead, retention cost, sampling and export, and estimated-versus-reconciled cost." },
 ]
-up_next = { milestone = "A1", step = "A1", title = "The last Medium, a steady flood test and a second review, then A2: Durable Runner as the first real host" }
+up_next = { milestone = "A1", step = "A1", title = "The second review, then A2: Durable Runner as the first real host" }
 +++
 
 **AI Operations Layer** is an add-on for applications that call AI models. When something goes wrong

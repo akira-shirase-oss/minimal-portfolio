@@ -6,11 +6,12 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "parked (future horizon); B0 built; review: memo accepted with corrections, spine fix first — the fix round is landing, not re-reviewed"
+status = "parked (future horizon); B0 built, its fix round merged, the memo accepted with corrections (D-036) — next: the starter template, B1-T"
 short_title = "Backend Platform"
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
   { id = "B0", name = "evidence memo and spine", about = "A memo that asks whether a platform is even the right answer, the engineering spine with CI, a fake provider, the partial-provisioning drill and the first load scenario." },
+  { id = "B1-T", name = "starter template", about = "The copy-and-own starter template from the accepted B0 memo: an accounts kit, a host layer, configuration and secrets, releases, a health contract and restore drills." },
   { id = "B1", name = "control plane core", about = "The control database, project and environment lifecycle, per-project principals, envelope-encrypted secrets." },
   { id = "B2", name = "reconciled provisioning", about = "A lease-claimed worker and the starter's adapters: a database and role, a bucket with quotas." },
   { id = "B3", name = "starter deployment", about = "Digest-pinned release manifests and a rootless container runtime." },
@@ -19,7 +20,7 @@ milestones = [
   { id = "B6", name = "load and isolation evidence", about = "A million control-API requests and a million app-facing requests, with isolation measured." },
   { id = "B7", name = "external validation and ship gate", about = "Three independent teams run the operations script." },
 ]
-up_next = { milestone = "B0", step = "fixes", title = "Finish the fix round and correct the memo, a second review, then the decision; quiet-machine load runs owed" }
+up_next = { milestone = "B1-T", step = "B1-T", title = "The copy-and-own starter template" }
 +++
 
 **Backend Platform** is a self-hosted backend for one organization's small apps: deployment,

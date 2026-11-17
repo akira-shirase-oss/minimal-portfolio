@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "M0–M5 built, functional gates pass; first fix round in (5 Highs, 5 Mediums), a second running — in progress until the full 1M load runs"
+status = "M0–M5 built, functional gates pass; two fix rounds merged, a second review running — in progress until the full 1M load runs"
 short_title = "Payment Sandbox"
 # The milestones from the project's docs/ROADMAP.md. M0–M5 are one row here: they were built
 # together on the first day, and the roadmap holds them all at "in progress" until the full load runs.
@@ -16,7 +16,7 @@ milestones = [
   { id = "M7", name = "developer product", about = "A CLI, a TypeScript SDK, a scenario library and dataset resets." },
   { id = "M8", name = "billing direction", about = "Asynchronous outcomes, authorization expiry on virtual time, then settlement, fees, payouts and disputes." },
 ]
-up_next = { milestone = "M0–M5", step = "fixes", title = "The second fix round on four Mediums, a second review, then M6: checkout and the dashboard" }
+up_next = { milestone = "M0–M5", step = "review", title = "The second review, then M6: checkout and the dashboard" }
 +++
 
 **Payment Sandbox** is a place to test a shop's payments without a real payment provider, real cards

@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "first release built, not shippable: second review says fix first, a second fix round running; live mic drills owed"
+status = "first release built, not shippable: second fix round merged, a third review has two items being fixed; live mic drills owed"
 short_title = "Voice Agent"
 # The project's own roadmap (docs/ROADMAP.md). Its first release is V0–V2 as one unit (D-012),
 # so this log treats it as one milestone.
@@ -15,7 +15,7 @@ milestones = [
   { id = "V3", name = "memory and personal voice", about = "Memory you can review, trace to its source and delete, and a personal-voice profile gated on consent and a usage-rights review." },
   { id = "V4", name = "controlled tools", about = "One reversible local tool, then reviewed external actions that name their recipient and leave an audit record." },
 ]
-up_next = { milestone = "V0–V2", step = "fixes", title = "The second fix round and another review, then the live microphone drills" }
+up_next = { milestone = "V0–V2", step = "fixes", title = "The third review's two items, then the live microphone drills" }
 +++
 
 **Personal Voice Agent** is a voice assistant that learns how you talk without taking actions in your
