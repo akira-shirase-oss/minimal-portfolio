@@ -40,7 +40,7 @@ tagline = "Rust runtimes, background jobs, AI infrastructure"
 card_alt = "404human: hey, I break things. A clay figure thinking at a laptop."
 # Contact links on the home page. Fill in the ones you want; empty ones are hidden.
 # X handle without the @ (also used for link previews on X).
-x_handle = "akirashiraseoss"
+x_handle = "404humandev"
 # GitHub username.
 github = "akira-shirase-oss"
 # Email address (shown on the page, so use one you're happy to make public).
