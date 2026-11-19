@@ -109,7 +109,7 @@ button.link       { background: none; border: none; padding: 0; font: inherit;
 table             { border-collapse: collapse; }
 th, td            { padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 3.5); }
 th                { text-align: left;
-                    background: light-dark(#eae6df, #2a2721); }
+                    background: var(--secondary); color: var(--secondary-foreground); }
 section, article  { margin: calc(var(--spacing) * 14) 0; }
 pre               { overflow-x: auto; }
 summary           { cursor: pointer; }
@@ -123,21 +123,47 @@ td time, td > code { white-space: nowrap; }
 progress          { width: 110px; vertical-align: middle; }
 h3                { margin-top: calc(var(--spacing) * 10); }
 
-/* Markdown bodies: tables have no border attribute, so give them the same
-   hairline the hand-built tables get from border="1" — currentColor, so it
-   follows whatever theme the reader's agent is in. */
-.post-body table th, .post-body table td { border: 1px solid; }
-.post-body pre      { padding: calc(var(--spacing) * 3) calc(var(--spacing) * 3.5); }
+/* The house hairline: the theme's --border on table rules and rules of
+   division. Hand-built tables carry border="1" (drawn by the browser);
+   Markdown-body tables have no attribute, so the CSS draws it for them. */
+hr                { border: 0; border-top: 1px solid var(--border); }
+table[border="1"], table[border="1"] th, table[border="1"] td
+                  { border: 1px solid var(--border); }
+.post-body table th, .post-body table td { border: 1px solid var(--border); }
+
+/* The house box, now the theme's card: border, large radius, card surface,
+   small shadow. Used by fieldset panels on every index and log page. */
+fieldset          { min-inline-size: 0; border: 1px solid var(--border);
+                    border-radius: var(--radius-lg);
+                    background: var(--card); color: var(--card-foreground);
+                    box-shadow: var(--shadow-sm); }
+
+/* Inline chips: code and keys sit on --muted with the small radius, keys get
+   the hairline and 2xs shadow. Inside a <pre>, a <mark> or a link the chip
+   resets — the block, the highlight and the link colour already carry it. */
+code, kbd         { background: var(--muted); border-radius: var(--radius-sm); }
+code              { padding: .1em .3em; }
+kbd               { padding: .1em .4em; border: 1px solid var(--border);
+                    box-shadow: var(--shadow-2xs); }
+pre code, mark code, a code { background: none; padding: 0; }
+
+/* <mark> is the site's badge ("● in progress", a log's name): accent chip. */
+mark              { background: var(--accent); color: var(--accent-foreground);
+                    border-radius: var(--radius-sm); padding: .05em .35em; }
+
+/* Meta lines and aside text read muted — still ≥ 4.5:1 on both surfaces. */
+small             { color: var(--muted-foreground); }
+.post-body pre      { padding: calc(var(--spacing) * 3) calc(var(--spacing) * 3.5);
+                      border: 1px solid var(--border); border-radius: var(--radius-md); }
 img                 { max-width: 100%; height: auto; }
 .mobile-label       { display: none; }
-fieldset            { min-inline-size: 0; }
 
 /* The status ticker: the old <marquee>, rebuilt as a sliding track so it can
    stop for readers who ask for less motion. The text is written once in
    data-ticker; the two pseudo-elements draw the two identical copies the
    loop needs, and the track slides exactly one copy's width (-50%). Each
    copy is at least 64ch so even a short ticker scrolls instead of gapping. */
-.ticker             { overflow: hidden; }
+.ticker             { overflow: hidden; color: var(--muted-foreground); }
 .ticker-track       { display: inline-block; white-space: nowrap;
                       animation: ticker-slide 50s linear infinite; }
 .ticker-copy        { display: inline-block; }
@@ -171,7 +197,7 @@ fieldset            { min-inline-size: 0; }
   .mobile-records { border: 0; overflow: visible; }
   .mobile-records thead { position: absolute; width: 1px; height: 1px;
                          padding: 0; overflow: hidden; clip-path: inset(50%); }
-  .mobile-records tr { margin-bottom: calc(var(--spacing) * 3.5); border: 1px solid; }
+  .mobile-records tr { margin-bottom: calc(var(--spacing) * 3.5); border: 1px solid var(--border); }
   .mobile-records td { border: 0; text-align: left; overflow-wrap: anywhere; }
   .mobile-records .mobile-label { display: inline; font-weight: bold; }
 }

@@ -263,9 +263,14 @@ panels and `<details>` accordions. Two typefaces: self-hosted Manrope (OFL,
 chrome — code, keys, nav brackets, the ticker and the ASCII masthead.
 
 - **The stylesheet is the whole design.** `static/style.css` is one documented
-  file: a max-width, the font stack, table padding, the light/dark hints. No
-  colors by hand — the browser's own palette carries the theme — and no
-  flexbox, no grid, no shadows.
+  file: a max-width, the font stack, and the maintainer's pasted shadcn theme
+  translated into plain CSS custom properties — each colour token written once
+  as `light-dark(<light>, <dark>)`, plus the theme's radius, shadow and spacing
+  scales. The `html[data-theme]` switch narrows `color-scheme` and every token
+  follows, so the palette works with JavaScript off too. Readability rules the
+  maintainer set (links and text-bearing primaries use the deeper blues of the
+  same scale) are enforced by `node tools/check-contrast.mjs`. Still no
+  flexbox, no grid, no new fonts.
 - **Every list is a real table.** `templates/partials/log-panel.html` draws each
   build log's milestone table plus a tests-per-entry sparkline inside
   `<details>`, on the log's own page. On phones the home page's record tables
