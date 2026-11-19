@@ -14,6 +14,11 @@
 //   --root <dir>     built site to serve        (default public)
 //   --out <dir>      where PNGs land            (default shots)
 //   --port <n>       HTTP port for the server   (default 58910)
+//   --strip <origin> absolute URL origin to rewrite to root-relative in
+//                    served HTML (default https://404human.dev — zola.toml's
+//                    base_url, which zola bakes into every link, so without
+//                    this the page loads its CSS from the live site and the
+//                    CSP blocks it: shots come out unstyled)
 //   --chrome <path>  browser binary             (default: macOS Chrome, then
 //                    chromium/google-chrome/chrome on PATH)
 
@@ -29,6 +34,7 @@ const arg = (n, d) => { const i = process.argv.indexOf(`--${n}`); return i === -
 const SITE = resolve(ROOT, arg('root', 'public'));
 const OUT = resolve(ROOT, arg('out', 'shots'));
 const PORT = Number(arg('port', 58910));
+const STRIP = arg('strip', 'https://404human.dev');
 
 const CHROME_CANDIDATES = [
 	process.env.CHROME_PATH,
@@ -61,8 +67,14 @@ const server = createServer((req, res) => {
 	let path = new URL(req.url, 'http://x').pathname;
 	if (path.endsWith('/')) path += 'index.html';
 	try {
-		const body = readFileSync(join(SITE, path));
-		res.writeHead(200, { 'content-type': TYPES[extname(path)] || 'application/octet-stream' });
+		let body = readFileSync(join(SITE, path));
+		const type = TYPES[extname(path)] || 'application/octet-stream';
+		// Pages link their assets by the baked-in base_url (https://404human.dev);
+		// served from here that's cross-origin and the CSP blocks it — rewrite to
+		// root-relative so CSS, fonts and images load same-origin. (Also rewrites
+		// canonical/og/JSON-LD URLs — meta text, invisible in a screenshot.)
+		if (type === 'text/html') body = Buffer.from(body.toString().replaceAll(STRIP, ''));
+		res.writeHead(200, { 'content-type': type });
 		res.end(body);
 	} catch { res.writeHead(404); res.end('not found'); }
 });
@@ -111,6 +123,16 @@ try {
 	await send('Page.enable');
 	await send('Runtime.enable');
 
+	// A screenshot that captured an unstyled page is worse than no shot — it
+	// looks like a design. Every page must show the stylesheet applied: Manrope
+	// computed on <body>, the Manrope face itself loaded, and --mono resolved
+	// (--mono is the one custom property both the old and new stylesheets set —
+	// --background only exists after the theme change, so it can't serve here).
+	const styled = `(() => { const cs = getComputedStyle(document.body);
+		return cs.fontFamily.includes('Manrope') && document.fonts.check('16px Manrope')
+			&& cs.getPropertyValue('--mono').trim() !== ''; })()`;
+	const unstyled = new Set();
+
 	for (const theme of THEMES) {
 		await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }] });
 		for (const size of SIZES) {
@@ -118,11 +140,14 @@ try {
 				width: size.w, height: size.h, deviceScaleFactor: size.scale, mobile: size.mobile,
 			});
 			for (const [name, path] of PAGES) {
+				if (unstyled.has(name)) continue;
 				events.length = 0;
 				await send('Page.navigate', { url: `http://127.0.0.1:${PORT}${path}` });
 				for (let i = 0; i < 100 && !events.includes('Page.loadEventFired'); i++) await sleep(100);
 				await send('Runtime.evaluate', { expression: 'document.fonts.ready.then(()=>1)', awaitPromise: true });
 				await sleep(250); // let the ticker/theme settle
+				const ok = await send('Runtime.evaluate', { expression: styled, returnByValue: true });
+				if (!ok.result?.value) { unstyled.add(name); console.error(`UNSTYLED ${name} (${path}) — page rendered without the stylesheet; skipping it`); continue; }
 				const shot = await send('Page.captureScreenshot', { format: 'png' });
 				const file = join(OUT, `${name}-${size.tag}-${theme}.png`);
 				writeFileSync(file, Buffer.from(shot.data, 'base64'));
@@ -130,6 +155,7 @@ try {
 			}
 		}
 	}
+	if (unstyled.size) { console.error(`unstyled pages: ${[...unstyled].join(', ')}`); process.exitCode = 1; }
 } finally {
 	ws?.close();
 	child.kill();
