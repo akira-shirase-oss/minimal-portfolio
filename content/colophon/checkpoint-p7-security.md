@@ -120,3 +120,7 @@ the five Low items it left were fixed the same evening.
 
 Fix the review's two new Highs and get the branch's CI green, then a second review and the merge. Then the testbed
 flake, the load smokes and L-case runs on a quiet machine, and the 24-hour soak before 0.1.
+
+*Update, 19 November 2026:* the landing site is live at [colophon.404human.dev](https://colophon.404human.dev)
+(docs at [docs.colophon.404human.dev](https://docs.colophon.404human.dev)); the "isn't attached yet" line above is
+history.
