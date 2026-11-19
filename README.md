@@ -1,6 +1,6 @@
 # 404human: portfolio and blog
 
-A text-only portfolio and blog built with [Zola](https://www.getzola.org) 0.23.6, a single program (installed at `~/.local/bin/zola`) that turns Markdown files into a plain, fast website. There's no theme and no tracking. The only JavaScript is a small script in `templates/base.html` for the light/dark toggle, which remembers the reader's choice and otherwise follows their system setting. The look is a calm "job log": Manrope for reading, the system monospace stack for everything terminal — bordered tables, fieldset panels, `<details>` accordions and a scrolling status ticker — the web of 1996, minus the clutter. The ticker stops for readers who turn motion off, and every page is complete without JavaScript. The site also makes `sitemap.xml`, `robots.txt` and an RSS feed (`rss.xml`) automatically.
+A text-only portfolio and blog built with [Zola](https://www.getzola.org) 0.23.6, a single program (installed at `~/.local/bin/zola`) that turns Markdown files into a plain, fast website. There's no theme and no tracking. The only JavaScript is a small script in `templates/base.html` — the light/dark toggle, which remembers the reader's choice and otherwise follows their system setting, plus the ticker's one-pass play. The look is a calm "job log": Manrope for reading, the system monospace stack for everything terminal — bordered tables, fieldset panels, `<details>` accordions and a status ticker — the web of 1996, minus the clutter. The ticker is a static strip (a `[ play ]` button runs one pass), and every page is complete without JavaScript. The site also makes `sitemap.xml`, `robots.txt` and an RSS feed (`rss.xml`) automatically.
 
 ## Write a new post
 
@@ -257,7 +257,7 @@ The Colophon and js-runtime entries follow the same steps below, in `content/col
 ## How the site looks, and why (the "job log")
 
 Reskinned on 2026-11-08 to the house style: the page is drawn the way a terminal
-log would be — tables with real headers, a scrolling status ticker, fieldset
+log would be — tables with real headers, a status ticker, fieldset
 panels and `<details>` accordions. Two typefaces: self-hosted Manrope (OFL,
 `static/fonts/`) for reading, and the system monospace stack for the terminal
 chrome — code, keys, nav brackets, the ticker and the ASCII masthead.
@@ -280,11 +280,13 @@ chrome — code, keys, nav brackets, the ticker and the ASCII masthead.
   Running-now rows) and `projects`. The ticker counts, the Running-now states
   and the latest-entry names are derived from the build logs, never typed in;
   the Numbers table is curated claims, each tied to stored evidence.
-- **Motion is one ticker, and JavaScript is one toggle.** The status strip is a
-  CSS-scrolling track — the text is written once in `data-ticker` and two copies
-  are drawn from it — and it stops dead for readers who ask for less motion.
-  The only script is the light/dark toggle in `templates/base.html`: with
-  JavaScript off, or with "reduce motion" on, every page is complete and still.
+- **Motion is a static ticker, and JavaScript is one small script.** Nothing on
+  the site animates forever: the status strip's text is written once in
+  `data-ticker` and drawn twice by CSS, and the one script in
+  `templates/base.html` (the theme toggle) adds a `[ play ]` button that runs a
+  single slide pass, ending where it started. Reduced-motion readers never get
+  the button — with JavaScript off, or with "reduce motion" on, every page is
+  complete and still.
 - **A Content-Security-Policy meta** in `base.html` allows same-origin
   everything, plus two inline scripts by hash: the theme toggle and the
   livereload snippet `zola serve` injects. Editing the toggle means updating

@@ -178,18 +178,22 @@ small             { color: var(--muted-foreground); }
 img                 { max-width: 100%; height: auto; }
 .mobile-label       { display: none; }
 
-/* The status ticker: the old <marquee>, rebuilt as a sliding track so it can
-   stop for readers who ask for less motion. The text is written once in
-   data-ticker; the two pseudo-elements draw the two identical copies the
-   loop needs, and the track slides exactly one copy's width (-50%). Each
-   copy is at least 64ch so even a short ticker scrolls instead of gapping. */
+/* The status ticker: the old <marquee>, retired to a static strip — the
+   house rule is nothing infinite. The text is written once in data-ticker;
+   the two pseudo-elements draw the two identical copies a play-through
+   needs, and the track slides exactly one copy's width (-50%), so one pass
+   lands where it started. The [ play ] button is drawn by the script in
+   base.html; with JavaScript off the strip just reads, and for reduced
+   motion the button is never offered and the strip scrolls by hand. */
 .ticker             { overflow: hidden; color: var(--muted-foreground); }
-.ticker-track       { display: inline-block; white-space: nowrap;
-                      animation: ticker-slide 50s linear infinite; }
+.ticker-track       { display: inline-block; white-space: nowrap; }
+.ticker.playing .ticker-track
+                    { animation: ticker-slide 50s linear 1; }
 .ticker-copy        { display: inline-block; }
 .ticker-copy::before,
 .ticker-copy::after { content: attr(data-ticker); display: inline-block;
                       min-width: 64ch; }
+button.link.ticker-play { font-family: var(--mono); }
 @keyframes ticker-slide { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
   .ticker         { overflow-x: auto; }
