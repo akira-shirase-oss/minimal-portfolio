@@ -130,7 +130,9 @@
           {%- set slug = project.link | replace(from="@/", to="") | replace(from="/_index.md", to="") %}
           {%- set l = config.extra.links[slug] | default(value={}) %}
           {%- if l.website or l.docs or l.source %}
-          <br><small>{% if l.website %}[ <a href="{{ l.website }}" rel="noopener">website</a> ] {% endif %}{% if l.docs %}[ <a href="{{ l.docs }}" rel="noopener">docs</a> ] {% endif %}{% if l.source %}[ <a href="{{ l.source }}" rel="noopener">source</a> ]{% endif %}</small>
+          {#- &nbsp; inside the brackets: each "[ label ]" is one unbreakable
+              unit; the row wraps only at the plain spaces between them. -#}
+          <br><small>{% if l.website %}[&nbsp;<a href="{{ l.website }}" rel="noopener">website</a>&nbsp;]{% endif %}{% if l.docs %} [&nbsp;<a href="{{ l.docs }}" rel="noopener">docs</a>&nbsp;]{% endif %}{% if l.source %} [&nbsp;<a href="{{ l.source }}" rel="noopener">source</a>&nbsp;]{% endif %}</small>
           {%- endif %}
         {%- endif %}
         </td>

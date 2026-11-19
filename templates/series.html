@@ -23,7 +23,8 @@
   {%- set slug = section.path | replace(from="/", to="") %}
   {%- set l = config.extra.links[slug] | default(value={}) %}
   {%- if l.website or l.docs or l.source %}
-  <p><small>{% if l.website %}[ <a href="{{ l.website }}" rel="noopener">website</a> ] {% endif %}{% if l.docs %}[ <a href="{{ l.docs }}" rel="noopener">docs</a> ] {% endif %}{% if l.source %}[ <a href="{{ l.source }}" rel="noopener">source</a> ]{% endif %}</small></p>
+  {#- &nbsp; inside the brackets keeps each "[ label ]" unbreakable. -#}
+  <p><small>{% if l.website %}[&nbsp;<a href="{{ l.website }}" rel="noopener">website</a>&nbsp;]{% endif %}{% if l.docs %} [&nbsp;<a href="{{ l.docs }}" rel="noopener">docs</a>&nbsp;]{% endif %}{% if l.source %} [&nbsp;<a href="{{ l.source }}" rel="noopener">source</a>&nbsp;]{% endif %}</small></p>
   {%- endif %}
 
   {#- The whole log at a glance first, drawn the same way as on the home page. #}
