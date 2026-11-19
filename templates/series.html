@@ -18,6 +18,13 @@
   {%- if section.description %}
   <p>{{ section.description }}</p>
   {%- endif %}
+  {#- Website · Docs · Source, from the one map in zola.toml ([extra.links.*],
+      keyed by this log's folder). Missing entries draw nothing — no dead links. -#}
+  {%- set slug = section.path | replace(from="/", to="") %}
+  {%- set l = config.extra.links[slug] | default(value={}) %}
+  {%- if l.website or l.docs or l.source %}
+  <p><small>{% if l.website %}[ <a href="{{ l.website }}" rel="noopener">website</a> ] {% endif %}{% if l.docs %}[ <a href="{{ l.docs }}" rel="noopener">docs</a> ] {% endif %}{% if l.source %}[ <a href="{{ l.source }}" rel="noopener">source</a> ]{% endif %}</small></p>
+  {%- endif %}
 
   {#- The whole log at a glance first, drawn the same way as on the home page. #}
   {%- set log = section %}

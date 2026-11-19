@@ -124,6 +124,15 @@
         {%- else %}
           <b>{{ project.name }}</b>
         {%- endif %}
+        {#- Website · Docs · Source, from zola.toml's [extra.links.*] keyed by
+            the build-log folder the project links to. Missing = draw nothing. -#}
+        {%- if project.link and project.link is starting_with(pat="@/") %}
+          {%- set slug = project.link | replace(from="@/", to="") | replace(from="/_index.md", to="") %}
+          {%- set l = config.extra.links[slug] | default(value={}) %}
+          {%- if l.website or l.docs or l.source %}
+          <br><small>{% if l.website %}[ <a href="{{ l.website }}" rel="noopener">website</a> ] {% endif %}{% if l.docs %}[ <a href="{{ l.docs }}" rel="noopener">docs</a> ] {% endif %}{% if l.source %}[ <a href="{{ l.source }}" rel="noopener">source</a> ]{% endif %}</small>
+          {%- endif %}
+        {%- endif %}
         </td>
         <td><span class="mobile-label" aria-hidden="true">Year: </span><code>{{ project.year | default(value="") }}</code></td>
         <td><span class="mobile-label" aria-hidden="true">Status: </span>{{ project.status | default(value="") }}</td>

@@ -45,3 +45,39 @@ x_handle = "404humandev"
 github = "akira-shirase-oss"
 # Email address (shown on the page, so use one you're happy to make public).
 email = ""
+
+# Website · Docs · Source for each project, keyed by its build-log folder —
+# one line per URL, so a custom domain later is a one-line edit. A project
+# with a missing row simply shows nothing for it; no dead links are drawn
+# (tools/check-links.mjs answers 200 for every URL here).
+[extra.links.colophon]
+website = "https://colophon.404human.dev"
+docs = "https://docs.colophon.404human.dev"
+source = "https://github.com/akira-shirase-oss/colophon-cms"
+[extra.links.service-monitor]
+source = "https://github.com/akira-shirase-oss/monitoring-service"
+[extra.links.js-runtime]
+website = "https://js-runtime-landing.pages.dev"
+docs = "https://js-runtime-docs.pages.dev"
+source = "https://github.com/akira-shirase-oss/js-runtime"
+[extra.links.minibtc]
+source = "https://github.com/akira-shirase-oss/miniBTC-chain"
+[extra.links.durable-runner]
+website = "https://durable-runner-landing.pages.dev"
+docs = "https://durable-runner-docs.pages.dev"
+source = "https://github.com/akira-shirase-oss/durable-runner"
+[extra.links.payment-sandbox]
+source = "https://github.com/akira-shirase-oss/payment-sandbox"
+[extra.links.ai-operations-layer]
+docs = "https://ai-operations-layer-docs.pages.dev"
+source = "https://github.com/akira-shirase-oss/ai-operations-layer"
+[extra.links.personal-voice-agent]
+source = "https://github.com/akira-shirase-oss/personal-voice-agent"
+[extra.links.intent-studio]
+source = "https://github.com/akira-shirase-oss/intent-studio"
+[extra.links.accounting-reconciliation]
+source = "https://github.com/akira-shirase-oss/accounting-reconciliation"
+[extra.links.native-workspace]
+source = "https://github.com/akira-shirase-oss/native-workspace"
+[extra.links.backend-platform]
+source = "https://github.com/akira-shirase-oss/backend-platform"
