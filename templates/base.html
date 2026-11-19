@@ -16,7 +16,7 @@
        (`shasum -a 256`, base64) and update the hash or the toggle silently
        stops unhiding. JSON-LD blocks are data, not script requests, so
        they need no hash. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com 'sha256-jpUsicNqxEQKhYxYNdg/zI1U5Kda3wxX1CujGCq5+Tw=' 'sha256-915BT+Saxf9hcT8mOhqas9hdZ5S8Z0bfVMUr5YP4ytI='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' ws:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com 'sha256-DuL2ryLe0jgoVHNq9X7ExNHad0CLFyZuF3I9V3+dHFE=' 'sha256-915BT+Saxf9hcT8mOhqas9hdZ5S8Z0bfVMUr5YP4ytI='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' ws:; object-src 'none'; base-uri 'self'; form-action 'self'">
   {%- set is_home = false %}
   {%- if page is defined and page.title %}
     {%- set doc_title = page.title %}
@@ -47,8 +47,8 @@
   <link rel="canonical" href="{{ current_url }}">
   {%- endif %}
   {%- block robots %}{% endblock robots %}
-  <meta name="theme-color" content="#f7f5f2" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#1c1a17" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="{{ get_url(path='favicon.ico') }}" sizes="48x48">
   <link rel="apple-touch-icon" href="{{ get_url(path='apple-touch-icon.png') }}">
   <link rel="manifest" href="{{ get_url(path='site.webmanifest') }}">
@@ -90,8 +90,9 @@
   {%- include "partials/json-ld.html" %}
 
   <script>
-    // Text light/dark toggle — the only script on the site. Runs before paint so a
-    // saved choice never flashes; with no saved choice the system setting wins.
+    // Text light/dark toggle plus the ticker's one-pass play — the only
+    // script on the site. Runs before paint so a saved theme choice never
+    // flashes; with no saved choice the system setting wins.
     (function () {
       var root = document.documentElement;
       try {
@@ -102,6 +103,29 @@
         else root.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       } catch (e) {}
       document.addEventListener("DOMContentLoaded", function () {
+        // The status ticker is a static strip (nothing infinite on this
+        // site). Offer a "play" that runs one slide pass; reduced-motion
+        // readers are never offered it, and it stops where it started.
+        var t = document.querySelector(".ticker");
+        if (t && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          var wrap = document.createElement("small");
+          var p = document.createElement("button");
+          p.type = "button";
+          p.className = "link ticker-play";
+          p.setAttribute("aria-label", "Play the status ticker once");
+          p.textContent = "play";
+          wrap.append("[ ", p, " ]");
+          t.after(wrap);
+          p.addEventListener("click", function () {
+            if (t.classList.contains("playing")) return;
+            t.classList.add("playing");
+            p.textContent = "playing…";
+          });
+          t.addEventListener("animationend", function () {
+            t.classList.remove("playing");
+            p.textContent = "play";
+          });
+        }
         var b = document.getElementById("theme-toggle");
         if (!b) return;
         function isDark() {

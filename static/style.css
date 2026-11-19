@@ -1,9 +1,11 @@
 /*
   The entire stylesheet — documented because accounting is the house style:
-  max-width for the 1180px container, font family/size, spacing, and a
-  color-scheme hint so the browser's own light/dark defaults carry the theme.
-  No colors by hand, no flexbox, no grid, no shadows.
-  Tables, <details>, <pre> and HTML elements carry the layout.
+  max-width for the 1180px container, font family/size, spacing, and the
+  maintainer's pasted shadcn theme translated from Tailwind variables into
+  plain CSS custom properties. Each color token is written once as
+  light-dark(<light>, <dark>): the html[data-theme] switch narrows
+  color-scheme and every token follows it — with no data-theme at all
+  (JavaScript off) the system preference still picks the right side.
 
   Two typefaces, both honest: Manrope (self-hosted, OFL) for reading, and the
   system monospace stack for everything that acts like a terminal — code,
@@ -20,57 +22,178 @@
      per-character to the stacks below. */
   src: url("fonts/manrope-var.woff2") format("woff2");
 }
-:root             { --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-                    color-scheme: light dark; }
-body              { max-width: 1180px; margin: 0 auto; padding: 0 24px;
+:root {
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  color-scheme: light dark;
+
+  /* ---- The pasted theme, verbatim values (shadcn/Tailwind source). ---- */
+  --background:    light-dark(oklch(1 0 0),    oklch(.1822 0 0));
+  --foreground:    light-dark(oklch(.3211 0 0), oklch(.9219 0 0));
+  --card:          light-dark(oklch(1 0 0),    oklch(.2046 0 0));
+  --card-foreground: light-dark(oklch(.3211 0 0), oklch(.9219 0 0));
+  --popover:       light-dark(oklch(1 0 0),    oklch(.2686 0 0));
+  --popover-foreground: light-dark(oklch(.3211 0 0), oklch(.9219 0 0));
+  --secondary:     light-dark(oklch(.9670 .0029 264.5419), oklch(.2686 0 0));
+  --secondary-foreground: light-dark(oklch(.4461 .0263 256.8018), oklch(.9219 0 0));
+  --muted:         light-dark(oklch(.9846 .0017 247.8389), oklch(.2393 0 0));
+  --muted-foreground: light-dark(oklch(.5510 .0234 264.3637), oklch(.7155 0 0));
+  --accent:        light-dark(oklch(.9514 .0250 236.8242), oklch(.4244 .1809 265.6377));
+  --accent-foreground: light-dark(oklch(.3791 .1378 265.5222), oklch(.8823 .0571 254.1284));
+  --border:        light-dark(oklch(.9276 .0058 264.5313), oklch(.2686 0 0));
+  --input:         light-dark(oklch(.9276 .0058 264.5313), oklch(.3715 0 0));
+  --ring:          oklch(.6231 .1880 259.8145); /* #3b82f6 in both schemes: the
+     pasted light primary, and the pasted dark ring. Kept for focus rings,
+     icons and large shapes — not for small text (see --primary, --link). */
+
+  /* Readability overrides the paste where the pasted value can't carry text
+     (the maintainer's "same look, made readable" rules):
+       --primary  = the text-bearing primary. Light: chart-2 #2563eb (white text
+                    5.17:1) — the pasted #3b82f6 reaches only 3.68:1. Dark: the
+                    pasted dark primary itself, #1d4ed8 (white 6.70:1).
+       --link     = the theme's own chart-2 in both schemes: #2563eb on the
+                    light background (5.17:1), #3b82f6 on the dark one (5.09:1).
+                    The dark primary #1d4ed8 is only 2.80:1 as text, so dark
+                    links/accent text use #3b82f6. */
+  --primary:     light-dark(oklch(.5461 .2152 262.8809), oklch(.4882 .2172 264.3763));
+  --primary-foreground: oklch(1 0 0);
+  --link:        light-dark(oklch(.5461 .2152 262.8809), oklch(.6231 .1880 259.8145));
+
+  /* Destructive one shade deeper than the pasted oklch(.6368 .2078 25.3313)
+     (#ef4444 — white only 3.76:1): oklch(.5771 .2152 27.3250) = #dc2626,
+     white text 4.83:1. */
+  --destructive:            oklch(.5771 .2152 27.3250);
+  --destructive-foreground: oklch(1 0 0);
+
+  --chart-1: light-dark(oklch(.6231 .1880 259.8145), oklch(.7137 .1434 254.6240));
+  --chart-2: light-dark(oklch(.5461 .2152 262.8809), oklch(.6231 .1880 259.8145));
+  --chart-3: light-dark(oklch(.4882 .2172 264.3763), oklch(.5461 .2152 262.8809));
+  --chart-4: light-dark(oklch(.4244 .1809 265.6377), oklch(.4882 .2172 264.3763));
+  --chart-5: light-dark(oklch(.3791 .1378 265.5222), oklch(.4244 .1809 265.6377));
+
+  /* Shape, depth and rhythm from the same paste: --radius 1.05rem with the
+     sm −4px / md −2px / lg / xl +4px scale, the shadow scale verbatim, and a
+     4px spacing unit — every padding and margin below is a multiple of it. */
+  --radius:    1.05rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0%/.05);
+  --shadow-xs:  0 1px 3px 0px hsl(0 0% 0%/.05);
+  --shadow-sm:  0 1px 3px 0px hsl(0 0% 0%/.10),0 1px 2px -1px hsl(0 0% 0%/.10);
+  --shadow:     0 1px 3px 0px hsl(0 0% 0%/.10),0 1px 2px -1px hsl(0 0% 0%/.10);
+  --shadow-md:  0 1px 3px 0px hsl(0 0% 0%/.10),0 2px 4px -1px hsl(0 0% 0%/.10);
+  --shadow-lg:  0 1px 3px 0px hsl(0 0% 0%/.10),0 4px 6px -1px hsl(0 0% 0%/.10);
+  --shadow-xl:  0 1px 3px 0px hsl(0 0% 0%/.10),0 8px 10px -1px hsl(0 0% 0%/.10);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0%/.25);
+  --spacing: .25rem;
+
+  /* The text/surface pairs this stylesheet paints, and their WCAG floors:
+     4.5:1 for normal text, 3:1 for large text and component boundaries.
+     tools/check-contrast.mjs resolves the tokens above in both schemes and
+     fails when a pair dips below its floor. The site draws no form fields,
+     so --input carries no boundary pair — a form added later must declare
+     one (the pasted --input values can't reach 3:1 on these backgrounds). */
+  /* check: --foreground on --background 4.5 */
+  /* check: --card-foreground on --card 4.5 */
+  /* check: --foreground on --muted 4.5 */
+  /* check: --link on --background 4.5 */
+  /* check: --link on --card 4.5 */
+  /* check: --muted-foreground on --background 4.5 */
+  /* check: --muted-foreground on --card 4.5 */
+  /* check: --muted-foreground on --muted 4.5 */
+  /* check: --secondary-foreground on --secondary 4.5 */
+  /* check: --accent-foreground on --accent 4.5 */
+  /* check: --primary-foreground on --primary 4.5 */
+  /* check: --destructive-foreground on --destructive 4.5 */
+  /* check: --ring on --background 3 boundary */
+}
+/* The theme toggle (or, with no saved choice, the system) narrows
+   color-scheme on <html>; every light-dark() token follows it. */
+html[data-theme="light"] { color-scheme: light; }
+html[data-theme="dark"]  { color-scheme: dark; }
+body              { max-width: 1180px; margin: 0 auto; padding: 0 calc(var(--spacing) * 6);
                     font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-                    font-size: 16px; line-height: 1.55; font-optical-sizing: auto; }
+                    font-size: 16px; line-height: 1.55; font-optical-sizing: auto;
+                    background: var(--background); color: var(--foreground); }
 /* Terminal chrome stays monospace: code, keys, the bracket nav, the ticker
    (its text is drawn by .ticker-copy's pseudo-elements, so it inherits this). */
 pre, code, kbd, nav, .ticker-copy { font-family: var(--mono); }
-html[data-theme="dark"]  { color-scheme: dark;  background: #1c1a17; color: #e8e4dc; }
-html[data-theme="light"] { color-scheme: light; background: #f7f5f2; color: #1f1d1a; }
+a                 { color: var(--link); }
+::selection       { background: var(--accent); color: var(--accent-foreground); }
+:focus-visible    { outline: 2px solid var(--ring); outline-offset: 2px; }
+progress          { accent-color: var(--chart-1); }
 /* The theme toggle is a button drawn as a text link — same size, same color. */
 button.link       { background: none; border: none; padding: 0; font: inherit;
-                    color: LinkText; text-decoration: underline; cursor: pointer; }
+                    color: var(--link); text-decoration: underline; cursor: pointer; }
 table             { border-collapse: collapse; }
-th, td            { padding: 6px 14px; }
+th, td            { padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 3.5); }
 th                { text-align: left;
-                    background: light-dark(#eae6df, #2a2721); }
-section, article  { margin: 56px 0; }
+                    background: var(--secondary); color: var(--secondary-foreground); }
+section, article  { margin: calc(var(--spacing) * 14) 0; }
 pre               { overflow-x: auto; }
 summary           { cursor: pointer; }
-dd                { margin-bottom: 14px; }
-details           { margin-bottom: 20px; }
+dd                { margin-bottom: calc(var(--spacing) * 3.5); }
+details           { margin-bottom: calc(var(--spacing) * 5); }
 details details   { margin-bottom: 0; }
 
 /* Cells that hold a date or a step code must not wrap — a broken "2026-11-05"
    or "audience-auth" reads as two values, not one. */
 td time, td > code { white-space: nowrap; }
 progress          { width: 110px; vertical-align: middle; }
-h3                { margin-top: 40px; }
+h3                { margin-top: calc(var(--spacing) * 10); }
 
-/* Markdown bodies: tables have no border attribute, so give them the same
-   hairline the hand-built tables get from border="1" — currentColor, so it
-   follows whatever theme the reader's agent is in. */
-.post-body table th, .post-body table td { border: 1px solid; }
-.post-body pre      { padding: 12px 14px; }
+/* The house hairline: the theme's --border on table rules and rules of
+   division. Hand-built tables carry border="1" (drawn by the browser);
+   Markdown-body tables have no attribute, so the CSS draws it for them. */
+hr                { border: 0; border-top: 1px solid var(--border); }
+table[border="1"], table[border="1"] th, table[border="1"] td
+                  { border: 1px solid var(--border); }
+.post-body table th, .post-body table td { border: 1px solid var(--border); }
+
+/* The house box, now the theme's card: border, large radius, card surface,
+   small shadow. Used by fieldset panels on every index and log page. */
+fieldset          { min-inline-size: 0; border: 1px solid var(--border);
+                    border-radius: var(--radius-lg);
+                    background: var(--card); color: var(--card-foreground);
+                    box-shadow: var(--shadow-sm); }
+
+/* Inline chips: code and keys sit on --muted with the small radius, keys get
+   the hairline and 2xs shadow. Inside a <pre>, a <mark> or a link the chip
+   resets — the block, the highlight and the link colour already carry it. */
+code, kbd         { background: var(--muted); border-radius: var(--radius-sm); }
+code              { padding: .1em .3em; }
+kbd               { padding: .1em .4em; border: 1px solid var(--border);
+                    box-shadow: var(--shadow-2xs); }
+pre code, mark code, a code { background: none; padding: 0; }
+
+/* <mark> is the site's badge ("● in progress", a log's name): accent chip. */
+mark              { background: var(--accent); color: var(--accent-foreground);
+                    border-radius: var(--radius-sm); padding: .05em .35em; }
+
+/* Meta lines and aside text read muted — still ≥ 4.5:1 on both surfaces. */
+small             { color: var(--muted-foreground); }
+.post-body pre      { padding: calc(var(--spacing) * 3) calc(var(--spacing) * 3.5);
+                      border: 1px solid var(--border); border-radius: var(--radius-md); }
 img                 { max-width: 100%; height: auto; }
 .mobile-label       { display: none; }
-fieldset            { min-inline-size: 0; }
 
-/* The status ticker: the old <marquee>, rebuilt as a sliding track so it can
-   stop for readers who ask for less motion. The text is written once in
-   data-ticker; the two pseudo-elements draw the two identical copies the
-   loop needs, and the track slides exactly one copy's width (-50%). Each
-   copy is at least 64ch so even a short ticker scrolls instead of gapping. */
-.ticker             { overflow: hidden; }
-.ticker-track       { display: inline-block; white-space: nowrap;
-                      animation: ticker-slide 50s linear infinite; }
+/* The status ticker: the old <marquee>, retired to a static strip — the
+   house rule is nothing infinite. The text is written once in data-ticker;
+   the two pseudo-elements draw the two identical copies a play-through
+   needs, and the track slides exactly one copy's width (-50%), so one pass
+   lands where it started. The [ play ] button is drawn by the script in
+   base.html; with JavaScript off the strip just reads, and for reduced
+   motion the button is never offered and the strip scrolls by hand. */
+.ticker             { overflow: hidden; color: var(--muted-foreground); }
+.ticker-track       { display: inline-block; white-space: nowrap; }
+.ticker.playing .ticker-track
+                    { animation: ticker-slide 50s linear 1; }
 .ticker-copy        { display: inline-block; }
 .ticker-copy::before,
 .ticker-copy::after { content: attr(data-ticker); display: inline-block;
                       min-width: 64ch; }
+button.link.ticker-play { font-family: var(--mono); }
 @keyframes ticker-slide { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
   .ticker         { overflow-x: auto; }
@@ -80,10 +203,10 @@ fieldset            { min-inline-size: 0; }
 /* Phones and small tablets: tables scroll sideways instead of shrinking their
    cells into wraps; the masthead's two cells stack on the narrowest screens. */
 @media (max-width: 860px) {
-  body             { padding: 0 14px; }
-  section, article { margin: 40px 0; }
+  body             { padding: 0 calc(var(--spacing) * 3.5); }
+  section, article { margin: calc(var(--spacing) * 10) 0; }
   table            { display: block; overflow-x: auto; }
-  th, td           { padding: 6px 10px; }
+  th, td           { padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 2.5); }
   th, td           { vertical-align: top; }
   /* Keep comparison columns readable; wide tables scroll inside the page.
      A pinned prose column used to cover neighbouring cells while scrolling. */
@@ -98,7 +221,7 @@ fieldset            { min-inline-size: 0; }
   .mobile-records { border: 0; overflow: visible; }
   .mobile-records thead { position: absolute; width: 1px; height: 1px;
                          padding: 0; overflow: hidden; clip-path: inset(50%); }
-  .mobile-records tr { margin-bottom: 14px; border: 1px solid; }
+  .mobile-records tr { margin-bottom: calc(var(--spacing) * 3.5); border: 1px solid var(--border); }
   .mobile-records td { border: 0; text-align: left; overflow-wrap: anywhere; }
   .mobile-records .mobile-label { display: inline; font-weight: bold; }
 }
