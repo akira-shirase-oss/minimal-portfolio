@@ -313,7 +313,7 @@ Open http://127.0.0.1:1111. The page reloads by itself every time you save a fil
 Before anything goes up, the build and the gates:
 
 ```
-zola build && node tools/check-contrast.mjs public/style.css && node tools/check-links.mjs
+zola build && node tools/check-contrast.mjs public/style.css && node tools/check-links.mjs && node tools/check-csp.mjs
 ```
 
 `zola build` stops on a bad code-block language or template error.
@@ -327,6 +327,11 @@ to check exactly what ships; with no argument it reads `static/style.css`.
 `[extra.links.*]` map — the Website · Docs · Source rows on each build-log
 page and project row — and fails on anything but a 200. Unreachable means
 offline: a warning locally, a failure in CI (the `CI` env var set).
+`tools/check-csp.mjs` builds the site and compares every executable inline
+`<script>`'s sha256 against the `script-src` hashes in `static/_headers` —
+the response header the Content Security Policy lives in. Missing or stale
+hashes, a stray `<meta>` policy, or an inline `on*=` handler all fail the
+run; `--print` emits the hashes a changed script needs.
 
 For screenshots — the home page, a post and the projects ledger
 (`/progress/`) at 1440 and 390, light and dark — `tools/capture-screenshots.mjs`
