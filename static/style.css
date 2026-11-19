@@ -87,6 +87,26 @@
   --shadow-xl:  0 1px 3px 0px hsl(0 0% 0%/.10),0 8px 10px -1px hsl(0 0% 0%/.10);
   --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0%/.25);
   --spacing: .25rem;
+
+  /* The text/surface pairs this stylesheet paints, and their WCAG floors:
+     4.5:1 for normal text, 3:1 for large text and component boundaries.
+     tools/check-contrast.mjs resolves the tokens above in both schemes and
+     fails when a pair dips below its floor. The site draws no form fields,
+     so --input carries no boundary pair — a form added later must declare
+     one (the pasted --input values can't reach 3:1 on these backgrounds). */
+  /* check: --foreground on --background 4.5 */
+  /* check: --card-foreground on --card 4.5 */
+  /* check: --foreground on --muted 4.5 */
+  /* check: --link on --background 4.5 */
+  /* check: --link on --card 4.5 */
+  /* check: --muted-foreground on --background 4.5 */
+  /* check: --muted-foreground on --card 4.5 */
+  /* check: --muted-foreground on --muted 4.5 */
+  /* check: --secondary-foreground on --secondary 4.5 */
+  /* check: --accent-foreground on --accent 4.5 */
+  /* check: --primary-foreground on --primary 4.5 */
+  /* check: --destructive-foreground on --destructive 4.5 */
+  /* check: --ring on --background 3 boundary */
 }
 /* The theme toggle (or, with no saved choice, the system) narrows
    color-scheme on <html>; every light-dark() token follows it. */

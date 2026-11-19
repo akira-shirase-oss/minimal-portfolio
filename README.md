@@ -306,6 +306,22 @@ zola serve
 
 Open http://127.0.0.1:1111. The page reloads by itself every time you save a file. Press Ctrl+C to stop.
 
+## Check the site
+
+Before anything goes up, the build and the contrast gate:
+
+```
+zola build && node tools/check-contrast.mjs public/style.css
+```
+
+`zola build` stops on a bad code-block language or template error.
+`tools/check-contrast.mjs` (plain node, no dependencies) reads the theme
+tokens and the `/* check: --fg on --bg MIN */` pairs declared inside
+`static/style.css`, computes each pair's WCAG ratio in both light and dark,
+and fails the run if any text/surface pair is under 4.5:1 — 3:1 for large
+text and component boundaries. Pass it the built CSS (`public/style.css`)
+to check exactly what ships; with no argument it reads `static/style.css`.
+
 ## Edit the portfolio
 
 All in `content/_index.md`:
