@@ -310,10 +310,10 @@ Open http://127.0.0.1:1111. The page reloads by itself every time you save a fil
 
 ## Check the site
 
-Before anything goes up, the build and the contrast gate:
+Before anything goes up, the build and the gates:
 
 ```
-zola build && node tools/check-contrast.mjs public/style.css
+zola build && node tools/check-contrast.mjs public/style.css && node tools/check-links.mjs
 ```
 
 `zola build` stops on a bad code-block language or template error.
@@ -323,6 +323,10 @@ tokens and the `/* check: --fg on --bg MIN */` pairs declared inside
 and fails the run if any text/surface pair is under 4.5:1 — 3:1 for large
 text and component boundaries. Pass it the built CSS (`public/style.css`)
 to check exactly what ships; with no argument it reads `static/style.css`.
+`tools/check-links.mjs` requests every URL in `zola.toml`'s
+`[extra.links.*]` map — the Website · Docs · Source rows on each build-log
+page and project row — and fails on anything but a 200. Unreachable means
+offline: a warning locally, a failure in CI (the `CI` env var set).
 
 For screenshots — the home page, a post and the projects ledger
 (`/progress/`) at 1440 and 390, light and dark — `tools/capture-screenshots.mjs`
