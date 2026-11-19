@@ -139,13 +139,6 @@ year = 2026
 status = "parked"
 
 [[extra.projects]]
-name = "Colophon landing page"
-about = "Colophon's own landing page and blog, a separate Astro site. Live as a preview at colophon-landing.pages.dev; its own domain isn't attached yet."
-link = "https://colophon-landing.pages.dev"
-year = 2026
-status = "preview live"
-
-[[extra.projects]]
 name = "MiniBTC"
 about = "A Bitcoin-style blockchain built from scratch in Rust — consensus, UTXO set, P2P, mining, an HD wallet, JSON-RPC, an explorer and an MCP server that can inspect the chain and draft payments but never spend without a human. Security pass done, final check: ship; 6 of 6 million-op load runs pass, the chain run on rejections only (being fixed); CI on the head commit failed at the audit step, cause unknown."
 link = "@/minibtc/_index.md"
@@ -168,7 +161,7 @@ status = "hardened"
 
 [[extra.projects]]
 name = "Colophon CMS"
-about = "A content management system that can prove what it published and survives being killed at any moment. Rust and Svelte, open source, every step logged here. Security pass merged, final check: ship; one CI load smoke miss is unexplained."
+about = "A content management system that can prove what it published and survives being killed at any moment. Rust and Svelte, open source, every step logged here; its website and docs are live. Security pass merged, final check: ship; one CI load smoke miss is unexplained."
 link = "@/colophon/_index.md"
 year = 2026
 status = "in progress"
