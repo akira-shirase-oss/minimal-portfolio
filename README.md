@@ -322,6 +322,15 @@ and fails the run if any text/surface pair is under 4.5:1 — 3:1 for large
 text and component boundaries. Pass it the built CSS (`public/style.css`)
 to check exactly what ships; with no argument it reads `static/style.css`.
 
+For screenshots — the home page, a post and the projects ledger
+(`/progress/`) at 1440 and 390, light and dark — `tools/capture-screenshots.mjs`
+serves a built `public/` and drives an installed Chrome through the DevTools
+protocol (plain node, no dependencies):
+
+```
+zola build && node tools/capture-screenshots.mjs --root public --out shots/after
+```
+
 ## Edit the portfolio
 
 All in `content/_index.md`:

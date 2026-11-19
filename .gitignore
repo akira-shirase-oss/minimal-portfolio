@@ -2,3 +2,5 @@
 public/
 # Wrangler cache: holds the Cloudflare account id and name (private). Never commit.
 .wrangler/
+# Local screenshot runs (before/after evidence for the maintainer's UI calls)
+shots/
