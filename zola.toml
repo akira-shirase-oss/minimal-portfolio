@@ -69,7 +69,7 @@ source = "https://github.com/akira-shirase-oss/durable-runner"
 [extra.links.payment-sandbox]
 source = "https://github.com/akira-shirase-oss/payment-sandbox"
 [extra.links.ai-operations-layer]
-docs = "https://ai-operations-layer-docs.pages.dev"
+# docs = "https://ai-operations-layer-docs.pages.dev"  # added back once the docs site is deployed (it is not live yet)
 source = "https://github.com/akira-shirase-oss/ai-operations-layer"
 [extra.links.personal-voice-agent]
 source = "https://github.com/akira-shirase-oss/personal-voice-agent"
