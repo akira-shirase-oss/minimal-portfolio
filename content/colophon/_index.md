@@ -296,8 +296,8 @@ independent install — then version 0.1.
 
 **The landing page** lives in its own repository,
 [akira-shirase-oss/colophon-landing](https://github.com/akira-shirase-oss/colophon-landing), and is
-live as a preview at [colophon-landing.pages.dev](https://colophon-landing.pages.dev). Its own domain,
-colophon.404human.dev, isn't attached yet.
+live at [colophon.404human.dev](https://colophon.404human.dev), with its docs at
+[docs.colophon.404human.dev](https://docs.colophon.404human.dev).
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
