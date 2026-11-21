@@ -8,17 +8,27 @@
 {%- endblock robots %}
 
 {% block content %}
-{#- On a site called 404human, the error page is the joke's home: the human
-    isn't found, but the clay one is, still thinking at his desk. #}
 <section>
-  <pre>$ find / -name "this page"
-find: ‘this page’: No such file or directory</pre>
-  <h1>404: human not found.</h1>
-  <p>The clay one is here, though, still thinking about where that page went. It doesn't exist, or I broke it.</p>
-  <picture>
-    <source type="image/webp" srcset="{{ get_url(path='img/desk-640.webp') }} 640w, {{ get_url(path='img/desk-1000.webp') }} 1000w" sizes="(max-width: 400px) 90vw, 340px">
-    <img src="{{ get_url(path='img/desk-640.jpg') }}" srcset="{{ get_url(path='img/desk-640.jpg') }} 640w, {{ get_url(path='img/desk-1000.jpg') }} 1000w" sizes="(max-width: 400px) 90vw, 340px" width="640" height="640" fetchpriority="high" alt="A clay figure in a dark hoodie at a desk, chin on hand, thinking at a laptop, next to a mug that says Good Ideas Ship Things">
-  </picture>
-  <p><a href="{{ get_url(path='@/_index.md') }}">Go to the home page</a> · <a href="{{ get_url(path='@/service-monitor/_index.md') }}">Read the build log</a></p>
+  <div class="win-dialog">
+    <div class="win-dialog-bar">
+      <span>404.exe — Critical Error: Human Not Found</span>
+      <span class="win-controls" aria-hidden="true"><span class="win-ctrl">?</span><span class="win-ctrl">×</span></span>
+    </div>
+    <div class="win-dialog-body">
+      <div class="win-dialog-well">$ find / -name "this page"<br>find: ‘this page’: No such file or directory</div>
+      <h1>404: human not found.</h1>
+      <p>The clay one is here, though, still thinking about where that page went. It doesn't exist, or I broke it.</p>
+      <p>
+        <picture>
+          <source type="image/webp" srcset="{{ get_url(path='img/desk-640.webp') }} 640w, {{ get_url(path='img/desk-1000.webp') }} 1000w" sizes="(max-width: 400px) 90vw, 340px">
+          <img src="{{ get_url(path='img/desk-640.jpg') }}" srcset="{{ get_url(path='img/desk-640.jpg') }} 640w, {{ get_url(path='img/desk-1000.jpg') }} 1000w" sizes="(max-width: 400px) 90vw, 340px" width="640" height="640" fetchpriority="high" alt="A clay figure in a dark hoodie at a desk, chin on hand, thinking at a laptop, next to a mug that says Good Ideas Ship Things">
+        </picture>
+      </p>
+      <div class="win-shortcuts">
+        <a class="btn btn-primary" href="{{ get_url(path='@/_index.md') }}">Return to Home</a>
+        <a class="btn btn-secondary" href="{{ get_url(path='@/build-log/_index.md') }}">Open build logs</a>
+      </div>
+    </div>
+  </div>
 </section>
 {% endblock content %}

@@ -1,26 +1,59 @@
 {% extends "base.html" %}
 
+{% block ticker %}
+<div class="ticker-bar">
+  <span class="ticker-prefix" aria-hidden="true">TRACK</span>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ section.title }} · {{ section.extra.status }} &nbsp;●&nbsp; {{ section.extra.chapters | length }} planned chapters &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+</div>
+{% endblock ticker %}
+
 {% block content %}
-<article>
-  <p><small><a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a> · {{ section.extra.status }}</small></p>
+<article class="post-header">
+  <div class="post-meta">
+    <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a>
+    <span>·</span>
+    <span>{{ section.extra.status }}</span>
+  </div>
   <h1>{{ section.title }}</h1>
-  <p>{{ section.description }}</p>
+  <p class="post-lead">{{ section.description }}</p>
   <div class="post-body">{{ section.content | safe }}</div>
-  <p>[ <a href="{{ get_url(path=section.extra.roadmap) }}">Read the learning roadmap</a> ]</p>
-  <hr>
-  <h2>{{ section.extra.item_label | default(value="chapter") | capitalize }}s, in order</h2>
-  <p>Available notes are linked. Planned chapters will get pages as I work through them.</p>
-  <ol>
-    {%- for chapter in section.extra.chapters %}
-    <li>
-      {%- if chapter.page %}
-      <a href="{{ get_url(path=chapter.page) }}">{{ chapter.title }}</a> <small>· note available</small>
-      {%- else %}
-      {{ chapter.title }} <small>· planned</small>
-      {%- endif %}
-    </li>
-    {%- endfor %}
-  </ol>
+  <p><a class="btn btn-secondary" href="{{ get_url(path=section.extra.roadmap) }}">Read the learning roadmap →</a></p>
 </article>
-<p><a href="{{ get_url(path='@/learn/_index.md') }}">← All learning tracks</a></p>
+
+<section aria-label="Chapters in order">
+  <div class="win-panel">
+    <div class="win-panel-bar">
+      <span>chapters.exe — {{ section.extra.item_label | default(value="chapter") | capitalize }}s, in order</span>
+      <span class="win-controls" aria-hidden="true"><span class="win-ctrl">_</span><span class="win-ctrl">×</span></span>
+    </div>
+    <div class="win-panel-body">
+      <p class="win-panel-note">Available notes are linked. Planned chapters will get pages as I work through them.</p>
+      <ul class="row-list" style="margin-bottom: 0;">
+        {%- for chapter in section.extra.chapters %}
+        <li class="row-item">
+          <div class="row-main">
+            <span class="mono" style="margin-right: 8px;">{{ loop.index }}.</span>
+            {%- if chapter.page %}
+            <a class="row-title" href="{{ get_url(path=chapter.page) }}">{{ chapter.title }}</a>
+            {%- else %}
+            <span>{{ chapter.title }}</span>
+            {%- endif %}
+          </div>
+          <div class="row-meta">
+            {%- if chapter.page %}
+            <span class="badge badge-ok">available</span>
+            {%- else %}
+            <span class="badge badge-muted">planned</span>
+            {%- endif %}
+          </div>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="win-shortcuts">
+  <a class="btn btn-secondary" href="{{ get_url(path='@/learn/_index.md') }}">← All learning tracks</a>
+</div>
 {% endblock content %}

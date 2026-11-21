@@ -8,6 +8,7 @@
 
 {% block ticker %}
 <div class="ticker-bar">
+  <span class="ticker-prefix" aria-hidden="true">PROGRESS</span>
   <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● progress · {{ section.extra.projects | length }} projects &nbsp;●&nbsp; as of {{ section.extra.as_of }} &nbsp;●&nbsp; stage, review, owed, next &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
 </div>
 {% endblock ticker %}
@@ -32,22 +33,29 @@
 </article>
 
 <section aria-label="Every project at a glance">
-  <h2>At a glance</h2>
-  <div class="table-wrap">
-    <table class="mobile-records" role="table" aria-label="Every project at a glance">
-      <thead>
-        <tr><th scope="col" width="200">Project</th><th scope="col">Stage</th><th scope="col">Latest independent review</th></tr>
-      </thead>
-      <tbody>
-      {%- for project in projects %}
-        <tr>
-          <td><span class="mobile-label" aria-hidden="true">Project: </span><b><a href="#{{ project.id }}">{{ project.name }}</a></b></td>
-          <td><span class="mobile-label" aria-hidden="true">Stage: </span>{{ project.stage }}</td>
-          <td><span class="mobile-label" aria-hidden="true">Latest independent review: </span>{{ project.review }}</td>
-        </tr>
-      {%- endfor %}
-      </tbody>
-    </table>
+  <div class="win-panel">
+    <div class="win-panel-bar">
+      <span>ledger.exe — At a glance ({{ projects | length }} projects)</span>
+      <span class="win-controls" aria-hidden="true"><span class="win-ctrl">_</span><span class="win-ctrl">×</span></span>
+    </div>
+    <div class="win-panel-body">
+      <div class="table-wrap">
+        <table class="mobile-records" role="table" aria-label="Every project at a glance">
+          <thead>
+            <tr><th scope="col" width="200">Project</th><th scope="col">Stage</th><th scope="col">Latest independent review</th></tr>
+          </thead>
+          <tbody>
+          {%- for project in projects %}
+            <tr>
+              <td><span class="mobile-label" aria-hidden="true">Project: </span><b><a href="#{{ project.id }}">{{ project.name }}</a></b></td>
+              <td><span class="mobile-label" aria-hidden="true">Stage: </span>{{ project.stage }}</td>
+              <td><span class="mobile-label" aria-hidden="true">Latest independent review: </span>{{ project.review }}</td>
+            </tr>
+          {%- endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </section>
 

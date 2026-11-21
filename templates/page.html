@@ -4,6 +4,7 @@
 {#- The status ticker: the text is written once in data-ticker; the CSS draws
     two copies from it and slides the track by half its width. -#}
 <div class="ticker-bar">
+  <span class="ticker-prefix" aria-hidden="true">{{ page.extra.kind | default(value="POST") | upper }}</span>
   <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ page.extra.kind | default(value="post") }} · {{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }} · {{ page.reading_time }} min read &nbsp;●&nbsp; written up, numbers included &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
 </div>
 {% endblock ticker %}

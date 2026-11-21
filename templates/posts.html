@@ -23,24 +23,36 @@
 </article>
 
 <section aria-label="All posts">
-  <ul class="row-list">
-    {%- for post in section.pages %}
-    <li class="row-item">
-      <div class="row-main">
-        <a class="row-title" href="{{ post.permalink }}">{{ post.title }}</a>
-        {%- if post.description %}
-        <span class="row-desc">{{ post.description }}</span>
-        {%- endif %}
-      </div>
-      <div class="row-meta">
-        {%- if post.extra.kind %}<span class="badge badge-muted">{{ post.extra.kind }}</span>{% endif %}
-        <span>{{ post.reading_time }} min</span>
-        <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
-      </div>
-    </li>
-    {%- endfor %}
-  </ul>
+  <div class="win-panel">
+    <div class="win-panel-bar">
+      <span>writing.exe — All posts ({{ section.pages | length }})</span>
+      <span class="win-controls" aria-hidden="true"><span class="win-ctrl">_</span><span class="win-ctrl">×</span></span>
+    </div>
+    <div class="win-panel-body">
+      <ul class="row-list" style="margin-bottom: 0;">
+        {%- for post in section.pages %}
+        <li class="row-item">
+          <div class="row-main">
+            <a class="row-title" href="{{ post.permalink }}">{{ post.title }}</a>
+            {%- if post.description %}
+            <span class="row-desc">{{ post.description }}</span>
+            {%- endif %}
+          </div>
+          <div class="row-meta">
+            {%- if post.extra.kind %}<span class="badge badge-muted">{{ post.extra.kind }}</span>{% endif %}
+            <span>{{ post.reading_time }} min</span>
+            <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+          </div>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </div>
 </section>
 
-<p><a href="{{ get_url(path='@/_index.md') }}">← Home</a> · <a href="{{ get_url(path='@/build-log/_index.md') }}">Project build logs</a> · <a href="{{ get_url(path='@/learn/_index.md') }}">Learning tracks</a></p>
+<div class="win-shortcuts">
+  <a class="btn btn-secondary" href="{{ get_url(path='@/_index.md') }}">← Home</a>
+  <a class="btn btn-secondary" href="{{ get_url(path='@/build-log/_index.md') }}">Project build logs</a>
+  <a class="btn btn-secondary" href="{{ get_url(path='@/learn/_index.md') }}">Learning tracks</a>
+</div>
 {% endblock content %}

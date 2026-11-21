@@ -14,6 +14,7 @@
 {#- The status ticker: the text is written once in data-ticker; the CSS draws
     two copies from it and slides the track by half its width. -#}
 <div class="ticker-bar">
+  <span class="ticker-prefix" aria-hidden="true">LOGS</span>
   <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ logs | length }} build logs · {{ entry_count }} entries on file{%- for log_path in logs %}{%- set one_log = get_section(path=log_path) %}{%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}{%- endfor %} &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
 </div>
 {% endblock ticker %}
@@ -49,7 +50,7 @@
       {%- endif %}
       {%- if log.extra.status %} <kbd>{{ log.extra.status }}</kbd>{% endif %}
     </p>
-    <p><a href="{{ log.permalink }}">Read build log →</a></p>
+    <p><a class="btn btn-secondary" href="{{ log.permalink }}">Open build log →</a></p>
   </fieldset>
 {%- endfor %}
 </div>
