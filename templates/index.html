@@ -51,102 +51,143 @@
   <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ log_entries + (posts.pages | length) }} write-ups on file{%- for log_path in logs %}{%- set one_log = get_section(path=log_path) %}{%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}{%- endfor %} &nbsp;●&nbsp; experiments, failures and releases &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
 </div>
 
-<!-- ======================= PROJECTS (TASK MANAGER TABBED SHEET) ======================= -->
+<!-- ======================= PROJECTS (TASK MANAGER INTERACTIVE TABS) ======================= -->
 {%- if section.extra.projects %}
 <section id="projects" aria-label="Projects">
   {%- set priority = ["Colophon CMS", "Durable Runner", "Service Monitor", "jsrt", "MiniBTC"] %}
-  <div class="win-tabs">
-    <span class="win-tab active">taskmgr.exe — Core Projects ({{ priority | length }})</span>
-    <a class="win-tab" href="{{ get_url(path='@/progress/_index.md') }}">Full Ledger ({{ logs | length }}) →</a>
-    <a class="win-tab" href="{{ get_url(path='@/build-log/_index.md') }}">Build Logs →</a>
-  </div>
-  <div class="win-tab-pane">
-    <div class="table-wrap">
-      <table class="mobile-records" role="table" aria-label="Core projects">
-        <thead>
-          <tr>
-            <th scope="col" width="64">PID</th>
-            <th scope="col" width="175">Project</th>
-            <th scope="col" width="115">Status</th>
-            <th scope="col">What it is &amp; latest checkpoint</th>
-          </tr>
-        </thead>
-        <tbody>
-        {%- for name in priority %}
-          {%- for project in section.extra.projects %}
-            {%- if project.name == name %}
-            {%- set st = project.status | default(value="") %}
-            {%- set href = "" %}
-            {%- set latest_meta = "" %}
-            {%- if project.link %}
-              {%- if project.link is starting_with(pat="@/") %}
-                {%- set href = get_url(path=project.link) %}
-                {%- set log_path = project.link | replace(from="@/", to="") %}
-                {%- if log_path in logs %}
-                  {%- set item_log = get_section(path=log_path) %}
-                  {%- if item_log.pages %}
-                    {%- set now_on = item_log.pages[0] %}
-                    {%- set latest_meta = now_on.extra.milestone ~ " · " ~ now_on.extra.step %}
-                    {%- if now_on.extra.tests is defined %}{%- set latest_meta = latest_meta ~ " · " ~ now_on.extra.tests ~ " tests" %}{%- endif %}
-                  {%- endif %}
-                {%- endif %}
-              {%- else %}
-                {%- set href = project.link %}
-              {%- endif %}
-            {%- endif %}
-            <tr>
-              <td class="num"><span class="mobile-label" aria-hidden="true">PID: </span><code>{{ 100 + loop.index }}</code></td>
-              <td><span class="mobile-label" aria-hidden="true">Project: </span><b>{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</b></td>
-              <td>
-                <span class="mobile-label" aria-hidden="true">Status: </span>
-                <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% else %}badge-accent{% endif %}"><span class="dot" aria-hidden="true"></span> {{ st }}</span>
-              </td>
-              <td>
-                <span class="mobile-label" aria-hidden="true">Summary: </span>
-                {{ project.about }}
-                {%- if latest_meta %}<br><small class="mono">{{ latest_meta }}</small>{% endif %}
-              </td>
-            </tr>
-            {%- endif %}
-          {%- endfor %}
-        {%- endfor %}
-        </tbody>
-      </table>
+  <div class="win-tabset">
+    <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-core" checked>
+    <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-dev">
+    <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-logs">
+
+    <div class="win-tabs">
+      <div class="win-tabs-left">
+        <label class="win-tab" for="tm-core">Core Projects ({{ priority | length }})</label>
+        <label class="win-tab" for="tm-dev">In Development ({{ (section.extra.projects | length) - (priority | length) }})</label>
+        <label class="win-tab" for="tm-logs">Build Logs ({{ logs | length }})</label>
+      </div>
+      <a class="win-tabs-link" href="{{ get_url(path='@/progress/_index.md') }}">Full progress ledger →</a>
     </div>
 
-    <details style="margin-top: 8px; border-bottom: 0; padding: 6px 4px 2px;">
-      <summary>In development, explorations &amp; side work ({{ (section.extra.projects | length) - (priority | length) }} more)</summary>
-      <div class="table-wrap" style="margin-left: 0; margin-top: 8px;">
-        <table class="mobile-records" role="table" aria-label="Other projects">
-          <thead>
-            <tr>
-              <th scope="col" width="190">Project</th>
-              <th scope="col" width="115">Status</th>
-              <th scope="col">What it is</th>
-            </tr>
-          </thead>
-          <tbody>
-          {%- for project in section.extra.projects %}
-            {%- if project.name not in priority %}
-            {%- set st = project.status | default(value="") %}
-            {%- set href = "" %}
-            {%- if project.link %}
-              {%- if project.link is starting_with(pat="@/") %}{%- set href = get_url(path=project.link) %}{%- else %}{%- set href = project.link %}{%- endif %}
-            {%- endif %}
-            <tr>
-              <td><span class="mobile-label" aria-hidden="true">Project: </span><b>{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</b></td>
-              <td>
-                <span class="mobile-label" aria-hidden="true">Status: </span>
-                <span class="badge {% if st == 'live' or st == 'shipped' %}badge-ok{% elif st == 'parked' or st == 'exploration' or st == 'write-up' %}badge-muted{% else %}badge-accent{% endif %}">{{ st }}</span>
-              </td>
-              <td><span class="mobile-label" aria-hidden="true">Summary: </span>{{ project.about }}</td>
-            </tr>
-            {%- endif %}
-          {%- endfor %}
-          </tbody>
-        </table>
+    <div class="win-tab-pane">
+      <!-- Tab 1: Core Projects -->
+      <div class="win-tab-panel panel-core">
+        <div class="table-wrap">
+          <table class="mobile-records" role="table" aria-label="Core projects">
+            <thead>
+              <tr>
+                <th scope="col" width="64">PID</th>
+                <th scope="col" width="175">Project</th>
+                <th scope="col" width="115">Status</th>
+                <th scope="col">What it is &amp; latest checkpoint</th>
+              </tr>
+            </thead>
+            <tbody>
+            {%- for name in priority %}
+              {%- for project in section.extra.projects %}
+                {%- if project.name == name %}
+                {%- set st = project.status | default(value="") %}
+                {%- set href = "" %}
+                {%- set latest_meta = "" %}
+                {%- if project.link %}
+                  {%- if project.link is starting_with(pat="@/") %}
+                    {%- set href = get_url(path=project.link) %}
+                    {%- set log_path = project.link | replace(from="@/", to="") %}
+                    {%- if log_path in logs %}
+                      {%- set item_log = get_section(path=log_path) %}
+                      {%- if item_log.pages %}
+                        {%- set now_on = item_log.pages[0] %}
+                        {%- set latest_meta = now_on.extra.milestone ~ " · " ~ now_on.extra.step %}
+                        {%- if now_on.extra.tests is defined %}{%- set latest_meta = latest_meta ~ " · " ~ now_on.extra.tests ~ " tests" %}{%- endif %}
+                      {%- endif %}
+                    {%- endif %}
+                  {%- else %}
+                    {%- set href = project.link %}
+                  {%- endif %}
+                {%- endif %}
+                <tr>
+                  <td class="num"><span class="mobile-label" aria-hidden="true">PID: </span><code>{{ 100 + loop.index }}</code></td>
+                  <td><span class="mobile-label" aria-hidden="true">Project: </span><b>{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</b></td>
+                  <td>
+                    <span class="mobile-label" aria-hidden="true">Status: </span>
+                    <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% else %}badge-accent{% endif %}"><span class="dot" aria-hidden="true"></span> {{ st }}</span>
+                  </td>
+                  <td>
+                    <span class="mobile-label" aria-hidden="true">Summary: </span>
+                    {{ project.about }}
+                    {%- if latest_meta %}<br><small class="mono">{{ latest_meta }}</small>{% endif %}
+                  </td>
+                </tr>
+                {%- endif %}
+              {%- endfor %}
+            {%- endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </details>
+
+      <!-- Tab 2: In Development & Explorations -->
+      <div class="win-tab-panel panel-dev">
+        <div class="table-wrap">
+          <table class="mobile-records" role="table" aria-label="In development and explorations">
+            <thead>
+              <tr>
+                <th scope="col" width="200">Project</th>
+                <th scope="col" width="120">Status</th>
+                <th scope="col">What it is</th>
+              </tr>
+            </thead>
+            <tbody>
+            {%- for project in section.extra.projects %}
+              {%- if project.name not in priority %}
+              {%- set st = project.status | default(value="") %}
+              {%- set href = "" %}
+              {%- if project.link %}
+                {%- if project.link is starting_with(pat="@/") %}{%- set href = get_url(path=project.link) %}{%- else %}{%- set href = project.link %}{%- endif %}
+              {%- endif %}
+              <tr>
+                <td><span class="mobile-label" aria-hidden="true">Project: </span><b>{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</b></td>
+                <td>
+                  <span class="mobile-label" aria-hidden="true">Status: </span>
+                  <span class="badge {% if st == 'live' or st == 'shipped' %}badge-ok{% elif st == 'parked' or st == 'exploration' or st == 'write-up' %}badge-muted{% else %}badge-accent{% endif %}">{{ st }}</span>
+                </td>
+                <td><span class="mobile-label" aria-hidden="true">Summary: </span>{{ project.about }}</td>
+              </tr>
+              {%- endif %}
+            {%- endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 3: All Build Logs -->
+      <div class="win-tab-panel panel-logs">
+        <div class="table-wrap">
+          <table class="mobile-records" role="table" aria-label="All build logs">
+            <thead>
+              <tr>
+                <th scope="col" width="190">Build log</th>
+                <th scope="col" width="90">Entries</th>
+                <th scope="col" width="150">Latest step</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+            {%- for log_path in logs %}
+              {%- set log = get_section(path=log_path) %}
+              {%- set latest = log.pages[0] %}
+              <tr>
+                <td><span class="mobile-label" aria-hidden="true">Log: </span><b><a href="{{ log.permalink }}">{{ log.extra.short_title or log.title }}</a></b></td>
+                <td class="num"><span class="mobile-label" aria-hidden="true">Entries: </span>{{ log.pages | length }}</td>
+                <td class="num"><span class="mobile-label" aria-hidden="true">Latest: </span>{% if latest %}<code>{{ latest.extra.milestone }} · {{ latest.extra.step }}</code>{% endif %}</td>
+                <td><span class="mobile-label" aria-hidden="true">About: </span>{{ log.description }}</td>
+              </tr>
+            {%- endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 {%- endif %}

@@ -924,14 +924,33 @@ td time, td > code {
   margin-bottom: calc(var(--spacing) * 3.5);
 }
 
-/* Classic Windows 97 Tab Strip (for Task Manager / Projects) */
+/* Classic Windows 97 Pure-CSS Radio Tabs (zero JS) */
+.win-tabset {
+  position: relative;
+}
+
+.win-tab-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .win-tabs {
   display: flex;
   align-items: flex-end;
-  gap: 2px;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
   padding: 0 2px;
   position: relative;
   z-index: 1;
+}
+
+.win-tabs-left {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  flex-wrap: wrap;
 }
 
 .win-tab {
@@ -940,35 +959,56 @@ td time, td > code {
   font-family: var(--mono);
   font-size: 0.78rem;
   font-weight: 700;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-  box-shadow: inset 1px 1px 0 var(--chrome-hi), inset -1px 0 0 var(--chrome-lo2), inset -2px 0 0 var(--chrome-lo);
-  text-decoration: none;
-  margin-bottom: -1px;
-}
-
-.win-tab.active {
-  padding-top: 7px;
-  padding-bottom: 6px;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-}
-
-.win-tab:not(.active) {
   background: var(--muted);
   color: var(--muted-foreground);
-  margin-bottom: 0;
+  box-shadow: inset 1px 1px 0 var(--chrome-hi), inset -1px 0 0 var(--chrome-lo2), inset -2px 0 0 var(--chrome-lo);
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
 }
 
-.win-tab:not(.active):hover {
+.win-tab:hover {
   color: var(--foreground);
   text-decoration: none;
+}
+
+.win-tabs-link {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  padding-bottom: 5px;
 }
 
 .win-tab-pane {
   background: var(--chrome);
   padding: 8px;
   box-shadow: var(--bevel-out);
+}
+
+.win-tab-panel {
+  display: none;
+}
+
+#tm-core:checked ~ .win-tabs label[for="tm-core"],
+#tm-dev:checked ~ .win-tabs label[for="tm-dev"],
+#tm-logs:checked ~ .win-tabs label[for="tm-logs"] {
+  padding-top: 7px;
+  padding-bottom: 6px;
+  margin-bottom: -1px;
+  background: var(--chrome);
+  color: var(--secondary-foreground);
+}
+
+#tm-core:focus-visible ~ .win-tabs label[for="tm-core"],
+#tm-dev:focus-visible ~ .win-tabs label[for="tm-dev"],
+#tm-logs:focus-visible ~ .win-tabs label[for="tm-logs"] {
+  outline: 1px dotted var(--ring);
+  outline-offset: -3px;
+}
+
+#tm-core:checked ~ .win-tab-pane .panel-core,
+#tm-dev:checked ~ .win-tab-pane .panel-dev,
+#tm-logs:checked ~ .win-tab-pane .panel-logs {
+  display: block;
 }
 
 .metrics-grid {
