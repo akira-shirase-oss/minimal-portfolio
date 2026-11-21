@@ -7,37 +7,48 @@
     `extra.as_of` — update it with the build logs. #}
 
 {% block ticker %}
-<div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● progress · {{ section.extra.projects | length }} projects &nbsp;●&nbsp; as of {{ section.extra.as_of }} &nbsp;●&nbsp; stage, review, owed, next &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
-<hr>
+<div class="ticker-bar">
+  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● progress · {{ section.extra.projects | length }} projects &nbsp;●&nbsp; as of {{ section.extra.as_of }} &nbsp;●&nbsp; stage, review, owed, next &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+</div>
 {% endblock ticker %}
 
 {% block content %}
 {%- set projects = section.extra.projects | default(value=[]) %}
 <article>
-  <p><small>progress · {{ projects | length }} projects · as of <code>{{ section.extra.as_of }}</code></small></p>
-  <h1>{{ section.title }}</h1>
-  {%- if section.description %}
-  <p>{{ section.description }}</p>
-  {%- endif %}
+  <div class="post-header">
+    <div class="post-meta">
+      <span>progress</span>
+      <span>·</span>
+      <span>{{ projects | length }} projects</span>
+      <span>·</span>
+      <span>as of <code>{{ section.extra.as_of }}</code></span>
+    </div>
+    <h1>{{ section.title }}</h1>
+    {%- if section.description %}
+    <p class="post-lead">{{ section.description }}</p>
+    {%- endif %}
+  </div>
   <div class="post-body">{{ section.content | safe }}</div>
 </article>
 
 <section aria-label="Every project at a glance">
   <h2>At a glance</h2>
-  <table class="mobile-records" role="table" aria-label="Every project at a glance" border="1" width="100%">
-    <thead>
-      <tr><th scope="col" width="180">Project</th><th scope="col">Stage</th><th scope="col">Latest independent review</th></tr>
-    </thead>
-    <tbody>
-    {%- for project in projects %}
-      <tr>
-        <td><span class="mobile-label" aria-hidden="true">Project: </span><b><a href="#{{ project.id }}">{{ project.name }}</a></b></td>
-        <td><span class="mobile-label" aria-hidden="true">Stage: </span>{{ project.stage }}</td>
-        <td><span class="mobile-label" aria-hidden="true">Latest independent review: </span>{{ project.review }}</td>
-      </tr>
-    {%- endfor %}
-    </tbody>
-  </table>
+  <div class="table-wrap">
+    <table class="mobile-records" role="table" aria-label="Every project at a glance">
+      <thead>
+        <tr><th scope="col" width="200">Project</th><th scope="col">Stage</th><th scope="col">Latest independent review</th></tr>
+      </thead>
+      <tbody>
+      {%- for project in projects %}
+        <tr>
+          <td><span class="mobile-label" aria-hidden="true">Project: </span><b><a href="#{{ project.id }}">{{ project.name }}</a></b></td>
+          <td><span class="mobile-label" aria-hidden="true">Stage: </span>{{ project.stage }}</td>
+          <td><span class="mobile-label" aria-hidden="true">Latest independent review: </span>{{ project.review }}</td>
+        </tr>
+      {%- endfor %}
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <hr>

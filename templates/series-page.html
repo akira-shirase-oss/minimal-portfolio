@@ -33,24 +33,27 @@
 
 {% block after_article %}
 {%- set log = get_section(path=page.ancestors[-1], metadata_only=true) %}
-<hr>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td align="left" valign="top">
-      {%- if page.higher %}
-      <small>← previous · {{ page.higher.extra.step }}</small><br>
-      <a href="{{ page.higher.permalink }}">{{ page.higher.extra.short_title or page.higher.title }}</a>
-      {%- endif %}
-    </td>
-    <td align="right" valign="top">
-      {%- if page.lower %}
-      <small>next · {{ page.lower.extra.step }} →</small><br>
-      <a href="{{ page.lower.permalink }}">{{ page.lower.extra.short_title or page.lower.title }}</a>
-      {%- else %}
-      <small>latest entry</small><br>
-      <a href="{{ log.permalink }}">See the whole build log →</a>
-      {%- endif %}
-    </td>
-  </tr>
-</table>
+<div class="pager">
+  <div>
+    {%- if page.higher %}
+    <a class="pager-card" href="{{ page.higher.permalink }}">
+      <span class="pager-dir">← previous · {{ page.higher.extra.step }}</span>
+      <span class="pager-title">{{ page.higher.extra.short_title or page.higher.title }}</span>
+    </a>
+    {%- endif %}
+  </div>
+  <div>
+    {%- if page.lower %}
+    <a class="pager-card next" href="{{ page.lower.permalink }}">
+      <span class="pager-dir">next · {{ page.lower.extra.step }} →</span>
+      <span class="pager-title">{{ page.lower.extra.short_title or page.lower.title }}</span>
+    </a>
+    {%- else %}
+    <a class="pager-card next" href="{{ log.permalink }}">
+      <span class="pager-dir">latest entry</span>
+      <span class="pager-title">See the whole build log →</span>
+    </a>
+    {%- endif %}
+  </div>
+</div>
 {% endblock after_article %}

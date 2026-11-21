@@ -152,31 +152,22 @@
        beside it. There is no logo file — there is a mark, in text.
        The home page overrides this block with the full hero masthead. -->
   {% block header %}
-  <header>
-    <table cellpadding="0" cellspacing="0" border="0">
-      <tr>
-        <td valign="middle">
-<pre>  ┌─ 404human ─────────┐
-  │  $ whoami          │
-  └────────────────────┘</pre>
-        </td>
-        <td width="28"></td>
-        <td valign="middle">
-          <b><a href="{{ get_url(path='@/_index.md') }}">{{ config.title }}</a></b><br>
-          <small>{{ config.extra.tagline }}</small>
-        </td>
-      </tr>
-    </table>
-    <nav aria-label="Site"><p>
-      [ <a href="{{ get_url(path='@/_index.md') }}">Home</a> ]
-      [ <a href="{{ get_url(path='@/_index.md') }}#running">Running now</a> ]
-      [ <a href="{{ get_url(path='@/progress/_index.md') }}">Progress</a> ]
-      [ <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a> ]
-      [ <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a> ]
-      [ <a href="{{ get_url(path='@/lessons/_index.md') }}">Lessons</a> ]
-      [ <a href="{{ get_url(path='@/_index.md') }}#writing">Writing</a> ]
-      <span id="theme-toggle-wrap" hidden>[ <button id="theme-toggle" class="link" type="button">dark</button> ]</span>
-    </p></nav>
+  <header class="site-header">
+    <div class="header-bar">
+      <a class="brand" href="{{ get_url(path='@/_index.md') }}">
+        <span class="brand-mark">$ whoami</span>
+        <span>{{ config.title }}</span>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="{{ get_url(path='@/_index.md') }}#projects">Projects</a>
+        <a href="{{ get_url(path='@/progress/_index.md') }}">Progress</a>
+        <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a>
+        <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a>
+        <a href="{{ get_url(path='@/lessons/_index.md') }}">Lessons</a>
+        <a href="{{ get_url(path='@/_index.md') }}#writing">Writing</a>
+        <span id="theme-toggle-wrap" hidden><button id="theme-toggle" class="link" type="button">dark</button></span>
+      </nav>
+    </div>
   </header>
   {% endblock header %}
 
@@ -185,16 +176,17 @@
     {% block content %}{% endblock content %}
   </main>
 
-  <hr>
-  <footer>
-    <p><small>
+  <footer class="site-footer">
+    <p>
       © {{ now() | date(format="%Y") }}{% if config.author %} {{ config.author }}{% endif %}
       {%- if config.extra.x_handle %} · <a href="https://x.com/{{ config.extra.x_handle }}">@{{ config.extra.x_handle }}</a>{% endif %}
       · built with Zola, in Rust · no tracking
-      · <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
+    </p>
+    <p>
+      <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
       · <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">rss</a>
-    </small></p>
-    <noscript><p><small>(JavaScript is off. You lost the theme toggle — the only script on the site. Everything else works.)</small></p></noscript>
+    </p>
+    <noscript><p>(JavaScript is off. You lost the theme toggle — the only script on the site. Everything else works.)</p></noscript>
   </footer>
 </body>
 </html>

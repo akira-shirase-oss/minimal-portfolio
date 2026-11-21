@@ -1,39 +1,6 @@
 {% extends "base.html" %}
 
-{#- The home page is its own masthead: the ASCII mark on the left, the words
-    from _index.md on the right, the nav underneath — one block, no chrome. #}
-{% block header %}
-<header>
-  <table cellpadding="0" cellspacing="0" border="0">
-    <tr>
-      <td valign="middle">
-<pre>  ┌─ 404human ─────────┐
-  │  $ whoami          │
-  └────────────────────┘</pre>
-      </td>
-      <td width="28"></td>
-      <td valign="middle">{{ section.content | safe }}</td>
-    </tr>
-  </table>
-  <nav aria-label="Site"><p>
-    [ <a href="#running">Running now</a> ]
-    [ <a href="#projects">Projects</a> ]
-    [ <a href="{{ get_url(path='@/progress/_index.md') }}">Progress</a> ]
-    [ <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a> ]
-    [ <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a> ]
-    [ <a href="{{ get_url(path='@/lessons/_index.md') }}">Lessons</a> ]
-    [ <a href="#numbers">Numbers</a> ]
-    [ <a href="#how">How I work</a> ]
-    [ <a href="#writing">Writing</a> ]
-    [ <a href="#find">Find me</a> ]
-    <span id="theme-toggle-wrap" hidden>[ <button id="theme-toggle" class="link" type="button">dark</button> ]</span>
-  </p></nav>
-</header>
-{% endblock header %}
-
 {% block content %}
-{#- Every build log listed in content/_index.md (`logs`), main project first.
-    Tera 2 can't join lists, so the totals are gathered with set_global. #}
 {%- set logs = section.extra.logs | default(value=[]) %}
 {%- set posts = get_section(path="posts/_index.md") %}
 {%- set newest = "" %}
@@ -47,279 +14,384 @@
   {%- endif %}
 {%- endfor %}
 
-{#- The status ticker: the text is written once in data-ticker; the CSS draws
-    two copies from it and slides the track by half its width. Hidden from
-    screen readers — everything it says is repeated in the tables below. -#}
-<div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ log_entries + (posts.pages | length) }} write-ups on file{%- for log_path in logs %}{%- set one_log = get_section(path=log_path) %}{%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}{%- endfor %} &nbsp;●&nbsp; experiments, failures and releases &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+<!-- ======================= HERO ======================= -->
+<section class="hero" aria-label="Introduction">
+  <div class="hero-lead">
+    <div class="hero-eyebrow">
+      <span class="badge badge-ok"><span class="dot" aria-hidden="true"></span> building in public</span>
+      <span>Rust · systems · AI tooling</span>
+    </div>
+    {{ section.content | safe }}
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{{ get_url(path='@/colophon/_index.md') }}">Explore Colophon →</a>
+      <a class="btn btn-secondary" href="{{ get_url(path='@/progress/_index.md') }}">View live progress</a>
+    </div>
+  </div>
 
-<hr>
-
-<!-- ======================= RUNNING NOW ======================= -->
-{%- if section.extra.now %}
-<section id="running">
-  <h2>Running now</h2>
-  <p>What’s actually in flight — drawn the way it’s thought about: as live processes, not as a bio.</p>
-  <p><code>$ ps aux | grep -v idle</code></p>
-  <p>Each project's stage, latest review verdict and what's still owed are on the
-  <a href="{{ get_url(path='@/progress/_index.md') }}">progress page</a>.</p>
-  <table class="mobile-records" role="table" aria-label="Running now" border="1" width="100%">
-    <thead>
-      <tr><th scope="col" width="60">PID</th><th scope="col" width="160">PROCESS</th><th scope="col" width="110">STATE</th><th scope="col">WHAT</th></tr>
-    </thead>
-    <tbody>
-    {%- for item in section.extra.now %}
-    {%- if item.link and item.link is starting_with(pat="@/") %}
-      {%- set href = get_url(path=item.link) %}
-    {%- else %}
-      {%- set href = item.link | default(value="") %}
-    {%- endif %}
-      <tr>
-        <td><span class="mobile-label" aria-hidden="true">PID: </span><code>{{ 100 + loop.index }}</code></td>
-        <td><span class="mobile-label" aria-hidden="true">PROCESS: </span><b>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</b></td>
-        <td><span class="mobile-label" aria-hidden="true">STATE: </span>{{ "always" if item.writing else ("running" if item.log else "complete") }}</td>
-        <td>
-          <span class="mobile-label" aria-hidden="true">WHAT: </span>
-          {{ item.what }}
-          {%- if item.log %}
-            {%- set item_log = get_section(path=item.log) %}
-            {%- if item_log.pages %}
-            {%- set now_on = item_log.pages[0] %}
-            — {{ now_on.extra.milestone }} · {{ now_on.extra.step }}{% if now_on.extra.tests is defined %}, {{ now_on.extra.tests }} tests{% endif %}
-            {%- endif %}
-          {%- elif item.writing %}
-            — {{ log_entries + (posts.pages | length) }} write-ups on file
-          {%- elif item.detail %}
-            — {{ item.detail }}
-          {%- endif %}
-        </td>
-      </tr>
-    {%- endfor %}
-    </tbody>
-  </table>
+  <aside class="whoami-card" aria-label="Control room snapshot">
+    <div class="whoami-bar">
+      <span>404human · control room</span>
+      <span>no tracking</span>
+    </div>
+    <div class="whoami-body">
+<pre>┌─ 404human ─────────────┐
+│  $ whoami              │
+│  rust · jobs · ai ops  │
+└────────────────────────┘</pre>
+      <div class="whoami-stats">
+        <div>
+          <span class="whoami-stat-label">Active logs</span>
+          <span class="whoami-stat-value">{{ logs | length }}</span>
+        </div>
+        <div>
+          <span class="whoami-stat-label">Write-ups</span>
+          <span class="whoami-stat-value">{{ log_entries + (posts.pages | length) }}</span>
+        </div>
+        <div>
+          <span class="whoami-stat-label">Load bar</span>
+          <span class="whoami-stat-value">≥ 1,000,000</span>
+        </div>
+        <div>
+          <span class="whoami-stat-label">Rust exam</span>
+          <span class="whoami-stat-value">59 / 59</span>
+        </div>
+      </div>
+    </div>
+  </aside>
 </section>
 
-<hr>
+<!-- ======================= STATUS TICKER ======================= -->
+<div class="ticker-bar">
+  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ log_entries + (posts.pages | length) }} write-ups on file{%- for log_path in logs %}{%- set one_log = get_section(path=log_path) %}{%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}{%- endfor %} &nbsp;●&nbsp; experiments, failures and releases &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+</div>
+
+<!-- ======================= FLAGSHIP SPOTLIGHT ======================= -->
+<section aria-label="Flagship project">
+  <div class="spotlight-card">
+    <span class="spotlight-tag">flagship · Colophon CMS</span>
+    <h2>A CMS where “published” is a receipt, not a spinner.</h2>
+    <p>In a book, the colophon is the note at the back saying how, when and by whom it was printed. This does that for a website: every publish is a numbered release, and a probe reads the release marker off the live page before the product calls it done.</p>
+    <div class="spotlight-chips">
+      <span class="spotlight-chip">PostgreSQL = single authority</span>
+      <span class="spotlight-chip">RLS tenant isolation</span>
+      <span class="spotlight-chip">transactional outbox</span>
+      <span class="spotlight-chip">monotonic releases</span>
+    </div>
+    <a class="btn btn-secondary" href="{{ get_url(path='@/colophon/_index.md') }}">Read the Colophon build log →</a>
+  </div>
+</section>
+
+<!-- ======================= RUNNING NOW (FOCUSED) ======================= -->
+{%- if section.extra.now %}
+<section id="running">
+  <div class="section-head">
+    <h2>Running now</h2>
+    <a class="mono" href="{{ get_url(path='@/progress/_index.md') }}">All {{ logs | length }} projects on /progress/ →</a>
+  </div>
+  <p class="section-sub">The core services and runtimes closest to ship — drawn as live processes, with milestones pulled directly from their build logs.</p>
+  <div class="table-wrap">
+    <table class="mobile-records" role="table" aria-label="Running now">
+      <thead>
+        <tr>
+          <th scope="col" width="76">PID</th>
+          <th scope="col" width="170">Process</th>
+          <th scope="col" width="120">State</th>
+          <th scope="col">Current focus</th>
+        </tr>
+      </thead>
+      <tbody>
+      {%- for item in section.extra.now %}
+        {%- if loop.index0 < 5 %}
+        {%- if item.link and item.link is starting_with(pat="@/") %}
+          {%- set href = get_url(path=item.link) %}
+        {%- else %}
+          {%- set href = item.link | default(value="") %}
+        {%- endif %}
+        <tr>
+          <td class="num"><span class="mobile-label" aria-hidden="true">PID: </span><code>{{ 100 + loop.index }}</code></td>
+          <td><span class="mobile-label" aria-hidden="true">Process: </span><b>{% if href %}<a href="{{ href }}">{{ item.process }}</a>{% else %}{{ item.process }}{% endif %}</b></td>
+          <td>
+            <span class="mobile-label" aria-hidden="true">State: </span>
+            <span class="badge badge-ok"><span class="dot" aria-hidden="true"></span> {{ "always" if item.writing else ("running" if item.log else "complete") }}</span>
+          </td>
+          <td>
+            <span class="mobile-label" aria-hidden="true">Focus: </span>
+            {{ item.what }}
+            {%- if item.log %}
+              {%- set item_log = get_section(path=item.log) %}
+              {%- if item_log.pages %}
+              {%- set now_on = item_log.pages[0] %}
+              <br><small class="mono">{{ now_on.extra.milestone }} · {{ now_on.extra.step }}{% if now_on.extra.tests is defined %} · {{ now_on.extra.tests }} tests{% endif %}</small>
+              {%- endif %}
+            {%- endif %}
+          </td>
+        </tr>
+        {%- endif %}
+      {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
 {%- endif %}
+
+<!-- ======================= NUMBERS ======================= -->
+<section id="numbers">
+  <div class="section-head">
+    <h2>Numbers I can show, not adjectives</h2>
+  </div>
+  <p class="section-sub">House rule: <b>no claim without an executed run and stored evidence.</b> All measurements below are from committed result files on laptop-class hardware — development observations, never presented as production capacity.</p>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-value">540,063 req</div>
+      <div class="metric-label">Warm baseline, 30 min sustained</div>
+      <p class="metric-note">300/s with zero failures on this machine. Proves the path holds steady load; says nothing about your hardware.</p>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">600 refused/s</div>
+      <div class="metric-label">Noisy-agent isolation</div>
+      <p class="metric-note">A token past quota is throttled inside its own auth lookup while editors beside it hold their latency.</p>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">≥ 1,000,000 req</div>
+      <div class="metric-label">Full load bar, every scenario</div>
+      <p class="metric-note">The standing bar for anything that serves traffic; misses fail and get investigated, not re-run till green.</p>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">400 s</div>
+      <div class="metric-label">Disaster restore drill</div>
+      <p class="metric-note">Encrypted capture to serving on clean infrastructure — rehearsed for real, not documented in hope.</p>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">10,000 records</div>
+      <div class="metric-label">Import at true scale</div>
+      <p class="metric-note">A real import, not a loop over a tiny sample labelled “scale”.</p>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">59 / 59</div>
+      <div class="metric-label">Hidden-test Rust exam</div>
+      <p class="metric-note">The AI couldn’t see the questions or run a compiler. Decoys included.</p>
+    </div>
+  </div>
+</section>
 
 <!-- ======================= PROJECTS ======================= -->
 {%- if section.extra.projects %}
 <section id="projects">
-  <h2>Projects</h2>
-  <table class="mobile-records" role="table" aria-label="Projects" border="1" width="100%">
-    <thead>
-      <tr><th scope="col" width="170">Project</th><th scope="col" width="70">Year</th><th scope="col" width="110">Status</th><th scope="col">What it is</th></tr>
-    </thead>
-    <tbody>
-    {%- for project in section.extra.projects %}
-      <tr>
-        <td>
-        <span class="mobile-label" aria-hidden="true">Project: </span>
-        {%- if project.link %}
-          {%- if project.link is starting_with(pat="@/") %}
-            {%- set href = get_url(path=project.link) %}
-          {%- else %}
-            {%- set href = project.link %}
+  <div class="section-head">
+    <h2>Projects</h2>
+    <a class="mono" href="{{ get_url(path='@/build-log/_index.md') }}">All build logs →</a>
+  </div>
+  <p class="section-sub">Flagship services and hardened labs first, followed by active builds and explorations. Every project is public and logged with its failures.</p>
+  <div class="table-wrap">
+    <table class="mobile-records" role="table" aria-label="Projects">
+      <thead>
+        <tr>
+          <th scope="col" width="210">Project</th>
+          <th scope="col" width="76">Year</th>
+          <th scope="col" width="130">Status</th>
+          <th scope="col">What it is</th>
+        </tr>
+      </thead>
+      <tbody>
+      {#- Show flagship / shipped / hardened items first, then everything else in order. -#}
+      {%- set priority = ["Colophon CMS", "Durable Runner", "Service Monitor", "jsrt", "MiniBTC"] %}
+      {%- for name in priority %}
+        {%- for project in section.extra.projects %}
+          {%- if project.name == name %}
+          {%- set st = project.status | default(value="") %}
+          <tr>
+            <td>
+              <span class="mobile-label" aria-hidden="true">Project: </span>
+              {%- if project.link %}
+                {%- if project.link is starting_with(pat="@/") %}{%- set href = get_url(path=project.link) %}{%- else %}{%- set href = project.link %}{%- endif %}
+                <b><a href="{{ href }}">{{ project.name }}</a></b>
+              {%- else %}
+                <b>{{ project.name }}</b>
+              {%- endif %}
+            </td>
+            <td class="num"><span class="mobile-label" aria-hidden="true">Year: </span><code>{{ project.year | default(value="") }}</code></td>
+            <td>
+              <span class="mobile-label" aria-hidden="true">Status: </span>
+              <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% elif st == 'parked' %}badge-muted{% else %}badge-accent{% endif %}">{{ st }}</span>
+            </td>
+            <td><span class="mobile-label" aria-hidden="true">What it is: </span>{{ project.about }}</td>
+          </tr>
           {%- endif %}
-          <b><a href="{{ href }}">{{ project.name }}</a></b>
-        {%- else %}
-          <b>{{ project.name }}</b>
+        {%- endfor %}
+      {%- endfor %}
+      {%- for project in section.extra.projects %}
+        {%- if project.name not in priority %}
+        {%- set st = project.status | default(value="") %}
+        <tr>
+          <td>
+            <span class="mobile-label" aria-hidden="true">Project: </span>
+            {%- if project.link %}
+              {%- if project.link is starting_with(pat="@/") %}{%- set href = get_url(path=project.link) %}{%- else %}{%- set href = project.link %}{%- endif %}
+              <b><a href="{{ href }}">{{ project.name }}</a></b>
+            {%- else %}
+              <b>{{ project.name }}</b>
+            {%- endif %}
+          </td>
+          <td class="num"><span class="mobile-label" aria-hidden="true">Year: </span><code>{{ project.year | default(value="") }}</code></td>
+          <td>
+            <span class="mobile-label" aria-hidden="true">Status: </span>
+            <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% elif st == 'parked' or st == 'exploration' %}badge-muted{% else %}badge-accent{% endif %}">{{ st }}</span>
+          </td>
+          <td><span class="mobile-label" aria-hidden="true">What it is: </span>{{ project.about }}</td>
+        </tr>
         {%- endif %}
-        </td>
-        <td><span class="mobile-label" aria-hidden="true">Year: </span><code>{{ project.year | default(value="") }}</code></td>
-        <td><span class="mobile-label" aria-hidden="true">Status: </span>{{ project.status | default(value="") }}</td>
-        <td><span class="mobile-label" aria-hidden="true">What it is: </span>{{ project.about }}</td>
-      </tr>
-    {%- endfor %}
-    </tbody>
-  </table>
+      {%- endfor %}
+      </tbody>
+    </table>
+  </div>
 </section>
-
-<hr>
 {%- endif %}
-
-<!-- ======================= SPOTLIGHT ======================= -->
-<section>
-  <fieldset>
-    <legend><b>flagship — Colophon</b></legend>
-    <p><b>A CMS where “published” is a receipt, not a spinner.</b> In a book, the colophon is the note at
-    the back saying how, when and by whom it was printed. This does that for a website: every publish is a
-    numbered release, and a probe reads the release marker off the live page before the product calls it done.</p>
-    <p>
-      <kbd>PostgreSQL</kbd> is the only authority —
-      <kbd>RLS</kbd> decides who sees what —
-      <kbd>outbox</kbd> commits intent before any external call —
-      <kbd>release generations</kbd> only move forward.
-    </p>
-    <p>[ <a href="{{ get_url(path='@/colophon/_index.md') }}">The build log</a> ] — every step, including the mistakes.</p>
-  </fieldset>
-</section>
-
-<!-- ======================= NUMBERS ======================= -->
-<section id="numbers">
-  <h2>Numbers I can show, not adjectives</h2>
-  <p>House rule: <b>no claim without an executed run and stored evidence.</b> These are from committed result
-  files on laptop-class hardware — development observations, never presented as production capacity.</p>
-  <table class="mobile-records" role="table" aria-label="Measured results" border="1" width="100%">
-    <thead>
-      <tr><th scope="col">Measured</th><th scope="col" width="150" align="right">Number</th><th scope="col">What it does and doesn’t prove</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="mobile-label" aria-hidden="true">Measured: </span>Warm baseline, 30 min sustained</td>
-        <td align="right"><span class="mobile-label" aria-hidden="true">Number: </span><b>540,063 req</b></td>
-        <td><span class="mobile-label" aria-hidden="true">What it does and doesn’t prove: </span>300/s with zero failures on this machine. Proves the path holds steady load; says nothing about your hardware.</td>
-      </tr>
-      <tr>
-        <td><span class="mobile-label" aria-hidden="true">Measured: </span>Noisy-agent isolation</td>
-        <td align="right"><span class="mobile-label" aria-hidden="true">Number: </span><b>600 refused/s</b></td>
-        <td><span class="mobile-label" aria-hidden="true">What it does and doesn’t prove: </span>A token past quota is throttled inside its own auth lookup while editors beside it hold their latency.</td>
-      </tr>
-      <tr>
-        <td><span class="mobile-label" aria-hidden="true">Measured: </span>Import at true scale</td>
-        <td align="right"><span class="mobile-label" aria-hidden="true">Number: </span><b>10,000 records</b></td>
-        <td><span class="mobile-label" aria-hidden="true">What it does and doesn’t prove: </span>A real import, not a loop over a sample labelled “scale”.</td>
-      </tr>
-      <tr>
-        <td><span class="mobile-label" aria-hidden="true">Measured: </span>Disaster restore drill</td>
-        <td align="right"><span class="mobile-label" aria-hidden="true">Number: </span><b>400 s</b></td>
-        <td><span class="mobile-label" aria-hidden="true">What it does and doesn’t prove: </span>Encrypted capture to serving on clean infrastructure — rehearsed for real, not documented in hope.</td>
-      </tr>
-      <tr>
-        <td><span class="mobile-label" aria-hidden="true">Measured: </span>Full load runs, every scenario</td>
-        <td align="right"><span class="mobile-label" aria-hidden="true">Number: </span><b>≥ 1,000,000 req</b></td>
-        <td><span class="mobile-label" aria-hidden="true">What it does and doesn’t prove: </span>The standing bar for anything that serves traffic; misses fail and get investigated, not re-run till green.</td>
-      </tr>
-      <tr>
-        <td><span class="mobile-label" aria-hidden="true">Measured: </span>Hidden-test Rust exam</td>
-        <td align="right"><span class="mobile-label" aria-hidden="true">Number: </span><b>59/59</b></td>
-        <td><span class="mobile-label" aria-hidden="true">What it does and doesn’t prove: </span>The AI couldn’t see the questions or run a compiler. Decoys included.</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<hr>
 
 <!-- ======================= HOW I WORK ======================= -->
 <section id="how">
-  <h2>How the work is judged</h2>
-  <dl>
-    <dt><b>Proof over breadth.</b></dt>
-    <dd>A feature counts when its <i>failure</i> behaviour is tested and the evidence is stored — never when
-    the screen exists. Every feature ships with the trio: regression tests in CI, a separate testbed app
-    driving the real HTTP API, and a load scenario with committed results.</dd>
-
-    <dt><b>Truthful states.</b></dt>
-    <dd><del>“Accepted” presented as “done”</del> is the industry’s favorite bug. Here an accepted publish is
-    <mark>pending</mark> until a probe sees it live, and an unmeasurable check stays <code>uncertain</code>
-    rather than borrow confidence.</dd>
-
-    <dt><b>Kill it at any moment.</b></dt>
-    <dd>Crash tests have catalogue numbers (F01–F09 and counting). Bugs get a replayable seed:
-    <kbd>colophon-sim --seed N --trace</kbd>. Killing things on purpose is the demo, not the edge case.</dd>
-
-    <dt><b>Bounded everything.</b></dt>
-    <dd>Every queue, body, page, cache, retry loop and pool has a limit and a deadline — a bound you can’t
-    name is an outage you haven’t met yet.</dd>
-
-    <dt><b>No AI hype.</b></dt>
-    <dd>Agents and scripts work through the same API and the same permissions as everyone else — draft-only,
-    on budgets reserved in Postgres, never allowed to approve their own submissions. Safe automation is a
-    tested milestone, not a paragraph.</dd>
-  </dl>
+  <div class="section-head">
+    <h2>How the work is judged</h2>
+  </div>
+  <div class="principles-grid">
+    <div class="principle-card">
+      <h3>Proof over breadth.</h3>
+      <p>A feature counts when its <i>failure</i> behaviour is tested and the evidence is stored — never when the screen exists. Every feature ships with regression tests in CI, a separate testbed app driving the real HTTP API, and a load scenario with committed results.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Truthful states.</h3>
+      <p><del>“Accepted” presented as “done”</del> is the industry’s favourite bug. Here an accepted publish is <mark>pending</mark> until a probe sees it live, and an unmeasurable check stays <code>uncertain</code> rather than borrow confidence.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Kill it at any moment.</h3>
+      <p>Crash tests have catalogue numbers (F01–F09 and counting). Bugs get a replayable seed: <kbd>colophon-sim --seed N --trace</kbd>. Killing things on purpose is the demo, not the edge case.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Bounded everything.</h3>
+      <p>Every queue, body, page, cache, retry loop and pool has a limit and a deadline — a bound you can’t name is an outage you haven’t met yet.</p>
+    </div>
+    <div class="principle-card">
+      <h3>No AI hype.</h3>
+      <p>Agents and scripts work through the same API and the same permissions as everyone else — draft-only, on budgets reserved in Postgres, never allowed to approve their own submissions.</p>
+    </div>
+  </div>
 </section>
-
-<hr>
 
 <!-- ======================= LEARNING ======================= -->
 <section id="learning">
-  <h2>Learning</h2>
-  <p>Concepts worked through from the beginning, with small examples and questions still open.</p>
+  <div class="section-head">
+    <h2>Learning</h2>
+    <a class="mono" href="{{ get_url(path='@/learn/_index.md') }}">All learning tracks →</a>
+  </div>
+  <p class="section-sub">Concepts worked through from the beginning, with small executable examples and open questions.</p>
   {%- set learning = get_section(path="learn/_index.md") %}
   {%- for track_path in learning.subsections %}
   {%- set track = get_section(path=track_path) %}
   {%- set chapters = [p for p in track.pages if p.extra.chapter] %}
   <fieldset>
-    <legend><b>{{ track.title }}</b></legend>
+    <legend>{{ track.title }}</legend>
     <p>{{ track.description }}</p>
-    <p>{{ chapters | length }} {{ track.extra.item_label | default(value="chapter note") }}{% if chapters | length != 1 %}s{% endif %} available · {{ track.extra.status }}.</p>
-    <p>[ <a href="{{ track.permalink }}">Chapters</a> ]
-      [ <a href="{{ get_url(path=track.extra.roadmap) }}">Roadmap</a> ]</p>
+    <p><small class="mono">{{ chapters | length }} {{ track.extra.item_label | default(value="chapter note") }}{% if chapters | length != 1 %}s{% endif %} available · {{ track.extra.status }}</small></p>
+    <p>
+      <a class="btn btn-secondary" href="{{ track.permalink }}">Read chapters</a>
+      <a class="btn btn-secondary" href="{{ get_url(path=track.extra.roadmap) }}">Roadmap</a>
+    </p>
   </fieldset>
   {%- endfor %}
-  <p><a href="{{ learning.permalink }}">All learning tracks →</a></p>
 </section>
-
-<hr>
 
 <!-- ======================= WRITING ======================= -->
 <section id="writing">
-  <h2>Writing</h2>
-  <p>Experiments, learning notes, and the things that went wrong along the way. Recent posts:</p>
-  <ul>
+  <div class="section-head">
+    <h2>Writing</h2>
+    <a class="mono" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS feed →</a>
+  </div>
+  <p class="section-sub">Experiments, learning notes, and the things that went wrong along the way.</p>
+  <ul class="writing-list">
     {%- for post in posts.pages %}
     {%- if loop.index0 < 5 %}
-    <li><a href="{{ post.permalink }}">{{ post.title }}</a>{% if post.description %} — {{ post.description | truncate(length=80) }}{% endif %}</li>
+    <li class="writing-item">
+      <div class="writing-main">
+        <a class="writing-title" href="{{ post.permalink }}">{{ post.title }}</a>
+        {%- if post.description %}
+        <span class="writing-desc">{{ post.description | truncate(length=110) }}</span>
+        {%- endif %}
+      </div>
+      <div class="writing-meta">
+        {%- if post.extra.kind %}<span class="badge badge-muted">{{ post.extra.kind }}</span>{% endif %}
+        <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+      </div>
+    </li>
     {%- endif %}
     {%- endfor %}
   </ul>
-  <p>And each project keeps its own build log —
+
+  <p><small>Or jump straight into a project build log:</small></p>
+  <div class="log-pills">
     {%- for log_path in logs %}
       {%- set log = get_section(path=log_path) %}
-      <a href="{{ log.permalink }}">{{ log.extra.short_title or log.title }}</a>{% if not loop.last %}, {% endif %}
+      <a class="log-pill" href="{{ log.permalink }}">{{ log.extra.short_title or log.title }}</a>
     {%- endfor %}
-    — every entry written up, numbers included. All writing also lives in
-    <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">the feed</a>.</p>
+  </div>
 </section>
-
-<hr>
 
 <!-- ======================= FAQ ======================= -->
-<section>
-  <h2>Asked plainly</h2>
+<section aria-label="Frequently asked questions">
+  <div class="section-head">
+    <h2>Asked plainly</h2>
+  </div>
   <details>
-    <summary><b>Why build in the open, including the mistakes?</b></summary>
-    <p>Because “proof over breadth” can’t be claimed, only shown. A build log that includes the failures is
-    the difference between <i>saying</i> a system is reliable and letting you check.</p>
+    <summary>Why build in the open, including the mistakes?</summary>
+    <p>Because “proof over breadth” can’t be claimed, only shown. A build log that includes the failures is the difference between <i>saying</i> a system is reliable and letting you check.</p>
   </details>
   <details>
-    <summary><b>Is any of this usable yet?</b></summary>
-    <p>Honestly labelled: Colophon is pre-0.1 — it runs on my laptop and CI, and its own site says so.
-    The service monitor has an installed release and a 24-hour soak on an earlier build (salvaged; its
-    latency and memory series were lost); after the
-    2026-11-16 security pass a million API reads pass, while a million checks and a fresh soak are
-    owed. jsrt's roadmap is done, and its load numbers were re-run on the hardened build. The seven
-    newer projects started code on 2026-11-16 and none of them is usable yet. The <a href="{{ get_url(path='@/progress/_index.md') }}">progress
-    page</a> has every project's stage, review verdict and what's owed. Nothing here is marketed ahead
-    of its evidence.</p>
+    <summary>Is any of this usable yet?</summary>
+    <p>Honestly labelled: Colophon is pre-0.1 — it runs on my laptop and CI, and its own site says so. The service monitor has an installed release and a 24-hour soak on an earlier build (salvaged; its latency and memory series were lost); after the 2026-11-16 security pass a million API reads pass, while a million checks and a fresh soak are owed. jsrt's roadmap is done, and its load numbers were re-run on the hardened build. The seven newer projects started code on 2026-11-16 and none of them is usable yet. The <a href="{{ get_url(path='@/progress/_index.md') }}">progress page</a> has every project's stage, review verdict and what's owed. Nothing here is marketed ahead of its evidence.</p>
   </details>
   <details>
-    <summary><b>Why Rust?</b></summary>
-    <p>Because “bounded everything” is easier to keep than to promise: one type system for the error
-    envelope, explicit deadlines on every I/O await, compilers that refuse what production would regret,
-    and simulators that replay failures deterministically.</p>
+    <summary>Why Rust?</summary>
+    <p>Because “bounded everything” is easier to keep than to promise: one type system for the error envelope, explicit deadlines on every I/O await, compilers that refuse what production would regret, and simulators that replay failures deterministically.</p>
   </details>
   <details>
-    <summary><b>How minimal is this site, really?</b></summary>
-    <p>Zola generates it; the output is one documented stylesheet (width, font, spacing — all of it), one
-    small script for the theme toggle, no tracking, one self-hosted font. Layout is tables, accordions are
-    <code>&lt;details&gt;</code>, the ticker is a CSS-scrolling track. View source; it fits in your head.</p>
+    <summary>How minimal is this site, really?</summary>
+    <p>Zola generates it; the output is one documented stylesheet, one small script for the theme toggle and ticker, no tracking, and one self-hosted font. Accordions are native <code>&lt;details&gt;</code>. View source; it fits in your head.</p>
   </details>
 </section>
-
-<hr>
 
 <!-- ======================= FIND ME ======================= -->
 <section id="find">
-  <h2>Find me</h2>
-  <table border="1" cellpadding="8">
-    {%- set x = config.extra.x_handle %}
-    {%- set gh = config.extra.github %}
-    {%- set mail = config.extra.email %}
-    <tr><td><b>Site</b></td><td><a href="https://404human.dev">404human.dev</a> — this one, generated by Zola in Rust</td></tr>
-    {%- if gh %}<tr><td><b>GitHub</b></td><td><a href="https://github.com/{{ gh }}">github.com/{{ gh }}</a> — every project above, public</td></tr>{% endif %}
-    {%- if x %}<tr><td><b>X</b></td><td><a href="https://x.com/{{ x }}">@{{ x }}</a></td></tr>{% endif %}
-    {%- if mail %}<tr><td><b>Email</b></td><td><a href="mailto:{{ mail }}">{{ mail }}</a></td></tr>{% endif %}
-  </table>
+  <div class="section-head">
+    <h2>Find me</h2>
+  </div>
+  {%- set x = config.extra.x_handle %}
+  {%- set gh = config.extra.github %}
+  {%- set mail = config.extra.email %}
+  <div class="find-grid">
+    <a class="find-card" href="https://404human.dev">
+      <span class="find-label">Site</span>
+      <span class="find-value">404human.dev</span>
+      <span class="find-note">Generated by Zola in Rust, zero tracking.</span>
+    </a>
+    {%- if gh %}
+    <a class="find-card" href="https://github.com/{{ gh }}">
+      <span class="find-label">GitHub</span>
+      <span class="find-value">github.com/{{ gh }}</span>
+      <span class="find-note">Every project above, public.</span>
+    </a>
+    {%- endif %}
+    {%- if x %}
+    <a class="find-card" href="https://x.com/{{ x }}">
+      <span class="find-label">X</span>
+      <span class="find-value">@{{ x }}</span>
+      <span class="find-note">Notes and updates.</span>
+    </a>
+    {%- endif %}
+    {%- if mail %}
+    <a class="find-card" href="mailto:{{ mail }}">
+      <span class="find-label">Email</span>
+      <span class="find-value">{{ mail }}</span>
+      <span class="find-note">Direct contact.</span>
+    </a>
+    {%- endif %}
+  </div>
 </section>
 {% endblock content %}
