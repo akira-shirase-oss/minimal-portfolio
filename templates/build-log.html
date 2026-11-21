@@ -34,7 +34,7 @@
   {{ section.content | safe }}
 </article>
 
-<div class="card-grid">
+<div class="log-grid">
 {%- for log_path in logs %}
   {%- set log = get_section(path=log_path) %}
   {%- set latest = log.pages[0] %}
