@@ -489,10 +489,12 @@ button.link {
 .ticker-track {
   display: inline-block;
   white-space: nowrap;
+  animation: ticker-slide 50s linear infinite;
 }
 
-.ticker.playing .ticker-track {
-  animation: ticker-slide 50s linear 1;
+.ticker:hover .ticker-track,
+.ticker.paused .ticker-track {
+  animation-play-state: paused;
 }
 
 .ticker-copy {
