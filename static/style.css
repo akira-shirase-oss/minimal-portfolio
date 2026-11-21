@@ -107,13 +107,13 @@ body {
   color: var(--foreground);
 }
 
-/* ---- Desktop 3-Column Stage (wide screens >= 1560px) ---- */
+/* ---- Desktop 3-Column Stage (wide screens >= 1340px) ---- */
 .desktop-stage {
   display: grid;
-  grid-template-columns: 236px minmax(0, 1100px) 236px;
+  grid-template-columns: 215px minmax(0, 1080px) 215px;
   justify-content: center;
   align-items: start;
-  gap: 20px;
+  gap: 16px;
 }
 
 .desktop-rail {
@@ -218,7 +218,7 @@ body {
   box-shadow: var(--bevel-out), 6px 6px 0 rgba(0, 0, 0, 0.28);
 }
 
-@media (max-width: 1560px) {
+@media (max-width: 1340px) {
   .desktop-stage {
     display: block;
   }
