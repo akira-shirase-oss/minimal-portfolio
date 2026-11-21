@@ -153,20 +153,28 @@
        The home page overrides this block with the full hero masthead. -->
   {% block header %}
   <header class="site-header">
-    <div class="header-bar">
-      <a class="brand" href="{{ get_url(path='@/_index.md') }}">
-        <span class="brand-mark">$ whoami</span>
-        <span>{{ config.title }}</span>
+    <div class="win-titlebar">
+      <a class="win-title" href="{{ get_url(path='@/_index.md') }}">
+        <span class="win-icon" aria-hidden="true">&gt;_</span>
+        <span>404human.exe — {{ config.extra.tagline }}</span>
       </a>
+      <div class="win-controls" aria-hidden="true">
+        <span class="win-ctrl">_</span>
+        <span class="win-ctrl">□</span>
+        <span class="win-ctrl">×</span>
+      </div>
+    </div>
+    <div class="win-menubar">
       <nav class="site-nav" aria-label="Site">
-        <a href="{{ get_url(path='@/_index.md') }}#projects">Projects</a>
-        <a href="{{ get_url(path='@/progress/_index.md') }}">Progress</a>
-        <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a>
-        <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a>
-        <a href="{{ get_url(path='@/lessons/_index.md') }}">Lessons</a>
-        <a href="{{ get_url(path='@/_index.md') }}#writing">Writing</a>
-        <span id="theme-toggle-wrap" hidden><button id="theme-toggle" class="link" type="button">dark</button></span>
+        <a href="{{ get_url(path='@/_index.md') }}"><u>H</u>ome</a>
+        <a href="{{ get_url(path='@/_index.md') }}#projects"><u>P</u>rojects</a>
+        <a href="{{ get_url(path='@/progress/_index.md') }}">P<u>r</u>ogress</a>
+        <a href="{{ get_url(path='@/build-log/_index.md') }}"><u>B</u>uild logs</a>
+        <a href="{{ get_url(path='@/learn/_index.md') }}"><u>L</u>earning</a>
+        <a href="{{ get_url(path='@/lessons/_index.md') }}">L<u>e</u>ssons</a>
+        <a href="{{ get_url(path='@/_index.md') }}#writing"><u>W</u>riting</a>
       </nav>
+      <span id="theme-toggle-wrap" hidden><button id="theme-toggle" class="link" type="button">dark</button></span>
     </div>
   </header>
   {% endblock header %}

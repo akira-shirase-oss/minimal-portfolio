@@ -30,17 +30,23 @@
 
 <!-- ======================= STATUS TICKER ======================= -->
 <div class="ticker-bar">
+  <span class="ticker-prefix" aria-hidden="true">STATUS</span>
   <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ log_entries + (posts.pages | length) }} write-ups on file{%- for log_path in logs %}{%- set one_log = get_section(path=log_path) %}{%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}{%- endfor %} &nbsp;●&nbsp; experiments, failures and releases &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
 </div>
 
 <!-- ======================= FLAGSHIP SPOTLIGHT ======================= -->
 <section aria-label="Flagship project">
-  <div class="spotlight">
-    <div class="spotlight-label">flagship · Colophon CMS</div>
-    <h2>A CMS where “published” is a receipt, not a spinner.</h2>
-    <p>In a book, the colophon is the note at the back saying how, when and by whom it was printed. This does that for a website: every publish is a numbered release, and a probe reads the release marker off the live page before the product calls it done.</p>
-    <p class="spotlight-specs">PostgreSQL authority · RLS tenant isolation · transactional outbox · monotonic releases</p>
-    <a href="{{ get_url(path='@/colophon/_index.md') }}">Read the Colophon build log →</a>
+  <div class="win-dialog">
+    <div class="win-dialog-bar">
+      <span>colophon.exe — Flagship Project</span>
+      <span class="win-controls" aria-hidden="true"><span class="win-ctrl">?</span><span class="win-ctrl">×</span></span>
+    </div>
+    <div class="win-dialog-body">
+      <h2>A CMS where “published” is a receipt, not a spinner.</h2>
+      <p>In a book, the colophon is the note at the back saying how, when and by whom it was printed. This does that for a website: every publish is a numbered release, and a probe reads the release marker off the live page before the product calls it done.</p>
+      <div class="win-dialog-well">PostgreSQL = single authority · RLS tenant isolation · transactional outbox · monotonic releases</div>
+      <a class="btn btn-secondary" href="{{ get_url(path='@/colophon/_index.md') }}">Open Colophon build log →</a>
+    </div>
   </div>
 </section>
 
