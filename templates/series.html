@@ -35,7 +35,7 @@
     <div class="win-panel">
       <div class="win-panel-bar">
         <span>milestones.exe — {{ section.extra.short_title or section.title }} at a glance</span>
-        <span class="win-controls" aria-hidden="true"><span class="win-ctrl">_</span><span class="win-ctrl">×</span></span>
+        <span class="win-bar-tag">{{ section.pages | length }} entries</span>
       </div>
       <div class="win-panel-body">
         {% include "partials/log-panel.html" %}

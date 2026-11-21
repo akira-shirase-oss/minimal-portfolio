@@ -24,7 +24,7 @@
   <div class="win-panel">
     <div class="win-panel-bar">
       <span>chapters.exe — {{ section.extra.item_label | default(value="chapter") | capitalize }}s, in order</span>
-      <span class="win-controls" aria-hidden="true"><span class="win-ctrl">_</span><span class="win-ctrl">×</span></span>
+      <span class="win-bar-tag">{{ section.extra.chapters | length }} topics</span>
     </div>
     <div class="win-panel-body">
       <p class="win-panel-note">Available notes are linked. Planned chapters will get pages as I work through them.</p>

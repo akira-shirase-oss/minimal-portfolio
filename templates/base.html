@@ -179,10 +179,9 @@
         <span class="win-icon" aria-hidden="true">&gt;_</span>
         <span>404human.exe — {{ config.extra.tagline }}</span>
       </a>
-      <div class="win-controls" aria-hidden="true">
-        <span class="win-ctrl">_</span>
-        <span class="win-ctrl">□</span>
-        <span class="win-ctrl">×</span>
+      <div class="win-bar-meta">
+        {%- if config.extra.github %}<a class="win-bar-btn" href="https://github.com/{{ config.extra.github }}">GitHub</a>{% endif %}
+        <a class="win-bar-btn" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
       </div>
     </div>
     <div class="win-menubar">
@@ -217,19 +216,6 @@
     </p>
     <noscript><p>(JavaScript is off. You lost the theme toggle — the only script on the site. Everything else works.)</p></noscript>
   </footer>
-  </div>
-
-  <div class="win-taskbar" aria-label="Taskbar">
-    <div class="taskbar-left">
-      <a class="taskbar-start" href="{{ get_url(path='@/_index.md') }}">&gt;_ 404human</a>
-      <span class="taskbar-sep" aria-hidden="true"></span>
-      <span class="taskbar-active">{{ doc_title | default(value="404human.exe") }}</span>
-    </div>
-    <div class="taskbar-tray">
-      <span>no tracking</span>
-      <span>·</span>
-      <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
-    </div>
   </div>
 </body>
 </html>
