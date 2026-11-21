@@ -142,36 +142,38 @@
   <link rel="alternate" type="application/rss+xml" title="{{ config.title }}" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
 </head>
 <body>
-  <aside class="desktop-icons" aria-label="Desktop shortcuts">
-    <a class="desktop-icon" href="{{ get_url(path='@/colophon/_index.md') }}">
-      <span class="desktop-glyph" aria-hidden="true">&gt;_</span>
-      <span>Colophon</span>
-    </a>
-    <a class="desktop-icon" href="{{ get_url(path='@/progress/_index.md') }}">
-      <span class="desktop-glyph" aria-hidden="true">≡</span>
-      <span>Progress</span>
-    </a>
-    <a class="desktop-icon" href="{{ get_url(path='@/build-log/_index.md') }}">
-      <span class="desktop-glyph" aria-hidden="true">#</span>
-      <span>Build logs</span>
-    </a>
-    <a class="desktop-icon" href="{{ get_url(path='@/posts/_index.md') }}">
-      <span class="desktop-glyph" aria-hidden="true">¶</span>
-      <span>Writing</span>
-    </a>
-    <a class="desktop-icon" href="{{ get_url(path='@/learn/_index.md') }}">
-      <span class="desktop-glyph" aria-hidden="true">?</span>
-      <span>Learning</span>
-    </a>
-    {%- if config.extra.github %}
-    <a class="desktop-icon" href="https://github.com/{{ config.extra.github }}">
-      <span class="desktop-glyph" aria-hidden="true">&lt;&gt;</span>
-      <span>GitHub</span>
-    </a>
-    {%- endif %}
-  </aside>
+  {%- set _home = get_section(path="_index.md") %}
+  {%- set _logs = _home.extra.logs | default(value=[]) %}
+  {%- set _posts = get_section(path="posts/_index.md") %}
+  <div class="desktop-stage">
+    <aside class="desktop-rail desktop-rail-left" aria-label="Latest build activity">
+      <div class="win-widget">
+        <div class="win-dialog-bar">
+          <span>latest.log</span>
+          <span class="win-bar-tag">live</span>
+        </div>
+        <div class="win-widget-body">
+          <p class="win-widget-caption">Recent build checkpoints</p>
+          <ul class="win-widget-list">
+            {%- for log_path in _logs %}
+              {%- if loop.index0 < 6 %}
+              {%- set _l = get_section(path=log_path) %}
+              {%- if _l.pages %}
+              {%- set _top = _l.pages[0] %}
+              <li>
+                <a href="{{ _top.permalink }}">{{ _l.extra.short_title or _l.title }}</a>
+                <small>{{ _top.extra.milestone }} · {{ _top.extra.step }}{% if _top.extra.tests is defined %} · {{ _top.extra.tests }}t{% endif %}</small>
+              </li>
+              {%- endif %}
+              {%- endif %}
+            {%- endfor %}
+          </ul>
+          <a class="win-widget-more" href="{{ get_url(path='@/progress/_index.md') }}">Full progress ledger →</a>
+        </div>
+      </div>
+    </aside>
 
-  <div class="win-shell">
+    <div class="win-shell">
   {% block header %}
   <header class="site-header">
     <div class="win-titlebar">
@@ -216,6 +218,49 @@
     </p>
     <noscript><p>(JavaScript is off. You lost the theme toggle — the only script on the site. Everything else works.)</p></noscript>
   </footer>
+    </div>
+
+    <aside class="desktop-rail desktop-rail-right" aria-label="Recent writing and quick info">
+      <div class="win-widget">
+        <div class="win-dialog-bar">
+          <span>writing.log</span>
+          <span class="win-bar-tag">{{ _posts.pages | length }} posts</span>
+        </div>
+        <div class="win-widget-body">
+          <p class="win-widget-caption">Latest posts</p>
+          <ul class="win-widget-list">
+            {%- for p in _posts.pages %}
+              {%- if loop.index0 < 4 %}
+              <li>
+                <a href="{{ p.permalink }}">{{ p.title }}</a>
+                <small>{{ p.date | date(format="%Y-%m-%d", timezone="America/New_York") }} · {{ p.reading_time }}m</small>
+              </li>
+              {%- endif %}
+            {%- endfor %}
+          </ul>
+          <a class="win-widget-more" href="{{ get_url(path='@/posts/_index.md') }}">All writing →</a>
+        </div>
+      </div>
+
+      <div class="win-widget">
+        <div class="win-dialog-bar">
+          <span>readme.txt</span>
+          <span class="win-bar-tag">info</span>
+        </div>
+        <div class="win-widget-body">
+          <p class="win-widget-text">All projects are public Rust &amp; systems builds with committed load runs and failure drills. Zero analytics.</p>
+          <div class="win-widget-links">
+            <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
+            <span>·</span>
+            <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
+            {%- if config.extra.x_handle %}
+            <span>·</span>
+            <a href="https://x.com/{{ config.extra.x_handle }}">@{{ config.extra.x_handle }}</a>
+            {%- endif %}
+          </div>
+        </div>
+      </div>
+    </aside>
   </div>
 </body>
 </html>

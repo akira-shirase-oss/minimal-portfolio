@@ -107,64 +107,109 @@ body {
   color: var(--foreground);
 }
 
-/* ---- Desktop Shortcut Icons (wide screens >= 1380px) ---- */
-.desktop-icons {
-  position: fixed;
-  top: 22px;
-  left: 16px;
-  width: 84px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  z-index: 5;
+/* ---- Desktop 3-Column Stage (wide screens >= 1560px) ---- */
+.desktop-stage {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1100px) 236px;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
 }
 
-.desktop-icon {
+.desktop-rail {
+  position: sticky;
+  top: 24px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 2px;
-  text-decoration: none;
-  color: var(--desktop-fg);
+  gap: 16px;
+}
+
+.win-widget {
+  background: var(--chrome);
+  padding: 3px;
+  box-shadow: var(--bevel-out), 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.win-widget-body {
+  padding: 10px;
+  color: var(--secondary-foreground);
+  font-size: 0.82rem;
+}
+
+.win-widget-caption {
   font-family: var(--mono);
   font-size: 0.72rem;
   font-weight: 700;
-  text-align: center;
-  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--secondary-foreground);
+  margin: 0 0 8px;
 }
 
-.desktop-icon:hover {
+.win-widget-list {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 2px;
+  background: var(--background);
+  box-shadow: var(--bevel-thin-in);
+}
+
+.win-widget-list li {
+  padding: 6px 8px;
+  border-bottom: 1px dotted var(--border);
+  line-height: 1.35;
+}
+
+.win-widget-list li:last-child {
+  border-bottom: 0;
+}
+
+.win-widget-list a {
+  display: block;
+  font-weight: 700;
+  font-size: 0.8rem;
   text-decoration: none;
 }
 
-.desktop-icon:hover .desktop-glyph {
-  background: var(--accent);
-  color: var(--accent-foreground);
+.win-widget-list a:hover {
+  text-decoration: underline;
 }
 
-.desktop-icon:hover span:last-child {
-  background: var(--accent);
-  color: var(--accent-foreground);
-  padding: 0 3px;
-}
-
-.desktop-glyph {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 34px;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-  box-shadow: var(--bevel-out), 2px 2px 0 rgba(0, 0, 0, 0.35);
+.win-widget-list small {
+  display: block;
   font-family: var(--mono);
-  font-size: 0.82rem;
-  font-weight: 800;
+  font-size: 0.71rem;
+  margin-top: 2px;
+}
+
+.win-widget-more {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.win-widget-text {
+  margin: 0 0 8px;
+  padding: 8px;
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: var(--bevel-thin-in);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.win-widget-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
 }
 
 /* ---- Main Application Window ---- */
 .win-shell {
+  width: 100%;
   max-width: 1180px;
   margin: 0 auto;
   padding: 4px;
@@ -173,8 +218,11 @@ body {
   box-shadow: var(--bevel-out), 6px 6px 0 rgba(0, 0, 0, 0.28);
 }
 
-@media (max-width: 1380px) {
-  .desktop-icons {
+@media (max-width: 1560px) {
+  .desktop-stage {
+    display: block;
+  }
+  .desktop-rail {
     display: none;
   }
 }
