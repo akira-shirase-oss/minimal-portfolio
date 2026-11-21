@@ -2,6 +2,9 @@
 title = "Proving a noisy neighbor stays quiet: measuring isolation instead of asserting it"
 description = "A token misbehaving at 600 requests a second shouldn't slow down the editors beside it. Colophon stopped asserting that and started measuring it — 99.7% refused, editorial p95 held within 2x."
 date = 2026-11-05T09:00:00Z
+
+[taxonomies]
+tags = ["rust", "reliability", "security"]
 +++
 
 Every multi-tenant system makes the same quiet promise: one tenant's bad behaviour won't become everyone's problem.

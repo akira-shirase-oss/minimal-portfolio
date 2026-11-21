@@ -3,20 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Content Security Policy: everything same-origin; connect-src also
-       allows ws: for zola serve's livereload (prod opens no sockets). Two
-       inline scripts are allowed by hash: the theme toggle, and the
-       livereload snippet zola serve injects on port 1111 (absent from
-       builds, so its hash is unused in production — it breaks only if you
-       serve on another port). static.cloudflareinsights.com is allowed for
-       the Web Analytics beacon Cloudflare injects at the edge on real
-       browser requests (it ships its own SRI hash; its data posts go to
-       same-origin /cdn-cgi/rum, already covered by connect-src 'self').
-       If you edit the theme script, recompute over its exact text
-       (`shasum -a 256`, base64) and update the hash or the toggle silently
-       stops unhiding. JSON-LD blocks are data, not script requests, so
-       they need no hash. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com 'sha256-QBUBrmnCnvVlcAo3Xp9TMjdCCmJgOKZv7O26CSimijs=' 'sha256-915BT+Saxf9hcT8mOhqas9hdZ5S8Z0bfVMUr5YP4ytI='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' ws:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <!-- Content Security Policy lives as a real HTTP response header in
+       static/_headers (so frame-ancestors applies and header audits see it).
+       If you edit the inline script below, recompute its sha256 base64 hash
+       and update static/_headers. -->
   {%- set is_home = false %}
   {%- if page is defined and page.title %}
     {%- set doc_title = page.title %}

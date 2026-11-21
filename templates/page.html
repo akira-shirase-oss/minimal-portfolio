@@ -19,6 +19,11 @@
       <span>·</span>
       <span>{{ page.reading_time }} min read</span>
       {%- if page.extra.kind %}<span>·</span><span class="badge badge-muted">{{ page.extra.kind }}</span>{% endif %}
+      {%- if page.taxonomies.tags is defined %}
+        {%- for tag in page.taxonomies.tags %}
+        <a class="badge" href="{{ get_taxonomy_url(kind='tags', name=tag) }}">#{{ tag }}</a>
+        {%- endfor %}
+      {%- endif %}
     </div>
     <h1>{{ page.title }}</h1>
     {%- if page.description %}
@@ -32,9 +37,56 @@
     {{ page.content | safe }}
   </div>
 </article>
-{%- block after_article %}{% endblock after_article %}
+{%- block after_article %}
+{%- if page.taxonomies.tags is defined and page.taxonomies.tags | length > 0 %}
+{%- set all_posts = get_section(path="posts/_index.md") %}
+{%- set_global rel_count = 0 %}
+{%- for cand in all_posts.pages %}
+  {%- if cand.permalink != page.permalink and cand.taxonomies.tags is defined %}
+    {%- set_global matched = false %}
+    {%- for t in page.taxonomies.tags %}
+      {%- if t in cand.taxonomies.tags %}{%- set_global matched = true %}{%- endif %}
+    {%- endfor %}
+    {%- if matched %}{%- set_global rel_count = rel_count + 1 %}{%- endif %}
+  {%- endif %}
+{%- endfor %}
+{%- if rel_count > 0 %}
+<section aria-label="Related posts">
+  <fieldset>
+    <legend>related.log — Keep reading</legend>
+    <ul class="row-list" style="margin-bottom: 0;">
+      {%- set_global shown = 0 %}
+      {%- for cand in all_posts.pages %}
+        {%- if shown < 3 and cand.permalink != page.permalink and cand.taxonomies.tags is defined %}
+          {%- set_global matched = false %}
+          {%- for t in page.taxonomies.tags %}
+            {%- if t in cand.taxonomies.tags %}{%- set_global matched = true %}{%- endif %}
+          {%- endfor %}
+          {%- if matched %}
+          {%- set_global shown = shown + 1 %}
+          <li class="row-item">
+            <div class="row-main">
+              <a class="row-title" href="{{ cand.permalink }}">{{ cand.title }}</a>
+              {%- if cand.description %}<span class="row-desc">{{ cand.description }}</span>{% endif %}
+            </div>
+            <div class="row-meta">
+              <time datetime="{{ cand.date }}">{{ cand.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+            </div>
+          </li>
+          {%- endif %}
+        {%- endif %}
+      {%- endfor %}
+    </ul>
+  </fieldset>
+</section>
+{%- endif %}
+{%- endif %}
+{% endblock after_article %}
 
 {% block back_link %}
-<p><a href="{{ get_url(path='@/posts/_index.md') }}">← All writing</a></p>
+<div class="win-shortcuts">
+  <a class="btn btn-secondary" href="{{ get_url(path='@/posts/_index.md') }}">← All writing</a>
+  <a class="btn btn-secondary" href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a>
+</div>
 {% endblock back_link %}
 {% endblock content %}

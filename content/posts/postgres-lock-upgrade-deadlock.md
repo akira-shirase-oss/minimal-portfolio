@@ -2,6 +2,9 @@
 title = "The deadlock that only exists when two people publish at once"
 description = "Colophon's concurrency tests caught a real FOR SHARE to UPDATE upgrade race in the publish path. The fix is one row of lock discipline: take the lock you actually need."
 date = 2026-11-05T08:00:00Z
+
+[taxonomies]
+tags = ["postgres", "rust", "reliability"]
 +++
 
 Here's a pattern that lives in thousands of codebases: read a counter, then write it back. It looks safe. It isn't — and Colophon's publish path just proved it the hard way.

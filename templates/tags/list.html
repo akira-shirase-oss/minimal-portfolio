@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Topics · {{ config.title }}{% endblock title %}
+
+{% block ticker %}
+<div class="ticker-bar">
+  <span class="ticker-prefix" aria-hidden="true">TOPICS</span>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ terms | length }} topics indexed &nbsp;●&nbsp; rust, postgres, reliability, security, ai &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+</div>
+{% endblock ticker %}
+
+{% block content %}
+<article class="post-header">
+  <div class="post-meta"><span>topics</span><span>·</span><span>{{ terms | length }} tags</span></div>
+  <h1>Topics</h1>
+  <p class="post-lead">Posts grouped by technical area — bugs, benchmarks, and architecture notes.</p>
+</article>
+
+<section aria-label="All topics">
+  <fieldset>
+    <legend>tags.cpl — Browse by topic</legend>
+    <div class="win-shortcuts">
+      {%- for term in terms %}
+      <a class="btn btn-secondary" href="{{ term.permalink }}">#{{ term.name }} ({{ term.pages | length }})</a>
+      {%- endfor %}
+    </div>
+  </fieldset>
+</section>
+
+<div class="win-shortcuts">
+  <a class="btn btn-secondary" href="{{ get_url(path='@/posts/_index.md') }}">← All writing</a>
+  <a class="btn btn-secondary" href="{{ get_url(path='@/_index.md') }}">Home</a>
+</div>
+{% endblock content %}

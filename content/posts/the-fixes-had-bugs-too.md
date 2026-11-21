@@ -3,6 +3,9 @@ title = "The fixes landed, and the reviews found bugs in the fixes"
 description = "2026-11-17: every project's review round landed on main, most with a final \"ship\". The best finds weren't in the original code. They were in the fixes: an honest peer banned, a restore that charged twice, a parser crash anyone could reach. Plus the load runs that finally ran."
 date = 2026-11-17T07:00:00-05:00
 
+[taxonomies]
+tags = ["security", "reliability", "rust"]
+
 [extra]
 kind = "release"
 +++

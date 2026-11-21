@@ -3,6 +3,9 @@ title = "I made an AI read the entire Rust Book. Then I tried to make it fail."
 description = "It passed. But the most interesting part was the one bug it did write."
 date = 2026-10-14
 
+[taxonomies]
+tags = ["rust", "ai"]
+
 [extra]
 # experiment, failure or release
 kind = "experiment"

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}#{{ term.name }} · {{ config.title }}{% endblock title %}
+
+{% block ticker %}
+<div class="ticker-bar">
+  <span class="ticker-prefix" aria-hidden="true">TOPIC</span>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● #{{ term.name }} · {{ term.pages | length }} posts &nbsp;●&nbsp; experiments, failures and releases &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+</div>
+{% endblock ticker %}
+
+{% block content %}
+<article class="post-header">
+  <div class="post-meta">
+    <a href="{{ get_url(path='tags') }}">Topics</a>
+    <span>›</span>
+    <span>#{{ term.name }}</span>
+    <span>·</span>
+    <span>{{ term.pages | length }} post{% if term.pages | length != 1 %}s{% endif %}</span>
+  </div>
+  <h1>#{{ term.name }}</h1>
+</article>
+
+<section aria-label="Posts tagged {{ term.name }}">
+  <div class="win-panel">
+    <div class="win-panel-bar">
+      <span>{{ term.name }}.log — {{ term.pages | length }} post{% if term.pages | length != 1 %}s{% endif %}</span>
+      <a class="win-bar-btn" href="{{ get_url(path='@/posts/_index.md') }}">All posts</a>
+    </div>
+    <div class="win-panel-body">
+      <ul class="row-list" style="margin-bottom: 0;">
+        {%- for post in term.pages %}
+        <li class="row-item">
+          <div class="row-main">
+            <a class="row-title" href="{{ post.permalink }}">{{ post.title }}</a>
+            {%- if post.description %}<span class="row-desc">{{ post.description }}</span>{% endif %}
+          </div>
+          <div class="row-meta">
+            <span>{{ post.reading_time }} min</span>
+            <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+          </div>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="win-shortcuts">
+  <a class="btn btn-secondary" href="{{ get_url(path='tags') }}">← All topics</a>
+  <a class="btn btn-secondary" href="{{ get_url(path='@/posts/_index.md') }}">All writing</a>
+</div>
+{% endblock content %}
