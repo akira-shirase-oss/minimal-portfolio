@@ -9,46 +9,47 @@
   {%- set_global log_entries = log_entries + (one_log.pages | length) %}
 {%- endfor %}
 
-<!-- ======================= HERO ======================= -->
-<section class="hero" aria-label="Introduction">
-  <div class="hero-eyebrow">
-    <span class="badge badge-ok"><span class="dot" aria-hidden="true"></span> building in public</span>
-    <span>Rust · runtimes · background jobs · AI tools</span>
-  </div>
-  {{ section.content | safe }}
-  <div class="hero-actions">
-    <a class="btn btn-primary" href="{{ get_url(path='@/colophon/_index.md') }}">Explore Colophon →</a>
-    <a class="btn btn-secondary" href="{{ get_url(path='@/progress/_index.md') }}">Live progress ledger</a>
-  </div>
-  <div class="hero-meta">
-    <span><strong>{{ logs | length }}</strong> build logs</span>
-    <span><strong>{{ log_entries + (posts.pages | length) }}</strong> write-ups</span>
-    <span><strong>Rust + Zola</strong> · static</span>
-    <span><strong>0</strong> trackers</span>
-  </div>
-</section>
+<!-- ======================= HERO + FLAGSHIP ======================= -->
+<div class="hero-grid">
+  <section class="hero" aria-label="Introduction">
+    <div class="hero-eyebrow">
+      <span class="badge badge-ok"><span class="dot" aria-hidden="true"></span> building in public</span>
+      <span>Rust · runtimes · background jobs · AI tools</span>
+    </div>
+    {{ section.content | safe }}
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{{ get_url(path='@/colophon/_index.md') }}">Explore Colophon →</a>
+      <a class="btn btn-secondary" href="{{ get_url(path='@/progress/_index.md') }}">Live progress ledger</a>
+    </div>
+    <div class="hero-meta">
+      <span><strong>{{ logs | length }}</strong> build logs</span>
+      <span><strong>{{ log_entries + (posts.pages | length) }}</strong> write-ups</span>
+      <span><strong>Rust + Zola</strong> · static</span>
+      <span><strong>0</strong> trackers</span>
+    </div>
+  </section>
+
+  <section aria-label="Flagship project" style="margin: 0;">
+    <div class="win-dialog">
+      <div class="win-dialog-bar">
+        <span>colophon.exe — Flagship</span>
+        <span class="win-controls" aria-hidden="true"><span class="win-ctrl">?</span><span class="win-ctrl">×</span></span>
+      </div>
+      <div class="win-dialog-body">
+        <h2>A CMS where “published” is a receipt, not a spinner.</h2>
+        <p>Every publish is a numbered release, and a probe reads the release marker off the live page before the product calls it done.</p>
+        <div class="win-dialog-well">PostgreSQL = single authority · RLS tenant isolation · transactional outbox · monotonic releases</div>
+        <a class="btn btn-secondary" href="{{ get_url(path='@/colophon/_index.md') }}">Open Colophon build log →</a>
+      </div>
+    </div>
+  </section>
+</div>
 
 <!-- ======================= STATUS TICKER ======================= -->
 <div class="ticker-bar">
   <span class="ticker-prefix" aria-hidden="true">STATUS</span>
   <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ log_entries + (posts.pages | length) }} write-ups on file{%- for log_path in logs %}{%- set one_log = get_section(path=log_path) %}{%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}{%- endfor %} &nbsp;●&nbsp; experiments, failures and releases &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
 </div>
-
-<!-- ======================= FLAGSHIP DIALOG ======================= -->
-<section aria-label="Flagship project">
-  <div class="win-dialog">
-    <div class="win-dialog-bar">
-      <span>colophon.exe — Flagship</span>
-      <span class="win-controls" aria-hidden="true"><span class="win-ctrl">?</span><span class="win-ctrl">×</span></span>
-    </div>
-    <div class="win-dialog-body">
-      <h2>A CMS where “published” is a receipt, not a spinner.</h2>
-      <p>Every publish is a numbered release, and a probe reads the release marker off the live page before the product calls it done.</p>
-      <div class="win-dialog-well">PostgreSQL = single authority · RLS tenant isolation · transactional outbox · monotonic releases</div>
-      <a class="btn btn-secondary" href="{{ get_url(path='@/colophon/_index.md') }}">Open Colophon build log →</a>
-    </div>
-  </div>
-</section>
 
 <!-- ======================= PROJECTS (TASK MANAGER TABBED SHEET) ======================= -->
 {%- if section.extra.projects %}
