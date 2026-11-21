@@ -188,59 +188,6 @@
   </div>
 </section>
 
-<!-- ======================= WRITING & LEARNING ======================= -->
-<section id="writing">
-  <div class="section-head">
-    <h2>Writing</h2>
-    <a class="mono" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS feed →</a>
-  </div>
-  <p class="section-sub">Experiments, learning notes, and the things that went wrong along the way.</p>
-  <ul class="row-list">
-    {%- for post in posts.pages %}
-    {%- if loop.index0 < 5 %}
-    <li class="row-item">
-      <div class="row-main">
-        <a class="row-title" href="{{ post.permalink }}">{{ post.title }}</a>
-        {%- if post.description %}
-        <span class="row-desc">{{ post.description | truncate(length=110) }}</span>
-        {%- endif %}
-      </div>
-      <div class="row-meta">
-        {%- if post.extra.kind %}<span class="badge badge-muted">{{ post.extra.kind }}</span>{% endif %}
-        <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
-      </div>
-    </li>
-    {%- endif %}
-    {%- endfor %}
-  </ul>
-</section>
-
-<!-- ======================= LEARNING ======================= -->
-<section id="learning">
-  <div class="section-head">
-    <h2>Learning in public</h2>
-    <a class="mono" href="{{ get_url(path='@/learn/_index.md') }}">All tracks →</a>
-  </div>
-  {%- set learning = get_section(path="learn/_index.md") %}
-  <ul class="row-list">
-    {%- for track_path in learning.subsections %}
-    {%- set track = get_section(path=track_path) %}
-    {%- set chapters = [p for p in track.pages if p.extra.chapter] %}
-    <li class="row-item">
-      <div class="row-main">
-        <a class="row-title" href="{{ track.permalink }}">{{ track.title }}</a>
-        <span class="row-desc">{{ track.description }}</span>
-      </div>
-      <div class="row-meta">
-        <span>{{ chapters | length }} {{ track.extra.item_label | default(value="chapter") }}{% if chapters | length != 1 %}s{% endif %}</span>
-        <span>·</span>
-        <a href="{{ get_url(path=track.extra.roadmap) }}">roadmap</a>
-      </div>
-    </li>
-    {%- endfor %}
-  </ul>
-</section>
-
 <!-- ======================= HOW I WORK ======================= -->
 <section id="how">
   <div class="section-head">
