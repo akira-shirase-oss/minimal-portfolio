@@ -50,223 +50,225 @@
   </div>
 </section>
 
-<!-- ======================= PROJECTS (UNIFIED TASK MANAGER) ======================= -->
+<!-- ======================= PROJECTS (TASK MANAGER TABBED SHEET) ======================= -->
 {%- if section.extra.projects %}
-<section id="projects">
-  <div class="section-head">
-    <h2>Projects</h2>
-    <a class="mono" href="{{ get_url(path='@/progress/_index.md') }}">Full progress ledger →</a>
-  </div>
-  <p class="section-sub">Core services and hardened runtimes first, with live milestones pulled straight from each build log. Nothing listed twice.</p>
+<section id="projects" aria-label="Projects">
   {%- set priority = ["Colophon CMS", "Durable Runner", "Service Monitor", "jsrt", "MiniBTC"] %}
-  <div class="table-wrap">
-    <table class="mobile-records" role="table" aria-label="Core projects">
-      <thead>
-        <tr>
-          <th scope="col" width="64">PID</th>
-          <th scope="col" width="175">Project</th>
-          <th scope="col" width="115">Status</th>
-          <th scope="col">What it is &amp; latest checkpoint</th>
-        </tr>
-      </thead>
-      <tbody>
-      {%- for name in priority %}
-        {%- for project in section.extra.projects %}
-          {%- if project.name == name %}
-          {%- set st = project.status | default(value="") %}
-          {%- set href = "" %}
-          {%- set latest_meta = "" %}
-          {%- if project.link %}
-            {%- if project.link is starting_with(pat="@/") %}
-              {%- set href = get_url(path=project.link) %}
-              {%- set log_path = project.link | replace(from="@/", to="") %}
-              {%- if log_path in logs %}
-                {%- set item_log = get_section(path=log_path) %}
-                {%- if item_log.pages %}
-                  {%- set now_on = item_log.pages[0] %}
-                  {%- set latest_meta = now_on.extra.milestone ~ " · " ~ now_on.extra.step %}
-                  {%- if now_on.extra.tests is defined %}{%- set latest_meta = latest_meta ~ " · " ~ now_on.extra.tests ~ " tests" %}{%- endif %}
-                {%- endif %}
-              {%- endif %}
-            {%- else %}
-              {%- set href = project.link %}
-            {%- endif %}
-          {%- endif %}
-          <tr>
-            <td class="num"><span class="mobile-label" aria-hidden="true">PID: </span><code>{{ 100 + loop.index }}</code></td>
-            <td><span class="mobile-label" aria-hidden="true">Project: </span><b>{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</b></td>
-            <td>
-              <span class="mobile-label" aria-hidden="true">Status: </span>
-              <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% else %}badge-accent{% endif %}"><span class="dot" aria-hidden="true"></span> {{ st }}</span>
-            </td>
-            <td>
-              <span class="mobile-label" aria-hidden="true">Summary: </span>
-              {{ project.about }}
-              {%- if latest_meta %}<br><small class="mono">{{ latest_meta }}</small>{% endif %}
-            </td>
-          </tr>
-          {%- endif %}
-        {%- endfor %}
-      {%- endfor %}
-      </tbody>
-    </table>
+  <div class="win-tabs">
+    <span class="win-tab active">taskmgr.exe — Core Projects ({{ priority | length }})</span>
+    <a class="win-tab" href="{{ get_url(path='@/progress/_index.md') }}">Full Ledger ({{ logs | length }}) →</a>
+    <a class="win-tab" href="{{ get_url(path='@/build-log/_index.md') }}">Build Logs →</a>
   </div>
-
-  <details style="margin-top: 12px;">
-    <summary>In development, explorations &amp; side work ({{ (section.extra.projects | length) - (priority | length) }} more)</summary>
-    <div class="table-wrap" style="margin-left: 0; margin-top: 10px;">
-      <table class="mobile-records" role="table" aria-label="Other projects">
+  <div class="win-tab-pane">
+    <div class="table-wrap">
+      <table class="mobile-records" role="table" aria-label="Core projects">
         <thead>
           <tr>
-            <th scope="col" width="190">Project</th>
+            <th scope="col" width="64">PID</th>
+            <th scope="col" width="175">Project</th>
             <th scope="col" width="115">Status</th>
-            <th scope="col">What it is</th>
+            <th scope="col">What it is &amp; latest checkpoint</th>
           </tr>
         </thead>
         <tbody>
-        {%- for project in section.extra.projects %}
-          {%- if project.name not in priority %}
-          {%- set st = project.status | default(value="") %}
-          {%- set href = "" %}
-          {%- if project.link %}
-            {%- if project.link is starting_with(pat="@/") %}{%- set href = get_url(path=project.link) %}{%- else %}{%- set href = project.link %}{%- endif %}
-          {%- endif %}
-          <tr>
-            <td><span class="mobile-label" aria-hidden="true">Project: </span><b>{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</b></td>
-            <td>
-              <span class="mobile-label" aria-hidden="true">Status: </span>
-              <span class="badge {% if st == 'live' or st == 'shipped' %}badge-ok{% elif st == 'parked' or st == 'exploration' or st == 'write-up' %}badge-muted{% else %}badge-accent{% endif %}">{{ st }}</span>
-            </td>
-            <td><span class="mobile-label" aria-hidden="true">Summary: </span>{{ project.about }}</td>
-          </tr>
-          {%- endif %}
+        {%- for name in priority %}
+          {%- for project in section.extra.projects %}
+            {%- if project.name == name %}
+            {%- set st = project.status | default(value="") %}
+            {%- set href = "" %}
+            {%- set latest_meta = "" %}
+            {%- if project.link %}
+              {%- if project.link is starting_with(pat="@/") %}
+                {%- set href = get_url(path=project.link) %}
+                {%- set log_path = project.link | replace(from="@/", to="") %}
+                {%- if log_path in logs %}
+                  {%- set item_log = get_section(path=log_path) %}
+                  {%- if item_log.pages %}
+                    {%- set now_on = item_log.pages[0] %}
+                    {%- set latest_meta = now_on.extra.milestone ~ " · " ~ now_on.extra.step %}
+                    {%- if now_on.extra.tests is defined %}{%- set latest_meta = latest_meta ~ " · " ~ now_on.extra.tests ~ " tests" %}{%- endif %}
+                  {%- endif %}
+                {%- endif %}
+              {%- else %}
+                {%- set href = project.link %}
+              {%- endif %}
+            {%- endif %}
+            <tr>
+              <td class="num"><span class="mobile-label" aria-hidden="true">PID: </span><code>{{ 100 + loop.index }}</code></td>
+              <td><span class="mobile-label" aria-hidden="true">Project: </span><b>{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</b></td>
+              <td>
+                <span class="mobile-label" aria-hidden="true">Status: </span>
+                <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% else %}badge-accent{% endif %}"><span class="dot" aria-hidden="true"></span> {{ st }}</span>
+              </td>
+              <td>
+                <span class="mobile-label" aria-hidden="true">Summary: </span>
+                {{ project.about }}
+                {%- if latest_meta %}<br><small class="mono">{{ latest_meta }}</small>{% endif %}
+              </td>
+            </tr>
+            {%- endif %}
+          {%- endfor %}
         {%- endfor %}
         </tbody>
       </table>
     </div>
-  </details>
+
+    <details style="margin-top: 8px; border-bottom: 0; padding: 6px 4px 2px;">
+      <summary>In development, explorations &amp; side work ({{ (section.extra.projects | length) - (priority | length) }} more)</summary>
+      <div class="table-wrap" style="margin-left: 0; margin-top: 8px;">
+        <table class="mobile-records" role="table" aria-label="Other projects">
+          <thead>
+            <tr>
+              <th scope="col" width="190">Project</th>
+              <th scope="col" width="115">Status</th>
+              <th scope="col">What it is</th>
+            </tr>
+          </thead>
+          <tbody>
+          {%- for project in section.extra.projects %}
+            {%- if project.name not in priority %}
+            {%- set st = project.status | default(value="") %}
+            {%- set href = "" %}
+            {%- if project.link %}
+              {%- if project.link is starting_with(pat="@/") %}{%- set href = get_url(path=project.link) %}{%- else %}{%- set href = project.link %}{%- endif %}
+            {%- endif %}
+            <tr>
+              <td><span class="mobile-label" aria-hidden="true">Project: </span><b>{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</b></td>
+              <td>
+                <span class="mobile-label" aria-hidden="true">Status: </span>
+                <span class="badge {% if st == 'live' or st == 'shipped' %}badge-ok{% elif st == 'parked' or st == 'exploration' or st == 'write-up' %}badge-muted{% else %}badge-accent{% endif %}">{{ st }}</span>
+              </td>
+              <td><span class="mobile-label" aria-hidden="true">Summary: </span>{{ project.about }}</td>
+            </tr>
+            {%- endif %}
+          {%- endfor %}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
 </section>
 {%- endif %}
 
-<!-- ======================= NUMBERS ======================= -->
-<section id="numbers">
-  <div class="section-head">
-    <h2>Numbers I can show, not adjectives</h2>
-  </div>
-  <p class="section-sub">House rule: <b>no claim without an executed run and stored evidence.</b> Measured on laptop-class hardware — development observations, never production capacity.</p>
-  <div class="metrics-grid">
-    <div class="metric">
-      <div class="metric-value">540,063 req</div>
-      <div class="metric-label">Warm baseline, 30 min sustained</div>
-      <p class="metric-note">300/s with zero failures on this machine. Proves steady load; says nothing about your hardware.</p>
+<!-- ======================= NUMBERS (PERFORMANCE MONITOR) ======================= -->
+<section id="numbers" aria-label="Measured numbers">
+  <div class="win-panel">
+    <div class="win-panel-bar">
+      <span>perfmon.exe — Numbers I can show, not adjectives</span>
+      <span class="win-controls" aria-hidden="true"><span class="win-ctrl">_</span><span class="win-ctrl">×</span></span>
     </div>
-    <div class="metric">
-      <div class="metric-value">600 refused/s</div>
-      <div class="metric-label">Noisy-agent isolation</div>
-      <p class="metric-note">A token past quota is throttled inside auth while editors beside it hold their latency.</p>
-    </div>
-    <div class="metric">
-      <div class="metric-value">≥ 1,000,000</div>
-      <div class="metric-label">Full load bar, every scenario</div>
-      <p class="metric-note">Standing bar for anything serving traffic; misses fail and get investigated, not re-run till green.</p>
-    </div>
-    <div class="metric">
-      <div class="metric-value">400 s</div>
-      <div class="metric-label">Disaster restore drill</div>
-      <p class="metric-note">Encrypted capture to serving on clean infrastructure — rehearsed for real, not documented in hope.</p>
-    </div>
-    <div class="metric">
-      <div class="metric-value">10,000 records</div>
-      <div class="metric-label">Import at true scale</div>
-      <p class="metric-note">A real import, not a loop over a tiny sample labelled “scale”.</p>
-    </div>
-    <div class="metric">
-      <div class="metric-value">59 / 59</div>
-      <div class="metric-label">Hidden-test Rust exam</div>
-      <p class="metric-note">The AI couldn’t see the questions or run a compiler. Decoys included.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= HOW I WORK ======================= -->
-<section id="how">
-  <div class="section-head">
-    <h2>How the work is judged</h2>
-  </div>
-  <div class="principles-list">
-    <div class="principle">
-      <h3>Proof over breadth.</h3>
-      <p>A feature counts when its <i>failure</i> behaviour is tested and stored — CI regressions, a real HTTP testbed, and committed load runs.</p>
-    </div>
-    <div class="principle">
-      <h3>Truthful states.</h3>
-      <p><del>“Accepted” presented as “done”</del> is the industry’s favourite bug. Publishes stay <mark>pending</mark> until probed live; unmeasured checks stay <code>uncertain</code>.</p>
-    </div>
-    <div class="principle">
-      <h3>Kill it at any moment.</h3>
-      <p>Crash tests have catalogue numbers (F01–F09). Bugs get a replayable seed: <kbd>colophon-sim --seed N --trace</kbd>.</p>
-    </div>
-    <div class="principle">
-      <h3>Bounded everything.</h3>
-      <p>Every queue, body, page, cache, retry loop and pool has a limit and a deadline — a bound you can’t name is an outage you haven’t met yet.</p>
-    </div>
-    <div class="principle">
-      <h3>No AI hype.</h3>
-      <p>Agents work through the same API and permissions as everyone else — draft-only, budgeted in Postgres, never self-approving.</p>
+    <div class="win-panel-body">
+      <p class="win-panel-note"><b>House rule:</b> no claim without an executed run and stored evidence. Measured on laptop-class hardware — development observations, never production capacity.</p>
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="metric-readout">540,063 req</div>
+          <div class="metric-label">Warm baseline, 30 min</div>
+          <p class="metric-note">300/s with zero failures on this machine. Proves steady load; says nothing about your hardware.</p>
+        </div>
+        <div class="metric">
+          <div class="metric-readout">600 refused/s</div>
+          <div class="metric-label">Noisy-agent isolation</div>
+          <p class="metric-note">A token past quota is throttled inside auth while editors beside it hold their latency.</p>
+        </div>
+        <div class="metric">
+          <div class="metric-readout">≥ 1,000,000</div>
+          <div class="metric-label">Full load bar</div>
+          <p class="metric-note">Standing bar for anything serving traffic; misses fail and get investigated, not re-run till green.</p>
+        </div>
+        <div class="metric">
+          <div class="metric-readout">400 s</div>
+          <div class="metric-label">Disaster restore drill</div>
+          <p class="metric-note">Encrypted capture to serving on clean infrastructure — rehearsed for real, not documented in hope.</p>
+        </div>
+        <div class="metric">
+          <div class="metric-readout">10,000 records</div>
+          <div class="metric-label">Import at true scale</div>
+          <p class="metric-note">A real import, not a loop over a tiny sample labelled “scale”.</p>
+        </div>
+        <div class="metric">
+          <div class="metric-readout">59 / 59</div>
+          <div class="metric-label">Hidden-test Rust exam</div>
+          <p class="metric-note">The AI couldn’t see the questions or run a compiler. Decoys included.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ======================= FAQ ======================= -->
+<!-- ======================= HOW I WORK (SYSTEM POLICIES GROUPBOX) ======================= -->
+<section id="how" aria-label="How the work is judged">
+  <fieldset>
+    <legend>policy.msc — How the work is judged</legend>
+    <div class="principles-list">
+      <div class="principle">
+        <h3><span class="win-check" aria-hidden="true">✓</span>Proof over breadth.</h3>
+        <p>A feature counts when its <i>failure</i> behaviour is tested and stored — CI regressions, a real HTTP testbed, and committed load runs.</p>
+      </div>
+      <div class="principle">
+        <h3><span class="win-check" aria-hidden="true">✓</span>Truthful states.</h3>
+        <p><del>“Accepted” presented as “done”</del> is the industry’s favourite bug. Publishes stay <mark>pending</mark> until probed live; unmeasured checks stay <code>uncertain</code>.</p>
+      </div>
+      <div class="principle">
+        <h3><span class="win-check" aria-hidden="true">✓</span>Kill it at any moment.</h3>
+        <p>Crash tests have catalogue numbers (F01–F09). Bugs get a replayable seed: <kbd>colophon-sim --seed N --trace</kbd>.</p>
+      </div>
+      <div class="principle">
+        <h3><span class="win-check" aria-hidden="true">✓</span>Bounded everything.</h3>
+        <p>Every queue, body, page, cache, retry loop and pool has a limit and a deadline — a bound you can’t name is an outage you haven’t met yet.</p>
+      </div>
+      <div class="principle">
+        <h3><span class="win-check" aria-hidden="true">✓</span>No AI hype.</h3>
+        <p>Agents work through the same API and permissions as everyone else — draft-only, budgeted in Postgres, never self-approving.</p>
+      </div>
+    </div>
+  </fieldset>
+</section>
+
+<!-- ======================= FAQ (WINHELP TREEVIEW) ======================= -->
 <section aria-label="Frequently asked questions">
-  <div class="section-head">
-    <h2>Asked plainly</h2>
-  </div>
-  <details>
-    <summary>Why build in the open, including the mistakes?</summary>
-    <p>Because “proof over breadth” can’t be claimed, only shown. A build log that includes the failures is the difference between <i>saying</i> a system is reliable and letting you check.</p>
-  </details>
-  <details>
-    <summary>Is any of this usable yet?</summary>
-    <p>Colophon is pre-0.1; Service Monitor has an installed release; jsrt’s roadmap and hardened load runs are done; the seven newer projects are still early. Check the <a href="{{ get_url(path='@/progress/_index.md') }}">progress ledger</a> for every project’s exact stage and open items.</p>
-  </details>
-  <details>
-    <summary>Why Rust?</summary>
-    <p>One type system for the error envelope, explicit deadlines on every I/O await, compilers that refuse what production would regret, and deterministic failure simulators.</p>
-  </details>
-  <details>
-    <summary>How minimal is this site, really?</summary>
-    <p>Zola generates it: one stylesheet, one small inline script for the theme toggle and ticker, no tracking, and one self-hosted font. Accordions are native <code>&lt;details&gt;</code>.</p>
-  </details>
+  <fieldset>
+    <legend>404human.hlp — Asked plainly</legend>
+    <div class="win-well">
+      <details>
+        <summary>Why build in the open, including the mistakes?</summary>
+        <p>Because “proof over breadth” can’t be claimed, only shown. A build log that includes the failures is the difference between <i>saying</i> a system is reliable and letting you check.</p>
+      </details>
+      <details>
+        <summary>Is any of this usable yet?</summary>
+        <p>Colophon is pre-0.1; Service Monitor has an installed release; jsrt’s roadmap and hardened load runs are done; the seven newer projects are still early. Check the <a href="{{ get_url(path='@/progress/_index.md') }}">progress ledger</a> for every project’s exact stage and open items.</p>
+      </details>
+      <details>
+        <summary>Why Rust?</summary>
+        <p>One type system for the error envelope, explicit deadlines on every I/O await, compilers that refuse what production would regret, and deterministic failure simulators.</p>
+      </details>
+      <details>
+        <summary>How minimal is this site, really?</summary>
+        <p>Zola generates it: one stylesheet, one small inline script for the theme toggle and ticker, no tracking, and one self-hosted font. Accordions are native <code>&lt;details&gt;</code>.</p>
+      </details>
+    </div>
+  </fieldset>
 </section>
 
-<!-- ======================= FIND ME ======================= -->
-<section id="find">
-  <div class="section-head">
-    <h2>Find me</h2>
-  </div>
+<!-- ======================= FIND ME (NETWORK SHORTCUTS) ======================= -->
+<section id="find" aria-label="Find me">
   {%- set x = config.extra.x_handle %}
   {%- set gh = config.extra.github %}
   {%- set mail = config.extra.email %}
-  <ul class="row-list">
-    {%- if gh %}
-    <li class="row-item">
-      <div class="row-main"><span class="mono">GitHub</span></div>
-      <div><a href="https://github.com/{{ gh }}">github.com/{{ gh }}</a> <small>— every project above, public</small></div>
-    </li>
-    {%- endif %}
-    {%- if x %}
-    <li class="row-item">
-      <div class="row-main"><span class="mono">X</span></div>
-      <div><a href="https://x.com/{{ x }}">@{{ x }}</a></div>
-    </li>
-    {%- endif %}
-    {%- if mail %}
-    <li class="row-item">
-      <div class="row-main"><span class="mono">Email</span></div>
-      <div><a href="mailto:{{ mail }}">{{ mail }}</a></div>
-    </li>
-    {%- endif %}
-  </ul>
+  <fieldset>
+    <legend>network.cpl — Find me</legend>
+    <div class="win-shortcuts">
+      {%- if gh %}
+      <a class="btn btn-secondary" href="https://github.com/{{ gh }}">GitHub · github.com/{{ gh }}</a>
+      {%- endif %}
+      {%- if x %}
+      <a class="btn btn-secondary" href="https://x.com/{{ x }}">X · @{{ x }}</a>
+      {%- endif %}
+      {%- if mail %}
+      <a class="btn btn-secondary" href="mailto:{{ mail }}">Email · {{ mail }}</a>
+      {%- endif %}
+      <a class="btn btn-secondary" href="{{ get_url(path='@/posts/_index.md') }}">Writing · /posts/</a>
+      <a class="btn btn-secondary" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS · /rss.xml</a>
+    </div>
+  </fieldset>
 </section>
 {% endblock content %}
