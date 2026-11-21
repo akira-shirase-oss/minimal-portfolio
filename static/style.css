@@ -1207,6 +1207,13 @@ details > *:not(summary) {
   color: var(--muted-foreground);
 }
 
+details > .table-wrap,
+details > pre {
+  margin-left: 0;
+  max-width: none;
+  color: var(--foreground);
+}
+
 details p:last-child {
   margin-bottom: 0;
 }
