@@ -1,7 +1,7 @@
 +++
-title = "Posts"
-# Newest first on the home page.
+title = "Writing"
+description = "Experiments, learning notes, and the things that went wrong along the way."
 sort_by = "date"
-# The home page lists the posts, so /posts/ itself isn't needed.
-render = false
+template = "posts.html"
+render = true
 +++

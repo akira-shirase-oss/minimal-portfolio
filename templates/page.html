@@ -3,23 +3,28 @@
 {% block ticker %}
 {#- The status ticker: the text is written once in data-ticker; the CSS draws
     two copies from it and slides the track by half its width. -#}
-<div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ page.extra.kind | default(value="post") }} · {{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }} · {{ page.reading_time }} min read &nbsp;●&nbsp; written up, numbers included &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
-<hr>
+<div class="ticker-bar">
+  <span class="ticker-prefix" aria-hidden="true">{{ page.extra.kind | default(value="POST") | upper }}</span>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ page.extra.kind | default(value="post") }} · {{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }} · {{ page.reading_time }} min read &nbsp;●&nbsp; written up, numbers included &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+</div>
 {% endblock ticker %}
 
 {% block content %}
 <article>
-  {#- Filled by series-page.html for build-log entries; empty for normal posts. #}
-  {%- block series_line %}{% endblock series_line %}
-  <p><small>
-    <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
-    · {{ page.reading_time }} min read
-    {%- if page.extra.kind %} · <code>{{ page.extra.kind }}</code>{% endif %}
-  </small></p>
-  <h1>{{ page.title }}</h1>
-  {%- if page.description %}
-  <p>{{ page.description }}</p>
-  {%- endif %}
+  <div class="post-header">
+    {#- Filled by series-page.html for build-log entries; empty for normal posts. #}
+    {%- block series_line %}{% endblock series_line %}
+    <div class="post-meta">
+      <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+      <span>·</span>
+      <span>{{ page.reading_time }} min read</span>
+      {%- if page.extra.kind %}<span>·</span><span class="badge badge-muted">{{ page.extra.kind }}</span>{% endif %}
+    </div>
+    <h1>{{ page.title }}</h1>
+    {%- if page.description %}
+    <p class="post-lead">{{ page.description }}</p>
+    {%- endif %}
+  </div>
   {#- Filled by series-page.html with an "at a glance" card; empty for normal posts. #}
   {%- block after_subtitle %}{% endblock after_subtitle %}
   <hr>
@@ -30,6 +35,6 @@
 {%- block after_article %}{% endblock after_article %}
 
 {% block back_link %}
-<p><a href="{{ get_url(path='@/_index.md') }}#writing">← All writing</a></p>
+<p><a href="{{ get_url(path='@/posts/_index.md') }}">← All writing</a></p>
 {% endblock back_link %}
 {% endblock content %}

@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
+{% block ticker %}
+<div class="ticker-bar">
+  <span class="ticker-prefix" aria-hidden="true">LESSONS</span>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● daily lessons · {{ section.pages | length }} shared &nbsp;●&nbsp; small notes, written as they happen &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+</div>
+{% endblock ticker %}
+
 {% block content %}
-<article>
-  <p><small>daily lessons · {{ section.pages | length }} shared</small></p>
+<article class="post-header">
+  <div class="post-meta"><span>daily lessons</span><span>·</span><span>{{ section.pages | length }} shared</span></div>
   <h1>{{ section.title }}</h1>
   {%- if section.description %}
-  <p>{{ section.description }}</p>
+  <p class="post-lead">{{ section.description }}</p>
   {%- endif %}
   <div class="post-body">{{ section.content | safe }}</div>
 </article>
@@ -16,18 +23,31 @@
 {%- set lessons = [p for p in section.pages if p.extra.week == week] %}
 {%- set lessons = lessons | sort(attribute="extra.lesson") %}
 <section>
-  <h2>Week {{ week }}</h2>
-  <ol>
-    {%- for lesson in lessons %}
-    <li>
-      <a href="{{ lesson.permalink }}">{{ lesson.title }}</a>
-      <small>· <time datetime="{{ lesson.date }}">{{ lesson.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time></small>
-      {%- if lesson.description %}<br><small>{{ lesson.description }}</small>{% endif %}
-    </li>
-    {%- endfor %}
-  </ol>
+  <div class="win-panel">
+    <div class="win-panel-bar">
+      <span>week-{{ week }}.exe — Week {{ week }}</span>
+      <span class="win-bar-tag">{{ lessons | length }} lessons</span>
+    </div>
+    <div class="win-panel-body">
+      <ul class="row-list" style="margin-bottom: 0;">
+        {%- for lesson in lessons %}
+        <li class="row-item">
+          <div class="row-main">
+            <a class="row-title" href="{{ lesson.permalink }}">{{ lesson.title }}</a>
+            {%- if lesson.description %}<span class="row-desc">{{ lesson.description }}</span>{% endif %}
+          </div>
+          <div class="row-meta">
+            <time datetime="{{ lesson.date }}">{{ lesson.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+          </div>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </div>
 </section>
 {%- endfor %}
 
-<p><a href="{{ get_url(path='@/_index.md') }}">← Home</a></p>
+<div class="win-shortcuts">
+  <a class="btn btn-secondary" href="{{ get_url(path='@/_index.md') }}">← Home</a>
+</div>
 {% endblock content %}
