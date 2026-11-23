@@ -22,7 +22,7 @@
 {%- if doc_type == "article" %}
   {%- set url = page.permalink %}
   {%- set parent_path = page.ancestors | last %}
-  {#- Blog posts live under /posts/ (Writing); build-log entries live under their log;
+  {#- Blog posts live under /posts/ (Knowledge Hub); build-log entries live under their log;
       learning chapters live under /learn/<track>/. #}
   {%- set in_learning = parent_path is starting_with(pat="learn/") %}
   {%- set in_posts = parent_path == "posts/_index.md" %}
@@ -32,7 +32,7 @@
     {%- if page.updated %}, "dateModified": {{ page.updated | json_encode | safe }}{% endif %}, "inLanguage": {{ lang | json_encode | safe }}, "wordCount": {{ page.word_count }}, "image": {{ card | json_encode | safe }}, "author": {"@id": {{ person_id | json_encode | safe }}}, "publisher": {"@id": {{ person_id | json_encode | safe }}}
     {%- if page.taxonomies.tags is defined and page.taxonomies.tags | length > 0 %}, "keywords": {{ page.taxonomies.tags | json_encode | replace(from="<", to="\\u003c") | safe }}{% endif %}
     {%- if in_learning %}, "learningResourceType": "{{ 'chapter' if page.extra.chapter else 'roadmap' }}", "isPartOf": {"@type": "CreativeWorkSeries", "@id": {{ (log.permalink ~ "#series") | json_encode | safe }}, "name": {{ log.title | json_encode | replace(from="<", to="\\u003c") | safe }}, "url": {{ log.permalink | json_encode | safe }}}
-    {%- elif in_log %}, "isPartOf": {"@type": "Blog", "@id": {{ (log.permalink ~ "#blog") | json_encode | safe }}, "name": {{ (log.title ~ " build log") | json_encode | replace(from="<", to="\\u003c") | safe }}, "url": {{ log.permalink | json_encode | safe }}}{% elif in_posts %}, "isPartOf": {"@type": "Blog", "@id": {{ (get_url(path="@/posts/_index.md") ~ "#blog") | json_encode | safe }}, "name": "Writing", "url": {{ get_url(path="@/posts/_index.md") | json_encode | safe }}}{% else %}, "isPartOf": {"@id": {{ website_id | json_encode | safe }}}{% endif %}},
+    {%- elif in_log %}, "isPartOf": {"@type": "Blog", "@id": {{ (log.permalink ~ "#blog") | json_encode | safe }}, "name": {{ (log.title ~ " build log") | json_encode | replace(from="<", to="\\u003c") | safe }}, "url": {{ log.permalink | json_encode | safe }}}{% elif in_posts %}, "isPartOf": {"@type": "Blog", "@id": {{ (get_url(path="@/posts/_index.md") ~ "#blog") | json_encode | safe }}, "name": "Knowledge Hub", "url": {{ get_url(path="@/posts/_index.md") | json_encode | safe }}}{% else %}, "isPartOf": {"@id": {{ website_id | json_encode | safe }}}{% endif %}},
   {"@type": "BreadcrumbList", "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Home", "item": {{ site | json_encode | safe }}},
     {%- if in_learning %}
@@ -43,7 +43,7 @@
     {"@type": "ListItem", "position": 2, "name": {{ (log.title ~ " build log") | json_encode | replace(from="<", to="\\u003c") | safe }}, "item": {{ log.permalink | json_encode | safe }}},
     {"@type": "ListItem", "position": 3, "name": {{ page.title | json_encode | replace(from="<", to="\\u003c") | safe }}, "item": {{ url | json_encode | safe }}}
     {%- elif in_posts %}
-    {"@type": "ListItem", "position": 2, "name": "Writing", "item": {{ get_url(path="@/posts/_index.md") | json_encode | safe }}},
+    {"@type": "ListItem", "position": 2, "name": "Knowledge Hub", "item": {{ get_url(path="@/posts/_index.md") | json_encode | safe }}},
     {"@type": "ListItem", "position": 3, "name": {{ page.title | json_encode | replace(from="<", to="\\u003c") | safe }}, "item": {{ url | json_encode | safe }}}
     {%- else %}
     {"@type": "ListItem", "position": 2, "name": {{ page.title | json_encode | replace(from="<", to="\\u003c") | safe }}, "item": {{ url | json_encode | safe }}}

@@ -33,7 +33,7 @@ Ordered notes written while learning, with planned work labelled and evidence li
 - [{{ page.title }}]({{ page.permalink }}): {{ page.description }}
 {% endfor -%}
 {% endfor %}
-## Writing
+## Knowledge Hub
 
 {% for page in posts -%}
 - [{{ page.title }}]({{ page.permalink }}): {{ page.description }}

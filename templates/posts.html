@@ -2,17 +2,17 @@
 
 {% block ticker %}
 <div class="ticker-bar">
-  <span class="ticker-prefix" aria-hidden="true">WRITING</span>
-  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ section.pages | length }} posts on file &nbsp;●&nbsp; experiments, failures and releases &nbsp;●&nbsp; numbers included &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
+  <span class="ticker-prefix" aria-hidden="true">KNOWLEDGE HUB</span>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ section.pages | length }} articles on file &nbsp;●&nbsp; guides, comparisons, failures and experiments &nbsp;●&nbsp; numbers included &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
 </div>
 {% endblock ticker %}
 
 {% block content %}
 <article class="post-header">
   <div class="post-meta">
-    <span>writing</span>
+    <span>knowledge hub</span>
     <span>·</span>
-    <span>{{ section.pages | length }} posts</span>
+    <span>{{ section.pages | length }} articles</span>
     <span>·</span>
     <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS feed</a>
   </div>
@@ -22,10 +22,10 @@
   {%- endif %}
 </article>
 
-<section aria-label="All posts">
+<section aria-label="All Knowledge Hub articles">
   <div class="win-panel">
     <div class="win-panel-bar">
-      <span>writing.exe — All posts ({{ section.pages | length }})</span>
+      <span>knowledge-hub.exe — All articles ({{ section.pages | length }})</span>
       <a class="win-bar-btn" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
     </div>
     <div class="win-panel-body">

@@ -184,7 +184,7 @@
         <a href="{{ get_url(path='@/build-log/_index.md') }}"><u>B</u>uild logs</a>
         <a href="{{ get_url(path='@/learn/_index.md') }}"><u>L</u>earning</a>
         <a href="{{ get_url(path='@/lessons/_index.md') }}">L<u>e</u>ssons</a>
-        <a href="{{ get_url(path='@/posts/_index.md') }}"><u>W</u>riting</a>
+        <a href="{{ get_url(path='@/posts/_index.md') }}"><u>K</u>nowledge Hub</a>
       </nav>
       <span id="theme-toggle-wrap" hidden><button id="theme-toggle" class="link" type="button">dark</button></span>
     </div>
@@ -210,14 +210,14 @@
   </footer>
     </div>
 
-    <aside class="desktop-rail desktop-rail-right" aria-label="Recent writing and quick info">
+    <aside class="desktop-rail desktop-rail-right" aria-label="Knowledge Hub and quick info">
       <div class="win-widget">
         <div class="win-dialog-bar">
-          <span>writing.log</span>
+          <span>knowledge.log</span>
           <span class="win-bar-tag">{{ _posts.pages | length }} posts</span>
         </div>
         <div class="win-widget-body">
-          <p class="win-widget-caption">Latest posts</p>
+          <p class="win-widget-caption">Latest in Knowledge Hub</p>
           <ul class="win-widget-list">
             {%- for p in _posts.pages %}
               {%- if loop.index0 < 4 %}
@@ -228,7 +228,7 @@
               {%- endif %}
             {%- endfor %}
           </ul>
-          <a class="win-widget-more" href="{{ get_url(path='@/posts/_index.md') }}">All writing →</a>
+          <a class="win-widget-more" href="{{ get_url(path='@/posts/_index.md') }}">All Knowledge Hub →</a>
         </div>
       </div>
 
