@@ -20,6 +20,14 @@
   {%- if section.description %}
   <p class="post-lead">{{ section.description }}</p>
   {%- endif %}
+  {%- set all_tags = get_taxonomy(kind="tags") %}
+  {%- if all_tags.items | length > 0 %}
+  <div class="post-tags" aria-label="Browse by topic">
+    {%- for term in all_tags.items %}
+    <a class="badge badge-muted" href="{{ term.permalink }}">#{{ term.name }} ({{ term.pages | length }})</a>
+    {%- endfor %}
+  </div>
+  {%- endif %}
 </article>
 
 <section aria-label="All Knowledge Hub articles">

@@ -4,6 +4,9 @@ description = "A local Qwen dashboard, its first real database actions, and a re
 date = 2026-11-13
 updated = 2026-11-13
 
+[taxonomies]
+tags = ["ai","architecture"]
+
 [extra]
 kind = "experiment"
 +++

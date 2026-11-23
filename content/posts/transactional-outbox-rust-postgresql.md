@@ -1,6 +1,6 @@
 +++
 title = "Transactional outbox in Rust + PostgreSQL: schema, worker loop, and kill -9 drills"
-description = "How to reliably publish webhooks, rebuilds, and side effects from PostgreSQL without dual-write bugs: outbox schema, SKIP LOCKED claiming, lease recovery, and crash drills."
+description = "Publish webhooks and side effects from PostgreSQL without dual-write bugs: outbox schema, SKIP LOCKED claiming, lease recovery, and kill -9 drills."
 date = 2026-11-23T10:15:00-05:00
 
 [taxonomies]

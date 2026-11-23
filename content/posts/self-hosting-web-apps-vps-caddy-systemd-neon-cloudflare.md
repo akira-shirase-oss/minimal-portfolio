@@ -1,6 +1,6 @@
 +++
 title = "Self-hosting web apps on one VPS: Caddy, systemd, Neon, and Cloudflare"
-description = "A battle-tested checklist for running multiple Rust web apps on a shared VPS behind Caddy and Cloudflare with Authenticated Origin Pulls, Neon Postgres, and idempotent deploys."
+description = "A practical checklist for running Rust web apps on one VPS with Caddy, systemd, Neon Postgres, and Cloudflare Authenticated Origin Pulls."
 date = 2026-11-23T11:45:00-05:00
 
 [taxonomies]

@@ -1,7 +1,10 @@
 +++
 title = "The Coldcard seed bug, explained — and why your wallet's RNG is a consensus-grade decision"
-description = "In November 2025 a 2021 build-config mistake gave Coldcard hardware wallets a weak RNG — seeds with ~40 bits of entropy instead of 128. ~1,816 BTC stolen. What actually broke, why entropy is an architectural decision, and how to test for it."
+description = "A 2021 build-config mistake gave Coldcard wallets ~40-bit RNG entropy instead of 128 (~1,816 BTC stolen). What broke and how we test wallet RNG."
 date = 2026-11-11
+
+[taxonomies]
+tags = ["security","rust"]
 
 [extra]
 kind = "experiment"

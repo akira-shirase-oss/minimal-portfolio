@@ -3,6 +3,9 @@ title = "The assistant failed before the model got a turn"
 description = "A small troubleshooting tool worked offline. The real assistant could not reach Ollama. Those are different results."
 date = 2026-11-13
 
+[taxonomies]
+tags = ["ai","reliability"]
+
 [extra]
 kind = "failure"
 +++

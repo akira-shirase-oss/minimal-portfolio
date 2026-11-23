@@ -8,6 +8,12 @@ page_template = "series-page.html"
 [extra]
 status = "blueprint complete; security pass done, final check: ship, 290 tests; CI failed on the head commit at the audit step, cause not known yet"
 short_title = "MiniBTC"
+related_posts = [
+  "posts/i-built-a-bitcoin-node-in-rust.md",
+  "posts/how-bitcoin-utxo-works.md",
+  "posts/the-coldcard-seed-bug-and-wallet-rng.md",
+  "posts/securing-mcp-servers-for-ai-agents.md",
+]
 milestones = [
   { id = "P0", name = "foundations", about = "Workspace, contract docs, chain params, architecture checks.", done = true },
   { id = "P1", name = "keys and addresses", about = "secp256k1 via k256, strict-DER low-S signatures, Base58Check.", done = true },

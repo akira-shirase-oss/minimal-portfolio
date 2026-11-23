@@ -1,6 +1,6 @@
 +++
 title = "SSE vs WebSockets vs Polling for live dashboards"
-description = "When to use Server-Sent Events (SSE), WebSockets, or HTTP polling for live admin dashboards: reconnect gaps, proxy timeouts, auth cookies, and operational simplicity."
+description = "SSE vs WebSockets vs HTTP polling for live dashboards: reconnect gaps, proxy timeouts, same-origin auth cookies, and operational simplicity."
 date = 2026-11-23T13:45:00-05:00
 
 [taxonomies]

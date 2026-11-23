@@ -1,6 +1,6 @@
 +++
 title = "Single VPS vs Serverless (Cloudflare Workers / AWS Lambda)"
-description = "When an always-on VPS beats serverless functions (and when serverless wins): background workers, database connection pools, cold starts, predictable billing, and static-plus-origin architecture."
+description = "When an always-on VPS beats serverless (Cloudflare Workers / AWS Lambda): background loops, DB pools, cold starts, and predictable flat pricing."
 date = 2026-11-23T12:45:00-05:00
 
 [taxonomies]

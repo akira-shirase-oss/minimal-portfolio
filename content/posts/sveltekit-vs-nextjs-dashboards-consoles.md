@@ -1,6 +1,6 @@
 +++
 title = "SvelteKit vs Next.js for dashboards and internal consoles"
-description = "SvelteKit vs Next.js when your backend is a separate Rust or Go API: bundle size, strict TypeScript, static/same-origin builds, React Server Component complexity, and ecosystem trade-offs."
+description = "SvelteKit vs Next.js for dashboards paired with a Rust or Go API: bundle size, static same-origin builds, strict TypeScript, and React trade-offs."
 date = 2026-11-23T14:00:00-05:00
 
 [taxonomies]

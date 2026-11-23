@@ -1,6 +1,6 @@
 +++
 title = "Embedding V8 in Rust with deno_core as a capability-bounded host"
-description = "Lessons from building jsrt—a Rust JavaScript host on deno_core where Rust owns capabilities, lifecycle, timeouts, and honest errors, hardened through four security rounds."
+description = "Lessons from building jsrt—a Rust JavaScript host on deno_core where Rust owns capabilities, timeouts, and honest errors across four security rounds."
 date = 2026-11-23T10:45:00-05:00
 
 [taxonomies]

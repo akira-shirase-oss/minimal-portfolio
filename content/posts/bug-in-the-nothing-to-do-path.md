@@ -1,7 +1,10 @@
 +++
 title = "The bug hiding in the \"nothing to do\" path"
-description = "Colophon's crash-resume test caught a bulk job stuck 'running' forever — only when every item had finished before the crash. The empty path was the one path that never checkpointed."
+description = "Colophon crash-resume testing caught a bulk job stuck running forever when every item finished before the crash—the empty path never checkpointed."
 date = 2026-11-05T10:00:00Z
+
+[taxonomies]
+tags = ["rust","reliability"]
 +++
 
 Crash bugs usually hide in the messy middle — half-done batches, partial writes.

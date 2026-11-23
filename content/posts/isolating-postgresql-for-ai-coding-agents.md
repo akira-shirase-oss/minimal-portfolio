@@ -1,6 +1,6 @@
 +++
 title = "How to isolate PostgreSQL for AI coding agents without breaking staging"
-description = "Give AI coding agents fast, disposable PostgreSQL databases with per-test schemas, migration checksum manifests, and non-superuser CI checks so agents never corrupt shared state."
+description = "Give AI coding agents fast, disposable PostgreSQL databases with per-test templates, migration checksums, and non-superuser CI checks."
 date = 2026-11-23T12:15:00-05:00
 
 [taxonomies]

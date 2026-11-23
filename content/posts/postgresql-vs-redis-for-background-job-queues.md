@@ -1,6 +1,6 @@
 +++
 title = "PostgreSQL vs Redis for background job queues"
-description = "When to use PostgreSQL (FOR UPDATE SKIP LOCKED) vs Redis for background jobs: crash durability, transactional enqueueing, throughput ceilings, and operational footprint."
+description = "PostgreSQL (FOR UPDATE SKIP LOCKED) vs Redis for background jobs: crash durability, transactional enqueueing, throughput, and operational footprint."
 date = 2026-11-23T12:30:00-05:00
 
 [taxonomies]

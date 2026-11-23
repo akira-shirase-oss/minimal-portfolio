@@ -8,6 +8,12 @@ page_template = "series-page.html"
 [extra]
 status = "feature-complete; security pass done, final check: ship; 1M API reads pass; 1M checks not run (20 checks/s ceiling)"
 short_title = "Service Monitor"
+related_posts = [
+  "posts/sqlite-vs-postgresql-in-production.md",
+  "posts/async-cache-await-resurrects-revoked-tokens.md",
+  "posts/proving-security-attack-tests-fail-with-mutation-harness.md",
+  "posts/self-hosting-web-apps-vps-caddy-systemd-neon-cloudflare.md",
+]
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, contract-first domain types, the honest-states dashboard shell." },
   { id = "M1", name = "check and remember", about = "Real probes on a bounded schedule, one writer committing evidence, state that survives a restart." },

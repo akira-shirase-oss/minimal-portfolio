@@ -1,6 +1,6 @@
 +++
 title = "Proving a noisy neighbor stays quiet: measuring isolation instead of asserting it"
-description = "A token misbehaving at 600 requests a second shouldn't slow down the editors beside it. Colophon stopped asserting that and started measuring it — 99.7% refused, editorial p95 held within 2x."
+description = "A rogue token at 600 req/s should not slow down editors beside it. Colophon measured tenant isolation: 99.7% refused while editorial p95 held."
 date = 2026-11-05T09:00:00Z
 
 [taxonomies]

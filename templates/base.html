@@ -23,11 +23,18 @@
     {%- set is_home = section is defined %}
   {%- endif %}
   {#- In search results and tabs: the home page says what the site is about,
-      every other page puts its own title first. #}
-  {%- if is_home and config.extra.tagline %}
+      every other page puts its own title first. Omit the site suffix on titles
+      over 50 chars so Google does not truncate the core keywords. -#}
+  {%- if page is defined and page.extra.seo_title is defined %}
+    {%- set full_title = page.extra.seo_title %}
+  {%- elif is_home and config.extra.tagline %}
     {%- set full_title = config.title ~ " · " ~ config.extra.tagline %}
   {%- elif doc_title != config.title %}
-    {%- set full_title = doc_title ~ " · " ~ config.title %}
+    {%- if doc_title | length <= 50 %}
+      {%- set full_title = doc_title ~ " · " ~ config.title %}
+    {%- else %}
+      {%- set full_title = doc_title %}
+    {%- endif %}
   {%- else %}
     {%- set full_title = config.title %}
   {%- endif %}

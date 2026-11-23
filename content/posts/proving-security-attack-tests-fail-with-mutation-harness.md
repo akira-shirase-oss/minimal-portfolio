@@ -1,6 +1,6 @@
 +++
 title = "How we proved our security attack tests fail when protections are removed"
-description = "Two independent reviews caught security tests that still passed after deleting the protection. Here is the 8-point mutation-proof harness standard we adopted across seven repos."
+description = "Two reviews caught security tests passing with protections deleted. Here is the 8-point mutation-proof harness standard we use across seven repos."
 date = 2026-11-23T09:45:00-05:00
 
 [taxonomies]

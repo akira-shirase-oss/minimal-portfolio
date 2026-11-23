@@ -3,6 +3,9 @@ title = "How tool calling actually works: the model never called my function"
 description = "The model proposes. My program executes. Mixing those up is where the trouble starts."
 date = 2026-11-08
 
+[taxonomies]
+tags = ["ai","architecture"]
+
 [extra]
 # experiment, failure or release
 kind = "experiment"

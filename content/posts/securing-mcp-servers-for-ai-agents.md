@@ -1,6 +1,6 @@
 +++
 title = "Securing MCP servers for AI agents: draft-only permissions and budgets"
-description = "Practical security boundaries for production Model Context Protocol (MCP) servers: read-only defaults, draft-only writes, explicit approval gates, token scoping, and audit logs."
+description = "Security boundaries for production MCP servers: read-only defaults, draft-only writes, explicit approval gates, scoped tokens, and audit trails."
 date = 2026-11-23T11:30:00-05:00
 
 [taxonomies]

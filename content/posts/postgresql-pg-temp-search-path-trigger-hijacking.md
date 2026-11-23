@@ -1,6 +1,6 @@
 +++
 title = "PostgreSQL pg_temp search_path hijacking: how a temp table fools triggers"
-description = "Why CVE-2018-1058-style search_path shadowing still breaks PostgreSQL triggers in 2026: how a session's pg_temp table can bypass an accounting trigger, and the exact fix."
+description = "Why CVE-2018-1058 search_path shadowing still breaks PostgreSQL triggers: how a pg_temp table fools a ledger trigger, and the exact fix."
 date = 2026-11-23T14:30:00-05:00
 
 [taxonomies]

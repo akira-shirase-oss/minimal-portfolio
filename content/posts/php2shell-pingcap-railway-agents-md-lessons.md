@@ -1,7 +1,10 @@
 +++
 title = "Five lessons from PHP2Shell, PingCAP, Railway and the AGENTS.md hijack"
-description = "A bitcoin dare, PHP2Shell, the PingCAP breach, Railway's leaked secrets and the AGENTS.md hijack: five lessons from one bad week, checked against the CMS I'm building."
+description = "PHP2Shell, PingCAP, Railway leaked secrets, and the AGENTS.md hijack: five security lessons from one bad week, checked against Colophon CMS."
 date = 2026-10-26T13:15:00Z
+
+[taxonomies]
+tags = ["security","reliability"]
 
 [extra]
 # The link preview for this post (made from art/cards/php2shell-pingcap-railway-agents-md-lessons.html).

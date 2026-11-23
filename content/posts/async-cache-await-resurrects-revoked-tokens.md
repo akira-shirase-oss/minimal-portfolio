@@ -1,6 +1,6 @@
 +++
 title = "Why an async cache filled across .await resurrects revoked tokens"
-description = "A cache miss that queries Postgres across an .await can write a revoked credential back into memory if an invalidation happened in flight. Fix it with a generation counter."
+description = "A cache miss across .await can write a revoked token back into memory if invalidation happens in flight. Fix it with an atomic generation counter."
 date = 2026-11-23T09:15:00-05:00
 
 [taxonomies]

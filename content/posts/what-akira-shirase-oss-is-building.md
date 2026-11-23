@@ -2,6 +2,9 @@
 title = "What I'm building at Akira Shirase OSS, and the cycle every step goes through"
 description = "A CMS that can prove what it published, an uptime monitor that never fakes a green light, and one loop for every step: plan, build, prove, write it up, ship."
 date = 2026-10-25T19:00:00Z
+
+[taxonomies]
+tags = ["rust","architecture"]
 +++
 
 Most portfolios show finished things. This one shows the work while it's happening, including the parts that break.

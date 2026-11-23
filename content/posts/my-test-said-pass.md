@@ -3,6 +3,9 @@ title = "My test said PASS. It was reading the todo's ID."
 description = "I made my local Qwen app save todos twice as fast, then caught my own grader passing an answer that was never given."
 date = 2026-11-13
 
+[taxonomies]
+tags = ["ai","reliability"]
+
 [extra]
 kind = "failure"
 +++

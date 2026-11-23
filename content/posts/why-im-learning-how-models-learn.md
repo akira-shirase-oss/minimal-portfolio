@@ -4,6 +4,9 @@ description = "I started by asking about an 8B blog-writing model. Then I had to
 date = 2026-11-06
 updated = 2026-11-11
 
+[taxonomies]
+tags = ["ai"]
+
 [extra]
 kind = "experiment"
 +++

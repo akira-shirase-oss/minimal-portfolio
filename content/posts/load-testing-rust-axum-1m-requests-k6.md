@@ -1,6 +1,6 @@
 +++
 title = "Load-testing a Rust Axum service to 1,000,000 requests with k6"
-description = "Why 10-second benchmarks and laptop numbers lie, how we run 1M-request k6 load and overload scenarios across our Rust services, and the exact thresholds that fail a build."
+description = "Why laptop benchmarks lie, how we run 1,000,000-request k6 load and overload tests on Rust Axum services, and the fixed thresholds that fail builds."
 date = 2026-11-23T10:30:00-05:00
 
 [taxonomies]

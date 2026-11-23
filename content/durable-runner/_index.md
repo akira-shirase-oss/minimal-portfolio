@@ -8,6 +8,12 @@ page_template = "series-page.html"
 [extra]
 status = "building — D4: the sustained gate is green (1M of 1M accepted), final review: ship; the rest of the battery and a second-developer restore owed"
 short_title = "Durable Runner"
+related_posts = [
+  "posts/transactional-outbox-rust-postgresql.md",
+  "posts/postgresql-vs-redis-for-background-job-queues.md",
+  "posts/load-testing-rust-axum-1m-requests-k6.md",
+  "posts/rust-axum-production-checklist.md",
+]
 milestones = [
   { id = "D0", name = "model", about = "The state machine: transitions, invalid states, identities, limits — deterministic tests under a fake clock.", done = true },
   { id = "D1", name = "journal", about = "Framed append-only records, checksums, exclusive writer, generations — the four crash cases proven.", done = true },

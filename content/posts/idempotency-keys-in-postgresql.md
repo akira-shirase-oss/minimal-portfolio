@@ -1,6 +1,6 @@
 +++
 title = "Idempotency keys in PostgreSQL: exact schema and retry safety"
-description = "How to implement idempotent HTTP APIs in PostgreSQL so retried payments, webhooks, and job submits never execute twice—including concurrent races and parameter mismatches."
+description = "Implement idempotent HTTP APIs in PostgreSQL so retried payments and webhooks never run twice—handling concurrent races and payload mismatches."
 date = 2026-11-22T09:20:00-05:00
 
 [taxonomies]

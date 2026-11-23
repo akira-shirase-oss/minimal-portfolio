@@ -1,7 +1,10 @@
 +++
 title = "Fixes need a second reader. Some of mine are still waiting."
-description = "One day: an outside gap review of the five built projects, fix rounds checked by reviewers who didn't write them, seven planned projects starting code, and decisions on eight new briefs. Plus an honest list of the fixes nobody has re-checked yet."
+description = "An outside gap review of five built projects, fix rounds checked by independent reviewers, seven new repos starting code, and what is still unchecked."
 date = 2026-11-16T23:59:00-05:00
+
+[taxonomies]
+tags = ["security","reliability","rust"]
 
 [extra]
 kind = "experiment"

@@ -1,6 +1,6 @@
 +++
 title = "The deadlock that only exists when two people publish at once"
-description = "Colophon's concurrency tests caught a real FOR SHARE to UPDATE upgrade race in the publish path. The fix is one row of lock discipline: take the lock you actually need."
+description = "Colophon concurrency tests caught a FOR SHARE to UPDATE lock-upgrade deadlock in the publish path. The fix: take the right lock up front."
 date = 2026-11-05T08:00:00Z
 
 [taxonomies]

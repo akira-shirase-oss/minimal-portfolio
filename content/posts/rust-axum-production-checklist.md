@@ -1,6 +1,6 @@
 +++
 title = "Rust Axum production checklist: timeouts, body limits, and shutdown"
-description = "The concrete defaults that turn a working Axum prototype into a hardened Rust HTTP service: body caps, slow-client timeouts, keep-alive alignment, admission control, and graceful shutdown."
+description = "Concrete defaults that turn an Axum prototype into a hardened Rust HTTP service: body limits, timeouts, keep-alive alignment, 503 shedding, shutdown."
 date = 2026-11-23T12:00:00-05:00
 
 [taxonomies]

@@ -1,7 +1,10 @@
 +++
 title = "I built a Bitcoin node from scratch in Rust — consensus, P2P, mining, wallet, the works"
-description = "A complete Bitcoin-style blockchain in pure Rust: UTXO validation, headers-first sync, a miner, an HD wallet, JSON-RPC, a block explorer and an MCP server. What actually broke, what the attack lab caught, and what I'd do differently."
+description = "A Bitcoin-style blockchain built from scratch in Rust: UTXO validation, headers-first sync, miner, HD wallet, explorer, MCP server, and attack lab."
 date = 2026-11-10
+
+[taxonomies]
+tags = ["rust","architecture","security"]
 
 [extra]
 kind = "experiment"

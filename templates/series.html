@@ -98,10 +98,37 @@
     </fieldset>
   </section>
   {%- endfor %}
+  {%- if section.extra.related_posts is defined and section.extra.related_posts | length > 0 %}
+  <section aria-label="Related Knowledge Hub guides">
+    <div class="win-panel">
+      <div class="win-panel-bar">
+        <span>knowledge-hub.exe — Related guides</span>
+        <span class="win-bar-tag">{{ section.extra.related_posts | length }} articles</span>
+      </div>
+      <div class="win-panel-body">
+        <ul class="row-list" style="margin-bottom: 0;">
+          {%- for post_path in section.extra.related_posts %}
+          {%- set rp = get_page(path=post_path) %}
+          <li class="row-item">
+            <div class="row-main">
+              <a class="row-title" href="{{ rp.permalink }}">{{ rp.title }}</a>
+              {%- if rp.description %}<span class="row-desc">{{ rp.description }}</span>{% endif %}
+            </div>
+            <div class="row-meta">
+              <time datetime="{{ rp.date }}">{{ rp.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+            </div>
+          </li>
+          {%- endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+  {%- endif %}
 </article>
 
 <div class="win-shortcuts">
   <a class="btn btn-secondary" href="{{ get_url(path='@/_index.md') }}">← Home</a>
+  <a class="btn btn-secondary" href="{{ get_url(path='@/posts/_index.md') }}">Knowledge Hub</a>
   <a class="btn btn-secondary" href="{{ get_url(path='@/build-log/_index.md') }}">All build logs</a>
 </div>
 {% endblock content %}

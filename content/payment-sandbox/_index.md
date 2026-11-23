@@ -8,6 +8,13 @@ page_template = "series-page.html"
 [extra]
 status = "M0–M6 built; M6 review: ship after the restore double-charge fix; every full 1M load run owed"
 short_title = "Payment Sandbox"
+related_posts = [
+  "posts/double-entry-accounting-postgresql-triggers.md",
+  "posts/postgresql-pg-temp-search-path-trigger-hijacking.md",
+  "posts/idempotency-keys-in-postgresql.md",
+  "posts/hyper-header-read-timeout-kills-idle-keep-alive.md",
+  "posts/postgresql-vs-mongodb.md",
+]
 # The milestones from the project's docs/ROADMAP.md. M0–M5 are one row here: they were built
 # together on the first day, and the roadmap holds them all at "in progress" until the full load runs.
 milestones = [

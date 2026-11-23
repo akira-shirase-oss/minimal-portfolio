@@ -8,6 +8,11 @@ page_template = "series-page.html"
 [extra]
 status = "I0 done pending the latency-budget decision; the 100k and 1M runs pass; no website generation yet"
 short_title = "Intent Studio"
+related_posts = [
+  "posts/pipefail-grep-q-sigpipe-141.md",
+  "posts/securing-mcp-servers-for-ai-agents.md",
+  "posts/sveltekit-vs-nextjs-dashboards-consoles.md",
+]
 # The milestones from the project's docs/ROADMAP.md.
 milestones = [
   { id = "I0", name = "the spine", about = "CI, the lead-intake path from form to database to notification, its load scenario and its failure drills. It needs no client, so it comes first." },

@@ -8,6 +8,11 @@ page_template = "series-page.html"
 [extra]
 status = "roadmap complete; security pass done, final check: ship; the M7 load battery re-run on the hardened build, all six pass"
 short_title = "jsrt"
+related_posts = [
+  "posts/embedding-v8-in-rust-with-deno-core.md",
+  "posts/load-testing-rust-axum-1m-requests-k6.md",
+  "posts/go-vs-rust-backend-apis-workers.md",
+]
 milestones = [
   { id = "M0", name = "scaffold", about = "Workspace, pinned deno_core + V8, the rt.* namespace, an error taxonomy where every way a run ends has its own exit code, and an isolate watchdog that can actually kill a CPU-bound script." },
   { id = "M1", name = "execute", about = "The run lifecycle proven end to end (every exit class reproducible, including uncaught CapabilityError → 7 and watchdog kill → 6); real module semantics — imports between files, honest load errors; the op boundary measured (cold-start p50/p95, 10k op calls) with numbers recorded, never oversold." },

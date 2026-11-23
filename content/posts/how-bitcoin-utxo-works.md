@@ -1,7 +1,10 @@
 +++
 title = "How Bitcoin's UTXO model actually works — explained by implementing it"
-description = "No accounts, no balances — just unspent transaction outputs. What the UTXO set is, why reorgs need undo data, how coinbase maturity stops inflation, and where the model breaks. Written from a from-scratch implementation."
+description = "No accounts, no balances—just unspent transaction outputs. How UTXO sets, reorg undo data, and coinbase maturity work, from a Rust implementation."
 date = 2026-11-10
+
+[taxonomies]
+tags = ["rust","architecture"]
 
 [extra]
 kind = "experiment"

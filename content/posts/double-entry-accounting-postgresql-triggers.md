@@ -1,6 +1,6 @@
 +++
 title = "Double-entry accounting enforced by PostgreSQL triggers"
-description = "How to make unbalanced or mutated ledger entries impossible at the database layer using PostgreSQL statement triggers, deferred commit checks, and pg_current_xact_id()."
+description = "Enforce immutable, balanced double-entry accounting inside PostgreSQL using statement triggers, deferred commit checks, and pg_current_xact_id()."
 date = 2026-11-23T11:00:00-05:00
 
 [taxonomies]

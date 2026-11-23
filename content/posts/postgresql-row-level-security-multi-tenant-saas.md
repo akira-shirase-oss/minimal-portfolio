@@ -1,6 +1,6 @@
 +++
 title = "Row-Level Security (RLS) in PostgreSQL for multi-tenant SaaS"
-description = "How to enforce tenant isolation inside PostgreSQL with RLS, FORCE ROW LEVEL SECURITY, transaction-scoped SET LOCAL, Neon non-superuser gotchas, and cross-tenant attack tests."
+description = "Enforce multi-tenant isolation in PostgreSQL with RLS, FORCE ROW LEVEL SECURITY, transaction-scoped SET LOCAL, Neon gotchas, and attack tests."
 date = 2026-11-23T11:15:00-05:00
 
 [taxonomies]

@@ -1,6 +1,6 @@
 +++
 title = "Headless CMS vs Static Site Generator (Zola / Astro)"
-description = "When a static site generator (Zola or Astro) beats a headless CMS—and the exact moment editorial workflows, scheduled publishing, and non-technical editors justify a CMS."
+description = "When a static site generator (Zola or Astro) beats a headless CMS—and when editorial workflows, roles, and scheduled publishing justify a CMS."
 date = 2026-11-23T14:15:00-05:00
 
 [taxonomies]
