@@ -6,7 +6,7 @@ template = "series.html"
 page_template = "series-page.html"
 
 [extra]
-status = "in progress"
+status = "live in alpha"
 # How lists elsewhere on the site name this build log.
 short_title = "Colophon"
 related_posts = [
@@ -36,7 +36,7 @@ milestones = [
   { id = "P7", name = "audience and speed", about = "Site visitors with real sign-in and per-project roles, content gated by row-level security, and the five demo sites driving the performance hunt." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
-up_next = { milestone = "P7", step = "v01", title = "Explain the session-steady miss, the owed load runs, the 24-hour soak and version 0.1" }
+up_next = { milestone = "P7", step = "v01", title = "Version 0.1: the stability promises, the usability sessions and an independent install" }
 
 # What's still ahead, shown faded under each milestone. A step leaves this list on
 # its own once its entry is published (or while it's `up_next`).
@@ -292,22 +292,19 @@ row-level security inside the delivery read rather than application filtering. M
 shared cache, so a gated row can never be served to or stored for a stranger. The Draft demo site runs the
 members flow live; the other four demo sites can only ever see public rows.
 
-**The security pass is merged (2026-11-17).** An outside gap review found 56 gaps, 14 of them High,
-starting with a magic-link account takeover. The fixes, each with a test that failed first, are on
-`main`, after an independent review that found two new Highs in the fixes themselves, which are fixed
-too, and a final check that says ship. Getting CI green on the way found four real bugs. `main`'s CI
-isn't settled yet: one load smoke missed on its first attempt and passed on a rerun, and the miss is
-unexplained.
+**Live in alpha (2026-11-24).** Colophon runs at
+[colophonapp.404human.dev](https://colophonapp.404human.dev): anyone can sign up, create projects, invite a team,
+write, upload media and publish. AI apps such as Claude connect at
+[colophonapp.404human.dev/mcp](https://colophonapp.404human.dev/mcp) by signing in, and act with the person's role
+in all their projects; anything that publishes, deletes or changes access waits for the person's yes, and deleting
+a project is never on offer. The software is version 0.1.0-alpha.7; **v0.1**, which makes the stability promises,
+comes next.
 
-**Now building (P7):** the owed load runs, then the 24-hour stress run, the usability gate and an
-independent install — then version 0.1.
-
-**The landing page** lives in its own repository,
-[akira-shirase-oss/colophon-landing](https://github.com/akira-shirase-oss/colophon-landing), and is
-live as a preview at [colophon-landing.pages.dev](https://colophon-landing.pages.dev). Its own domain,
-colophon.404human.dev, isn't attached yet.
+**The rest of it** is live too: the landing page and blog at [colophon.404human.dev](https://colophon.404human.dev)
+and the docs at [docs.colophon.404human.dev](https://docs.colophon.404human.dev). The security pass, which fixed
+56 gaps found by an outside review, merged on 2026-11-17.
 
 The goal got bigger in October: every feature a serious CMS offers, a proper role and permission system, and a
 Studio simple enough for people who aren't developers, all held to the same standard of proof. That's about 9 to 12
-months of work. It isn't a CMS you can use yet: nothing runs anywhere but my laptop and CI. The plan and the code are public on GitHub at
+months of work, and the hosted alpha is the first part of it you can use. The plan and the code are public on GitHub at
 [akira-shirase-oss/colophon-cms](https://github.com/akira-shirase-oss/colophon-cms).

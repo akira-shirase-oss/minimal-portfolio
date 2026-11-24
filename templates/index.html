@@ -115,6 +115,7 @@
                   <td>
                     <span class="mobile-label" aria-hidden="true">Summary: </span>
                     {{ project.about }}
+                    {%- if project.site %}<br><a href="{{ project.site }}" rel="noopener">{{ project.site | replace(from="https://", to="") }} ↗</a>{% endif %}
                     {%- if latest_meta %}<br><small class="mono">{{ latest_meta }}</small>{% endif %}
                   </td>
                 </tr>
@@ -151,7 +152,7 @@
                   <span class="mobile-label" aria-hidden="true">Status: </span>
                   <span class="badge {% if st == 'live' or st == 'shipped' %}badge-ok{% elif st == 'parked' or st == 'exploration' or st == 'write-up' %}badge-muted{% else %}badge-accent{% endif %}">{{ st }}</span>
                 </td>
-                <td><span class="mobile-label" aria-hidden="true">Summary: </span>{{ project.about }}</td>
+                <td><span class="mobile-label" aria-hidden="true">Summary: </span>{{ project.about }}{%- if project.site %}<br><a href="{{ project.site }}" rel="noopener">{{ project.site | replace(from="https://", to="") }} ↗</a>{% endif %}</td>
               </tr>
               {%- endif %}
             {%- endfor %}
