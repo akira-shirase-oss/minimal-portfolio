@@ -11,7 +11,7 @@ logs = ["colophon/_index.md", "service-monitor/_index.md", "js-runtime/_index.md
 # itself; `writing = true` counts the write-ups. `detail` is shown as written.
 [[extra.now]]
 process = "colophon"
-what = "A Rust + Svelte CMS that can prove what it published, designed in the open and built one proven milestone at a time — security pass merged, final check: ship."
+what = "A Rust + Svelte CMS that can prove what it published — live in alpha at colophonapp.404human.dev with open sign-up; v0.1 next."
 link = "@/colophon/_index.md"
 log = "colophon/_index.md"
 
@@ -140,10 +140,11 @@ status = "parked"
 
 [[extra.projects]]
 name = "Colophon landing page"
-about = "Colophon's own landing page and blog, a separate Astro site. Live as a preview at colophon-landing.pages.dev; its own domain isn't attached yet."
-link = "https://colophon-landing.pages.dev"
+about = "Colophon's own landing page and blog, a separate Astro site, with the docs beside it."
+link = "https://colophon.404human.dev"
+site = "https://colophon.404human.dev"
 year = 2026
-status = "preview live"
+status = "live"
 
 [[extra.projects]]
 name = "MiniBTC"
@@ -168,10 +169,11 @@ status = "hardened"
 
 [[extra.projects]]
 name = "Colophon CMS"
-about = "A content management system that can prove what it published and survives being killed at any moment. Rust and Svelte, open source, every step logged here. Security pass merged, final check: ship; one CI load smoke miss is unexplained."
+about = "A content management system that can prove what it published and survives being killed at any moment. Rust and Svelte, open source, every step logged here. Live in alpha: anyone can sign up, and AI apps connect over MCP by signing in."
 link = "@/colophon/_index.md"
+site = "https://colophonapp.404human.dev"
 year = 2026
-status = "in progress"
+status = "live"
 
 [[extra.projects]]
 name = "Service Monitor"
