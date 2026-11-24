@@ -32,7 +32,7 @@ milestones = [
   { id = "P4", name = "time travel", about = "Browse the site as it was at any release, roll back safely, and upload images without risk." },
   { id = "E + DX", name = "editorial + developer parity", about = "Everything an editorial team expects of a serious CMS — languages, schedules, review stages, comments, live updates — plus the developer surface: queries, GraphQL, a typed SDK, webhooks and imports, through the same permissions." },
   { id = "P5", name = "safe automation", about = "Scripts and AI agents can help at a limited scale, and can never skip review." },
-  { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, a 24-hour stress test, and version 0.1." },
+  { id = "P6", name = "running on its own", about = "Backups, a real restore, upgrades, and version 0.1." },
   { id = "P7", name = "audience and speed", about = "Site visitors with real sign-in and per-project roles, content gated by row-level security, and the five demo sites driving the performance hunt." },
 ]
 # The checkpoint being built right now (shown as "next" in its milestone).
@@ -202,10 +202,6 @@ title = "The usability gate and an independent install"
 
 [[extra.planned]]
 milestone = "P6"
-title = "A 24-hour stress test"
-
-[[extra.planned]]
-milestone = "P6"
 title = "Version 0.1"
 +++
 
@@ -278,7 +274,7 @@ endpoint backs off.
 
 **The matrix is nearly closed (P6):** every load case now has stored evidence — 540,063 requests over 30 minutes at
 300/s with zero failures on the warm baseline, stampedes coalesced, spikes shaped, a true 10,000-record import —
-with only the 24-hour soak outstanding. Backups run on a verified schedule with retention that only prunes
+with only the 24-hour soak outstanding (later dropped: shipping and fixing fast mattered more). Backups run on a verified schedule with retention that only prunes
 what it can prove, upgrades rehearse an explicit gate, and every log line carries the build's version and commit.
 The committed benchmark report names every run and what its numbers don't prove. Tables stay bounded: an hourly
 retention sweep clears dead state in batches and a 1 GiB ceiling refuses oversized queued payloads. And media
