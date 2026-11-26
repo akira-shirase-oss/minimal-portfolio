@@ -622,9 +622,17 @@ button.link {
   color: var(--muted-foreground);
 }
 
+.ticker.is-scrolling {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+}
+
 .ticker-track {
   display: inline-block;
   white-space: nowrap;
+}
+
+.ticker.is-scrolling .ticker-track {
   animation: ticker-slide 50s linear infinite;
 }
 
@@ -637,11 +645,20 @@ button.link {
   display: inline-block;
 }
 
-.ticker-copy::before,
-.ticker-copy::after {
+.ticker-copy::before {
   content: attr(data-ticker);
   display: inline-block;
-  min-width: 64ch;
+}
+
+.ticker-copy::after {
+  display: none;
+}
+
+.ticker.is-scrolling .ticker-copy::before,
+.ticker.is-scrolling .ticker-copy::after {
+  content: attr(data-ticker);
+  display: inline-block;
+  padding-right: 2ch;
 }
 
 .ticker-bar > small {

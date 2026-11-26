@@ -100,22 +100,38 @@
         else root.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       } catch (e) {}
       document.addEventListener("DOMContentLoaded", function () {
-        // Status ticker plays by default (pauses on hover); offer a pause/play
-        // toggle. Reduced-motion readers never get motion or the toggle.
+        // Status ticker stays static when it fits cleanly on one line; only
+        // scroll (with a pause/play toggle) when the content overflows.
+        // Reduced-motion readers never get motion or the toggle.
         var t = document.querySelector(".ticker");
-        if (t && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          var wrap = document.createElement("small");
-          var p = document.createElement("button");
-          p.type = "button";
-          p.className = "link ticker-play";
-          p.setAttribute("aria-label", "Pause or play the status ticker");
-          p.textContent = "pause";
-          wrap.append("[ ", p, " ]");
-          t.after(wrap);
-          p.addEventListener("click", function () {
-            var paused = t.classList.toggle("paused");
-            p.textContent = paused ? "play" : "pause";
-          });
+        if (t) {
+          var copy = t.querySelector(".ticker-copy");
+          var track = t.querySelector(".ticker-track");
+          var raw = copy ? copy.getAttribute("data-ticker") || "" : "";
+          var clean = raw.replace(/[\s\u00a0]*●[\s\u00a0]*$/, "");
+          if (copy) copy.setAttribute("data-ticker", clean);
+          function checkTicker() {
+            if (t.classList.contains("is-scrolling")) return;
+            var overflow = t.scrollWidth > t.clientWidth + 2 || (track && track.getBoundingClientRect().width > t.clientWidth + 2);
+            if (overflow && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+              if (copy) copy.setAttribute("data-ticker", clean + "  ●  ");
+              t.classList.add("is-scrolling");
+              var wrap = document.createElement("small");
+              var p = document.createElement("button");
+              p.type = "button";
+              p.className = "link ticker-play";
+              p.setAttribute("aria-label", "Pause or play the status ticker");
+              p.textContent = "pause";
+              wrap.append("[ ", p, " ]");
+              t.after(wrap);
+              p.addEventListener("click", function () {
+                var paused = t.classList.toggle("paused");
+                p.textContent = paused ? "play" : "pause";
+              });
+            }
+          }
+          checkTicker();
+          window.addEventListener("load", checkTicker);
         }
         var b = document.getElementById("theme-toggle");
         if (!b) return;
