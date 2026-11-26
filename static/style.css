@@ -1309,8 +1309,8 @@ dd {
 
 dd:last-child { margin-bottom: 0; }
 
-/* ---- Long-form reading ergonomics (.post-body) ---- */
-.post-header { max-width: 70ch; }
+/* ---- Long-form reading (.post-body) — full section width ---- */
+.post-header { max-width: none; }
 
 .post-meta {
   display: flex;
@@ -1335,8 +1335,9 @@ dd:last-child { margin-bottom: 0; }
 .post-body > blockquote,
 .post-body > h2,
 .post-body > h3,
-.post-body > h4 {
-  max-width: 68ch;
+.post-body > h4,
+.post-body details > *:not(summary) {
+  max-width: none;
 }
 
 .post-body blockquote {
