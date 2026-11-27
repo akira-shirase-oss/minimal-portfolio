@@ -71,6 +71,17 @@ Two small details make this airtight:
 
 Once every open SSE stream returns `None`, `axum::serve` finishes in milliseconds, systemd starts the replacement process right away, and the browser's `EventSource` automatically reconnects to the new server and fetches fresh state.
 
+## Measured before and after on production
+
+We measured both deploys against the live hosted server with an open SSE stream held across the entire restart:
+
+| Deploy | Failed probes | Failure window | Total switch time |
+|---|---|---|---|
+| **Before fix** (SSE waited out shutdown grace) | **3 / 407** | **12.9 s** | **29 s** |
+| **After fix** (SSE cancelled on drain) | **0 / 411** | **0 s** | **10 s** |
+
+On the fixed deploy, the open stream ended cleanly the moment draining began, three reconnect attempts were refused cleanly during drain, and the very next reconnect landed on the new process with zero failed probes.
+
 ## Don't forget background listeners
 
 If your SSE fan-out is backed by Postgres `LISTEN`/`NOTIFY`, your database listener needs the same cancellation token—see [sqlx PgListener::recv() silently drops notifications on reconnect](@/posts/sqlx-pglistener-silently-drops-notifications.md) for how we wrap `try_recv()` in `tokio::select!` so shutdown never blocks on a dead database retry loop either.
