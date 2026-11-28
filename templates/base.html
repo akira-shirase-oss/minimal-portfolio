@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ lang }}">
+<html lang="{{ lang }}" data-style="html">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -92,7 +92,7 @@
     // so saved choices never flash.
     (function () {
       var root = document.documentElement;
-      var STYLES = ["notion", "linear", "vscode", "figma", "obsidian", "arc", "notes", "docs", "macos", "win7", "win97", "terminal", "swiss"];
+      var STYLES = ["html", "notion", "linear", "vscode", "figma", "obsidian", "arc", "notes", "docs", "macos", "win7", "win97", "terminal", "swiss"];
       try {
         var saved = localStorage.getItem("theme");
         if (saved === "light" || saved === "dark") root.dataset.theme = saved;
@@ -102,7 +102,7 @@
         var qStyle = new URLSearchParams(location.search).get("style");
         var style = (qStyle && STYLES.indexOf(qStyle) !== -1) ? qStyle : localStorage.getItem("style");
         if (style && STYLES.indexOf(style) !== -1) root.dataset.style = style;
-        else root.dataset.style = "notion";
+        else root.dataset.style = "html";
       } catch (e) {}
       document.addEventListener("DOMContentLoaded", function () {
         var btn = document.getElementById("settings-toggle");
@@ -112,7 +112,7 @@
         wrap.hidden = false;
 
         function sync() {
-          var curStyle = root.dataset.style || "notion";
+          var curStyle = root.dataset.style || "html";
           var curTheme = root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
           var curFont = root.dataset.font || "sans";
           var sBtns = panel.querySelectorAll("[data-set-style]");
@@ -158,7 +158,7 @@
             try { localStorage.setItem("font", fn); } catch (err) {}
             sync();
           } else if (target.id === "settings-reset") {
-            root.dataset.style = "notion";
+            root.dataset.style = "html";
             root.dataset.font = "sans";
             root.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
             try {
@@ -241,6 +241,14 @@
   </button>
 
   <div class="notion-app">
+    <nav class="vscode-activity" aria-label="Activity bar">
+      <a class="vsc-act-btn is-active" href="{{ get_url(path='@/_index.md') }}" title="Explorer"><svg class="ui-icon" width="20" height="20" aria-hidden="true"><use href="#ic-file"/></svg></a>
+      <a class="vsc-act-btn" href="{{ get_url(path='@/posts/_index.md') }}" title="Knowledge Hub"><svg class="ui-icon" width="20" height="20" aria-hidden="true"><use href="#ic-search"/></svg></a>
+      <a class="vsc-act-btn" href="{{ get_url(path='@/_index.md') }}#projects" title="Projects"><svg class="ui-icon" width="20" height="20" aria-hidden="true"><use href="#ic-grid"/></svg></a>
+      <a class="vsc-act-btn" href="{{ get_url(path='@/build-log/_index.md') }}" title="Build logs"><svg class="ui-icon" width="20" height="20" aria-hidden="true"><use href="#ic-terminal"/></svg></a>
+      <a class="vsc-act-btn" href="{{ get_url(path='@/learn/_index.md') }}" title="Learning"><svg class="ui-icon" width="20" height="20" aria-hidden="true"><use href="#ic-layers"/></svg></a>
+      <a class="vsc-act-btn vsc-act-bottom" href="{{ get_url(path='@/progress/_index.md') }}" title="Progress"><svg class="ui-icon" width="20" height="20" aria-hidden="true"><use href="#ic-activity"/></svg></a>
+    </nav>
     <aside class="notion-sidebar" aria-label="Workspace navigation">
       <div class="mac-lights" aria-label="Window controls">
         <button type="button" class="mac-dot mac-red" data-mac-win="min" title="Minimize to Dock" aria-label="Minimize window">×</button>
@@ -313,12 +321,14 @@
               </button>
               <div id="settings-panel" class="settings-panel" role="dialog" aria-label="Appearance settings" hidden>
                 <div class="settings-group">
-                  <div class="settings-heading">Workspaces</div>
-                  <div class="style-grid" role="group" aria-label="Workspace design systems">
-                    <button class="style-opt" type="button" data-set-style="notion" aria-pressed="true"><span class="style-swatch sw-notion" aria-hidden="true"></span><span>Notion</span></button>
+                  <div class="settings-heading">Default &amp; Workspaces</div>
+                  <div class="style-grid" role="group" aria-label="Default and workspace design systems">
+                    <button class="style-opt" type="button" data-set-style="html" aria-pressed="true"><span class="style-swatch sw-html" aria-hidden="true"></span><span>HTML Only</span></button>
+                    <button class="style-opt" type="button" data-set-style="notion" aria-pressed="false"><span class="style-swatch sw-notion" aria-hidden="true"></span><span>Notion</span></button>
                     <button class="style-opt" type="button" data-set-style="linear" aria-pressed="false"><span class="style-swatch sw-linear" aria-hidden="true"></span><span>Linear</span></button>
                     <button class="style-opt" type="button" data-set-style="obsidian" aria-pressed="false"><span class="style-swatch sw-obsidian" aria-hidden="true"></span><span>Obsidian</span></button>
                     <button class="style-opt" type="button" data-set-style="notes" aria-pressed="false"><span class="style-swatch sw-notes" aria-hidden="true"></span><span>Notes</span></button>
+                    <button class="style-opt" type="button" data-set-style="swiss" aria-pressed="false"><span class="style-swatch sw-swiss" aria-hidden="true"></span><span>Swiss</span></button>
                   </div>
                 </div>
 
@@ -333,13 +343,12 @@
                 </div>
 
                 <div class="settings-group">
-                  <div class="settings-heading">OS &amp; Editorial</div>
-                  <div class="style-grid" role="group" aria-label="Operating system and editorial styles">
+                  <div class="settings-heading">Operating Systems</div>
+                  <div class="style-grid" role="group" aria-label="Operating system styles">
                     <button class="style-opt" type="button" data-set-style="macos" aria-pressed="false"><span class="style-swatch sw-macos" aria-hidden="true"></span><span>macOS</span></button>
                     <button class="style-opt" type="button" data-set-style="arc" aria-pressed="false"><span class="style-swatch sw-arc" aria-hidden="true"></span><span>Arc</span></button>
                     <button class="style-opt" type="button" data-set-style="win7" aria-pressed="false"><span class="style-swatch sw-win7" aria-hidden="true"></span><span>Windows 7</span></button>
                     <button class="style-opt" type="button" data-set-style="win97" aria-pressed="false"><span class="style-swatch sw-win97" aria-hidden="true"></span><span>Windows 97</span></button>
-                    <button class="style-opt" type="button" data-set-style="swiss" aria-pressed="false"><span class="style-swatch sw-swiss" aria-hidden="true"></span><span>Swiss</span></button>
                   </div>
                 </div>
 

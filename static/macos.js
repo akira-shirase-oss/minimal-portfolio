@@ -53,7 +53,8 @@
     });
   }
   var styleActions = [
-    { group: "Appearance", title: "Switch to Notion", sub: "Default editorial workspace", style: "notion" },
+    { group: "Appearance", title: "Switch to HTML Only", sub: "Clean minimal default HTML document", style: "html" },
+    { group: "Appearance", title: "Switch to Notion", sub: "Calm editorial workspace", style: "notion" },
     { group: "Appearance", title: "Switch to Linear", sub: "Issue tracker & cycle roadmap", style: "linear" },
     { group: "Appearance", title: "Switch to VS Code", sub: "IDE workbench with file tree & tabs", style: "vscode" },
     { group: "Appearance", title: "Switch to Figma", sub: "Spatial dot-grid canvas & artboard frames", style: "figma" },

@@ -535,14 +535,15 @@ body {
   font-family: var(--sans);
 }
 
-/* Hidden by default (Notion & Swiss stay pure); activated per OS design system */
+/* Hidden by default (HTML/Notion stay pure); activated per OS/IDE design system */
 .win-controls,
 .os-bar,
 .term-shell,
 .mac-menubar,
 .mac-lights,
 .mac-restore-pill,
-.mac-spot-backdrop {
+.mac-spot-backdrop,
+.vscode-activity {
   display: none;
 }
 
@@ -607,6 +608,7 @@ body {
   border: 1px solid rgba(128, 128, 128, 0.35);
 }
 
+.sw-html     { background: #ffffff; border-color: #111111; box-shadow: inset 0 0 0 2px #0000ee; border-radius: 0; }
 .sw-notion   { background: linear-gradient(135deg, #f7f6f3 50%, #37352f 50%); }
 .sw-linear   { background: linear-gradient(135deg, #101116 50%, #5e6ad2 50%); }
 .sw-obsidian { background: linear-gradient(135deg, #1e1e1e 48%, #a882ff 48%); }
@@ -2026,6 +2028,265 @@ pre {
 .site-footer a:hover {
   color: var(--foreground);
   text-decoration: underline;
+}
+
+/* ============================================================================
+   0. HTML ONLY (DEFAULT) — Clean Semantic HTML with Minimal Spacing & Font
+   Zero sidebar, zero cards, zero cover banners, zero chrome bloat.
+   ============================================================================ */
+html[data-style="html"] {
+  --background:           light-dark(#ffffff, #111111);
+  --foreground:           light-dark(#141414, #e8e8e8);
+  --card:                 light-dark(#ffffff, #111111);
+  --card-foreground:      light-dark(#141414, #e8e8e8);
+  --secondary:            light-dark(#f5f5f5, #1d1d1d);
+  --secondary-foreground: light-dark(#141414, #e8e8e8);
+  --muted:                light-dark(#f2f2f2, #1f1f1f);
+  --muted-foreground:     light-dark(#555555, #a3a3a3);
+  --border:               light-dark(#dddddd, #2e2e2e);
+  --border-strong:        light-dark(#bbbbbb, #444444);
+  --link:                 light-dark(#0000cc, #7db4ff);
+  --ring:                 light-dark(#0000cc, #7db4ff);
+  --accent-soft-bg:       light-dark(#eef4ff, #18273d);
+  --accent-soft-fg:       light-dark(#0000aa, #96c4ff);
+  --radius-sm:            2px;
+  --radius-md:            3px;
+  --radius-lg:            4px;
+}
+
+/* Strip all app-shell chrome: no sidebar, no cover, no avatar widget */
+html[data-style="html"] .notion-sidebar,
+html[data-style="html"] .notion-cover,
+html[data-style="html"] .notion-page-icon-overlap,
+html[data-style="html"] .notion-avatar,
+html[data-style="html"] .notion-prop-glyph,
+html[data-style="html"] .win-tab-glyph,
+html[data-style="html"] .page-icon {
+  display: none;
+}
+
+html[data-style="html"] .notion-app {
+  display: block;
+}
+
+html[data-style="html"] .site-header {
+  position: static;
+  width: 100%;
+  background: var(--background);
+  backdrop-filter: none;
+  border-bottom: 1px solid var(--border);
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 18px 20px 10px;
+}
+
+html[data-style="html"] .notion-topbar {
+  padding: 0;
+  min-height: 0;
+}
+
+html[data-style="html"] .notion-crumb-root {
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+html[data-style="html"] .notion-crumb-root:hover {
+  background: transparent;
+  text-decoration: underline;
+}
+
+html[data-style="html"] .mobile-nav-bar {
+  display: block;
+  border-top: 0;
+  padding: 8px 0 0;
+  overflow-x: visible;
+}
+
+html[data-style="html"] .site-nav {
+  flex-wrap: wrap;
+  white-space: normal;
+  gap: 6px 14px;
+  font-size: 0.9rem;
+}
+
+html[data-style="html"] .site-nav a {
+  padding: 0;
+  border-radius: 0;
+  color: var(--link);
+  text-decoration: underline;
+  font-weight: 400;
+}
+
+html[data-style="html"] .site-nav a:hover {
+  background: transparent;
+  color: var(--link);
+}
+
+html[data-style="html"] .settings-trigger {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  padding: 3px 8px;
+  font-size: 0.78rem;
+}
+
+html[data-style="html"] main,
+html[data-style="html"] .has-cover main {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
+}
+
+html[data-style="html"] .site-footer {
+  max-width: 740px;
+  padding: 18px 20px 36px;
+}
+
+/* Plain classic links & clean typography */
+html[data-style="html"] a {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+}
+
+html[data-style="html"] .hero h1 {
+  font-size: clamp(1.9rem, 3.4vw, 2.35rem);
+  letter-spacing: -0.015em;
+}
+
+html[data-style="html"] .hero h1 em {
+  color: var(--foreground);
+  font-style: italic;
+  padding-right: 0.08em;
+}
+
+/* Plain HTML Properties list (no icons or heavy pills) */
+html[data-style="html"] .notion-props {
+  grid-template-columns: 70px minmax(0, 1fr);
+  gap: 5px 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  font-size: 0.92rem;
+}
+
+html[data-style="html"] .notion-prop-key {
+  gap: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+html[data-style="html"] .notion-prop-key::after {
+  content: ":";
+}
+
+/* Strip colored sticker badges down to clean minimal HTML inline text */
+html[data-style="html"] .badge {
+  background: transparent;
+  color: var(--muted-foreground);
+  padding: 0;
+  font-size: 0.85rem;
+  font-weight: 400;
+  font-family: var(--mono);
+}
+
+html[data-style="html"] a.badge {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+html[data-style="html"] .badge .dot {
+  display: none;
+}
+
+html[data-style="html"] .gallery-card .badge::before { content: "("; }
+html[data-style="html"] .gallery-card .badge::after  { content: ")"; }
+
+/* Strip project cards into a clean plain HTML list */
+html[data-style="html"] .notion-gallery {
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+html[data-style="html"] .gallery-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+html[data-style="html"] .gallery-card:hover {
+  background: transparent;
+}
+
+html[data-style="html"] .gallery-card-body {
+  padding: 0;
+  gap: 4px;
+}
+
+html[data-style="html"] .gallery-card-title a {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+html[data-style="html"] .gallery-card-desc {
+  font-size: 0.95rem;
+  color: var(--foreground);
+}
+
+html[data-style="html"] .gallery-card-foot {
+  border-top: 0;
+  padding-top: 0;
+  justify-content: flex-start;
+  gap: 12px;
+  font-size: 0.82rem;
+}
+
+/* Strip row-list card container into plain HTML list */
+html[data-style="html"] .row-list {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+html[data-style="html"] .row-item {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+html[data-style="html"] .row-item:hover {
+  background: transparent;
+}
+
+html[data-style="html"] .row-title {
+  color: var(--link);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+html[data-style="html"] .win-tabs {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
+}
+
+html[data-style="html"] .win-tab {
+  padding: 4px 10px 6px 0;
+  font-size: 0.9rem;
+}
+
+html[data-style="html"] .win-tab:hover {
+  background: transparent;
+}
+
+html[data-style="html"] .table-wrap {
+  border-radius: 0;
+}
+
+html[data-style="html"] .notion-callout,
+html[data-style="html"] .metric,
+html[data-style="html"] .principle,
+html[data-style="html"] .pager-card,
+html[data-style="html"] .post-body pre {
+  border-radius: 0;
+  background: var(--secondary);
 }
 
 /* ============================================================================
@@ -3934,7 +4195,7 @@ html[data-style="linear"] #tm-core:checked    ~ .win-tabs label[for="tm-core"] {
   border-bottom-color: var(--accent);
 }
 
-/* ---- 7. VS Code / Zed — IDE Workbench (Activity Rail + File Explorer + Tabs + Status Bar) ---- */
+/* ---- 7. VS Code / Zed — Authentic IDE Workbench (Activity Rail + Explorer + Tabs + Gutter + Status Bar) ---- */
 html[data-style="vscode"] {
   --background:           light-dark(#ffffff, #1e1e1e);
   --foreground:           light-dark(#24292e, #d4d4d4);
@@ -3942,58 +4203,146 @@ html[data-style="vscode"] {
   --card-foreground:      light-dark(#24292e, #d4d4d4);
   --secondary:            light-dark(#e8e8e8, #2d2d30);
   --secondary-foreground: light-dark(#24292e, #d4d4d4);
-  --muted:                light-dark(#eaeaea, #2d2d30);
-  --muted-foreground:     light-dark(#616161, #969696);
+  --muted:                light-dark(#e6e6e6, #2a2d2e);
+  --muted-foreground:     light-dark(#616161, #858585);
   --border:               light-dark(#e0e0e0, #333337);
-  --border-strong:        light-dark(#c8c8c8, #46464c);
+  --border-strong:        light-dark(#c8c8c8, #45454b);
   --accent:               #007acc;
   --primary:              #007acc;
   --primary-foreground:   #ffffff;
-  --link:                 light-dark(#005fb8, #569cd6);
+  --link:                 light-dark(#005fb8, #4fc1ff);
   --ring:                 #007acc;
   --code-fg:              light-dark(#a31515, #ce9178);
   --accent-soft-bg:       light-dark(#e4f1fb, #183047);
   --accent-soft-fg:       light-dark(#00549e, #7bc2ff);
   --radius-sm:            2px;
   --radius-md:            3px;
-  --radius-lg:            4px;
+  --radius-lg:            3px;
 }
 
 html[data-style="vscode"] body { padding-bottom: 24px; }
 html[data-style="vscode"] .notion-cover,
 html[data-style="vscode"] .notion-page-icon-overlap { display: none; }
 
-/* Activity Bar strip on the far left of the Explorer Sidebar */
-html[data-style="vscode"] .notion-sidebar {
-  width: 274px;
-  border-left: 42px solid light-dark(#2c2c2c, #333333);
-  background: var(--card);
-  font-family: var(--mono);
-  font-size: 0.8rem;
+/* Real 48px VS Code Activity Bar with Icons & Active Left Edge Indicator */
+html[data-style="vscode"] .vscode-activity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 48px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 24px);
+  background: light-dark(#2c2c2c, #333333);
+  border-right: 1px solid light-dark(#1e1e1e, #252526);
+  padding: 4px 0 8px;
+  z-index: 30;
 }
+
+html[data-style="vscode"] .vsc-act-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 44px;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition: color 100ms ease;
+}
+
+html[data-style="vscode"] .vsc-act-btn:hover,
+html[data-style="vscode"] .vsc-act-btn.is-active {
+  color: #ffffff;
+}
+
+html[data-style="vscode"] .vsc-act-btn.is-active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: #ffffff;
+}
+
+html[data-style="vscode"] .vsc-act-bottom {
+  margin-top: auto;
+}
+
+/* VS Code Explorer Sidebar */
+html[data-style="vscode"] .notion-sidebar {
+  width: 236px;
+  height: calc(100vh - 24px);
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  padding: 10px 8px 16px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+
+html[data-style="vscode"] .notion-workspace {
+  padding: 4px 6px 8px;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+}
+
+html[data-style="vscode"] .notion-ws-name {
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+html[data-style="vscode"] .notion-ws-name::before {
+  content: "▾ ";
+  color: var(--muted-foreground);
+}
+
+html[data-style="vscode"] .notion-ws-sub { display: none; }
 
 html[data-style="vscode"] .sidebar-label {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   letter-spacing: 0.08em;
+  padding: 2px 6px;
 }
 
-/* File-tree extension suffix presentation in VS Code Explorer */
-html[data-style="vscode"] .sidebar-nav li:nth-child(1) .sidebar-nav-left::after { content: ".rs"; color: var(--link); }
-html[data-style="vscode"] .sidebar-nav li:nth-child(2) .sidebar-nav-left::after { content: ".toml"; color: var(--muted-foreground); }
+html[data-style="vscode"] .sidebar-nav a {
+  padding: 4px 6px;
+  border-radius: 0;
+  font-size: 0.78rem;
+}
+
+html[data-style="vscode"] .sidebar-nav a:hover {
+  background: light-dark(#e4e6f1, #2a2d2e);
+}
+
+/* Tight filename + extension styling (zero gap before .rs / .toml / .md) */
+html[data-style="vscode"] .sidebar-nav-left {
+  gap: 0;
+}
+
+html[data-style="vscode"] .sidebar-glyph {
+  margin-right: 7px;
+  color: light-dark(#005fb8, #519aba);
+}
+
+html[data-style="vscode"] .sidebar-nav li:nth-child(1) .sidebar-nav-left::after { content: ".rs"; color: light-dark(#c55a11, #dea584); }
+html[data-style="vscode"] .sidebar-nav li:nth-child(2) .sidebar-nav-left::after { content: ".toml"; color: light-dark(#795e26, #dcdcaa); }
 html[data-style="vscode"] .sidebar-nav li:nth-child(3) .sidebar-nav-left::after { content: "/"; color: var(--muted-foreground); }
 html[data-style="vscode"] .sidebar-nav li:nth-child(4) .sidebar-nav-left::after { content: "/"; color: var(--muted-foreground); }
-html[data-style="vscode"] .sidebar-nav li:nth-child(5) .sidebar-nav-left::after { content: ".md"; color: var(--muted-foreground); }
-html[data-style="vscode"] .sidebar-nav li:nth-child(6) .sidebar-nav-left::after { content: ".log"; color: var(--muted-foreground); }
+html[data-style="vscode"] .sidebar-nav li:nth-child(5) .sidebar-nav-left::after { content: ".md"; color: light-dark(#005fb8, #519aba); }
+html[data-style="vscode"] .sidebar-nav li:nth-child(6) .sidebar-nav-left::after { content: ".log"; color: light-dark(#008000, #6a9955); }
 
-/* Editor Tab Bar in Topbar */
+/* Authentic VS Code Editor Tab Strip + Breadcrumb Bar */
 html[data-style="vscode"] .site-header {
-  background: var(--card);
+  background: light-dark(#ececec, #252526);
   backdrop-filter: none;
   border-bottom: 1px solid var(--border);
 }
 
 html[data-style="vscode"] .notion-topbar {
-  padding: 0 14px 0 0;
+  padding: 0 12px 0 0;
   min-height: 36px;
 }
 
@@ -4011,33 +4360,75 @@ html[data-style="vscode"] .notion-crumb-root {
   border-right: 1px solid var(--border);
   font-family: var(--mono);
   font-size: 0.78rem;
+  gap: 0;
+}
+
+html[data-style="vscode"] .notion-crumb-root img {
+  margin-right: 7px;
+  border-radius: 2px;
 }
 
 html[data-style="vscode"] .notion-crumb-root::after {
-  content: ".md  ×";
+  content: ".rs  ×";
   color: var(--muted-foreground);
   font-weight: 400;
-  margin-left: 4px;
 }
 
-html[data-style="vscode"] .notion-crumb-sep { padding: 0 8px; }
-html[data-style="vscode"] .notion-crumb-current { font-family: var(--mono); font-size: 0.76rem; }
+html[data-style="vscode"] .notion-crumb-sep {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+}
 
-/* Editor Document Canvas with subtle Line-Number Gutter */
+html[data-style="vscode"] .notion-crumb-current {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--muted-foreground);
+}
+
+html[data-style="vscode"] .notion-crumb-current::before {
+  content: "src › ";
+  opacity: 0.65;
+}
+
+/* Editor Document Canvas with Real Vertical Line-Number Gutter */
 html[data-style="vscode"] main,
 html[data-style="vscode"] .has-cover main {
-  max-width: 1040px;
+  position: relative;
+  max-width: 1080px;
   margin: 0;
-  padding: 26px 40px 56px 52px;
-  border-left: 1px solid var(--border);
-  box-shadow: inset 36px 0 0 light-dark(#fafafa, #1b1b1c);
+  padding: 24px 40px 56px 64px;
+  overflow: hidden;
+}
+
+html[data-style="vscode"] main::before {
+  content: "01\A 02\A 03\A 04\A 05\A 06\A 07\A 08\A 09\A 10\A 11\A 12\A 13\A 14\A 15\A 16\A 17\A 18\A 19\A 20\A 21\A 22\A 23\A 24\A 25\A 26\A 27\A 28\A 29\A 30\A 31\A 32\A 33\A 34\A 35\A 36\A 37\A 38\A 39\A 40\A 41\A 42\A 43\A 44\A 45\A 46\A 47\A 48\A 49\A 50\A 51\A 52\A 53\A 54\A 55\A 56\A 57\A 58\A 59\A 60";
+  position: absolute;
+  top: 24px;
+  left: 0;
+  bottom: 0;
+  width: 44px;
+  padding-right: 12px;
+  border-right: 1px solid var(--border);
+  text-align: right;
+  white-space: pre;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  line-height: 2.1;
+  color: light-dark(#999999, #5a5a5a);
+  user-select: none;
+  pointer-events: none;
 }
 
 html[data-style="vscode"] .site-footer {
-  max-width: 1040px;
+  max-width: 1080px;
   margin: 0;
-  padding: 16px 40px 28px 52px;
+  padding: 16px 40px 28px 64px;
   font-family: var(--mono);
+  font-size: 0.75rem;
 }
 
 html[data-style="vscode"] h1,
@@ -4046,9 +4437,70 @@ html[data-style="vscode"] .gallery-card-title {
   font-family: var(--mono);
 }
 
+html[data-style="vscode"] .hero h1 {
+  font-size: clamp(1.75rem, 3vw, 2.3rem);
+}
+
 html[data-style="vscode"] .hero h1::before {
-  content: "// ";
+  content: "/// ";
   color: light-dark(#008000, #6a9955);
+}
+
+html[data-style="vscode"] .hero h1 em {
+  color: light-dark(#0000ff, #569cd6);
+}
+
+/* Cargo.toml Metadata Block for Properties */
+html[data-style="vscode"] .notion-props {
+  position: relative;
+  padding: 26px 16px 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 2px solid #007acc;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+html[data-style="vscode"] .notion-props::before {
+  content: "[package.metadata]";
+  position: absolute;
+  top: 6px;
+  left: 16px;
+  font-size: 0.72rem;
+  color: light-dark(#795e26, #dcdcaa);
+}
+
+html[data-style="vscode"] .notion-prop-key {
+  font-family: var(--mono);
+  color: light-dark(#0451a5, #9cdcfe);
+}
+
+/* Syntax-Colored Code-Block Project Cards */
+html[data-style="vscode"] .gallery-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+}
+
+html[data-style="vscode"] .gallery-card:hover {
+  border-color: #007acc;
+  background: light-dark(#f8f8f8, #28282b);
+}
+
+html[data-style="vscode"] .gallery-card-title a {
+  color: light-dark(#267f99, #4ec9b0);
+}
+
+html[data-style="vscode"] .notion-section-head h2::before {
+  content: "mod ";
+  color: light-dark(#af00db, #c586c0);
+  font-weight: 500;
+}
+
+html[data-style="vscode"] .notion-section-head h2::after {
+  content: " {";
+  color: light-dark(#795e26, #ffd700);
+  font-weight: 400;
 }
 
 /* Iconic Blue VS Code Bottom Status Bar */
@@ -4073,12 +4525,13 @@ html[data-style="vscode"] .os-bar {
 html[data-style="vscode"] .os-orb { display: none; }
 html[data-style="vscode"] .os-start { color: #ffffff; text-decoration: none; font-weight: 700; white-space: nowrap; }
 html[data-style="vscode"] .os-start-label { font-size: 0; }
-html[data-style="vscode"] .os-start-label::before { content: "⎇ main*"; font-size: 0.72rem; }
+html[data-style="vscode"] .os-start-label::before { content: "⎇ main*   ⊘ 0  ⚠ 0"; font-size: 0.72rem; }
 html[data-style="vscode"] .os-dock-items { display: flex; align-items: center; gap: 12px; margin-right: auto; overflow-x: auto; scrollbar-width: none; }
 html[data-style="vscode"] .os-dock-item { color: rgba(255, 255, 255, 0.9); text-decoration: none; white-space: nowrap; }
 html[data-style="vscode"] .os-dock-item svg { display: none; }
 html[data-style="vscode"] .os-dock-item:hover { color: #ffffff; text-decoration: underline; }
-html[data-style="vscode"] .os-tray { color: rgba(255, 255, 255, 0.92); white-space: nowrap; }
+html[data-style="vscode"] .os-tray { font-size: 0; white-space: nowrap; }
+html[data-style="vscode"] .os-tray::after { content: "Ln 1, Col 1   Spaces: 2   UTF-8   Rust"; font-size: 0.72rem; color: rgba(255, 255, 255, 0.92); }
 
 /* ---- 8. Figma — Spatial Dot-Grid Canvas + Layers Sidebar + Blue-Labeled Artboards ---- */
 html[data-style="figma"] {
@@ -4632,7 +5085,8 @@ html[data-style="docs"] #tm-core:checked    ~ .win-tabs label[for="tm-core"] {
 
 /* ---- Responsive Breakpoints ---- */
 @media (max-width: 1040px) {
-  .notion-sidebar { display: none; }
+  .notion-sidebar,
+  html[data-style="vscode"] .vscode-activity { display: none; }
   .mobile-nav-bar { display: block; }
   .notion-cover-caption { padding: 12px 28px; }
   main { padding: 28px 28px 56px; }
@@ -4725,7 +5179,11 @@ html[data-style="docs"] #tm-core:checked    ~ .win-tabs label[for="tm-core"] {
   html[data-style="figma"] .os-dock-item span { display: none; }
   html[data-style="vscode"] main,
   html[data-style="vscode"] .has-cover main { padding: 18px 16px 36px; box-shadow: none; border-left: 0; }
+  html[data-style="vscode"] main::before { display: none; }
   html[data-style="vscode"] .site-footer { padding: 14px 16px 28px; }
+  html[data-style="html"] main,
+  html[data-style="html"] .has-cover main { padding: 20px 16px 40px; }
+  html[data-style="html"] .site-header { padding: 14px 16px 8px; }
   html[data-style="win7"] .has-cover main,
   html[data-style="win7"] main,
   html[data-style="win97"] .has-cover main,
