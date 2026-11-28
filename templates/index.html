@@ -1,87 +1,60 @@
 {% extends "base.html" %}
 
 {% block cover %}
-<div class="notion-cover" aria-hidden="true">
-  <div class="notion-cover-caption">
-    <span class="notion-cover-pill">404human.dev · Rust · systems · AI tools</span>
-  </div>
-</div>
+<div class="notion-cover" aria-hidden="true"></div>
 {% endblock cover %}
 
 {% block content %}
 {%- set logs = section.extra.logs | default(value=[]) %}
 {%- set posts = get_section(path="posts/_index.md") %}
-{%- set log_entries = 0 %}
-{%- for log_path in logs %}
-  {%- set one_log = get_section(path=log_path) %}
-  {%- set_global log_entries = log_entries + (one_log.pages | length) %}
-{%- endfor %}
+{%- set priority = ["Colophon CMS", "Durable Runner", "Service Monitor", "jsrt", "MiniBTC"] %}
 
-<!-- ======================= PAGE ICON + HERO + FLAGSHIP CALLOUT ======================= -->
+<!-- ======================= MINIMAL NOTION PAGE HEADER ======================= -->
 <div class="notion-page-icon-overlap">
-  <img class="notion-page-avatar" src="{{ get_url(path='img/avatar-192.webp') }}" alt="404human avatar" width="78" height="78">
+  <img class="notion-page-avatar" src="{{ get_url(path='img/avatar-192.webp') }}" alt="404human avatar" width="72" height="72">
 </div>
 
-<div class="hero-grid">
-  <section class="hero" aria-label="Introduction">
-    <div class="hero-eyebrow">
-      <span class="badge badge-ok"><span class="dot" aria-hidden="true"></span> building in public</span>
-      <span>Rust · runtimes · background jobs · AI tools</span>
-    </div>
-    {{ section.content | safe }}
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="{{ get_url(path='@/colophon/_index.md') }}">Explore Colophon →</a>
-      <a class="btn btn-secondary" href="{{ get_url(path='@/progress/_index.md') }}">Live progress ledger</a>
-    </div>
-    <div class="hero-meta">
-      <span><strong>{{ logs | length }}</strong> build logs</span>
-      <span><strong>{{ log_entries + (posts.pages | length) }}</strong> write-ups</span>
-      <span><strong>Rust + Zola</strong> · static</span>
-      <span><strong>0</strong> trackers</span>
-    </div>
-  </section>
+<section class="hero" aria-label="Introduction" style="margin-bottom: 24px;">
+  {{ section.content | safe }}
 
-  <section aria-label="Flagship project" style="margin: 0;">
-    <div class="notion-callout notion-callout-blue" style="margin: 0;">
-      <span class="notion-callout-icon" aria-hidden="true">C</span>
-      <div class="notion-callout-body">
-        <div class="notion-callout-meta">Flagship · Colophon CMS · Rust + Svelte · pre-0.1</div>
-        <h2 class="notion-callout-title" style="font-size: 1.12rem; margin-bottom: 8px;">A CMS where “published” is a receipt, not a spinner.</h2>
-        <p style="font-size: 0.9rem; color: var(--muted-foreground); margin-bottom: 12px;">Every publish is a numbered release, and a probe reads the release marker off the live page before the product calls it done.</p>
-        <div class="win-dialog-well">PostgreSQL = single authority · RLS tenant isolation · transactional outbox · monotonic releases</div>
-        <a class="btn btn-secondary" href="{{ get_url(path='@/colophon/_index.md') }}">Open Colophon build log →</a>
-      </div>
-    </div>
-  </section>
-</div>
+  <div class="notion-props" aria-label="Profile properties">
+    <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">◎</span>Status</div>
+    <div class="notion-prop-val"><span class="badge badge-ok"><span class="dot" aria-hidden="true"></span> building in public</span></div>
 
-<!-- ======================= PROJECTS DATABASE (GALLERY + TABLE + IN DEV + LOGS) ======================= -->
+    <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">▤</span>Focus</div>
+    <div class="notion-prop-val">
+      <a class="badge tag-rust" href="{{ get_taxonomy_url(kind='tags', name='rust') }}">#rust</a>
+      <a class="badge tag-postgres" href="{{ get_taxonomy_url(kind='tags', name='postgres') }}">#postgres</a>
+      <a class="badge tag-ai" href="{{ get_taxonomy_url(kind='tags', name='ai') }}">#ai</a>
+      <a class="badge tag-reliability" href="{{ get_taxonomy_url(kind='tags', name='reliability') }}">#reliability</a>
+    </div>
+
+    <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">→</span>Now</div>
+    <div class="notion-prop-val"><a href="{{ get_url(path='@/colophon/_index.md') }}">Colophon CMS</a> — live in alpha at <a href="https://colophon.404human.dev" rel="noopener">colophon.404human.dev ↗</a></div>
+  </div>
+</section>
+
+<!-- ======================= PROJECTS DATABASE (GALLERY + ALL) ======================= -->
 {%- if section.extra.projects %}
 <section id="projects" aria-label="Projects">
-  {%- set priority = ["Colophon CMS", "Durable Runner", "Service Monitor", "jsrt", "MiniBTC"] %}
   <div class="notion-section-head">
     <h2>Projects</h2>
-    <span class="notion-section-meta">{{ section.extra.projects | length }} tracked · {{ logs | length }} build logs</span>
+    <a class="win-tabs-link" style="padding: 0;" href="{{ get_url(path='@/progress/_index.md') }}">Progress ledger →</a>
   </div>
 
   <div class="win-tabset">
     <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-gallery" checked>
     <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-core">
-    <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-dev">
-    <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-logs">
 
     <div class="win-tabs">
       <div class="win-tabs-left">
-        <label class="win-tab" for="tm-gallery"><span class="win-tab-glyph" aria-hidden="true">⊞</span>Gallery ({{ priority | length }})</label>
-        <label class="win-tab" for="tm-core"><span class="win-tab-glyph" aria-hidden="true">▤</span>Table ({{ priority | length }})</label>
-        <label class="win-tab" for="tm-dev"><span class="win-tab-glyph" aria-hidden="true">◎</span>In Development ({{ (section.extra.projects | length) - (priority | length) }})</label>
-        <label class="win-tab" for="tm-logs"><span class="win-tab-glyph" aria-hidden="true">☰</span>Build Logs ({{ logs | length }})</label>
+        <label class="win-tab" for="tm-gallery"><span class="win-tab-glyph" aria-hidden="true">⊞</span>Core ({{ priority | length }})</label>
+        <label class="win-tab" for="tm-core"><span class="win-tab-glyph" aria-hidden="true">▤</span>All ({{ section.extra.projects | length }})</label>
       </div>
-      <a class="win-tabs-link" href="{{ get_url(path='@/progress/_index.md') }}">Full progress ledger →</a>
     </div>
 
     <div class="win-tab-pane">
-      <!-- Tab 1: Notion Gallery Cards -->
+      <!-- View 1: Clean Gallery Cards for Core 5 -->
       <div class="win-tab-panel panel-gallery">
         <div class="notion-gallery">
         {%- for name in priority %}
@@ -99,7 +72,6 @@
                   {%- if item_log.pages %}
                     {%- set now_on = item_log.pages[0] %}
                     {%- set latest_meta = now_on.extra.milestone ~ " · " ~ now_on.extra.step %}
-                    {%- if now_on.extra.tests is defined %}{%- set latest_meta = latest_meta ~ " · " ~ now_on.extra.tests ~ " tests" %}{%- endif %}
                   {%- endif %}
                 {%- endif %}
               {%- else %}
@@ -107,19 +79,18 @@
               {%- endif %}
             {%- endif %}
             <article class="gallery-card" style="margin: 0;">
-              <div class="gallery-card-cover">
-                <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% else %}badge-accent{% endif %}"><span class="dot" aria-hidden="true"></span> {{ st }}</span>
-                <span class="gallery-card-id">PID {{ 100 + loop.index }}</span>
-              </div>
               <div class="gallery-card-body">
-                <h3 class="gallery-card-title">{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</h3>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                  <h3 class="gallery-card-title">{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</h3>
+                  <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% else %}badge-accent{% endif %}"><span class="dot" aria-hidden="true"></span> {{ st }}</span>
+                </div>
                 <p class="gallery-card-desc">{{ project.about }}</p>
                 <div class="gallery-card-foot">
                   <span>{% if latest_meta %}{{ latest_meta }}{% else %}Build log{% endif %}</span>
                   {%- if project.site %}
                   <a href="{{ project.site }}" rel="noopener">{{ project.site | replace(from="https://", to="") }} ↗</a>
                   {%- elif href %}
-                  <a href="{{ href }}">Read log →</a>
+                  <a href="{{ href }}">Build log →</a>
                   {%- endif %}
                 </div>
               </div>
@@ -130,77 +101,19 @@
         </div>
       </div>
 
-      <!-- Tab 2: Core Projects Table -->
+      <!-- View 2: All Projects Table -->
       <div class="win-tab-panel panel-core">
         <div class="table-wrap">
-          <table class="mobile-records" role="table" aria-label="Core projects">
+          <table class="mobile-records" role="table" aria-label="All projects">
             <thead>
               <tr>
-                <th scope="col" width="64">PID</th>
-                <th scope="col" width="175">Project</th>
+                <th scope="col" width="190">Project</th>
                 <th scope="col" width="115">Status</th>
-                <th scope="col">What it is &amp; latest checkpoint</th>
-              </tr>
-            </thead>
-            <tbody>
-            {%- for name in priority %}
-              {%- for project in section.extra.projects %}
-                {%- if project.name == name %}
-                {%- set st = project.status | default(value="") %}
-                {%- set href = "" %}
-                {%- set latest_meta = "" %}
-                {%- if project.link %}
-                  {%- if project.link is starting_with(pat="@/") %}
-                    {%- set href = get_url(path=project.link) %}
-                    {%- set log_path = project.link | replace(from="@/", to="") %}
-                    {%- if log_path in logs %}
-                      {%- set item_log = get_section(path=log_path) %}
-                      {%- if item_log.pages %}
-                        {%- set now_on = item_log.pages[0] %}
-                        {%- set latest_meta = now_on.extra.milestone ~ " · " ~ now_on.extra.step %}
-                        {%- if now_on.extra.tests is defined %}{%- set latest_meta = latest_meta ~ " · " ~ now_on.extra.tests ~ " tests" %}{%- endif %}
-                      {%- endif %}
-                    {%- endif %}
-                  {%- else %}
-                    {%- set href = project.link %}
-                  {%- endif %}
-                {%- endif %}
-                <tr>
-                  <td class="num"><span class="mobile-label" aria-hidden="true">PID: </span><code>{{ 100 + loop.index }}</code></td>
-                  <td><span class="mobile-label" aria-hidden="true">Project: </span><b>{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</b></td>
-                  <td>
-                    <span class="mobile-label" aria-hidden="true">Status: </span>
-                    <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% else %}badge-accent{% endif %}"><span class="dot" aria-hidden="true"></span> {{ st }}</span>
-                  </td>
-                  <td>
-                    <span class="mobile-label" aria-hidden="true">Summary: </span>
-                    {{ project.about }}
-                    {%- if project.site %}<br><a href="{{ project.site }}" rel="noopener">{{ project.site | replace(from="https://", to="") }} ↗</a>{% endif %}
-                    {%- if latest_meta %}<br><small class="mono">{{ latest_meta }}</small>{% endif %}
-                  </td>
-                </tr>
-                {%- endif %}
-              {%- endfor %}
-            {%- endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Tab 3: In Development & Explorations -->
-      <div class="win-tab-panel panel-dev">
-        <div class="table-wrap">
-          <table class="mobile-records" role="table" aria-label="In development and explorations">
-            <thead>
-              <tr>
-                <th scope="col" width="200">Project</th>
-                <th scope="col" width="120">Status</th>
-                <th scope="col">What it is</th>
+                <th scope="col">Summary</th>
               </tr>
             </thead>
             <tbody>
             {%- for project in section.extra.projects %}
-              {%- if project.name not in priority %}
               {%- set st = project.status | default(value="") %}
               {%- set href = "" %}
               {%- if project.link %}
@@ -210,38 +123,9 @@
                 <td><span class="mobile-label" aria-hidden="true">Project: </span><b>{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</b></td>
                 <td>
                   <span class="mobile-label" aria-hidden="true">Status: </span>
-                  <span class="badge {% if st == 'live' or st == 'shipped' %}badge-ok{% elif st == 'parked' or st == 'exploration' or st == 'write-up' %}badge-muted{% else %}badge-accent{% endif %}">{{ st }}</span>
+                  <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% elif st == 'parked' or st == 'exploration' or st == 'write-up' %}badge-muted{% else %}badge-accent{% endif %}">{{ st }}</span>
                 </td>
-                <td><span class="mobile-label" aria-hidden="true">Summary: </span>{{ project.about }}{%- if project.site %}<br><a href="{{ project.site }}" rel="noopener">{{ project.site | replace(from="https://", to="") }} ↗</a>{% endif %}</td>
-              </tr>
-              {%- endif %}
-            {%- endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Tab 4: All Build Logs -->
-      <div class="win-tab-panel panel-logs">
-        <div class="table-wrap">
-          <table class="mobile-records" role="table" aria-label="All build logs">
-            <thead>
-              <tr>
-                <th scope="col" width="190">Build log</th>
-                <th scope="col" width="90">Entries</th>
-                <th scope="col" width="150">Latest step</th>
-                <th scope="col">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-            {%- for log_path in logs %}
-              {%- set log = get_section(path=log_path) %}
-              {%- set latest = log.pages[0] %}
-              <tr>
-                <td><span class="mobile-label" aria-hidden="true">Log: </span><b><a href="{{ log.permalink }}">{{ log.extra.short_title or log.title }}</a></b></td>
-                <td class="num"><span class="mobile-label" aria-hidden="true">Entries: </span>{{ log.pages | length }}</td>
-                <td class="num"><span class="mobile-label" aria-hidden="true">Latest: </span>{% if latest %}<code>{{ latest.extra.milestone }} · {{ latest.extra.step }}</code>{% endif %}</td>
-                <td><span class="mobile-label" aria-hidden="true">About: </span>{{ log.description }}</td>
+                <td><span class="mobile-label" aria-hidden="true">Summary: </span>{{ project.about }}{%- if project.site %} · <a href="{{ project.site }}" rel="noopener">{{ project.site | replace(from="https://", to="") }} ↗</a>{% endif %}</td>
               </tr>
             {%- endfor %}
             </tbody>
@@ -253,129 +137,48 @@
 </section>
 {%- endif %}
 
-<!-- ======================= NUMBERS (NOTION CALLOUT + METRIC GALLERY) ======================= -->
-<section id="numbers" aria-label="Measured numbers">
+<!-- ======================= LATEST WRITING ======================= -->
+<section aria-label="Latest writing">
   <div class="notion-section-head">
-    <h2>Numbers I can show, not adjectives</h2>
-    <span class="notion-section-meta">6 verified runs</span>
+    <h2>Writing</h2>
+    <a class="win-tabs-link" style="padding: 0;" href="{{ get_url(path='@/posts/_index.md') }}">All {{ posts.pages | length }} articles →</a>
   </div>
-  <div class="notion-callout">
-    <span class="notion-callout-icon" aria-hidden="true">!</span>
-    <div class="notion-callout-body">
-      <p style="font-size: 0.9rem; color: var(--muted-foreground);"><b>House rule:</b> no claim without an executed run and stored evidence. Measured on laptop-class hardware — development observations, never production capacity.</p>
-    </div>
-  </div>
-  <div class="metrics-grid">
-    <div class="metric">
-      <div class="metric-readout">540,063 req</div>
-      <div class="metric-label">Warm baseline, 30 min</div>
-      <p class="metric-note">300/s with zero failures on this machine. Proves steady load; says nothing about your hardware.</p>
-    </div>
-    <div class="metric">
-      <div class="metric-readout">600 refused/s</div>
-      <div class="metric-label">Noisy-agent isolation</div>
-      <p class="metric-note">A token past quota is throttled inside auth while editors beside it hold their latency.</p>
-    </div>
-    <div class="metric">
-      <div class="metric-readout">≥ 1,000,000</div>
-      <div class="metric-label">Full load bar</div>
-      <p class="metric-note">Standing bar for anything serving traffic; misses fail and get investigated, not re-run till green.</p>
-    </div>
-    <div class="metric">
-      <div class="metric-readout">400 s</div>
-      <div class="metric-label">Disaster restore drill</div>
-      <p class="metric-note">Encrypted capture to serving on clean infrastructure — rehearsed for real, not documented in hope.</p>
-    </div>
-    <div class="metric">
-      <div class="metric-readout">10,000 records</div>
-      <div class="metric-label">Import at true scale</div>
-      <p class="metric-note">A real import, not a loop over a tiny sample labelled “scale”.</p>
-    </div>
-    <div class="metric">
-      <div class="metric-readout">59 / 59</div>
-      <div class="metric-label">Hidden-test Rust exam</div>
-      <p class="metric-note">The AI couldn’t see the questions or run a compiler. Decoys included.</p>
-    </div>
-  </div>
+  <ul class="row-list" style="margin-bottom: 0;">
+    {%- for post in posts.pages %}
+      {%- if loop.index0 < 6 %}
+      <li class="row-item">
+        <div class="row-main">
+          <a class="row-title" href="{{ post.permalink }}">{{ post.title }}</a>
+          {%- if post.description %}<span class="row-desc">{{ post.description }}</span>{% endif %}
+        </div>
+        <div class="row-meta">
+          {%- if post.extra.kind %}<span class="badge kind-{{ post.extra.kind }}">{{ post.extra.kind }}</span>{% endif %}
+          <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+        </div>
+      </li>
+      {%- endif %}
+    {%- endfor %}
+  </ul>
 </section>
 
-<!-- ======================= HOW THE WORK IS JUDGED ======================= -->
-<section id="how" aria-label="How the work is judged">
+<!-- ======================= COMPACT NOTES (NOTION TOGGLES) ======================= -->
+<section aria-label="Notes and principles">
   <div class="notion-section-head">
-    <h2>How the work is judged</h2>
-    <span class="notion-section-meta">5 standing rules</span>
-  </div>
-  <div class="principles-list">
-    <div class="principle">
-      <h3><span class="win-check" aria-hidden="true">✓</span>Proof over breadth.</h3>
-      <p>A feature counts when its <i>failure</i> behaviour is tested and stored — CI regressions, a real HTTP testbed, and committed load runs.</p>
-    </div>
-    <div class="principle">
-      <h3><span class="win-check" aria-hidden="true">✓</span>Truthful states.</h3>
-      <p><del>“Accepted” presented as “done”</del> is the industry’s favourite bug. Publishes stay <mark>pending</mark> until probed live; unmeasured checks stay <code>uncertain</code>.</p>
-    </div>
-    <div class="principle">
-      <h3><span class="win-check" aria-hidden="true">✓</span>Kill it at any moment.</h3>
-      <p>Crash tests have catalogue numbers (F01–F09). Bugs get a replayable seed: <kbd>colophon-sim --seed N --trace</kbd>.</p>
-    </div>
-    <div class="principle">
-      <h3><span class="win-check" aria-hidden="true">✓</span>Bounded everything.</h3>
-      <p>Every queue, body, page, cache, retry loop and pool has a limit and a deadline — a bound you can’t name is an outage you haven’t met yet.</p>
-    </div>
-    <div class="principle">
-      <h3><span class="win-check" aria-hidden="true">✓</span>No AI hype.</h3>
-      <p>Agents work through the same API and permissions as everyone else — draft-only, budgeted in Postgres, never self-approving.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ======================= FAQ (NATIVE NOTION TOGGLE LIST) ======================= -->
-<section aria-label="Frequently asked questions">
-  <div class="notion-section-head">
-    <h2>Asked plainly</h2>
-    <span class="notion-section-meta">Toggle blocks</span>
+    <h2>Notes</h2>
   </div>
   <div class="notion-toggles">
     <details>
-      <summary>Why build in the open, including the mistakes?</summary>
-      <p>Because “proof over breadth” can’t be claimed, only shown. A build log that includes the failures is the difference between <i>saying</i> a system is reliable and letting you check.</p>
+      <summary>How the work is judged</summary>
+      <p><b>Proof over breadth:</b> a feature counts when its failure behaviour is tested and stored. <b>Truthful states:</b> publishes stay pending until probed live. <b>Bounded everything:</b> every queue, body, cache, and retry loop has a hard limit and deadline.</p>
     </details>
     <details>
-      <summary>Is any of this usable yet?</summary>
-      <p>Colophon is live in alpha; Service Monitor has an installed release; jsrt’s roadmap and hardened load runs are done; the seven newer projects are still early. Check the <a href="{{ get_url(path='@/progress/_index.md') }}">progress ledger</a> for every project’s exact stage and open items.</p>
+      <summary>Verified runs &amp; numbers</summary>
+      <p>540,063 req warm baseline (30 min, 0 failures) · 600 refused/s noisy-agent isolation · 1,000,000+ standing load bar · 400 s encrypted disaster restore drill · 10,000-record real import · 59/59 hidden-test Rust exam. Measured on laptop-class hardware.</p>
     </details>
     <details>
-      <summary>Why Rust?</summary>
-      <p>One type system for the error envelope, explicit deadlines on every I/O await, compilers that refuse what production would regret, and deterministic failure simulators.</p>
+      <summary>About this site</summary>
+      <p>Generated with Zola in Rust — one stylesheet, zero tracking, zero analytics, and native HTML toggles. Browse <a href="{{ get_url(path='@/build-log/_index.md') }}">build logs</a>, <a href="{{ get_url(path='@/learn/_index.md') }}">learning tracks</a>, or <a href="{{ get_url(path='@/lessons/_index.md') }}">daily lessons</a>.</p>
     </details>
-    <details>
-      <summary>How minimal is this site, really?</summary>
-      <p>Zola generates it: one stylesheet, one tiny inline script for the theme and font toggles, no tracking, and one self-hosted font. Accordions are native <code>&lt;details&gt;</code>.</p>
-    </details>
-  </div>
-</section>
-
-<!-- ======================= FIND ME ======================= -->
-<section id="find" aria-label="Find me">
-  {%- set x = config.extra.x_handle %}
-  {%- set gh = config.extra.github %}
-  {%- set mail = config.extra.email %}
-  <div class="notion-section-head">
-    <h2>Find me</h2>
-    <span class="notion-section-meta">Links &amp; feeds</span>
-  </div>
-  <div class="win-shortcuts" style="margin-top: 0;">
-    {%- if gh %}
-    <a class="btn btn-secondary" href="https://github.com/{{ gh }}">GitHub · github.com/{{ gh }}</a>
-    {%- endif %}
-    {%- if x %}
-    <a class="btn btn-secondary" href="https://x.com/{{ x }}">X · @{{ x }}</a>
-    {%- endif %}
-    {%- if mail %}
-    <a class="btn btn-secondary" href="mailto:{{ mail }}">Email · {{ mail }}</a>
-    {%- endif %}
-    <a class="btn btn-secondary" href="{{ get_url(path='@/posts/_index.md') }}">Knowledge Hub · /posts/</a>
-    <a class="btn btn-secondary" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS · /rss.xml</a>
   </div>
 </section>
 {% endblock content %}

@@ -539,7 +539,7 @@ body {
 /* ---- Full-Bleed Notion Page Cover (Home) ---- */
 .notion-cover {
   width: 100%;
-  height: 164px;
+  height: 136px;
   background:
     radial-gradient(var(--cover-dot) 1px, transparent 0) 0 0 / 18px 18px,
     linear-gradient(118deg, var(--cover-a) 0%, var(--cover-b) 54%, var(--cover-c) 100%);

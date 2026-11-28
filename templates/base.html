@@ -155,44 +155,22 @@
       </a>
 
       <nav class="sidebar-section" aria-label="Primary pages">
-        <p class="sidebar-label">Workspace</p>
+        <p class="sidebar-label">Pages</p>
         <ul class="sidebar-nav">
           <li><a href="{{ get_url(path='@/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">⌂</span>Home</span></a></li>
           <li><a href="{{ get_url(path='@/_index.md') }}#projects"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">▤</span>Projects</span></a></li>
-          <li><a href="{{ get_url(path='@/progress/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">◎</span>Progress</span></a></li>
+          <li><a href="{{ get_url(path='@/posts/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">¶</span>Knowledge Hub</span><span class="sidebar-count">{{ _posts.pages | length }}</span></a></li>
           <li><a href="{{ get_url(path='@/build-log/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">☰</span>Build logs</span><span class="sidebar-count">{{ _logs | length }}</span></a></li>
           <li><a href="{{ get_url(path='@/learn/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">◈</span>Learning</span></a></li>
-          <li><a href="{{ get_url(path='@/lessons/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">✎</span>Lessons</span></a></li>
-          <li><a href="{{ get_url(path='@/posts/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">¶</span>Knowledge Hub</span><span class="sidebar-count">{{ _posts.pages | length }}</span></a></li>
+          <li><a href="{{ get_url(path='@/progress/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">◎</span>Progress</span></a></li>
         </ul>
       </nav>
 
       <div class="sidebar-section">
-        <p class="sidebar-label">Recent checkpoints</p>
-        <ul class="sidebar-sublist">
-          {%- for log_path in _logs %}
-            {%- if loop.index0 < 6 %}
-            {%- set _l = get_section(path=log_path) %}
-            {%- if _l.pages %}
-            {%- set _top = _l.pages[0] %}
-            <li>
-              <a href="{{ _top.permalink }}">
-                <span class="sidebar-item-title">{{ _l.extra.short_title or _l.title }}</span>
-                <span class="sidebar-item-meta">{{ _top.extra.milestone }} · {{ _top.extra.step }}{% if _top.extra.tests is defined %} · {{ _top.extra.tests }}t{% endif %}</span>
-              </a>
-            </li>
-            {%- endif %}
-            {%- endif %}
-          {%- endfor %}
-        </ul>
-        <a class="sidebar-more" href="{{ get_url(path='@/progress/_index.md') }}">Full progress ledger →</a>
-      </div>
-
-      <div class="sidebar-section">
-        <p class="sidebar-label">Latest articles</p>
+        <p class="sidebar-label">Latest writing</p>
         <ul class="sidebar-sublist">
           {%- for p in _posts.pages %}
-            {%- if loop.index0 < 4 %}
+            {%- if loop.index0 < 3 %}
             <li>
               <a href="{{ p.permalink }}">
                 <span class="sidebar-item-title">{{ p.title }}</span>
@@ -202,14 +180,13 @@
             {%- endif %}
           {%- endfor %}
         </ul>
-        <a class="sidebar-more" href="{{ get_url(path='@/posts/_index.md') }}">All articles →</a>
       </div>
 
       <div class="sidebar-footer">
-        <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
-        <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
         {%- if config.extra.github %}<a href="https://github.com/{{ config.extra.github }}">GitHub</a>{% endif %}
         {%- if config.extra.x_handle %}<a href="https://x.com/{{ config.extra.x_handle }}">@{{ config.extra.x_handle }}</a>{% endif %}
+        <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
+        <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
       </div>
     </aside>
 
@@ -240,11 +217,10 @@
           <nav class="site-nav" aria-label="Site">
             <a href="{{ get_url(path='@/_index.md') }}">Home</a>
             <a href="{{ get_url(path='@/_index.md') }}#projects">Projects</a>
-            <a href="{{ get_url(path='@/progress/_index.md') }}">Progress</a>
+            <a href="{{ get_url(path='@/posts/_index.md') }}">Knowledge Hub</a>
             <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a>
             <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a>
-            <a href="{{ get_url(path='@/lessons/_index.md') }}">Lessons</a>
-            <a href="{{ get_url(path='@/posts/_index.md') }}">Knowledge Hub</a>
+            <a href="{{ get_url(path='@/progress/_index.md') }}">Progress</a>
           </nav>
         </div>
       </header>
