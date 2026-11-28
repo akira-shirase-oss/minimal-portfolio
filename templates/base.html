@@ -208,12 +208,45 @@
     <symbol id="ic-flask" viewBox="0 0 24 24"><path d="M10 3h4"/><path d="M10 3v5.5L4.8 17.8A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.7-3.2L14 8.5V3"/><path d="M8.5 14h7"/></symbol>
     <symbol id="ic-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
     <symbol id="ic-sliders" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="9" cy="6" r="2" fill="var(--background)"/><circle cx="15" cy="12" r="2" fill="var(--background)"/><circle cx="11" cy="18" r="2" fill="var(--background)"/></symbol>
+    <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="ic-command" viewBox="0 0 24 24"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></symbol>
   </svg>
   {%- set _home = get_section(path="_index.md") %}
   {%- set _logs = _home.extra.logs | default(value=[]) %}
   {%- set _posts = get_section(path="posts/_index.md") %}
+  <div class="mac-menubar" role="region" aria-label="macOS menu bar">
+    <div class="mac-menu-left">
+      <a class="mac-apple" href="{{ get_url(path='@/_index.md') }}" aria-label="404human Home"><svg class="ui-icon" width="13" height="13" aria-hidden="true"><use href="#ic-command"/></svg></a>
+      <a class="mac-app-name" href="{{ get_url(path='@/_index.md') }}">404human</a>
+      <a class="mac-menu-link" href="{{ get_url(path='@/_index.md') }}#projects">Projects</a>
+      <a class="mac-menu-link" href="{{ get_url(path='@/posts/_index.md') }}">Writing</a>
+      <a class="mac-menu-link" href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a>
+      <a class="mac-menu-link" href="{{ get_url(path='@/learn/_index.md') }}">Learning</a>
+      <a class="mac-menu-link" href="{{ get_url(path='@/progress/_index.md') }}">Progress</a>
+    </div>
+    <div class="mac-menu-right">
+      <button type="button" id="mac-spotlight-btn" class="mac-menu-btn" aria-label="Open Spotlight search (Command K)">
+        <svg class="ui-icon" width="12" height="12" aria-hidden="true"><use href="#ic-search"/></svg>
+        <span>Spotlight</span>
+        <kbd>⌘K</kbd>
+      </button>
+      <span class="mac-status">Rust · Zola</span>
+      <span class="mac-clock" id="mac-clock" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <button type="button" class="mac-restore-pill" id="mac-restore-pill" hidden>
+    <svg class="ui-icon" width="14" height="14" aria-hidden="true"><use href="#ic-command"/></svg>
+    <span>404human minimized — click to restore window</span>
+  </button>
+
   <div class="notion-app">
     <aside class="notion-sidebar" aria-label="Workspace navigation">
+      <div class="mac-lights" aria-label="Window controls">
+        <button type="button" class="mac-dot mac-red" data-mac-win="min" title="Minimize to Dock" aria-label="Minimize window">×</button>
+        <button type="button" class="mac-dot mac-yellow" data-mac-win="compact" title="Toggle compact width" aria-label="Toggle compact window">–</button>
+        <button type="button" class="mac-dot mac-green" data-mac-win="full" title="Toggle Full Screen" aria-label="Toggle full screen">+</button>
+      </div>
       <a class="notion-workspace" href="{{ get_url(path='@/_index.md') }}">
         <img class="notion-avatar" src="{{ get_url(path='img/avatar-192.webp') }}" alt="" width="24" height="24">
         <span class="notion-ws-text">
@@ -441,6 +474,21 @@
     ]
   }
   </script>
+  <div class="mac-spot-backdrop" id="mac-spotlight" hidden role="dialog" aria-modal="true" aria-label="Spotlight search">
+    <div class="mac-spot-box">
+      <div class="mac-spot-input-row">
+        <svg class="ui-icon mac-spot-icon" width="18" height="18" aria-hidden="true"><use href="#ic-search"/></svg>
+        <input class="mac-spot-input" id="mac-spot-input" type="text" autocomplete="off" spellcheck="false" placeholder="Spotlight Search — projects, articles, styles…">
+        <kbd class="mac-spot-kbd">ESC</kbd>
+      </div>
+      <ul class="mac-spot-list" id="mac-spot-list" role="listbox"></ul>
+      <div class="mac-spot-foot">
+        <span>↑↓ navigate · ↵ open · Esc close</span>
+        <span>404human.dev</span>
+      </div>
+    </div>
+  </div>
   <script src="{{ get_url(path='term.js', cachebust=true) }}" defer></script>
+  <script src="{{ get_url(path='macos.js', cachebust=true) }}" defer></script>
 </body>
 </html>

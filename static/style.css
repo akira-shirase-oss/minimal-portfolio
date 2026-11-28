@@ -536,7 +536,11 @@ body {
 /* Hidden by default (Notion & Swiss stay pure); activated per OS design system */
 .win-controls,
 .os-bar,
-.term-shell {
+.term-shell,
+.mac-menubar,
+.mac-lights,
+.mac-restore-pill,
+.mac-spot-backdrop {
   display: none;
 }
 
@@ -2668,19 +2672,170 @@ html[data-style="macos"] body {
     radial-gradient(ellipse at 52% 92%, light-dark(rgba(176, 156, 255, 0.42), rgba(28, 110, 128, 0.36)), transparent 56%),
     linear-gradient(145deg, light-dark(#f2eae5, #12101c) 0%, light-dark(#e4effb, #0e1624) 52%, light-dark(#ede8f8, #121822) 100%);
   background-attachment: fixed;
-  padding: 20px 26px 88px;
+  padding: 46px 26px 96px;
+  transition: padding 200ms ease;
+}
+
+/* Fixed Translucent macOS Top Menu Bar (28px) */
+html[data-style="macos"] .mac-menubar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  padding: 0 14px;
+  z-index: 120;
+  background: light-dark(rgba(252, 252, 254, 0.74), rgba(26, 26, 30, 0.74));
+  backdrop-filter: blur(22px) saturate(1.8);
+  border-bottom: 1px solid light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.1));
+  font-size: 0.78rem;
+  color: var(--foreground);
+}
+
+html[data-style="macos"] .mac-menu-left,
+html[data-style="macos"] .mac-menu-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+html[data-style="macos"] .mac-apple,
+html[data-style="macos"] .mac-app-name,
+html[data-style="macos"] .mac-menu-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 5px;
+  color: var(--foreground);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+html[data-style="macos"] .mac-app-name {
+  font-weight: 700;
+}
+
+html[data-style="macos"] .mac-apple:hover,
+html[data-style="macos"] .mac-app-name:hover,
+html[data-style="macos"] .mac-menu-link:hover {
+  background: light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.12));
+  text-decoration: none;
+}
+
+html[data-style="macos"] .mac-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 5px;
+  background: light-dark(rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.1));
+  color: var(--foreground);
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+html[data-style="macos"] .mac-menu-btn:hover {
+  background: light-dark(rgba(0, 102, 204, 0.15), rgba(10, 132, 255, 0.25));
+  color: var(--link);
+}
+
+html[data-style="macos"] .mac-menu-btn kbd {
+  padding: 0 4px;
+  font-size: 0.68rem;
+  box-shadow: none;
+  border-color: var(--border);
+  background: transparent;
+}
+
+html[data-style="macos"] .mac-status,
+html[data-style="macos"] .mac-clock {
+  padding: 0 6px;
+  font-size: 0.74rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+html[data-style="macos"] .mac-clock {
+  color: var(--foreground);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Minimized-to-Dock Restore Pill */
+html[data-style="macos"][data-mac-state="minimized"] .mac-restore-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 80;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: light-dark(rgba(255, 255, 255, 0.84), rgba(34, 34, 38, 0.84));
+  backdrop-filter: blur(22px) saturate(1.6);
+  border: 1px solid light-dark(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.18));
+  color: var(--foreground);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
 }
 
 /* Floating Rounded macOS Finder Window */
 html[data-style="macos"] .notion-app {
   max-width: 1200px;
-  min-height: calc(100vh - 114px);
+  min-height: calc(100vh - 144px);
   margin: 0 auto;
   border-radius: 16px;
   border: 1px solid light-dark(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.14));
   box-shadow:
     0 28px 80px light-dark(rgba(25, 36, 62, 0.18), rgba(0, 0, 0, 0.62)),
     0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: max-width 220ms ease, transform 220ms ease, opacity 200ms ease, border-radius 200ms ease;
+}
+
+/* Interactive macOS Window States (Red = Minimize, Yellow = Compact, Green = Full Screen) */
+html[data-style="macos"][data-mac-state="minimized"] .notion-app {
+  opacity: 0;
+  transform: scale(0.92) translateY(36px);
+  pointer-events: none;
+}
+
+html[data-style="macos"][data-mac-state="compact"] .notion-app {
+  max-width: 920px;
+}
+
+html[data-style="macos"][data-mac-state="full"] body {
+  padding: 28px 0 0;
+}
+
+html[data-style="macos"][data-mac-state="full"] .notion-app {
+  max-width: 100%;
+  min-height: calc(100vh - 28px);
+  border-radius: 0;
+  border-width: 0;
+  box-shadow: none;
+}
+
+html[data-style="macos"][data-mac-state="full"] .notion-sidebar,
+html[data-style="macos"][data-mac-state="full"] .notion-main-wrap,
+html[data-style="macos"][data-mac-state="full"] .site-header {
+  border-radius: 0;
+}
+
+html[data-style="macos"][data-mac-state="full"] .os-bar {
+  display: none;
 }
 
 html[data-style="macos"] .notion-sidebar {
@@ -2691,23 +2846,44 @@ html[data-style="macos"] .notion-sidebar {
   background: light-dark(rgba(238, 238, 243, 0.86), rgba(34, 34, 38, 0.86));
   backdrop-filter: blur(26px) saturate(1.5);
   border-right: 1px solid var(--border);
-  padding-top: 15px;
+  padding-top: 14px;
 }
 
-/* Traffic-light dots in top-left of Finder window */
-html[data-style="macos"] .notion-sidebar::before {
-  content: "";
-  display: block;
+/* Interactive Traffic-Light Window Controls */
+html[data-style="macos"] .mac-lights {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0 4px 10px;
+}
+
+html[data-style="macos"] .mac-dot {
   width: 12px;
   height: 12px;
-  margin: 0 0 4px 10px;
+  padding: 0;
   border-radius: 999px;
-  background: #ff5f56;
-  box-shadow:
-    inset 0 0 0 0.5px rgba(0, 0, 0, 0.18),
-    20px 0 0 #ffbd2e,
-    40px 0 0 #27c93f;
-  flex-shrink: 0;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  color: transparent;
+  cursor: pointer;
+  transition: color 100ms ease, filter 100ms ease;
+}
+
+html[data-style="macos"] .mac-red    { background: #ff5f56; }
+html[data-style="macos"] .mac-yellow { background: #ffbd2e; }
+html[data-style="macos"] .mac-green  { background: #27c93f; }
+
+html[data-style="macos"] .mac-lights:hover .mac-dot {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+html[data-style="macos"] .mac-dot:active {
+  filter: brightness(0.85);
 }
 
 html[data-style="macos"] .notion-main-wrap {
@@ -2794,21 +2970,21 @@ html[data-style="macos"] #tm-core:checked    ~ .win-tabs label[for="tm-core"] {
   border-bottom-color: var(--link);
 }
 
-/* Floating Frosted-Glass macOS Bottom Dock */
+/* Floating Frosted-Glass macOS Bottom Dock with Native Apple Squircle App Icons */
 html[data-style="macos"] .os-bar {
   display: flex;
   align-items: center;
   position: fixed;
-  bottom: 14px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 90;
-  padding: 6px 10px;
-  border-radius: 18px;
-  background: light-dark(rgba(255, 255, 255, 0.66), rgba(34, 34, 38, 0.72));
-  backdrop-filter: blur(24px) saturate(1.8);
-  border: 1px solid light-dark(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.16));
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  z-index: 110;
+  padding: 7px 12px 10px;
+  border-radius: 20px;
+  background: light-dark(rgba(255, 255, 255, 0.62), rgba(34, 34, 38, 0.68));
+  backdrop-filter: blur(26px) saturate(1.9);
+  border: 1px solid light-dark(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.16));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   max-width: calc(100vw - 24px);
 }
 
@@ -2817,33 +2993,214 @@ html[data-style="macos"] .os-tray { display: none; }
 
 html[data-style="macos"] .os-dock-items {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  align-items: flex-end;
+  gap: 10px;
 }
 
 html[data-style="macos"] .os-dock-item {
+  position: relative;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 7px 11px;
-  border-radius: 11px;
-  background: light-dark(rgba(255, 255, 255, 0.86), rgba(56, 56, 62, 0.86));
-  border: 1px solid var(--border);
-  color: var(--foreground);
-  font-size: 0.77rem;
-  font-weight: 600;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 12px;
+  color: #ffffff;
   text-decoration: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: transform 140ms ease, background 120ms ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 150ms ease;
+}
+
+html[data-style="macos"] .os-dock-item svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.9;
+}
+
+/* Native macOS app icon color palettes */
+html[data-style="macos"] .os-dock-item:nth-child(1) { background: linear-gradient(180deg, #49b6ff 0%, #007aff 100%); }
+html[data-style="macos"] .os-dock-item:nth-child(2) { background: linear-gradient(180deg, #7484ff 0%, #4c51d6 100%); }
+html[data-style="macos"] .os-dock-item:nth-child(3) { background: linear-gradient(180deg, #ffb43b 0%, #f06518 100%); }
+html[data-style="macos"] .os-dock-item:nth-child(4) { background: linear-gradient(180deg, #4f525c 0%, #1d1e24 100%); }
+html[data-style="macos"] .os-dock-item:nth-child(5) { background: linear-gradient(180deg, #c084fc 0%, #7c3aed 100%); }
+html[data-style="macos"] .os-dock-item:nth-child(6) { background: linear-gradient(180deg, #45df83 0%, #16a34a 100%); }
+
+/* Active running app indicator dot under Home */
+html[data-style="macos"] .os-dock-item:nth-child(1)::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: light-dark(rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.85));
+}
+
+/* Floating macOS Dock Tooltip Pill on Hover */
+html[data-style="macos"] .os-dock-item span {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: light-dark(rgba(250, 250, 252, 0.96), rgba(38, 38, 42, 0.96));
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+  font-size: 0.72rem;
+  font-weight: 600;
   white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease, transform 120ms ease;
 }
 
 html[data-style="macos"] .os-dock-item:hover {
-  transform: translateY(-4px) scale(1.04);
+  transform: translateY(-7px) scale(1.12);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+}
+
+html[data-style="macos"] .os-dock-item:hover span {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Frosted macOS Spotlight Search Modal (Cmd+K) */
+html[data-style="macos"] .mac-spot-backdrop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  padding: 15vh 16px 24px;
+  z-index: 250;
+  background: rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(4px);
+}
+
+html[data-style="macos"] .mac-spot-backdrop[hidden] {
+  display: none;
+}
+
+html[data-style="macos"] .mac-spot-box {
+  width: 100%;
+  max-width: 580px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: light-dark(rgba(252, 252, 254, 0.92), rgba(34, 34, 38, 0.92));
+  backdrop-filter: blur(28px) saturate(1.8);
+  border: 1px solid light-dark(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.16));
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34), 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+html[data-style="macos"] .mac-spot-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+html[data-style="macos"] .mac-spot-icon {
+  color: var(--muted-foreground);
+}
+
+html[data-style="macos"] .mac-spot-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--foreground);
+  font-family: var(--sans);
+  font-size: 1.05rem;
+}
+
+html[data-style="macos"] .mac-spot-kbd {
+  font-size: 0.7rem;
+  box-shadow: none;
+}
+
+html[data-style="macos"] .mac-spot-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  max-height: 330px;
+  overflow-y: auto;
+}
+
+html[data-style="macos"] .mac-spot-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+html[data-style="macos"] .mac-spot-item.is-active,
+html[data-style="macos"] .mac-spot-item:hover {
   background: var(--primary);
   color: #ffffff;
-  border-color: var(--primary);
-  text-decoration: none;
+}
+
+html[data-style="macos"] .mac-spot-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+html[data-style="macos"] .mac-spot-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[data-style="macos"] .mac-spot-sub {
+  font-size: 0.76rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[data-style="macos"] .mac-spot-item.is-active .mac-spot-sub,
+html[data-style="macos"] .mac-spot-item:hover .mac-spot-sub,
+html[data-style="macos"] .mac-spot-item.is-active .mac-spot-group,
+html[data-style="macos"] .mac-spot-item:hover .mac-spot-group {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+html[data-style="macos"] .mac-spot-group {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+}
+
+html[data-style="macos"] .mac-spot-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+}
+
+html[data-style="macos"] .mac-spot-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
 }
 
 /* ---- 4. Terminal — Full-Screen Tmux / TUI Workstation (NO Sidebar, NO Cover) ---- */
@@ -3524,7 +3881,13 @@ html[data-style="swiss"] #tm-core:checked    ~ .win-tabs label[for="tm-core"] {
   /* Mobile polish for all 5 alternate OS/Broadsheet layouts */
   html[data-style="win7"] body,
   html[data-style="win97"] body { padding: 8px 8px 54px; }
-  html[data-style="macos"] body { padding: 10px 10px 76px; }
+  html[data-style="macos"] body { padding: 38px 10px 84px; }
+  html[data-style="macos"] .mac-menu-link,
+  html[data-style="macos"] .mac-status,
+  html[data-style="macos"] .mac-menu-btn span,
+  html[data-style="macos"] .mac-menu-btn kbd { display: none; }
+  html[data-style="macos"] .os-dock-item { width: 38px; height: 38px; border-radius: 10px; }
+  html[data-style="macos"] .os-dock-items { gap: 8px; }
   html[data-style="win7"] .has-cover main,
   html[data-style="win7"] main,
   html[data-style="win97"] .has-cover main,
@@ -3551,6 +3914,4 @@ html[data-style="swiss"] #tm-core:checked    ~ .win-tabs label[for="tm-core"] {
   html[data-style="win7"] .os-tray,
   html[data-style="win97"] .os-tray,
   html[data-style="terminal"] .os-tray { display: none; }
-  html[data-style="macos"] .os-dock-item span { display: none; }
-  html[data-style="macos"] .os-dock-item { padding: 8px 10px; }
 }
