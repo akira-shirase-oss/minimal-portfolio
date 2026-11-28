@@ -265,13 +265,37 @@ body {
   min-width: 0;
 }
 
+.svg-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ui-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .sidebar-glyph {
-  width: 16px;
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
   color: var(--muted-foreground);
   flex-shrink: 0;
+}
+
+.sidebar-nav a:hover .sidebar-glyph {
+  color: var(--foreground);
 }
 
 .sidebar-count {
@@ -640,11 +664,13 @@ main {
 }
 
 .notion-prop-glyph {
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  opacity: 0.8;
-  width: 14px;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  opacity: 0.78;
+  flex-shrink: 0;
 }
 
 .notion-prop-val {
@@ -1288,9 +1314,10 @@ td time, td > code {
 }
 
 .win-tab-glyph {
-  font-family: var(--mono);
-  font-size: 0.76rem;
-  opacity: 0.75;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.78;
 }
 
 .win-tabs-link {

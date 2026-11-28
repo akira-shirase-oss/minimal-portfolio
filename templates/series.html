@@ -3,21 +3,21 @@
 {% block content %}
 <article>
   <div class="post-header">
-    <span class="page-icon" aria-hidden="true">☰</span>
+    <span class="page-icon"><svg class=\"ui-icon\" width=\"20\" height=\"20\" aria-hidden=\"true\"><use href=\"#ic-terminal\"/></svg></span>
     <h1>{{ section.title }}</h1>
     {%- if section.description %}
     <p class="post-lead">{{ section.description }}</p>
     {%- endif %}
 
     <div class="notion-props" aria-label="Build log properties">
-      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">▤</span>Entries</div>
+      <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-file\"/></svg></span>Entries</div>
       <div class="notion-prop-val">{{ section.pages | length }} logged</div>
       {%- if section.extra.status %}
-      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">◎</span>Status</div>
+      <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-activity\"/></svg></span>Status</div>
       <div class="notion-prop-val"><span class="badge badge-accent">{{ section.extra.status }}</span></div>
       {%- endif %}
       {%- if section.extra.up_next %}
-      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">→</span>Up next</div>
+      <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-compass\"/></svg></span>Up next</div>
       <div class="notion-prop-val"><code>{{ section.extra.up_next.step }}</code> {{ section.extra.up_next.title }}</div>
       {%- endif %}
     </div>

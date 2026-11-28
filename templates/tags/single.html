@@ -4,12 +4,12 @@
 
 {% block content %}
 <article class="post-header">
-  <span class="page-icon" aria-hidden="true">#</span>
+  <span class="page-icon"><svg class=\"ui-icon\" width=\"20\" height=\"20\" aria-hidden=\"true\"><use href=\"#ic-hash\"/></svg></span>
   <h1>#{{ term.name }}</h1>
   <div class="notion-props" aria-label="Topic properties">
-    <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">#</span>Tag</div>
+    <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-hash\"/></svg></span>Tag</div>
     <div class="notion-prop-val"><span class="badge tag-{{ term.name }}">#{{ term.name }}</span></div>
-    <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">▤</span>Articles</div>
+    <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-file\"/></svg></span>Articles</div>
     <div class="notion-prop-val">{{ term.pages | length }} post{% if term.pages | length != 1 %}s{% endif %}</div>
   </div>
 </article>

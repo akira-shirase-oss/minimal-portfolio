@@ -5,26 +5,26 @@
   <div class="post-header">
     {#- Filled by series-page.html / learning-page.html; empty for normal posts. #}
     {%- block series_line %}{% endblock series_line %}
-    <span class="page-icon" aria-hidden="true">{% if page.extra.kind == "failure" %}!{% elif page.extra.kind == "experiment" %}◈{% elif page.extra.kind == "release" %}★{% else %}¶{% endif %}</span>
+    <span class="page-icon">{% if page.extra.kind == "failure" %}<svg class=\"ui-icon\" width=\"20\" height=\"20\" aria-hidden=\"true\"><use href=\"#ic-alert\"/></svg>{% elif page.extra.kind == "experiment" %}<svg class=\"ui-icon\" width=\"20\" height=\"20\" aria-hidden=\"true\"><use href=\"#ic-flask\"/></svg>{% elif page.extra.kind == "release" %}<svg class=\"ui-icon\" width=\"20\" height=\"20\" aria-hidden=\"true\"><use href=\"#ic-tag\"/></svg>{% else %}<svg class=\"ui-icon\" width=\"20\" height=\"20\" aria-hidden=\"true\"><use href=\"#ic-file\"/></svg>{% endif %}</span>
     <h1>{{ page.title }}</h1>
     {%- if page.description %}
     <p class="post-lead">{{ page.description }}</p>
     {%- endif %}
 
     <div class="notion-props" aria-label="Page properties">
-      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">◷</span>Published</div>
+      <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-calendar\"/></svg></span>Published</div>
       <div class="notion-prop-val"><time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>{% if page.updated %} <small>(updated {{ page.updated | date(format="%Y-%m-%d", timezone="America/New_York") }})</small>{% endif %}</div>
 
-      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">◫</span>Read time</div>
+      <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-clock\"/></svg></span>Read time</div>
       <div class="notion-prop-val">{{ page.reading_time }} min read</div>
 
       {%- if page.extra.kind %}
-      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">◎</span>Kind</div>
+      <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-tag\"/></svg></span>Kind</div>
       <div class="notion-prop-val"><span class="badge kind-{{ page.extra.kind }}">{{ page.extra.kind }}</span></div>
       {%- endif %}
 
       {%- if page.taxonomies.tags is defined and page.taxonomies.tags | length > 0 %}
-      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">#</span>Topics</div>
+      <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-hash\"/></svg></span>Topics</div>
       <div class="notion-prop-val">
         {%- for tag in page.taxonomies.tags %}
         <a class="badge tag-{{ tag }}" href="{{ get_taxonomy_url(kind='tags', name=tag) }}">#{{ tag }}</a>
