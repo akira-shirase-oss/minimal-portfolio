@@ -23,7 +23,7 @@
 <section aria-label="Chapters in order">
   <div class="win-panel">
     <div class="win-panel-bar">
-      <span>chapters.exe — {{ section.extra.item_label | default(value="chapter") | capitalize }}s, in order</span>
+      <span>{{ section.extra.item_label | default(value="chapter") | capitalize }}s, in order</span>
       <span class="win-bar-tag">{{ section.extra.chapters | length }} topics</span>
     </div>
     <div class="win-panel-body">

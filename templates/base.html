@@ -158,122 +158,125 @@
   {%- set _home = get_section(path="_index.md") %}
   {%- set _logs = _home.extra.logs | default(value=[]) %}
   {%- set _posts = get_section(path="posts/_index.md") %}
-  <div class="desktop-stage">
-    <aside class="desktop-rail desktop-rail-left" aria-label="Latest build activity">
-      <div class="win-widget">
-        <div class="win-dialog-bar">
-          <span>latest.log</span>
-          <span class="win-bar-tag">live</span>
-        </div>
-        <div class="win-widget-body">
-          <p class="win-widget-caption">Recent build checkpoints</p>
-          <ul class="win-widget-list">
-            {%- for log_path in _logs %}
-              {%- if loop.index0 < 6 %}
-              {%- set _l = get_section(path=log_path) %}
-              {%- if _l.pages %}
-              {%- set _top = _l.pages[0] %}
-              <li>
-                <a href="{{ _top.permalink }}">{{ _l.extra.short_title or _l.title }}</a>
-                <small>{{ _top.extra.milestone }} · {{ _top.extra.step }}{% if _top.extra.tests is defined %} · {{ _top.extra.tests }}t{% endif %}</small>
-              </li>
-              {%- endif %}
-              {%- endif %}
-            {%- endfor %}
-          </ul>
-          <a class="win-widget-more" href="{{ get_url(path='@/progress/_index.md') }}">Full progress ledger →</a>
-        </div>
+  <div class="notion-app">
+    <aside class="notion-sidebar" aria-label="Workspace navigation">
+      <a class="notion-workspace" href="{{ get_url(path='@/_index.md') }}">
+        <img class="notion-avatar" src="{{ get_url(path='img/avatar-192.webp') }}" alt="" width="24" height="24">
+        <span class="notion-ws-text">
+          <span class="notion-ws-name">404human</span>
+          <span class="notion-ws-sub">Open-source engineering</span>
+        </span>
+      </a>
+
+      <nav class="sidebar-section" aria-label="Primary pages">
+        <p class="sidebar-label">Workspace</p>
+        <ul class="sidebar-nav">
+          <li><a href="{{ get_url(path='@/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">⌂</span>Home</span></a></li>
+          <li><a href="{{ get_url(path='@/_index.md') }}#projects"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">▤</span>Projects</span></a></li>
+          <li><a href="{{ get_url(path='@/progress/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">◎</span>Progress</span></a></li>
+          <li><a href="{{ get_url(path='@/build-log/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">☰</span>Build logs</span><span class="sidebar-count">{{ _logs | length }}</span></a></li>
+          <li><a href="{{ get_url(path='@/learn/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">◈</span>Learning</span></a></li>
+          <li><a href="{{ get_url(path='@/lessons/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">✎</span>Lessons</span></a></li>
+          <li><a href="{{ get_url(path='@/posts/_index.md') }}"><span class="sidebar-nav-left"><span class="sidebar-glyph" aria-hidden="true">¶</span>Knowledge Hub</span><span class="sidebar-count">{{ _posts.pages | length }}</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">Recent checkpoints</p>
+        <ul class="sidebar-sublist">
+          {%- for log_path in _logs %}
+            {%- if loop.index0 < 6 %}
+            {%- set _l = get_section(path=log_path) %}
+            {%- if _l.pages %}
+            {%- set _top = _l.pages[0] %}
+            <li>
+              <a href="{{ _top.permalink }}">
+                <span class="sidebar-item-title">{{ _l.extra.short_title or _l.title }}</span>
+                <span class="sidebar-item-meta">{{ _top.extra.milestone }} · {{ _top.extra.step }}{% if _top.extra.tests is defined %} · {{ _top.extra.tests }}t{% endif %}</span>
+              </a>
+            </li>
+            {%- endif %}
+            {%- endif %}
+          {%- endfor %}
+        </ul>
+        <a class="sidebar-more" href="{{ get_url(path='@/progress/_index.md') }}">Full progress ledger →</a>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">Latest articles</p>
+        <ul class="sidebar-sublist">
+          {%- for p in _posts.pages %}
+            {%- if loop.index0 < 4 %}
+            <li>
+              <a href="{{ p.permalink }}">
+                <span class="sidebar-item-title">{{ p.title }}</span>
+                <span class="sidebar-item-meta">{{ p.date | date(format="%Y-%m-%d", timezone="America/New_York") }} · {{ p.reading_time }}m</span>
+              </a>
+            </li>
+            {%- endif %}
+          {%- endfor %}
+        </ul>
+        <a class="sidebar-more" href="{{ get_url(path='@/posts/_index.md') }}">All articles →</a>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
+        <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
+        {%- if config.extra.github %}<a href="https://github.com/{{ config.extra.github }}">GitHub</a>{% endif %}
+        {%- if config.extra.x_handle %}<a href="https://x.com/{{ config.extra.x_handle }}">@{{ config.extra.x_handle }}</a>{% endif %}
       </div>
     </aside>
 
-    <div class="win-shell">
-  {% block header %}
-  <header class="site-header">
-    <div class="win-titlebar">
-      <a class="win-title" href="{{ get_url(path='@/_index.md') }}">
-        <span class="win-icon" aria-hidden="true">&gt;_</span>
-        <span>404human.exe — {{ config.extra.tagline }}</span>
-      </a>
-      <div class="win-bar-meta">
-        {%- if config.extra.github %}<a class="win-bar-btn" href="https://github.com/{{ config.extra.github }}">GitHub</a>{% endif %}
-        <a class="win-bar-btn" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
-      </div>
-    </div>
-    <div class="win-menubar">
-      <nav class="site-nav" aria-label="Site">
-        <a href="{{ get_url(path='@/_index.md') }}"><u>H</u>ome</a>
-        <a href="{{ get_url(path='@/_index.md') }}#projects"><u>P</u>rojects</a>
-        <a href="{{ get_url(path='@/progress/_index.md') }}">P<u>r</u>ogress</a>
-        <a href="{{ get_url(path='@/build-log/_index.md') }}"><u>B</u>uild logs</a>
-        <a href="{{ get_url(path='@/learn/_index.md') }}"><u>L</u>earning</a>
-        <a href="{{ get_url(path='@/lessons/_index.md') }}">L<u>e</u>ssons</a>
-        <a href="{{ get_url(path='@/posts/_index.md') }}"><u>K</u>nowledge Hub</a>
-      </nav>
-      <span id="theme-toggle-wrap" hidden><button id="theme-toggle" class="link" type="button">dark</button></span>
-    </div>
-  </header>
-  {% endblock header %}
-
-  <main>
-    {% block ticker %}{% endblock ticker %}
-    {% block content %}{% endblock content %}
-  </main>
-
-  <footer class="site-footer">
-    <p>
-      © {{ now() | date(format="%Y") }}{% if config.author %} {{ config.author }}{% endif %}
-      {%- if config.extra.x_handle %} · <a href="https://x.com/{{ config.extra.x_handle }}">@{{ config.extra.x_handle }}</a>{% endif %}
-      · built with Zola, in Rust · no tracking
-    </p>
-    <p>
-      <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
-      · <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">rss</a>
-    </p>
-    <noscript><p>(JavaScript is off. You lost the theme toggle — the only script on the site. Everything else works.)</p></noscript>
-  </footer>
-    </div>
-
-    <aside class="desktop-rail desktop-rail-right" aria-label="Knowledge Hub and quick info">
-      <div class="win-widget">
-        <div class="win-dialog-bar">
-          <span>knowledge.log</span>
-          <span class="win-bar-tag">{{ _posts.pages | length }} posts</span>
-        </div>
-        <div class="win-widget-body">
-          <p class="win-widget-caption">Latest in Knowledge Hub</p>
-          <ul class="win-widget-list">
-            {%- for p in _posts.pages %}
-              {%- if loop.index0 < 4 %}
-              <li>
-                <a href="{{ p.permalink }}">{{ p.title }}</a>
-                <small>{{ p.date | date(format="%Y-%m-%d", timezone="America/New_York") }} · {{ p.reading_time }}m</small>
-              </li>
-              {%- endif %}
-            {%- endfor %}
-          </ul>
-          <a class="win-widget-more" href="{{ get_url(path='@/posts/_index.md') }}">All Knowledge Hub →</a>
-        </div>
-      </div>
-
-      <div class="win-widget">
-        <div class="win-dialog-bar">
-          <span>readme.txt</span>
-          <span class="win-bar-tag">info</span>
-        </div>
-        <div class="win-widget-body">
-          <p class="win-widget-text">All projects are public Rust &amp; systems builds with committed load runs and failure drills. Zero analytics.</p>
-          <div class="win-widget-links">
-            <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
-            <span>·</span>
-            <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
-            {%- if config.extra.x_handle %}
-            <span>·</span>
-            <a href="https://x.com/{{ config.extra.x_handle }}">@{{ config.extra.x_handle }}</a>
-            {%- endif %}
+    <div class="notion-main-wrap">
+      {% block header %}
+      <header class="site-header">
+        <div class="notion-topbar">
+          <div class="notion-crumbs">
+            <a class="notion-crumb-root" href="{{ get_url(path='@/_index.md') }}">
+              <img class="notion-avatar" src="{{ get_url(path='img/avatar-192.webp') }}" alt="" width="20" height="20" style="width:20px;height:20px;">
+              <span>404human</span>
+            </a>
+            <span class="notion-crumb-sep" aria-hidden="true">/</span>
+            <span class="notion-crumb-current">{% if is_home %}Workspace{% else %}{{ doc_title }}{% endif %}</span>
+          </div>
+          <div class="notion-topbar-actions">
+            {%- if config.extra.github %}<a class="topbar-link" href="https://github.com/{{ config.extra.github }}">GitHub</a>{% endif %}
+            <a class="topbar-link" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
+            <span id="theme-toggle-wrap" hidden><button id="theme-toggle" type="button">dark</button></span>
           </div>
         </div>
-      </div>
-    </aside>
+        <div class="mobile-nav-bar">
+          <nav class="site-nav" aria-label="Site">
+            <a href="{{ get_url(path='@/_index.md') }}">Home</a>
+            <a href="{{ get_url(path='@/_index.md') }}#projects">Projects</a>
+            <a href="{{ get_url(path='@/progress/_index.md') }}">Progress</a>
+            <a href="{{ get_url(path='@/build-log/_index.md') }}">Build logs</a>
+            <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a>
+            <a href="{{ get_url(path='@/lessons/_index.md') }}">Lessons</a>
+            <a href="{{ get_url(path='@/posts/_index.md') }}">Knowledge Hub</a>
+          </nav>
+        </div>
+      </header>
+      {% endblock header %}
+
+      <main>
+        {% block ticker %}{% endblock ticker %}
+        {% block content %}{% endblock content %}
+      </main>
+
+      <footer class="site-footer">
+        <p>
+          © {{ now() | date(format="%Y") }}{% if config.author %} {{ config.author }}{% endif %}
+          {%- if config.extra.x_handle %} · <a href="https://x.com/{{ config.extra.x_handle }}">@{{ config.extra.x_handle }}</a>{% endif %}
+          · built with Zola, in Rust · zero tracking
+        </p>
+        <p>
+          <a href="{{ get_url(path='llms.txt', trailing_slash=false) }}">llms.txt</a>
+          · <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">rss</a>
+        </p>
+        <noscript><p>(JavaScript is off. You lost the theme toggle — the only script on the site. Everything else works.)</p></noscript>
+      </footer>
+    </div>
   </div>
 </body>
 </html>

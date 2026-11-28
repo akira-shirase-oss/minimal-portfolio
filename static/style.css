@@ -1,10 +1,10 @@
 /*
-  404human — Windows 97 ("Control Room 97") design system.
-  Zero border-radius, crisp 3D outset/inset bevels, classic title bars,
-  Task Manager listviews, etched GroupBoxes, and sunken status-bar panes.
+  404human — Notion-style editorial workspace design system.
+  Clean document canvas, warm stone left sidebar, subtle hairline dividers,
+  rounded callout blocks, database view tabs, and rotating toggle lists.
 
-  Light mode: classic Windows 95/97 Teal desktop + Silver (#c0c0c0) chrome + Navy title bar.
-  Dark mode:  classic Midnight Teal desktop + Slate chrome + Steel-Blue title bar.
+  Light mode: crisp paper (#ffffff) + Notion stone sidebar (#f7f6f3) + warm ink (#37352f).
+  Dark mode:  Notion charcoal (#191919) + elevated sidebar (#202020) + soft ink (#ebebea).
   All contrast pairs verified by tools/check-contrast.mjs in both schemes.
 */
 @font-face {
@@ -17,54 +17,43 @@
 
 :root {
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  --sans: "Manrope", "MS Sans Serif", "Tahoma", ui-sans-serif, system-ui, sans-serif;
+  --sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   color-scheme: light dark;
 
-  /* ---- Windows 97 Palette Tokens (light-dark pairs) ---- */
-  --desktop:              light-dark(#007878, #0d2b2e);
-  --desktop-fg:           #ffffff;
-  --chrome:               light-dark(#c0c0c0, #2b2f36);
-  --chrome-hi:            light-dark(#ffffff, #454b56);
-  --chrome-hi2:           light-dark(#dfdfdf, #383d46);
-  --chrome-lo:            light-dark(#808080, #181a1f);
-  --chrome-lo2:           light-dark(#0a0a0a, #090a0c);
+  /* ---- Notion-Style Palette Tokens (light-dark pairs) ---- */
+  --background:           light-dark(#ffffff, #191919);
+  --foreground:           light-dark(#37352f, #ebebea);
+  --card:                 light-dark(#f7f6f3, #202020);
+  --card-foreground:      light-dark(#37352f, #ebebea);
+  --secondary:            light-dark(#f1f1ef, #2a2a2a);
+  --secondary-foreground: light-dark(#37352f, #ebebea);
+  --muted:                light-dark(#efefec, #2a2a2a);
+  --muted-foreground:     light-dark(#615d55, #9b9a97);
+  --border:               light-dark(#e3e2de, #2f2f2f);
+  --border-strong:        light-dark(#d3d1cb, #3d3d3d);
 
-  --background:           light-dark(#ffffff, #14171c);
-  --foreground:           light-dark(#111111, #eceef2);
-  --card:                 light-dark(#f4f4f2, #1c2027);
-  --card-foreground:      light-dark(#111111, #eceef2);
-  --secondary:            light-dark(#c0c0c0, #2b2f36);
-  --secondary-foreground: light-dark(#111111, #eceef2);
-  --muted:                light-dark(#e6e6e4, #22262e);
-  --muted-foreground:     light-dark(#44474e, #a5acb8);
-  --accent:               light-dark(#000080, #1d4ed8);
-  --accent-foreground:    light-dark(#ffffff, #ffffff);
-  --border:               light-dark(#808080, #3d434e);
+  --accent:               light-dark(#1a6bc4, #1e6bc4);
+  --accent-foreground:    #ffffff;
+  --primary:              light-dark(#2f2d28, #ebebea);
+  --primary-foreground:   light-dark(#ffffff, #191919);
+  --link:                 light-dark(#1a6bc4, #6bb0ff);
+  --ring:                 light-dark(#1a6bc4, #6bb0ff);
+  --code-fg:              light-dark(#b42318, #ff857a);
 
-  --title-start:          light-dark(#000080, #122c5c);
-  --title-end:            light-dark(#1084d0, #2457a8);
-  --title-fg:             #ffffff;
-
-  --primary:              light-dark(#000080, #1d4ed8);
-  --primary-foreground:   #ffffff;
-  --link:                 light-dark(#0000b8, #6bb0ff);
-  --ring:                 light-dark(#000080, #6bb0ff);
-
-  --ok-bg:                light-dark(#d8f3dc, #123524);
-  --ok-fg:                light-dark(#0b4f24, #8ce99a);
+  --ok-bg:                light-dark(#e7f3ec, #1b3124);
+  --ok-fg:                light-dark(#1f5c39, #7ad9a0);
+  --accent-soft-bg:       light-dark(#e8f1fb, #1c2c40);
+  --accent-soft-fg:       light-dark(#165299, #84beff);
+  --mark-bg:              light-dark(#fbf3db, #3d351e);
+  --mark-fg:              light-dark(#5c4409, #f5d887);
   --destructive:          #b91c1c;
   --destructive-foreground: #ffffff;
 
-  --chart-1:              light-dark(#000080, #6bb0ff);
+  --radius-sm:            4px;
+  --radius-md:            6px;
+  --radius-lg:            8px;
   --spacing:              0.25rem;
-
-  /* Classic 97 3D bevels */
-  --bevel-out: inset 1px 1px 0 var(--chrome-hi), inset -1px -1px 0 var(--chrome-lo2),
-               inset 2px 2px 0 var(--chrome-hi2), inset -2px -2px 0 var(--chrome-lo);
-  --bevel-in:  inset 1px 1px 0 var(--chrome-lo), inset -1px -1px 0 var(--chrome-hi),
-               inset 2px 2px 0 var(--chrome-lo2), inset -2px -2px 0 var(--chrome-hi2);
-  --bevel-thin-in: inset 1px 1px 0 var(--chrome-lo), inset -1px -1px 0 var(--chrome-hi);
-  --bevel-thin-out: inset 1px 1px 0 var(--chrome-hi), inset -1px -1px 0 var(--chrome-lo);
+  --sidebar-width:        252px;
 
   /* Declared WCAG contrast checks (verified by tools/check-contrast.mjs) */
   /* check: --foreground on --background 4.5 */
@@ -78,10 +67,11 @@
   /* check: --secondary-foreground on --secondary 4.5 */
   /* check: --accent-foreground on --accent 4.5 */
   /* check: --primary-foreground on --primary 4.5 */
-  /* check: --title-fg on --title-start 4.5 */
+  /* check: --code-fg on --muted 4.5 */
   /* check: --destructive-foreground on --destructive 4.5 */
   /* check: --ok-fg on --ok-bg 4.5 */
-  /* check: --desktop-fg on --desktop 4.5 */
+  /* check: --accent-soft-fg on --accent-soft-bg 4.5 */
+  /* check: --mark-fg on --mark-bg 4.5 */
   /* check: --ring on --background 3 boundary */
 }
 
@@ -91,331 +81,412 @@ html[data-theme="dark"]  { color-scheme: dark; }
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  background: var(--desktop);
-  background-image: radial-gradient(color-mix(in srgb, #ffffff 8%, transparent) 1px, transparent 0);
-  background-size: 4px 4px;
+  background: var(--background);
   min-height: 100%;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
   margin: 0;
-  padding: calc(var(--spacing) * 6) calc(var(--spacing) * 5) calc(var(--spacing) * 10);
+  padding: 0;
   font-family: var(--sans);
   font-size: 15.5px;
-  line-height: 1.6;
+  line-height: 1.65;
   font-optical-sizing: auto;
+  background: var(--background);
   color: var(--foreground);
 }
 
-/* ---- Desktop 3-Column Stage (wide screens >= 1340px) ---- */
-.desktop-stage {
-  display: grid;
-  grid-template-columns: 215px minmax(0, 1080px) 215px;
-  justify-content: center;
-  align-items: start;
-  gap: 16px;
+/* ---- Notion 2-Column App Shell ---- */
+.notion-app {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
 }
 
-.desktop-rail {
+/* ---- Left Workspace Sidebar ---- */
+.notion-sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
   position: sticky;
-  top: 24px;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  padding: 12px 10px 18px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
+  scrollbar-width: thin;
 }
 
-.win-widget {
-  background: var(--chrome);
-  padding: 3px;
-  box-shadow: var(--bevel-out), 4px 4px 0 rgba(0, 0, 0, 0.25);
-}
-
-.win-widget-body {
-  padding: 10px;
-  color: var(--secondary-foreground);
-  font-size: 0.82rem;
-}
-
-.win-widget-caption {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--secondary-foreground);
-  margin: 0 0 8px;
-}
-
-.win-widget-list {
-  list-style: none;
-  margin: 0 0 8px;
-  padding: 2px;
-  background: var(--background);
-  box-shadow: var(--bevel-thin-in);
-}
-
-.win-widget-list li {
+.notion-workspace {
+  display: flex;
+  align-items: center;
+  gap: 9px;
   padding: 6px 8px;
-  border-bottom: 1px dotted var(--border);
-  line-height: 1.35;
-}
-
-.win-widget-list li:last-child {
-  border-bottom: 0;
-}
-
-.win-widget-list a {
-  display: block;
-  font-weight: 700;
-  font-size: 0.8rem;
-  text-decoration: none;
-}
-
-.win-widget-list a:hover {
-  text-decoration: underline;
-}
-
-.win-widget-list small {
-  display: block;
-  font-family: var(--mono);
-  font-size: 0.71rem;
-  margin-top: 2px;
-}
-
-.win-widget-more {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
-.win-widget-text {
-  margin: 0 0 8px;
-  padding: 8px;
-  background: var(--background);
+  border-radius: var(--radius-md);
   color: var(--foreground);
-  box-shadow: var(--bevel-thin-in);
-  font-size: 0.8rem;
-  line-height: 1.45;
-}
-
-.win-widget-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  font-family: var(--mono);
-  font-size: 0.75rem;
-}
-
-/* ---- Main Application Window ---- */
-.win-shell {
-  width: 100%;
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 4px;
-  background: var(--chrome);
-  color: var(--foreground);
-  box-shadow: var(--bevel-out), 6px 6px 0 rgba(0, 0, 0, 0.28);
-}
-
-@media (max-width: 1340px) {
-  .desktop-stage {
-    display: block;
-  }
-  .desktop-rail {
-    display: none;
-  }
-}
-
-/* ---- Main Window Title Bar & Menu Bar ---- */
-.site-header {
-  background: var(--chrome);
-  margin: 0;
-  padding: 0;
-}
-
-.win-titlebar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 4px 6px 4px 8px;
-  background: linear-gradient(90deg, var(--title-start), var(--title-end));
-  color: var(--title-fg);
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  user-select: none;
-}
-
-.win-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--title-fg);
   text-decoration: none;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  transition: background 120ms ease;
 }
 
-.win-title:hover {
+.notion-workspace:hover {
+  background: var(--muted);
   text-decoration: none;
 }
 
-.win-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-  box-shadow: var(--bevel-thin-out);
-  font-size: 0.65rem;
-  font-weight: 800;
+.notion-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  border: 1px solid var(--border);
   flex-shrink: 0;
 }
 
-.win-bar-meta {
+.notion-ws-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.notion-ws-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--foreground);
+}
+
+.notion-ws-sub {
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-label {
+  font-size: 0.71rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  padding: 4px 8px;
+  margin: 0;
+}
+
+.sidebar-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: var(--radius-md);
+  color: var(--foreground);
+  text-decoration: none;
+  font-size: 0.87rem;
+  font-weight: 500;
+  line-height: 1.35;
+  transition: background 100ms ease;
+}
+
+.sidebar-nav a:hover {
+  background: var(--muted);
+  text-decoration: none;
+}
+
+.sidebar-nav-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.sidebar-glyph {
+  width: 16px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+}
+
+.sidebar-count {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+  background: var(--muted);
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.sidebar-sublist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sidebar-sublist a {
+  display: block;
+  padding: 5px 8px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background 100ms ease;
+}
+
+.sidebar-sublist a:hover {
+  background: var(--muted);
+  text-decoration: none;
+}
+
+.sidebar-item-title {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--foreground);
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-item-meta {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.71rem;
+  color: var(--muted-foreground);
+  margin-top: 1px;
+}
+
+.sidebar-more {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+}
+
+.sidebar-more:hover {
+  color: var(--foreground);
+  background: var(--muted);
+  text-decoration: none;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 10px 8px 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 0.76rem;
+  color: var(--muted-foreground);
+}
+
+.sidebar-footer a {
+  color: var(--muted-foreground);
+  text-decoration: none;
+}
+
+.sidebar-footer a:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+
+/* ---- Main Workspace Area ---- */
+.notion-main-wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+/* ---- Minimal Sticky Notion Topbar ---- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--background) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.notion-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 46px;
+  padding: 6px 20px;
+}
+
+.notion-crumbs {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: 0.86rem;
+  color: var(--muted-foreground);
+}
+
+.notion-crumb-root {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--foreground);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 3px 6px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.notion-crumb-root:hover {
+  background: var(--muted);
+  text-decoration: none;
+}
+
+.notion-crumb-sep {
+  color: var(--border-strong);
+  user-select: none;
+}
+
+.notion-crumb-current {
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notion-topbar-actions {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
 }
 
-.win-bar-btn {
+.topbar-link,
+#theme-toggle {
   display: inline-flex;
   align-items: center;
-  padding: 1px 7px;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-  box-shadow: var(--bevel-thin-out);
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: var(--radius-md);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  background: transparent;
+  border: 1px solid transparent;
   text-decoration: none;
-  line-height: 1.3;
+  cursor: pointer;
+  transition: background 100ms ease, color 100ms ease;
 }
 
-.win-bar-btn:hover {
+.topbar-link:hover,
+#theme-toggle:hover {
+  background: var(--muted);
+  color: var(--foreground);
   text-decoration: none;
-  background: var(--card);
 }
 
-.win-bar-btn:active {
-  box-shadow: var(--bevel-thin-in);
-  transform: translate(1px, 1px);
+#theme-toggle {
+  border-color: var(--border);
+  color: var(--foreground);
 }
 
-.win-bar-tag {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--title-fg);
-  opacity: 0.9;
-  white-space: nowrap;
+/* Mobile horizontal nav (visible when sidebar collapses < 1040px) */
+.mobile-nav-bar {
+  display: none;
+  padding: 4px 16px 8px;
+  border-top: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
-/* Classic Menu Bar */
-.win-menubar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  padding: 4px 6px;
-  background: var(--chrome);
-  border-bottom: 1px solid var(--chrome-lo);
-  box-shadow: 0 1px 0 var(--chrome-hi);
+.mobile-nav-bar::-webkit-scrollbar {
+  display: none;
 }
 
 .site-nav {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 2px;
-  font-family: var(--mono);
-  font-size: 0.82rem;
+  gap: 4px;
+  white-space: nowrap;
+  font-size: 0.83rem;
 }
 
 .site-nav a {
-  color: var(--secondary-foreground);
+  color: var(--muted-foreground);
   text-decoration: none;
-  padding: 3px 8px;
-  border: 1px solid transparent;
+  padding: 4px 9px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
 }
 
 .site-nav a:hover {
-  background: var(--accent);
-  color: var(--accent-foreground);
+  background: var(--muted);
+  color: var(--foreground);
   text-decoration: none;
 }
 
-.site-nav a u {
-  text-underline-offset: 2px;
-}
-
-#theme-toggle-wrap {
-  margin-left: auto;
-}
-
-#theme-toggle {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-decoration: none;
-  color: var(--secondary-foreground);
-  background: var(--chrome);
-  border: 0;
-  box-shadow: var(--bevel-out);
-  padding: 3px 10px;
-  cursor: pointer;
-}
-
-#theme-toggle:active {
-  box-shadow: var(--bevel-in);
-  transform: translate(1px, 1px);
-}
-
-/* ---- Main Document Viewport (sunken client area) ---- */
+/* ---- Main Document Canvas ---- */
 main {
-  margin: 6px 4px 4px;
-  padding: calc(var(--spacing) * 7) calc(var(--spacing) * 8);
-  background: var(--background);
-  box-shadow: var(--bevel-in);
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 36px 48px 64px;
+  flex: 1 0 auto;
 }
 
 /* ---- Typography ---- */
 h1, h2, h3, h4 {
   color: var(--foreground);
-  line-height: 1.22;
-  letter-spacing: -0.02em;
+  line-height: 1.24;
+  letter-spacing: -0.022em;
   font-weight: 700;
   margin-top: 0;
 }
 
 h1 {
-  font-size: clamp(1.9rem, 3.6vw, 2.55rem);
-  margin-bottom: calc(var(--spacing) * 3.5);
+  font-size: clamp(1.95rem, 3.6vw, 2.6rem);
+  margin-bottom: 14px;
 }
 
 h2 {
-  font-size: clamp(1.2rem, 2vw, 1.45rem);
-  margin-bottom: calc(var(--spacing) * 3);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  margin-top: 32px;
+  margin-bottom: 12px;
 }
 
 h3 {
-  font-size: 1.05rem;
-  margin-top: calc(var(--spacing) * 7);
-  margin-bottom: calc(var(--spacing) * 2);
+  font-size: 1.08rem;
+  margin-top: 24px;
+  margin-bottom: 8px;
 }
 
 p {
   margin-top: 0;
-  margin-bottom: calc(var(--spacing) * 3.5);
+  margin-bottom: 14px;
 }
 
 pre, code, kbd, .mono, .ticker-copy {
@@ -424,17 +495,24 @@ pre, code, kbd, .mono, .ticker-copy {
 
 a {
   color: var(--link);
-  text-underline-offset: 2px;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--link) 35%, transparent);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-color: var(--link);
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--accent-foreground);
+  background: var(--accent-soft-bg);
+  color: var(--foreground);
 }
 
 :focus-visible {
-  outline: 1px dotted var(--ring);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
+  border-radius: 3px;
 }
 
 small {
@@ -444,42 +522,49 @@ small {
 
 hr {
   border: 0;
-  height: 2px;
-  background: linear-gradient(to bottom, var(--chrome-lo) 50%, var(--chrome-hi) 50%);
-  margin: calc(var(--spacing) * 9) 0;
+  height: 1px;
+  background: var(--border);
+  margin: 32px 0;
 }
 
 img {
   max-width: 100%;
   height: auto;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
 }
 
 progress {
   accent-color: var(--accent);
   width: 100px;
-  height: 12px;
+  height: 8px;
   vertical-align: middle;
 }
 
-/* ---- Inline tokens & badges ---- */
+/* ---- Inline Code, Kbd, Mark & Notion Property Pills ---- */
 code, kbd {
   background: var(--muted);
-  font-size: 0.86em;
+  font-size: 0.85em;
+  border-radius: var(--radius-sm);
 }
 
 code {
-  padding: 0.1em 0.35em;
-  border: 1px solid var(--border);
+  padding: 0.14em 0.38em;
+  color: var(--code-fg);
 }
 
 kbd {
   display: inline-block;
   padding: 1px 6px;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-  box-shadow: var(--bevel-thin-out);
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 1px 0 var(--border-strong);
   font-size: 0.8em;
+}
+
+pre code, mark code, a code, td > code {
+  color: inherit;
 }
 
 pre code, mark code, a code {
@@ -490,56 +575,56 @@ pre code, mark code, a code {
 }
 
 mark {
-  background: var(--accent);
-  color: var(--accent-foreground);
+  background: var(--mark-bg);
+  color: var(--mark-fg);
   padding: 1px 5px;
-  font-family: var(--mono);
-  font-size: 0.8em;
-  font-weight: 700;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  padding: 1px 6px;
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  font-weight: 700;
+  gap: 0.35rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.76rem;
+  font-weight: 600;
   white-space: nowrap;
-  background: var(--chrome);
+  background: var(--secondary);
   color: var(--secondary-foreground);
-  box-shadow: var(--bevel-thin-out);
+  text-decoration: none;
+}
+
+a.badge:hover {
+  background: var(--muted);
+  text-decoration: none;
 }
 
 .badge-ok {
   background: var(--ok-bg);
   color: var(--ok-fg);
-  box-shadow: inset 1px 1px 0 var(--ok-fg);
-  border: 1px solid var(--ok-fg);
-  box-shadow: none;
 }
 
 .badge-accent {
-  background: var(--accent);
-  color: var(--accent-foreground);
-  box-shadow: none;
+  background: var(--accent-soft-bg);
+  color: var(--accent-soft-fg);
 }
 
 .badge-muted {
   background: var(--muted);
   color: var(--muted-foreground);
-  box-shadow: var(--bevel-thin-in);
 }
 
 .dot {
   display: inline-block;
   width: 6px;
   height: 6px;
+  border-radius: 50%;
   background: currentColor;
 }
 
-/* ---- Classic Windows 97 3D Buttons ---- */
+/* ---- Notion-Style Buttons ---- */
 button.link {
   background: none;
   border: none;
@@ -554,64 +639,69 @@ button.link {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 6px 14px;
-  font-family: var(--mono);
-  font-size: 0.84rem;
-  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  font-weight: 600;
   text-decoration: none;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-  box-shadow: var(--bevel-out);
-  border: 0;
+  background: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border-strong);
   cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
 }
 
 .btn:hover {
+  background: var(--muted);
   text-decoration: none;
 }
 
-.btn:active {
-  box-shadow: var(--bevel-in);
-  transform: translate(1px, 1px);
-}
-
-/* Default action button: classic 1px outer black focus frame */
 .btn-primary {
-  outline: 1px solid var(--chrome-lo2);
   background: var(--primary);
   color: var(--primary-foreground);
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.45), inset -1px -1px 0 rgba(0, 0, 0, 0.55);
+  border-color: var(--primary);
 }
 
 .btn-primary:hover {
-  opacity: 0.94;
+  background: var(--primary);
+  opacity: 0.9;
 }
 
 .btn-secondary {
-  background: var(--chrome);
-  color: var(--secondary-foreground);
+  background: var(--card);
+  color: var(--foreground);
+  border-color: var(--border);
 }
 
-/* ---- Status Ticker (Windows 97 Address/Status Bar well) ---- */
+.btn-secondary:hover {
+  background: var(--muted);
+  border-color: var(--border-strong);
+}
+
+/* ---- Quiet Notion Status Strip ---- */
 .ticker-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 8px;
+  gap: 10px;
+  padding: 7px 12px;
   background: var(--card);
-  box-shadow: var(--bevel-thin-in);
-  margin-bottom: calc(var(--spacing) * 7);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 28px;
   font-size: 0.8rem;
 }
 
 .ticker-prefix {
   font-family: var(--mono);
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: var(--secondary-foreground);
-  background: var(--chrome);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   padding: 1px 6px;
-  box-shadow: var(--bevel-thin-out);
   flex-shrink: 0;
 }
 
@@ -665,12 +755,12 @@ button.link {
   white-space: nowrap;
   flex-shrink: 0;
   font-family: var(--mono);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
 }
 
 button.link.ticker-play {
   font-family: var(--mono);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   white-space: nowrap;
 }
 
@@ -683,46 +773,38 @@ button.link.ticker-play {
   .ticker-track { animation: none; }
 }
 
-/* ---- Hero + Flagship 2-column top row ---- */
+/* ---- Home Hero & Notion Callout Card ---- */
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  gap: calc(var(--spacing) * 7);
+  grid-template-columns: minmax(0, 1.2fr) minmax(290px, 0.8fr);
+  gap: 28px;
   align-items: start;
-  margin: calc(var(--spacing) * 2) 0 calc(var(--spacing) * 7);
+  margin: 4px 0 28px;
 }
 
 .hero {
-  padding: calc(var(--spacing) * 2) 0 0;
   margin: 0;
-}
-
-.win-dialog {
-  background: var(--chrome);
-  padding: 3px;
-  box-shadow: var(--bevel-out);
+  padding: 0;
 }
 
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  font-family: var(--mono);
-  font-size: 0.78rem;
+  gap: 8px;
+  font-size: 0.82rem;
   color: var(--muted-foreground);
-  margin-bottom: calc(var(--spacing) * 4);
+  margin-bottom: 14px;
 }
 
 .hero h1 em {
-  font-style: italic;
+  font-style: normal;
   color: var(--link);
-  padding-right: 0.14em;
 }
 
 .hero p {
-  font-size: 1.06rem;
-  line-height: 1.62;
+  font-size: 1.04rem;
+  line-height: 1.65;
   color: var(--muted-foreground);
   max-width: 58ch;
 }
@@ -731,25 +813,25 @@ button.link.ticker-play {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: calc(var(--spacing) * 3);
-  margin-top: calc(var(--spacing) * 5);
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: calc(var(--spacing) * 6);
-  font-family: var(--mono);
-  font-size: 0.78rem;
+  gap: 8px;
+  margin-top: 22px;
+  font-size: 0.8rem;
   color: var(--muted-foreground);
   font-variant-numeric: tabular-nums;
 }
 
 .hero-meta span {
-  padding: 3px 8px;
+  padding: 3px 9px;
   background: var(--card);
-  box-shadow: var(--bevel-thin-in);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
 }
 
 .hero-meta strong {
@@ -758,7 +840,12 @@ button.link.ticker-play {
 
 /* ---- Sections ---- */
 section, article {
-  margin: calc(var(--spacing) * 11) 0;
+  margin: 36px 0;
+}
+
+article:first-child,
+section:first-child {
+  margin-top: 0;
 }
 
 .section-head {
@@ -767,9 +854,9 @@ section, article {
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-bottom: calc(var(--spacing) * 2.5);
-  padding-bottom: calc(var(--spacing) * 2);
-  border-bottom: 2px solid var(--border);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
 }
 
 .section-head h2 {
@@ -777,21 +864,20 @@ section, article {
 }
 
 .section-head a {
-  font-size: 0.82rem;
+  font-size: 0.84rem;
 }
 
 .section-sub {
   color: var(--muted-foreground);
-  max-width: 66ch;
-  margin-bottom: calc(var(--spacing) * 5);
+  margin-bottom: 18px;
 }
 
-/* ---- Flagship Windows 97 Dialog Box ---- */
+/* ---- Notion Callout / Flagship Block (replaces .win-dialog) ---- */
 .win-dialog {
-  background: var(--chrome);
-  padding: 3px;
-  box-shadow: var(--bevel-out);
-  max-width: 78ch;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 
 .win-dialog-bar {
@@ -800,45 +886,74 @@ section, article {
   justify-content: space-between;
   gap: 8px;
   flex-wrap: wrap;
-  padding: 3px 7px;
-  background: linear-gradient(90deg, var(--title-start), var(--title-end));
-  color: var(--title-fg);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.win-bar-tag {
   font-family: var(--mono);
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.win-bar-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.win-bar-btn:hover {
+  background: var(--muted);
+  text-decoration: none;
 }
 
 .win-dialog-body {
-  padding: calc(var(--spacing) * 5) calc(var(--spacing) * 5.5);
-  color: var(--secondary-foreground);
+  padding: 18px 18px 20px;
+  color: var(--card-foreground);
 }
 
 .win-dialog-body h2 {
-  color: var(--secondary-foreground);
-  margin-bottom: calc(var(--spacing) * 2.5);
+  font-size: 1.18rem;
+  margin-top: 0;
+  margin-bottom: 8px;
 }
 
 .win-dialog-body p {
-  color: var(--secondary-foreground);
-  margin-bottom: calc(var(--spacing) * 3.5);
+  color: var(--muted-foreground);
+  font-size: 0.92rem;
+  margin-bottom: 14px;
 }
 
 .win-dialog-well {
-  padding: calc(var(--spacing) * 2.5) calc(var(--spacing) * 3.5);
+  padding: 10px 12px;
   background: var(--background);
-  color: var(--foreground);
-  box-shadow: var(--bevel-thin-in);
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   font-family: var(--mono);
-  font-size: 0.8rem;
-  margin-bottom: calc(var(--spacing) * 4);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
 }
 
-/* ---- Windows 97 ListView / Task Manager Tables ---- */
+/* ---- Notion Database Tables ---- */
 .table-wrap {
   overflow-x: auto;
   background: var(--background);
-  box-shadow: var(--bevel-in);
-  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
 table {
@@ -848,25 +963,23 @@ table {
 }
 
 th, td {
-  padding: 7px 10px;
+  padding: 10px 12px;
   text-align: left;
   vertical-align: top;
 }
 
 th {
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-  box-shadow: var(--bevel-thin-out);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 
 tbody tr {
-  border-bottom: 1px dotted var(--border);
+  border-bottom: 1px solid var(--border);
+  transition: background 80ms ease;
 }
 
 tbody tr:last-child {
@@ -874,7 +987,7 @@ tbody tr:last-child {
 }
 
 tbody tr:hover {
-  background: var(--muted);
+  background: var(--card);
 }
 
 table[border="1"],
@@ -883,13 +996,18 @@ table[border="1"] td {
   border: 0;
 }
 
+table[border="1"] th {
+  border-bottom: 1px solid var(--border);
+}
+
 table[border="1"] td {
-  border-bottom: 1px dotted var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .post-body table {
-  box-shadow: var(--bevel-in);
-  margin: calc(var(--spacing) * 5) 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin: 20px 0;
 }
 
 td time, td > code {
@@ -906,11 +1024,12 @@ td time, td > code {
   display: none;
 }
 
-/* ---- Numbers: Windows 97 Performance Monitor (perfmon.exe) ---- */
+/* ---- Notion Section Panels (replaces .win-panel) ---- */
 .win-panel {
-  background: var(--chrome);
-  padding: 4px;
-  box-shadow: var(--bevel-out);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 
 .win-panel-bar {
@@ -919,32 +1038,36 @@ td time, td > code {
   justify-content: space-between;
   gap: 8px;
   flex-wrap: wrap;
-  padding: 3px 8px;
-  background: linear-gradient(90deg, var(--title-start), var(--title-end));
-  color: var(--title-fg);
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  font-weight: 700;
+  padding: 11px 16px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--foreground);
 }
 
 .win-panel-bar a {
-  color: var(--title-fg);
-  font-size: 0.74rem;
-  text-decoration: underline;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.win-panel-bar a:hover {
+  color: var(--foreground);
 }
 
 .win-panel-body {
-  padding: calc(var(--spacing) * 4);
-  color: var(--secondary-foreground);
+  padding: 16px;
+  color: var(--foreground);
 }
 
 .win-panel-note {
-  font-size: 0.86rem;
-  color: var(--secondary-foreground);
-  margin-bottom: calc(var(--spacing) * 3.5);
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+  margin-bottom: 14px;
 }
 
-/* Classic Windows 97 Pure-CSS Radio Tabs (zero JS) */
+/* ---- Notion Database View Tabs (Pure CSS, Zero JS) ---- */
 .win-tabset {
   position: relative;
 }
@@ -957,51 +1080,54 @@ td time, td > code {
 
 .win-tabs {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: wrap;
-  padding: 0 2px;
-  position: relative;
-  z-index: 1;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 14px;
 }
 
 .win-tabs-left {
   display: flex;
-  align-items: flex-end;
-  gap: 2px;
+  align-items: center;
+  gap: 4px;
   flex-wrap: wrap;
 }
 
 .win-tab {
-  display: inline-block;
-  padding: 5px 12px;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  font-weight: 700;
-  background: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 0.86rem;
+  font-weight: 500;
   color: var(--muted-foreground);
-  box-shadow: inset 1px 1px 0 var(--chrome-hi), inset -1px 0 0 var(--chrome-lo2), inset -2px 0 0 var(--chrome-lo);
-  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
   cursor: pointer;
   user-select: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: color 100ms ease, background 100ms ease;
 }
 
 .win-tab:hover {
   color: var(--foreground);
-  text-decoration: none;
+  background: var(--card);
 }
 
 .win-tabs-link {
-  font-family: var(--mono);
-  font-size: 0.76rem;
-  padding-bottom: 5px;
+  font-size: 0.82rem;
+  padding-bottom: 6px;
+  text-decoration: none;
+}
+
+.win-tabs-link:hover {
+  text-decoration: underline;
 }
 
 .win-tab-pane {
-  background: var(--chrome);
-  padding: 8px;
-  box-shadow: var(--bevel-out);
+  background: transparent;
+  padding: 0;
 }
 
 .win-tab-panel {
@@ -1011,18 +1137,16 @@ td time, td > code {
 #tm-core:checked ~ .win-tabs label[for="tm-core"],
 #tm-dev:checked ~ .win-tabs label[for="tm-dev"],
 #tm-logs:checked ~ .win-tabs label[for="tm-logs"] {
-  padding-top: 7px;
-  padding-bottom: 6px;
-  margin-bottom: -1px;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
+  color: var(--foreground);
+  font-weight: 600;
+  border-bottom-color: var(--foreground);
 }
 
 #tm-core:focus-visible ~ .win-tabs label[for="tm-core"],
 #tm-dev:focus-visible ~ .win-tabs label[for="tm-dev"],
 #tm-logs:focus-visible ~ .win-tabs label[for="tm-logs"] {
-  outline: 1px dotted var(--ring);
-  outline-offset: -3px;
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
 }
 
 #tm-core:checked ~ .win-tab-pane .panel-core,
@@ -1031,58 +1155,56 @@ td time, td > code {
   display: block;
 }
 
+/* ---- Notion Gallery Metric Cards ---- */
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  gap: 12px;
 }
 
 .metric {
-  background: var(--chrome);
-  padding: 8px;
-  box-shadow: var(--bevel-thin-out);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
 .metric-readout {
-  padding: 8px 10px;
-  background: var(--background);
-  box-shadow: var(--bevel-thin-in);
   font-family: var(--mono);
-  font-size: 1.3rem;
-  font-weight: 800;
+  font-size: 1.32rem;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
-  color: var(--link);
-  line-height: 1.1;
+  color: var(--foreground);
+  line-height: 1.15;
 }
 
 .metric-label {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 0.82rem;
-  color: var(--secondary-foreground);
+  font-weight: 600;
+  font-size: 0.86rem;
+  color: var(--foreground);
 }
 
 .metric-note {
   font-size: 0.82rem;
-  line-height: 1.42;
-  color: var(--secondary-foreground);
+  line-height: 1.48;
+  color: var(--muted-foreground);
   margin: 0;
 }
 
-/* Classic Windows 97 Checkbox for System Policies */
+/* ---- Check icon for Principles ---- */
 .win-check {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 15px;
-  height: 15px;
-  margin-right: 6px;
-  background: var(--background);
-  color: var(--foreground);
-  box-shadow: var(--bevel-thin-in);
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  border-radius: var(--radius-sm);
+  background: var(--ok-bg);
+  color: var(--ok-fg);
   font-family: var(--mono);
   font-size: 0.72rem;
   font-weight: 800;
@@ -1090,38 +1212,40 @@ td time, td > code {
   flex-shrink: 0;
 }
 
-/* Sunken white document well inside GroupBoxes (Help / FAQ) */
+/* ---- Notion Callout Inner Container ---- */
 .win-well {
   background: var(--background);
-  box-shadow: var(--bevel-in);
-  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 2px 14px;
 }
 
 .win-shortcuts {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: 16px;
 }
 
-/* ---- Etched GroupBoxes (authentic 97 <fieldset>) ---- */
+/* ---- Notion Callout Section Boxes (<fieldset>) ---- */
 fieldset {
   min-inline-size: 0;
-  border: 1px solid var(--chrome-lo);
-  box-shadow: 1px 1px 0 var(--chrome-hi), inset 1px 1px 0 var(--chrome-hi);
-  padding: calc(var(--spacing) * 4.5) calc(var(--spacing) * 5);
-  margin: 0 0 calc(var(--spacing) * 5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px 20px;
+  margin: 0 0 20px;
   background: var(--card);
   color: var(--card-foreground);
 }
 
 fieldset > legend {
-  padding: 1px 8px;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-  box-shadow: var(--bevel-thin-out);
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  font-weight: 700;
+  padding: 2px 10px;
+  background: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
 fieldset p:last-child,
@@ -1129,16 +1253,18 @@ fieldset dl:last-child {
   margin-bottom: 0;
 }
 
-/* ---- Principles (etched 2-col list) ---- */
+/* ---- Principles (2-col editorial grid) ---- */
 .principles-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: calc(var(--spacing) * 5) calc(var(--spacing) * 8);
+  gap: 18px 28px;
 }
 
 .principle h3 {
-  margin: 0 0 4px;
+  margin: 0 0 5px;
   font-size: 0.98rem;
+  display: flex;
+  align-items: center;
 }
 
 .principle p {
@@ -1147,13 +1273,20 @@ fieldset dl:last-child {
   color: var(--muted-foreground);
 }
 
-/* ---- Explorer File List Rows (Writing, Learning, Find me) ---- */
+/* ---- Notion List View Rows ---- */
 .row-list {
   list-style: none;
-  padding: 2px;
-  margin: 0 0 calc(var(--spacing) * 5);
+  padding: 0;
+  margin: 0 0 20px;
   background: var(--background);
-  box-shadow: var(--bevel-in);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.win-panel-body > .row-list {
+  border: 0;
+  border-radius: 0;
 }
 
 .row-item {
@@ -1161,8 +1294,9 @@ fieldset dl:last-child {
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding: 8px 12px;
-  border-bottom: 1px dotted var(--border);
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--border);
+  transition: background 80ms ease;
 }
 
 .row-item:last-child {
@@ -1170,7 +1304,7 @@ fieldset dl:last-child {
 }
 
 .row-item:hover {
-  background: var(--muted);
+  background: var(--card);
 }
 
 .row-main {
@@ -1178,12 +1312,19 @@ fieldset dl:last-child {
 }
 
 .row-title {
-  font-weight: 700;
+  font-weight: 600;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.row-title:hover {
+  color: var(--link);
+  text-decoration: underline;
 }
 
 .row-desc {
   display: block;
-  font-size: 0.86rem;
+  font-size: 0.87rem;
   color: var(--muted-foreground);
   margin-top: 2px;
 }
@@ -1191,10 +1332,10 @@ fieldset dl:last-child {
 .row-meta {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   flex-shrink: 0;
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--muted-foreground);
   font-variant-numeric: tabular-nums;
 }
@@ -1203,36 +1344,40 @@ fieldset dl:last-child {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
 }
 
 .log-links a {
-  padding: 2px 8px;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-  box-shadow: var(--bevel-thin-out);
+  padding: 3px 10px;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   text-decoration: none;
 }
 
 .log-links a:hover {
-  background: var(--accent);
-  color: var(--accent-foreground);
+  background: var(--muted);
 }
 
-/* ---- Windows 97 TreeView Details / FAQ ---- */
+/* ---- Notion Toggle Blocks (<details>) ---- */
 details {
-  padding: 8px 0;
-  border-bottom: 1px dotted var(--border);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+details:last-child {
+  border-bottom: 0;
 }
 
 details summary {
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 600;
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
+  color: var(--foreground);
 }
 
 details summary::-webkit-details-marker {
@@ -1240,37 +1385,37 @@ details summary::-webkit-details-marker {
 }
 
 details summary::before {
-  content: "+";
+  content: "▸";
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 15px;
-  height: 15px;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  font-weight: 700;
-  line-height: 1;
-  background: var(--background);
-  color: var(--foreground);
-  border: 1px solid var(--border);
+  width: 18px;
+  height: 18px;
+  font-size: 0.82rem;
+  color: var(--muted-foreground);
+  border-radius: var(--radius-sm);
+  transition: transform 140ms ease, background 100ms ease;
   flex-shrink: 0;
 }
 
+details summary:hover::before {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
 details[open] > summary::before {
-  content: "−";
+  transform: rotate(90deg);
 }
 
 details > *:not(summary) {
   margin-top: 8px;
-  margin-left: 24px;
-  max-width: 68ch;
+  margin-left: 26px;
   color: var(--muted-foreground);
 }
 
 details > .table-wrap,
 details > pre {
   margin-left: 0;
-  max-width: none;
   color: var(--foreground);
 }
 
@@ -1287,44 +1432,51 @@ td details {
 .log-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: calc(var(--spacing) * 5);
+  gap: 16px;
 }
 
-/* ---- Definition lists ---- */
+/* ---- Definition lists (Notion property rows) ---- */
 dl { margin: 0; }
 
 dt {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.74rem;
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.03em;
   color: var(--muted-foreground);
   margin-bottom: 2px;
 }
 
 dd {
   margin-left: 0;
-  margin-bottom: calc(var(--spacing) * 3.5);
+  margin-bottom: 12px;
 }
 
 dd:last-child { margin-bottom: 0; }
 
-/* ---- Long-form reading (.post-body) — full section width ---- */
+/* ---- Long-form Notion Document (.post-body) — full section width ---- */
 .post-header { max-width: none; }
 
 .post-meta {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.45rem;
-  font-family: var(--mono);
-  font-size: 0.8rem;
+  gap: 0.5rem;
+  font-size: 0.82rem;
   color: var(--muted-foreground);
-  margin-bottom: calc(var(--spacing) * 3);
+  margin-bottom: 12px;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
 }
 
 .post-lead {
-  font-size: 1.06rem;
+  font-size: 1.08rem;
+  line-height: 1.6;
   color: var(--muted-foreground);
 }
 
@@ -1340,11 +1492,23 @@ dd:last-child { margin-bottom: 0; }
   max-width: none;
 }
 
+.post-body ul,
+.post-body ol {
+  padding-left: 1.4rem;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.post-body li {
+  margin-bottom: 6px;
+}
+
 .post-body blockquote {
-  margin: calc(var(--spacing) * 5) 0;
-  padding: 8px 14px;
+  margin: 20px 0;
+  padding: 10px 16px;
   background: var(--card);
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--foreground);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   color: var(--card-foreground);
 }
 
@@ -1352,95 +1516,107 @@ dd:last-child { margin-bottom: 0; }
 
 pre {
   overflow-x: auto;
-  font-size: 0.86rem;
-  line-height: 1.5;
+  font-size: 0.85rem;
+  line-height: 1.55;
 }
 
 .post-body pre {
-  padding: 12px 14px;
+  padding: 16px 18px;
   background: var(--card);
-  box-shadow: var(--bevel-thin-in);
-  margin: calc(var(--spacing) * 5) 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin: 20px 0;
 }
 
 /* Prev/Next navigation on series pages */
 .pager {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  margin: calc(var(--spacing) * 8) 0;
+  gap: 12px;
+  margin: 32px 0;
 }
 
 .pager-card {
   display: block;
-  padding: 8px 12px;
-  background: var(--chrome);
-  color: var(--secondary-foreground);
-  box-shadow: var(--bevel-out);
+  padding: 12px 16px;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   text-decoration: none;
+  transition: background 100ms ease, border-color 100ms ease;
 }
 
-.pager-card:active {
-  box-shadow: var(--bevel-in);
+.pager-card:hover {
+  background: var(--muted);
+  border-color: var(--border-strong);
+  text-decoration: none;
 }
 
 .pager-card.next { text-align: right; }
 
 .pager-dir {
   display: block;
-  font-family: var(--mono);
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   color: var(--muted-foreground);
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
 .pager-title {
-  font-weight: 700;
-  color: var(--link);
+  font-weight: 600;
+  color: var(--foreground);
 }
 
-/* ---- Classic Windows 97 Bottom Status Bar (sunken panes) ---- */
+/* ---- Minimal Document Footer ---- */
 .site-footer {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px 48px 36px;
+  border-top: 1px solid var(--border);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
-  padding: 4px 4px 2px;
-  background: var(--chrome);
-  font-family: var(--mono);
-  font-size: 0.76rem;
-  color: var(--secondary-foreground);
+  gap: 8px 16px;
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
 }
 
 .site-footer p {
   margin: 0;
-  padding: 3px 8px;
-  box-shadow: var(--bevel-thin-in);
-  background: var(--chrome);
 }
 
-.site-footer p:first-child {
-  flex: 1 1 auto;
+.site-footer a {
+  color: var(--muted-foreground);
+  text-decoration: none;
 }
 
-/* ---- Responsive breakpoints ---- */
-@media (max-width: 960px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-    gap: calc(var(--spacing) * 5);
+.site-footer a:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+
+/* ---- Responsive Breakpoints ---- */
+@media (max-width: 1040px) {
+  .notion-sidebar {
+    display: none;
   }
-}
-
-@media (max-width: 820px) {
-  body {
-    padding: 0 0 42px;
-  }
-  .win-shell {
-    box-shadow: none;
+  .mobile-nav-bar {
+    display: block;
   }
   main {
-    padding: calc(var(--spacing) * 5) calc(var(--spacing) * 4);
+    padding: 28px 28px 56px;
+  }
+  .site-footer {
+    padding: 18px 28px 32px;
+  }
+}
+
+@media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
   .metrics-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1453,22 +1629,18 @@ pre {
   .pager-card.next { text-align: left; }
 }
 
-@media (max-width: 680px) {
-  body {
-    padding-bottom: 0;
+@media (max-width: 640px) {
+  .notion-topbar {
+    padding: 6px 14px;
   }
-  .site-nav {
-    font-size: 0.76rem;
+  .mobile-nav-bar {
+    padding: 4px 10px 8px;
   }
-  .site-nav a {
-    padding: 2px 6px;
+  main {
+    padding: 22px 16px 44px;
   }
-  .win-tabs-left {
-    width: 100%;
-  }
-  .win-tab {
-    font-size: 0.72rem;
-    padding: 4px 8px;
+  .site-footer {
+    padding: 16px 16px 28px;
   }
   .metrics-grid {
     grid-template-columns: 1fr;
@@ -1493,8 +1665,8 @@ pre {
     clip-path: inset(50%);
   }
   .mobile-records tr {
-    padding: 10px 8px;
-    border-bottom: 1px dotted var(--border);
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
   }
   .mobile-records td {
     border: 0 !important;
@@ -1504,10 +1676,8 @@ pre {
   }
   .mobile-records .mobile-label {
     display: inline;
-    font-family: var(--mono);
     font-size: 0.74rem;
-    font-weight: 700;
-    text-transform: uppercase;
+    font-weight: 600;
     color: var(--muted-foreground);
     margin-right: 0.35rem;
   }

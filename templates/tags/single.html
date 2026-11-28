@@ -24,7 +24,7 @@
 <section aria-label="Posts tagged {{ term.name }}">
   <div class="win-panel">
     <div class="win-panel-bar">
-      <span>{{ term.name }}.log — {{ term.pages | length }} post{% if term.pages | length != 1 %}s{% endif %}</span>
+      <span>#{{ term.name }} — {{ term.pages | length }} post{% if term.pages | length != 1 %}s{% endif %}</span>
       <a class="win-bar-btn" href="{{ get_url(path='@/posts/_index.md') }}">All posts</a>
     </div>
     <div class="win-panel-body">
