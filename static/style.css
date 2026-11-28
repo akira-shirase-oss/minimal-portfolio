@@ -1005,6 +1005,50 @@ progress {
   vertical-align: middle;
 }
 
+/* ---- Homepage Project Progress Table & Cross-Theme Progress Bars ---- */
+.prog-meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.prog-bar {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 88px;
+  height: 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  overflow: hidden;
+}
+
+.prog-bar::-webkit-progress-bar {
+  background: var(--muted);
+}
+
+.prog-bar::-webkit-progress-value {
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.prog-bar::-moz-progress-bar {
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.prog-frac {
+  font-size: 0.76rem;
+  color: var(--muted-foreground);
+  min-width: 34px;
+}
+
+.prog-next {
+  color: var(--muted-foreground);
+  font-size: 0.86rem;
+}
+
 /* ---- Inline Code, Kbd, Mark & Notion Sticker Pills ---- */
 code, kbd {
   background: var(--muted);
@@ -2278,6 +2322,25 @@ html[data-style="html"] .win-tab:hover {
 
 html[data-style="html"] .table-wrap {
   border-radius: 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+html[data-style="html"] .progress-table th {
+  background: transparent;
+  padding-left: 0;
+}
+
+html[data-style="html"] .progress-table td {
+  padding-left: 0;
+}
+
+html[data-style="html"] .prog-bar {
+  appearance: auto;
+  -webkit-appearance: auto;
+  height: 10px;
+  border: 0;
+  background: transparent;
 }
 
 html[data-style="html"] .notion-callout,
@@ -2482,6 +2545,24 @@ html[data-style="win7"] .sidebar-nav a:hover,
 html[data-style="win7"] .sidebar-sublist a:hover {
   background: linear-gradient(180deg, light-dark(#edf6ff, #22384f) 0%, light-dark(#d4e8fb, #1a2d40) 100%);
   box-shadow: inset 0 0 0 1px light-dark(#89b5db, #3f678c);
+}
+
+html[data-style="win7"] .prog-bar {
+  height: 11px;
+  border-radius: 3px;
+  border-color: light-dark(#9bb5cc, #3d5d7d);
+  background: linear-gradient(180deg, light-dark(#e3ebf3, #13202e) 0%, light-dark(#f2f7fc, #1c2c3d) 100%);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+html[data-style="win7"] .prog-bar::-webkit-progress-value {
+  background: linear-gradient(180deg, #83f18c 0%, #2fd444 48%, #0fb826 50%, #3ee252 100%);
+  border-radius: 2px;
+}
+
+html[data-style="win7"] .prog-bar::-moz-progress-bar {
+  background: linear-gradient(180deg, #83f18c 0%, #2fd444 48%, #0fb826 50%, #3ee252 100%);
+  border-radius: 2px;
 }
 
 /* Fixed Bottom Windows 7 Aero Glass Taskbar */
@@ -2833,6 +2914,29 @@ html[data-style="win97"] .win-dialog-well {
 html[data-style="win97"] .settings-heading,
 html[data-style="win97"] .notion-prop-key {
   font-family: var(--mono);
+}
+
+html[data-style="win97"] .prog-bar {
+  height: 12px;
+  border: 0;
+  border-radius: 0;
+  background: var(--background);
+  box-shadow: var(--bevel-in);
+  padding: 2px;
+}
+
+html[data-style="win97"] .prog-bar::-webkit-progress-bar {
+  background: var(--background);
+}
+
+html[data-style="win97"] .prog-bar::-webkit-progress-value {
+  background: repeating-linear-gradient(90deg, light-dark(#000080, #3b82f6) 0 8px, transparent 8px 10px);
+  border-radius: 0;
+}
+
+html[data-style="win97"] .prog-bar::-moz-progress-bar {
+  background: repeating-linear-gradient(90deg, light-dark(#000080, #3b82f6) 0 8px, transparent 8px 10px);
+  border-radius: 0;
 }
 
 /* Fixed Bottom Classic Windows 97 Start Taskbar */
@@ -3238,6 +3342,17 @@ html[data-style="macos"] #tm-gallery:checked ~ .win-tabs label[for="tm-gallery"]
 html[data-style="macos"] #tm-core:checked    ~ .win-tabs label[for="tm-core"] {
   color: var(--link);
   border-bottom-color: var(--link);
+}
+
+html[data-style="macos"] .prog-bar {
+  height: 6px;
+  border: 0;
+  border-radius: 999px;
+}
+
+html[data-style="macos"] .prog-bar::-webkit-progress-value,
+html[data-style="macos"] .prog-bar::-moz-progress-bar {
+  border-radius: 999px;
 }
 
 /* Floating Frosted-Glass macOS Bottom Dock with Native Apple Squircle App Icons */
@@ -3725,6 +3840,7 @@ html[data-style="terminal"] .term-chip:hover {
 /* Frame page sections below the shell as authentic CLI command outputs */
 html[data-style="terminal"] .hero::before,
 html[data-style="terminal"] #projects::before,
+html[data-style="terminal"] #progress::before,
 html[data-style="terminal"] section[aria-label="Latest writing"]::before,
 html[data-style="terminal"] section[aria-label="Notes and principles"]::before {
   display: block;
@@ -3737,8 +3853,21 @@ html[data-style="terminal"] section[aria-label="Notes and principles"]::before {
 
 html[data-style="terminal"] .hero::before { content: "$ cat ~/README.md"; }
 html[data-style="terminal"] #projects::before { content: "$ ls -la ~/projects/"; }
+html[data-style="terminal"] #progress::before { content: "$ ./progress --all"; }
 html[data-style="terminal"] section[aria-label="Latest writing"]::before { content: "$ ls -lt ~/writing/ | head -n 6"; }
 html[data-style="terminal"] section[aria-label="Notes and principles"]::before { content: "$ cat ~/NOTES.md"; }
+
+html[data-style="terminal"] .prog-bar {
+  border-radius: 0;
+  border-color: var(--border-strong);
+  height: 9px;
+}
+
+html[data-style="terminal"] .prog-bar::-webkit-progress-value,
+html[data-style="terminal"] .prog-bar::-moz-progress-bar {
+  background: var(--link);
+  border-radius: 0;
+}
 
 /* Single-Column Stacked TUI Directory List instead of 2-Col Cards */
 html[data-style="terminal"] .notion-gallery {
@@ -4061,6 +4190,18 @@ html[data-style="swiss"] .settings-heading,
 html[data-style="swiss"] th {
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+html[data-style="swiss"] .prog-bar {
+  border-radius: 0;
+  border-color: var(--foreground);
+  height: 8px;
+}
+
+html[data-style="swiss"] .prog-bar::-webkit-progress-value,
+html[data-style="swiss"] .prog-bar::-moz-progress-bar {
+  background: var(--link);
+  border-radius: 0;
 }
 
 html[data-style="swiss"] #tm-gallery:checked ~ .win-tabs label[for="tm-gallery"],
@@ -4620,6 +4761,7 @@ html[data-style="figma"] .notion-page-avatar {
 /* Artboard Frames floating on the Figma Canvas with blue Frame Labels above each */
 html[data-style="figma"] .hero,
 html[data-style="figma"] #projects,
+html[data-style="figma"] #progress,
 html[data-style="figma"] section[aria-label="Latest writing"],
 html[data-style="figma"] section[aria-label="Notes and principles"] {
   position: relative;
@@ -4632,6 +4774,7 @@ html[data-style="figma"] section[aria-label="Notes and principles"] {
 
 html[data-style="figma"] .hero:hover,
 html[data-style="figma"] #projects:hover,
+html[data-style="figma"] #progress:hover,
 html[data-style="figma"] section[aria-label="Latest writing"]:hover,
 html[data-style="figma"] section[aria-label="Notes and principles"]:hover,
 html[data-style="figma"] .gallery-card:hover {
@@ -4641,6 +4784,7 @@ html[data-style="figma"] .gallery-card:hover {
 
 html[data-style="figma"] .hero::before,
 html[data-style="figma"] #projects::before,
+html[data-style="figma"] #progress::before,
 html[data-style="figma"] section[aria-label="Latest writing"]::before,
 html[data-style="figma"] section[aria-label="Notes and principles"]::before {
   position: absolute;
@@ -4654,8 +4798,9 @@ html[data-style="figma"] section[aria-label="Notes and principles"]::before {
 
 html[data-style="figma"] .hero::before { content: "❖ Frame 01 · Intro / 940 × auto"; }
 html[data-style="figma"] #projects::before { content: "❖ Frame 02 · Projects Component Set"; }
-html[data-style="figma"] section[aria-label="Latest writing"]::before { content: "❖ Frame 03 · Writing Index"; }
-html[data-style="figma"] section[aria-label="Notes and principles"]::before { content: "❖ Frame 04 · Engineering Notes"; }
+html[data-style="figma"] #progress::before { content: "❖ Frame 03 · Progress Ledger"; }
+html[data-style="figma"] section[aria-label="Latest writing"]::before { content: "❖ Frame 04 · Writing Index"; }
+html[data-style="figma"] section[aria-label="Notes and principles"]::before { content: "❖ Frame 05 · Engineering Notes"; }
 
 html[data-style="figma"] .gallery-card {
   background: light-dark(#fafafa, #242424);

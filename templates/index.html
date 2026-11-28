@@ -139,6 +139,86 @@
 </section>
 {%- endif %}
 
+<!-- ======================= PROJECT PROGRESS (LIVE FROM BUILD LOGS) ======================= -->
+{%- set prog_sec = get_section(path="progress/_index.md") %}
+{%- set prog_projects = prog_sec.extra.projects | default(value=[]) %}
+{%- if prog_projects %}
+<section id="progress" class="progress-section" aria-label="Projects progress">
+  <div class="notion-section-head">
+    <h2>Progress</h2>
+    <a class="win-tabs-link" style="padding: 0;" href="{{ get_url(path='@/progress/_index.md') }}">Full ledger ({{ prog_projects | length }}) →</a>
+  </div>
+  <div class="table-wrap">
+    <table class="mobile-records progress-table" role="table" aria-label="Project progress">
+      <thead>
+        <tr>
+          <th scope="col" width="210">Project</th>
+          <th scope="col" width="170">Milestones</th>
+          <th scope="col" width="130">Latest</th>
+          <th scope="col">Next</th>
+        </tr>
+      </thead>
+      <tbody>
+      {%- for pr in prog_projects %}
+        {%- set_global done_m = 0 %}
+        {%- set_global total_m = 1 %}
+        {%- set_global latest_tag = "live" %}
+        {%- set_global proj_href = get_url(path='@/progress/_index.md') ~ '#' ~ pr.id %}
+        {%- if pr.log %}
+          {%- set log = get_section(path=pr.log) %}
+          {%- set proj_href = log.permalink %}
+          {%- set entries = log.pages | reverse %}
+          {%- set up_next = log.extra.up_next %}
+          {%- set latest = entries | last %}
+          {%- set current_id = up_next.milestone if up_next else (latest.extra.milestone if latest else "") %}
+          {%- set published_steps = [p.extra.step for p in entries] %}
+          {%- set planned_all = log.extra.planned | default(value=[]) %}
+          {%- set ms_list = log.extra.milestones | default(value=[]) %}
+          {%- set_global total_m = ms_list | length %}
+          {%- if total_m == 0 %}{%- set_global total_m = 1 %}{%- endif %}
+          {%- if latest %}
+            {%- set_global latest_tag = latest.extra.milestone ~ " · " ~ latest.extra.step %}
+          {%- endif %}
+          {%- for milestone in ms_list %}
+            {%- set m_count = [p for p in entries if p.extra.milestone == milestone.id] | length %}
+            {%- set m_rem = [p for p in planned_all if p.milestone == milestone.id and not (p.step and p.step in published_steps)] | length %}
+            {%- if milestone.id != current_id and (milestone.done or (m_count > 0 and m_rem == 0)) %}
+              {%- set_global done_m = done_m + 1 %}
+            {%- endif %}
+          {%- endfor %}
+        {%- elif pr.live %}
+          {%- set_global done_m = 1 %}
+          {%- set_global total_m = 1 %}
+          {%- set_global latest_tag = "live" %}
+          {%- set_global proj_href = pr.live %}
+        {%- endif %}
+        <tr>
+          <td>
+            <span class="mobile-label" aria-hidden="true">Project: </span>
+            <b><a href="{{ proj_href }}">{{ pr.name }}</a></b>
+          </td>
+          <td class="prog-meter-cell">
+            <span class="mobile-label" aria-hidden="true">Milestones: </span>
+            <span class="prog-meter">
+              <progress class="prog-bar" value="{{ done_m }}" max="{{ total_m }}">{{ done_m }} / {{ total_m }}</progress>
+              <span class="num prog-frac">{% if pr.log %}{{ done_m }}/{{ total_m }}{% else %}live{% endif %}</span>
+            </span>
+          </td>
+          <td>
+            <span class="mobile-label" aria-hidden="true">Latest: </span>
+            <span class="badge {% if pr.group == 'built' %}badge-ok{% else %}badge-accent{% endif %}">{{ latest_tag }}</span>
+          </td>
+          <td class="prog-next">
+            <span class="mobile-label" aria-hidden="true">Next: </span>{{ pr.next }}
+          </td>
+        </tr>
+      {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{%- endif %}
+
 <!-- ======================= LATEST WRITING ======================= -->
 <section aria-label="Latest writing">
   <div class="notion-section-head">
