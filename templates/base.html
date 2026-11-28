@@ -87,52 +87,101 @@
   {%- include "partials/json-ld.html" %}
 
   <script>
-    // Light/dark theme and Notion-style Sans/Serif/Mono document font toggle —
-    // the only script on the site. Runs before paint so saved preferences never flash.
+    // Theme (light/dark), document font (sans/serif/mono), and design system
+    // switcher (notion, win7, win97, macos, terminal, swiss). Runs before paint
+    // so saved choices never flash.
     (function () {
       var root = document.documentElement;
+      var STYLES = ["notion", "win7", "win97", "macos", "terminal", "swiss"];
       try {
         var saved = localStorage.getItem("theme");
         if (saved === "light" || saved === "dark") root.dataset.theme = saved;
         else root.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         var font = localStorage.getItem("font");
         if (font === "sans" || font === "serif" || font === "mono") root.dataset.font = font;
+        var qStyle = new URLSearchParams(location.search).get("style");
+        var style = (qStyle && STYLES.indexOf(qStyle) !== -1) ? qStyle : localStorage.getItem("style");
+        if (style && STYLES.indexOf(style) !== -1) root.dataset.style = style;
+        else root.dataset.style = "notion";
       } catch (e) {}
       document.addEventListener("DOMContentLoaded", function () {
-        var fw = document.getElementById("font-toggle-wrap");
-        if (fw) {
-          var btns = fw.querySelectorAll("[data-set-font]");
-          function syncFont() {
-            var cur = root.dataset.font || "sans";
-            for (var i = 0; i < btns.length; i++) {
-              btns[i].setAttribute("aria-pressed", btns[i].getAttribute("data-set-font") === cur ? "true" : "false");
-            }
+        var btn = document.getElementById("settings-toggle");
+        var panel = document.getElementById("settings-panel");
+        var wrap = document.getElementById("settings-wrap");
+        if (!btn || !panel || !wrap) return;
+        wrap.hidden = false;
+
+        function sync() {
+          var curStyle = root.dataset.style || "notion";
+          var curTheme = root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          var curFont = root.dataset.font || "sans";
+          var sBtns = panel.querySelectorAll("[data-set-style]");
+          for (var i = 0; i < sBtns.length; i++) {
+            sBtns[i].setAttribute("aria-pressed", sBtns[i].getAttribute("data-set-style") === curStyle ? "true" : "false");
           }
-          for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function () {
-              var next = this.getAttribute("data-set-font");
-              root.dataset.font = next;
-              try { localStorage.setItem("font", next); } catch (e) {}
-              syncFont();
-            });
+          var tBtns = panel.querySelectorAll("[data-set-theme]");
+          for (var j = 0; j < tBtns.length; j++) {
+            tBtns[j].setAttribute("aria-pressed", tBtns[j].getAttribute("data-set-theme") === curTheme ? "true" : "false");
           }
-          fw.hidden = false;
-          syncFont();
+          var fBtns = panel.querySelectorAll("[data-set-font]");
+          for (var k = 0; k < fBtns.length; k++) {
+            fBtns[k].setAttribute("aria-pressed", fBtns[k].getAttribute("data-set-font") === curFont ? "true" : "false");
+          }
         }
-        var b = document.getElementById("theme-toggle");
-        if (!b) return;
-        function isDark() {
-          return root.dataset.theme ? root.dataset.theme === "dark"
-            : matchMedia("(prefers-color-scheme: dark)").matches;
+
+        function setOpen(open) {
+          panel.hidden = !open;
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
         }
-        function show() { b.textContent = isDark() ? "light" : "dark"; }
-        b.addEventListener("click", function () {
-          root.dataset.theme = isDark() ? "light" : "dark";
-          try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
-          show();
+
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          setOpen(panel.hidden);
         });
-        (document.getElementById("theme-toggle-wrap") || b).hidden = false;
-        show();
+
+        panel.addEventListener("click", function (e) {
+          var target = e.target.closest("button");
+          if (!target) return;
+          var st = target.getAttribute("data-set-style");
+          var th = target.getAttribute("data-set-theme");
+          var fn = target.getAttribute("data-set-font");
+          if (st) {
+            root.dataset.style = st;
+            try { localStorage.setItem("style", st); } catch (err) {}
+            sync();
+          } else if (th) {
+            root.dataset.theme = th;
+            try { localStorage.setItem("theme", th); } catch (err) {}
+            sync();
+          } else if (fn) {
+            root.dataset.font = fn;
+            try { localStorage.setItem("font", fn); } catch (err) {}
+            sync();
+          } else if (target.id === "settings-reset") {
+            root.dataset.style = "notion";
+            root.dataset.font = "sans";
+            root.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            try {
+              localStorage.removeItem("style");
+              localStorage.removeItem("font");
+              localStorage.removeItem("theme");
+            } catch (err) {}
+            sync();
+          }
+        });
+
+        document.addEventListener("click", function (e) {
+          if (!panel.hidden && !wrap.contains(e.target)) setOpen(false);
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && !panel.hidden) {
+            setOpen(false);
+            btn.focus();
+          }
+        });
+
+        sync();
       });
     })();
   </script>
@@ -158,6 +207,7 @@
     <symbol id="ic-alert" viewBox="0 0 24 24"><path d="M10.3 4.3 2.7 17.5A2 2 0 0 0 4.4 20.5h15.2a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><circle cx="12" cy="16.5" r="0.8" fill="currentColor" stroke="none"/></symbol>
     <symbol id="ic-flask" viewBox="0 0 24 24"><path d="M10 3h4"/><path d="M10 3v5.5L4.8 17.8A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.7-3.2L14 8.5V3"/><path d="M8.5 14h7"/></symbol>
     <symbol id="ic-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+    <symbol id="ic-sliders" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="9" cy="6" r="2" fill="var(--background)"/><circle cx="15" cy="12" r="2" fill="var(--background)"/><circle cx="11" cy="18" r="2" fill="var(--background)"/></symbol>
   </svg>
   {%- set _home = get_section(path="_index.md") %}
   {%- set _logs = _home.extra.logs | default(value=[]) %}
@@ -223,12 +273,48 @@
           <div class="notion-topbar-actions">
             {%- if config.extra.github %}<a class="topbar-link" href="https://github.com/{{ config.extra.github }}">GitHub</a>{% endif %}
             <a class="topbar-link" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
-            <span id="font-toggle-wrap" class="font-switcher" role="group" aria-label="Page font style" hidden>
-              <button class="font-btn" type="button" data-set-font="sans" aria-pressed="true" title="Sans-serif">Sans</button>
-              <button class="font-btn" type="button" data-set-font="serif" aria-pressed="false" title="Serif">Serif</button>
-              <button class="font-btn" type="button" data-set-font="mono" aria-pressed="false" title="Monospace">Mono</button>
-            </span>
-            <span id="theme-toggle-wrap" hidden><button id="theme-toggle" type="button">dark</button></span>
+            <div id="settings-wrap" class="settings-wrap" hidden>
+              <button id="settings-toggle" class="settings-trigger" type="button" aria-expanded="false" aria-controls="settings-panel">
+                <svg class="ui-icon" width="14" height="14" aria-hidden="true"><use href="#ic-sliders"/></svg>
+                <span>Settings</span>
+              </button>
+              <div id="settings-panel" class="settings-panel" role="dialog" aria-label="Appearance settings" hidden>
+                <div class="settings-group">
+                  <div class="settings-heading">Design system</div>
+                  <div class="style-grid" role="group" aria-label="Design system">
+                    <button class="style-opt" type="button" data-set-style="notion" aria-pressed="true"><span class="style-swatch sw-notion" aria-hidden="true"></span><span>Notion</span></button>
+                    <button class="style-opt" type="button" data-set-style="win7" aria-pressed="false"><span class="style-swatch sw-win7" aria-hidden="true"></span><span>Windows 7</span></button>
+                    <button class="style-opt" type="button" data-set-style="win97" aria-pressed="false"><span class="style-swatch sw-win97" aria-hidden="true"></span><span>Windows 97</span></button>
+                    <button class="style-opt" type="button" data-set-style="macos" aria-pressed="false"><span class="style-swatch sw-macos" aria-hidden="true"></span><span>macOS</span></button>
+                    <button class="style-opt" type="button" data-set-style="terminal" aria-pressed="false"><span class="style-swatch sw-terminal" aria-hidden="true"></span><span>Terminal</span></button>
+                    <button class="style-opt" type="button" data-set-style="swiss" aria-pressed="false"><span class="style-swatch sw-swiss" aria-hidden="true"></span><span>Swiss</span></button>
+                  </div>
+                </div>
+
+                <div class="settings-row">
+                  <div class="settings-group">
+                    <div class="settings-heading">Theme</div>
+                    <div class="seg-control" role="group" aria-label="Color theme">
+                      <button class="seg-btn" type="button" data-set-theme="light" aria-pressed="false">Light</button>
+                      <button class="seg-btn" type="button" data-set-theme="dark" aria-pressed="false">Dark</button>
+                    </div>
+                  </div>
+                  <div class="settings-group">
+                    <div class="settings-heading">Font</div>
+                    <div class="seg-control" role="group" aria-label="Page font">
+                      <button class="seg-btn" type="button" data-set-font="sans" aria-pressed="true">Sans</button>
+                      <button class="seg-btn" type="button" data-set-font="serif" aria-pressed="false">Serif</button>
+                      <button class="seg-btn" type="button" data-set-font="mono" aria-pressed="false">Mono</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-foot">
+                  <span>Saved in browser</span>
+                  <button id="settings-reset" class="settings-reset" type="button">Reset default</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="mobile-nav-bar">
