@@ -15,7 +15,9 @@
 </div>
 
 <section class="hero" aria-label="Introduction" style="margin-bottom: 24px;">
-  {{ section.content | safe }}
+  <div class="hero-copy">
+    {{ section.content | safe }}
+  </div>
 
   <div class="notion-props" aria-label="Profile properties">
     <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class="ui-icon" width="14" height="14" aria-hidden="true"><use href="#ic-activity"/></svg></span>Status</div>

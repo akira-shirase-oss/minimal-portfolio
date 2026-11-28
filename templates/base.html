@@ -315,6 +315,11 @@
                 </div>
               </div>
             </div>
+            <span class="win-controls" aria-hidden="true">
+              <span class="wc-btn wc-min">–</span>
+              <span class="wc-btn wc-max">□</span>
+              <span class="wc-btn wc-close">×</span>
+            </span>
           </div>
         </div>
         <div class="mobile-nav-bar">
@@ -351,5 +356,23 @@
       </footer>
     </div>
   </div>
+
+  <nav class="os-bar" aria-label="Workspace dock">
+    <a class="os-start" href="{{ get_url(path='@/_index.md') }}">
+      <span class="os-orb" aria-hidden="true"></span>
+      <span class="os-start-label">Start</span>
+    </a>
+    <div class="os-dock-items">
+      <a class="os-dock-item" href="{{ get_url(path='@/_index.md') }}"><svg class="ui-icon" width="15" height="15" aria-hidden="true"><use href="#ic-home"/></svg><span>Home</span></a>
+      <a class="os-dock-item" href="{{ get_url(path='@/_index.md') }}#projects"><svg class="ui-icon" width="15" height="15" aria-hidden="true"><use href="#ic-grid"/></svg><span>Projects</span></a>
+      <a class="os-dock-item" href="{{ get_url(path='@/posts/_index.md') }}"><svg class="ui-icon" width="15" height="15" aria-hidden="true"><use href="#ic-book"/></svg><span>Hub</span></a>
+      <a class="os-dock-item" href="{{ get_url(path='@/build-log/_index.md') }}"><svg class="ui-icon" width="15" height="15" aria-hidden="true"><use href="#ic-terminal"/></svg><span>Logs</span></a>
+      <a class="os-dock-item" href="{{ get_url(path='@/learn/_index.md') }}"><svg class="ui-icon" width="15" height="15" aria-hidden="true"><use href="#ic-layers"/></svg><span>Learn</span></a>
+      <a class="os-dock-item" href="{{ get_url(path='@/progress/_index.md') }}"><svg class="ui-icon" width="15" height="15" aria-hidden="true"><use href="#ic-activity"/></svg><span>Progress</span></a>
+    </div>
+    <div class="os-tray" aria-hidden="true">
+      <span class="os-tray-status">404human · zola</span>
+    </div>
+  </nav>
 </body>
 </html>
