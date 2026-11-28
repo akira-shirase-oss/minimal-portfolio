@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block cover %}
-<div class="notion-cover" aria-hidden="true"></div>
+<div class="notion-cover">
+  <picture>
+    <source srcset="{{ get_url(path='img/notion-cover.webp') }}" type="image/webp">
+    <img class="notion-cover-img" src="{{ get_url(path='img/notion-cover.jpg') }}" alt="404human.dev workspace banner" width="1500" height="500" decoding="async">
+  </picture>
+</div>
 {% endblock cover %}
 
 {% block content %}

@@ -723,12 +723,30 @@ body {
 /* ---- Full-Bleed Notion Page Cover (Home) ---- */
 .notion-cover {
   width: 100%;
-  height: 136px;
-  background:
-    radial-gradient(var(--cover-dot) 1px, transparent 0) 0 0 / 18px 18px,
-    linear-gradient(118deg, var(--cover-a) 0%, var(--cover-b) 54%, var(--cover-c) 100%);
+  background: linear-gradient(to bottom, #fdfbf8 0%, #fdfbf8 83%, #eedcc8 83.5%, #e5ceb4 100%);
   border-bottom: 1px solid var(--border);
   position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.notion-cover picture {
+  display: block;
+  width: 100%;
+  max-width: 960px;
+}
+
+.notion-cover-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+}
+
+html[data-theme="dark"] .notion-cover {
+  filter: brightness(0.86) contrast(1.04);
 }
 
 .notion-cover-caption {
@@ -757,8 +775,8 @@ body {
 }
 
 .notion-page-icon-overlap {
-  margin-top: -42px;
-  margin-bottom: 16px;
+  margin-top: 22px;
+  margin-bottom: 14px;
   position: relative;
   z-index: 2;
   display: inline-flex;
@@ -5283,8 +5301,7 @@ html[data-style="docs"] #tm-core:checked    ~ .win-tabs label[for="tm-core"] {
   .notion-crumb-current,
   .notion-cover-caption { display: none; }
   .mobile-nav-bar { padding: 4px 10px 8px; }
-  .notion-cover { height: 108px; }
-  .notion-page-icon-overlap { margin-top: -34px; }
+  .notion-page-icon-overlap { margin-top: 16px; }
   .notion-page-avatar { width: 64px; height: 64px; border-radius: 14px; }
   main { padding: 22px 16px 44px; }
   .has-cover main { padding-top: 0; }
