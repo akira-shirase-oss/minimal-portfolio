@@ -18,10 +18,10 @@
   {{ section.content | safe }}
 
   <div class="notion-props" aria-label="Profile properties">
-    <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-activity\"/></svg></span>Status</div>
+    <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class="ui-icon" width="14" height="14" aria-hidden="true"><use href="#ic-activity"/></svg></span>Status</div>
     <div class="notion-prop-val"><span class="badge badge-ok"><span class="dot" aria-hidden="true"></span> building in public</span></div>
 
-    <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-hash\"/></svg></span>Focus</div>
+    <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class="ui-icon" width="14" height="14" aria-hidden="true"><use href="#ic-hash"/></svg></span>Focus</div>
     <div class="notion-prop-val">
       <a class="badge tag-rust" href="{{ get_taxonomy_url(kind='tags', name='rust') }}">#rust</a>
       <a class="badge tag-postgres" href="{{ get_taxonomy_url(kind='tags', name='postgres') }}">#postgres</a>
@@ -29,7 +29,7 @@
       <a class="badge tag-reliability" href="{{ get_taxonomy_url(kind='tags', name='reliability') }}">#reliability</a>
     </div>
 
-    <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-compass\"/></svg></span>Now</div>
+    <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class="ui-icon" width="14" height="14" aria-hidden="true"><use href="#ic-compass"/></svg></span>Now</div>
     <div class="notion-prop-val"><a href="{{ get_url(path='@/colophon/_index.md') }}">Colophon CMS</a> — live in alpha at <a href="https://colophon.404human.dev" rel="noopener">colophon.404human.dev ↗</a></div>
   </div>
 </section>
@@ -48,8 +48,8 @@
 
     <div class="win-tabs">
       <div class="win-tabs-left">
-        <label class="win-tab" for="tm-gallery"><span class="win-tab-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-grid\"/></svg></span>Core ({{ priority | length }})</label>
-        <label class="win-tab" for="tm-core"><span class="win-tab-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-table\"/></svg></span>All ({{ section.extra.projects | length }})</label>
+        <label class="win-tab" for="tm-gallery"><span class="win-tab-glyph"><svg class="ui-icon" width="14" height="14" aria-hidden="true"><use href="#ic-grid"/></svg></span>Core ({{ priority | length }})</label>
+        <label class="win-tab" for="tm-core"><span class="win-tab-glyph"><svg class="ui-icon" width="14" height="14" aria-hidden="true"><use href="#ic-table"/></svg></span>All ({{ section.extra.projects | length }})</label>
       </div>
     </div>
 

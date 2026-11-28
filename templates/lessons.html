@@ -2,13 +2,13 @@
 
 {% block content %}
 <article class="post-header">
-  <span class="page-icon"><svg class=\"ui-icon\" width=\"20\" height=\"20\" aria-hidden=\"true\"><use href=\"#ic-pen\"/></svg></span>
+  <span class="page-icon"><svg class="ui-icon" width="20" height="20" aria-hidden="true"><use href="#ic-pen"/></svg></span>
   <h1>{{ section.title }}</h1>
   {%- if section.description %}
   <p class="post-lead">{{ section.description }}</p>
   {%- endif %}
   <div class="notion-props" aria-label="Lessons properties">
-    <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class=\"ui-icon\" width=\"14\" height=\"14\" aria-hidden=\"true\"><use href=\"#ic-pen\"/></svg></span>Shared</div>
+    <div class="notion-prop-key"><span class="notion-prop-glyph"><svg class="ui-icon" width="14" height="14" aria-hidden="true"><use href="#ic-pen"/></svg></span>Shared</div>
     <div class="notion-prop-val">{{ section.pages | length }} daily lessons</div>
   </div>
   <hr>
