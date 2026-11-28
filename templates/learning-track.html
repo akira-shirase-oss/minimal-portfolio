@@ -1,21 +1,17 @@
 {% extends "base.html" %}
 
-{% block ticker %}
-<div class="ticker-bar">
-  <span class="ticker-prefix" aria-hidden="true">TRACK</span>
-  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ section.title }} · {{ section.extra.status }} &nbsp;●&nbsp; {{ section.extra.chapters | length }} planned chapters &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
-</div>
-{% endblock ticker %}
-
 {% block content %}
 <article class="post-header">
-  <div class="post-meta">
-    <a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a>
-    <span>·</span>
-    <span>{{ section.extra.status }}</span>
-  </div>
+  <span class="page-icon" aria-hidden="true">◈</span>
   <h1>{{ section.title }}</h1>
   <p class="post-lead">{{ section.description }}</p>
+  <div class="notion-props" aria-label="Track properties">
+    <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">▤</span>Track</div>
+    <div class="notion-prop-val"><a href="{{ get_url(path='@/learn/_index.md') }}">Learning</a></div>
+    <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">◎</span>Status</div>
+    <div class="notion-prop-val"><span class="badge badge-accent">{{ section.extra.status }}</span></div>
+  </div>
+  <hr>
   <div class="post-body">{{ section.content | safe }}</div>
   <p><a class="btn btn-secondary" href="{{ get_url(path=section.extra.roadmap) }}">Read the learning roadmap →</a></p>
 </article>

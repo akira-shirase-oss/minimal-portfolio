@@ -1,61 +1,51 @@
 {% extends "base.html" %}
 
-{% block ticker %}
-<div class="ticker-bar">
-  <span class="ticker-prefix" aria-hidden="true">KNOWLEDGE HUB</span>
-  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ section.pages | length }} articles on file &nbsp;●&nbsp; guides, comparisons, failures and experiments &nbsp;●&nbsp; numbers included &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
-</div>
-{% endblock ticker %}
-
 {% block content %}
 <article class="post-header">
-  <div class="post-meta">
-    <span>knowledge hub</span>
-    <span>·</span>
-    <span>{{ section.pages | length }} articles</span>
-    <span>·</span>
-    <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS feed</a>
-  </div>
+  <span class="page-icon" aria-hidden="true">¶</span>
   <h1>{{ section.title }}</h1>
   {%- if section.description %}
   <p class="post-lead">{{ section.description }}</p>
   {%- endif %}
+
   {%- set all_tags = get_taxonomy(kind="tags") %}
-  {%- if all_tags.items | length > 0 %}
-  <div class="post-tags" aria-label="Browse by topic">
-    {%- for term in all_tags.items %}
-    <a class="badge badge-muted" href="{{ term.permalink }}">#{{ term.name }} ({{ term.pages | length }})</a>
-    {%- endfor %}
+  <div class="notion-props" aria-label="Collection properties">
+    <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">▤</span>Articles</div>
+    <div class="notion-prop-val">{{ section.pages | length }} published · <a href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS feed</a></div>
+
+    {%- if all_tags.items | length > 0 %}
+    <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">#</span>Topics</div>
+    <div class="notion-prop-val">
+      {%- for term in all_tags.items %}
+      <a class="badge tag-{{ term.name }}" href="{{ term.permalink }}">#{{ term.name }} ({{ term.pages | length }})</a>
+      {%- endfor %}
+    </div>
+    {%- endif %}
   </div>
-  {%- endif %}
 </article>
 
 <section aria-label="All Knowledge Hub articles">
-  <div class="win-panel">
-    <div class="win-panel-bar">
-      <span>All articles ({{ section.pages | length }})</span>
-      <a class="win-bar-btn" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
-    </div>
-    <div class="win-panel-body">
-      <ul class="row-list" style="margin-bottom: 0;">
-        {%- for post in section.pages %}
-        <li class="row-item">
-          <div class="row-main">
-            <a class="row-title" href="{{ post.permalink }}">{{ post.title }}</a>
-            {%- if post.description %}
-            <span class="row-desc">{{ post.description }}</span>
-            {%- endif %}
-          </div>
-          <div class="row-meta">
-            {%- if post.extra.kind %}<span class="badge badge-muted">{{ post.extra.kind }}</span>{% endif %}
-            <span>{{ post.reading_time }} min</span>
-            <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
-          </div>
-        </li>
-        {%- endfor %}
-      </ul>
-    </div>
+  <div class="notion-section-head">
+    <h2>All articles</h2>
+    <span class="notion-section-meta">{{ section.pages | length }} pages</span>
   </div>
+  <ul class="row-list" style="margin-bottom: 0;">
+    {%- for post in section.pages %}
+    <li class="row-item">
+      <div class="row-main">
+        <a class="row-title" href="{{ post.permalink }}">{{ post.title }}</a>
+        {%- if post.description %}
+        <span class="row-desc">{{ post.description }}</span>
+        {%- endif %}
+      </div>
+      <div class="row-meta">
+        {%- if post.extra.kind %}<span class="badge kind-{{ post.extra.kind }}">{{ post.extra.kind }}</span>{% endif %}
+        <span>{{ post.reading_time }} min</span>
+        <time datetime="{{ post.date }}">{{ post.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+      </div>
+    </li>
+    {%- endfor %}
+  </ul>
 </section>
 
 <div class="win-shortcuts">

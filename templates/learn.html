@@ -1,17 +1,11 @@
 {% extends "base.html" %}
 
-{% block ticker %}
-<div class="ticker-bar">
-  <span class="ticker-prefix" aria-hidden="true">LEARNING</span>
-  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● learning tracks &nbsp;●&nbsp; worked examples, small numbers and open questions &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
-</div>
-{% endblock ticker %}
-
 {% block content %}
 <article class="post-header">
-  <div class="post-meta"><span>notes from learning in public</span></div>
+  <span class="page-icon" aria-hidden="true">◈</span>
   <h1>{{ section.title }}</h1>
   <p class="post-lead">{{ section.description }}</p>
+  <hr>
   <div class="post-body">{{ section.content | safe }}</div>
 </article>
 

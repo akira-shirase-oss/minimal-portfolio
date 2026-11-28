@@ -1,34 +1,37 @@
 {% extends "base.html" %}
 
-{% block ticker %}
-{#- The status ticker: the text is written once in data-ticker; the CSS draws
-    two copies from it and slides the track by half its width. -#}
-<div class="ticker-bar">
-  <span class="ticker-prefix" aria-hidden="true">{{ page.extra.kind | default(value="POST") | upper }}</span>
-  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ page.extra.kind | default(value="post") }} · {{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }} · {{ page.reading_time }} min read &nbsp;●&nbsp; written up, numbers included &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
-</div>
-{% endblock ticker %}
-
 {% block content %}
 <article>
   <div class="post-header">
-    {#- Filled by series-page.html for build-log entries; empty for normal posts. #}
+    {#- Filled by series-page.html / learning-page.html; empty for normal posts. #}
     {%- block series_line %}{% endblock series_line %}
-    <div class="post-meta">
-      <time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
-      <span>·</span>
-      <span>{{ page.reading_time }} min read</span>
-      {%- if page.extra.kind %}<span>·</span><span class="badge badge-muted">{{ page.extra.kind }}</span>{% endif %}
-      {%- if page.taxonomies.tags is defined %}
-        {%- for tag in page.taxonomies.tags %}
-        <a class="badge" href="{{ get_taxonomy_url(kind='tags', name=tag) }}">#{{ tag }}</a>
-        {%- endfor %}
-      {%- endif %}
-    </div>
+    <span class="page-icon" aria-hidden="true">{% if page.extra.kind == "failure" %}!{% elif page.extra.kind == "experiment" %}◈{% elif page.extra.kind == "release" %}★{% else %}¶{% endif %}</span>
     <h1>{{ page.title }}</h1>
     {%- if page.description %}
     <p class="post-lead">{{ page.description }}</p>
     {%- endif %}
+
+    <div class="notion-props" aria-label="Page properties">
+      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">◷</span>Published</div>
+      <div class="notion-prop-val"><time datetime="{{ page.date }}">{{ page.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>{% if page.updated %} <small>(updated {{ page.updated | date(format="%Y-%m-%d", timezone="America/New_York") }})</small>{% endif %}</div>
+
+      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">◫</span>Read time</div>
+      <div class="notion-prop-val">{{ page.reading_time }} min read</div>
+
+      {%- if page.extra.kind %}
+      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">◎</span>Kind</div>
+      <div class="notion-prop-val"><span class="badge kind-{{ page.extra.kind }}">{{ page.extra.kind }}</span></div>
+      {%- endif %}
+
+      {%- if page.taxonomies.tags is defined and page.taxonomies.tags | length > 0 %}
+      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">#</span>Topics</div>
+      <div class="notion-prop-val">
+        {%- for tag in page.taxonomies.tags %}
+        <a class="badge tag-{{ tag }}" href="{{ get_taxonomy_url(kind='tags', name=tag) }}">#{{ tag }}</a>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+    </div>
   </div>
   {#- Filled by series-page.html with an "at a glance" card; empty for normal posts. #}
   {%- block after_subtitle %}{% endblock after_subtitle %}
@@ -52,32 +55,33 @@
 {%- endfor %}
 {%- if rel_count > 0 %}
 <section aria-label="Related posts">
-  <fieldset>
-    <legend>Related reading</legend>
-    <ul class="row-list" style="margin-bottom: 0;">
-      {%- set_global shown = 0 %}
-      {%- for cand in all_posts.pages %}
-        {%- if shown < 3 and cand.permalink != page.permalink and cand.taxonomies.tags is defined %}
-          {%- set_global matched = false %}
-          {%- for t in page.taxonomies.tags %}
-            {%- if t in cand.taxonomies.tags %}{%- set_global matched = true %}{%- endif %}
-          {%- endfor %}
-          {%- if matched %}
-          {%- set_global shown = shown + 1 %}
-          <li class="row-item">
-            <div class="row-main">
-              <a class="row-title" href="{{ cand.permalink }}">{{ cand.title }}</a>
-              {%- if cand.description %}<span class="row-desc">{{ cand.description }}</span>{% endif %}
-            </div>
-            <div class="row-meta">
-              <time datetime="{{ cand.date }}">{{ cand.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
-            </div>
-          </li>
-          {%- endif %}
+  <div class="notion-section-head">
+    <h2>Related reading</h2>
+    <span class="notion-section-meta">From Knowledge Hub</span>
+  </div>
+  <ul class="row-list" style="margin-bottom: 0;">
+    {%- set_global shown = 0 %}
+    {%- for cand in all_posts.pages %}
+      {%- if shown < 3 and cand.permalink != page.permalink and cand.taxonomies.tags is defined %}
+        {%- set_global matched = false %}
+        {%- for t in page.taxonomies.tags %}
+          {%- if t in cand.taxonomies.tags %}{%- set_global matched = true %}{%- endif %}
+        {%- endfor %}
+        {%- if matched %}
+        {%- set_global shown = shown + 1 %}
+        <li class="row-item">
+          <div class="row-main">
+            <a class="row-title" href="{{ cand.permalink }}">{{ cand.title }}</a>
+            {%- if cand.description %}<span class="row-desc">{{ cand.description }}</span>{% endif %}
+          </div>
+          <div class="row-meta">
+            <time datetime="{{ cand.date }}">{{ cand.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+          </div>
+        </li>
         {%- endif %}
-      {%- endfor %}
-    </ul>
-  </fieldset>
+      {%- endif %}
+    {%- endfor %}
+  </ul>
 </section>
 {%- endif %}
 {%- endif %}

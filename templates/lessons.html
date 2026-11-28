@@ -1,19 +1,17 @@
 {% extends "base.html" %}
 
-{% block ticker %}
-<div class="ticker-bar">
-  <span class="ticker-prefix" aria-hidden="true">LESSONS</span>
-  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● daily lessons · {{ section.pages | length }} shared &nbsp;●&nbsp; small notes, written as they happen &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
-</div>
-{% endblock ticker %}
-
 {% block content %}
 <article class="post-header">
-  <div class="post-meta"><span>daily lessons</span><span>·</span><span>{{ section.pages | length }} shared</span></div>
+  <span class="page-icon" aria-hidden="true">✎</span>
   <h1>{{ section.title }}</h1>
   {%- if section.description %}
   <p class="post-lead">{{ section.description }}</p>
   {%- endif %}
+  <div class="notion-props" aria-label="Lessons properties">
+    <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">▤</span>Shared</div>
+    <div class="notion-prop-val">{{ section.pages | length }} daily lessons</div>
+  </div>
+  <hr>
   <div class="post-body">{{ section.content | safe }}</div>
 </article>
 

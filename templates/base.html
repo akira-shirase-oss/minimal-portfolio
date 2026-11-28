@@ -87,51 +87,37 @@
   {%- include "partials/json-ld.html" %}
 
   <script>
-    // Text light/dark toggle plus the ticker's one-pass play — the only
-    // script on the site. Runs before paint so a saved theme choice never
-    // flashes; with no saved choice the system setting wins.
+    // Light/dark theme and Notion-style Sans/Serif/Mono document font toggle —
+    // the only script on the site. Runs before paint so saved preferences never flash.
     (function () {
       var root = document.documentElement;
       try {
         var saved = localStorage.getItem("theme");
         if (saved === "light" || saved === "dark") root.dataset.theme = saved;
-        // No saved choice: follow the system, same as the toggle label does.
-        // Without this the palette never applies until the first click.
         else root.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        var font = localStorage.getItem("font");
+        if (font === "sans" || font === "serif" || font === "mono") root.dataset.font = font;
       } catch (e) {}
       document.addEventListener("DOMContentLoaded", function () {
-        // Status ticker stays static when it fits cleanly on one line; only
-        // scroll (with a pause/play toggle) when the content overflows.
-        // Reduced-motion readers never get motion or the toggle.
-        var t = document.querySelector(".ticker");
-        if (t) {
-          var copy = t.querySelector(".ticker-copy");
-          var track = t.querySelector(".ticker-track");
-          var raw = copy ? copy.getAttribute("data-ticker") || "" : "";
-          var clean = raw.replace(/[\s\u00a0]*●[\s\u00a0]*$/, "");
-          if (copy) copy.setAttribute("data-ticker", clean);
-          function checkTicker() {
-            if (t.classList.contains("is-scrolling")) return;
-            var overflow = t.scrollWidth > t.clientWidth + 2 || (track && track.getBoundingClientRect().width > t.clientWidth + 2);
-            if (overflow && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-              if (copy) copy.setAttribute("data-ticker", clean + "  ●  ");
-              t.classList.add("is-scrolling");
-              var wrap = document.createElement("small");
-              var p = document.createElement("button");
-              p.type = "button";
-              p.className = "link ticker-play";
-              p.setAttribute("aria-label", "Pause or play the status ticker");
-              p.textContent = "pause";
-              wrap.append("[ ", p, " ]");
-              t.after(wrap);
-              p.addEventListener("click", function () {
-                var paused = t.classList.toggle("paused");
-                p.textContent = paused ? "play" : "pause";
-              });
+        var fw = document.getElementById("font-toggle-wrap");
+        if (fw) {
+          var btns = fw.querySelectorAll("[data-set-font]");
+          function syncFont() {
+            var cur = root.dataset.font || "sans";
+            for (var i = 0; i < btns.length; i++) {
+              btns[i].setAttribute("aria-pressed", btns[i].getAttribute("data-set-font") === cur ? "true" : "false");
             }
           }
-          checkTicker();
-          window.addEventListener("load", checkTicker);
+          for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+              var next = this.getAttribute("data-set-font");
+              root.dataset.font = next;
+              try { localStorage.setItem("font", next); } catch (e) {}
+              syncFont();
+            });
+          }
+          fw.hidden = false;
+          syncFont();
         }
         var b = document.getElementById("theme-toggle");
         if (!b) return;
@@ -227,7 +213,7 @@
       </div>
     </aside>
 
-    <div class="notion-main-wrap">
+    <div class="notion-main-wrap{% if is_home %} has-cover{% endif %}">
       {% block header %}
       <header class="site-header">
         <div class="notion-topbar">
@@ -242,6 +228,11 @@
           <div class="notion-topbar-actions">
             {%- if config.extra.github %}<a class="topbar-link" href="https://github.com/{{ config.extra.github }}">GitHub</a>{% endif %}
             <a class="topbar-link" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS</a>
+            <span id="font-toggle-wrap" class="font-switcher" role="group" aria-label="Page font style" hidden>
+              <button class="font-btn" type="button" data-set-font="sans" aria-pressed="true" title="Sans-serif">Sans</button>
+              <button class="font-btn" type="button" data-set-font="serif" aria-pressed="false" title="Serif">Serif</button>
+              <button class="font-btn" type="button" data-set-font="mono" aria-pressed="false" title="Monospace">Mono</button>
+            </span>
             <span id="theme-toggle-wrap" hidden><button id="theme-toggle" type="button">dark</button></span>
           </div>
         </div>
@@ -258,6 +249,8 @@
         </div>
       </header>
       {% endblock header %}
+
+      {% block cover %}{% endblock cover %}
 
       <main>
         {% block ticker %}{% endblock ticker %}

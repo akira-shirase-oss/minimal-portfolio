@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block cover %}
+<div class="notion-cover" aria-hidden="true">
+  <div class="notion-cover-caption">
+    <span class="notion-cover-pill">404human.dev · Rust · systems · AI tools</span>
+  </div>
+</div>
+{% endblock cover %}
+
 {% block content %}
 {%- set logs = section.extra.logs | default(value=[]) %}
 {%- set posts = get_section(path="posts/_index.md") %}
@@ -9,7 +17,11 @@
   {%- set_global log_entries = log_entries + (one_log.pages | length) %}
 {%- endfor %}
 
-<!-- ======================= HERO + FLAGSHIP ======================= -->
+<!-- ======================= PAGE ICON + HERO + FLAGSHIP CALLOUT ======================= -->
+<div class="notion-page-icon-overlap">
+  <img class="notion-page-avatar" src="{{ get_url(path='img/avatar-192.webp') }}" alt="404human avatar" width="78" height="78">
+</div>
+
 <div class="hero-grid">
   <section class="hero" aria-label="Introduction">
     <div class="hero-eyebrow">
@@ -30,14 +42,12 @@
   </section>
 
   <section aria-label="Flagship project" style="margin: 0;">
-    <div class="win-dialog">
-      <div class="win-dialog-bar">
-        <span>Flagship · Colophon CMS</span>
-        <span class="win-bar-tag">Rust + Svelte · pre-0.1</span>
-      </div>
-      <div class="win-dialog-body">
-        <h2>A CMS where “published” is a receipt, not a spinner.</h2>
-        <p>Every publish is a numbered release, and a probe reads the release marker off the live page before the product calls it done.</p>
+    <div class="notion-callout notion-callout-blue" style="margin: 0;">
+      <span class="notion-callout-icon" aria-hidden="true">C</span>
+      <div class="notion-callout-body">
+        <div class="notion-callout-meta">Flagship · Colophon CMS · Rust + Svelte · pre-0.1</div>
+        <h2 class="notion-callout-title" style="font-size: 1.12rem; margin-bottom: 8px;">A CMS where “published” is a receipt, not a spinner.</h2>
+        <p style="font-size: 0.9rem; color: var(--muted-foreground); margin-bottom: 12px;">Every publish is a numbered release, and a probe reads the release marker off the live page before the product calls it done.</p>
         <div class="win-dialog-well">PostgreSQL = single authority · RLS tenant isolation · transactional outbox · monotonic releases</div>
         <a class="btn btn-secondary" href="{{ get_url(path='@/colophon/_index.md') }}">Open Colophon build log →</a>
       </div>
@@ -45,32 +55,82 @@
   </section>
 </div>
 
-<!-- ======================= STATUS TICKER ======================= -->
-<div class="ticker-bar">
-  <span class="ticker-prefix" aria-hidden="true">STATUS</span>
-  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ log_entries + (posts.pages | length) }} write-ups on file{%- for log_path in logs %}{%- set one_log = get_section(path=log_path) %}{%- if one_log.pages %} &nbsp;●&nbsp; {{ one_log.extra.short_title or one_log.title }}: {{ one_log.pages[0].extra.milestone }} · {{ one_log.pages[0].extra.step }}{% endif %}{%- endfor %} &nbsp;●&nbsp; experiments, failures and releases &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
-</div>
-
-<!-- ======================= PROJECTS (TASK MANAGER INTERACTIVE TABS) ======================= -->
+<!-- ======================= PROJECTS DATABASE (GALLERY + TABLE + IN DEV + LOGS) ======================= -->
 {%- if section.extra.projects %}
 <section id="projects" aria-label="Projects">
   {%- set priority = ["Colophon CMS", "Durable Runner", "Service Monitor", "jsrt", "MiniBTC"] %}
+  <div class="notion-section-head">
+    <h2>Projects</h2>
+    <span class="notion-section-meta">{{ section.extra.projects | length }} tracked · {{ logs | length }} build logs</span>
+  </div>
+
   <div class="win-tabset">
-    <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-core" checked>
+    <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-gallery" checked>
+    <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-core">
     <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-dev">
     <input class="win-tab-radio" type="radio" name="tm-tab" id="tm-logs">
 
     <div class="win-tabs">
       <div class="win-tabs-left">
-        <label class="win-tab" for="tm-core">Core Projects ({{ priority | length }})</label>
-        <label class="win-tab" for="tm-dev">In Development ({{ (section.extra.projects | length) - (priority | length) }})</label>
-        <label class="win-tab" for="tm-logs">Build Logs ({{ logs | length }})</label>
+        <label class="win-tab" for="tm-gallery"><span class="win-tab-glyph" aria-hidden="true">⊞</span>Gallery ({{ priority | length }})</label>
+        <label class="win-tab" for="tm-core"><span class="win-tab-glyph" aria-hidden="true">▤</span>Table ({{ priority | length }})</label>
+        <label class="win-tab" for="tm-dev"><span class="win-tab-glyph" aria-hidden="true">◎</span>In Development ({{ (section.extra.projects | length) - (priority | length) }})</label>
+        <label class="win-tab" for="tm-logs"><span class="win-tab-glyph" aria-hidden="true">☰</span>Build Logs ({{ logs | length }})</label>
       </div>
       <a class="win-tabs-link" href="{{ get_url(path='@/progress/_index.md') }}">Full progress ledger →</a>
     </div>
 
     <div class="win-tab-pane">
-      <!-- Tab 1: Core Projects -->
+      <!-- Tab 1: Notion Gallery Cards -->
+      <div class="win-tab-panel panel-gallery">
+        <div class="notion-gallery">
+        {%- for name in priority %}
+          {%- for project in section.extra.projects %}
+            {%- if project.name == name %}
+            {%- set st = project.status | default(value="") %}
+            {%- set href = "" %}
+            {%- set latest_meta = "" %}
+            {%- if project.link %}
+              {%- if project.link is starting_with(pat="@/") %}
+                {%- set href = get_url(path=project.link) %}
+                {%- set log_path = project.link | replace(from="@/", to="") %}
+                {%- if log_path in logs %}
+                  {%- set item_log = get_section(path=log_path) %}
+                  {%- if item_log.pages %}
+                    {%- set now_on = item_log.pages[0] %}
+                    {%- set latest_meta = now_on.extra.milestone ~ " · " ~ now_on.extra.step %}
+                    {%- if now_on.extra.tests is defined %}{%- set latest_meta = latest_meta ~ " · " ~ now_on.extra.tests ~ " tests" %}{%- endif %}
+                  {%- endif %}
+                {%- endif %}
+              {%- else %}
+                {%- set href = project.link %}
+              {%- endif %}
+            {%- endif %}
+            <article class="gallery-card" style="margin: 0;">
+              <div class="gallery-card-cover">
+                <span class="badge {% if st == 'hardened' or st == 'live' or st == 'shipped' %}badge-ok{% else %}badge-accent{% endif %}"><span class="dot" aria-hidden="true"></span> {{ st }}</span>
+                <span class="gallery-card-id">PID {{ 100 + loop.index }}</span>
+              </div>
+              <div class="gallery-card-body">
+                <h3 class="gallery-card-title">{% if href %}<a href="{{ href }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</h3>
+                <p class="gallery-card-desc">{{ project.about }}</p>
+                <div class="gallery-card-foot">
+                  <span>{% if latest_meta %}{{ latest_meta }}{% else %}Build log{% endif %}</span>
+                  {%- if project.site %}
+                  <a href="{{ project.site }}" rel="noopener">{{ project.site | replace(from="https://", to="") }} ↗</a>
+                  {%- elif href %}
+                  <a href="{{ href }}">Read log →</a>
+                  {%- endif %}
+                </div>
+              </div>
+            </article>
+            {%- endif %}
+          {%- endfor %}
+        {%- endfor %}
+        </div>
+      </div>
+
+      <!-- Tab 2: Core Projects Table -->
       <div class="win-tab-panel panel-core">
         <div class="table-wrap">
           <table class="mobile-records" role="table" aria-label="Core projects">
@@ -127,7 +187,7 @@
         </div>
       </div>
 
-      <!-- Tab 2: In Development & Explorations -->
+      <!-- Tab 3: In Development & Explorations -->
       <div class="win-tab-panel panel-dev">
         <div class="table-wrap">
           <table class="mobile-records" role="table" aria-label="In development and explorations">
@@ -161,7 +221,7 @@
         </div>
       </div>
 
-      <!-- Tab 3: All Build Logs -->
+      <!-- Tab 4: All Build Logs -->
       <div class="win-tab-panel panel-logs">
         <div class="table-wrap">
           <table class="mobile-records" role="table" aria-label="All build logs">
@@ -193,125 +253,129 @@
 </section>
 {%- endif %}
 
-<!-- ======================= NUMBERS (PERFORMANCE MONITOR) ======================= -->
+<!-- ======================= NUMBERS (NOTION CALLOUT + METRIC GALLERY) ======================= -->
 <section id="numbers" aria-label="Measured numbers">
-  <div class="win-panel">
-    <div class="win-panel-bar">
-      <span>Numbers I can show, not adjectives</span>
-      <span class="win-bar-tag">6 verified runs</span>
+  <div class="notion-section-head">
+    <h2>Numbers I can show, not adjectives</h2>
+    <span class="notion-section-meta">6 verified runs</span>
+  </div>
+  <div class="notion-callout">
+    <span class="notion-callout-icon" aria-hidden="true">!</span>
+    <div class="notion-callout-body">
+      <p style="font-size: 0.9rem; color: var(--muted-foreground);"><b>House rule:</b> no claim without an executed run and stored evidence. Measured on laptop-class hardware — development observations, never production capacity.</p>
     </div>
-    <div class="win-panel-body">
-      <p class="win-panel-note"><b>House rule:</b> no claim without an executed run and stored evidence. Measured on laptop-class hardware — development observations, never production capacity.</p>
-      <div class="metrics-grid">
-        <div class="metric">
-          <div class="metric-readout">540,063 req</div>
-          <div class="metric-label">Warm baseline, 30 min</div>
-          <p class="metric-note">300/s with zero failures on this machine. Proves steady load; says nothing about your hardware.</p>
-        </div>
-        <div class="metric">
-          <div class="metric-readout">600 refused/s</div>
-          <div class="metric-label">Noisy-agent isolation</div>
-          <p class="metric-note">A token past quota is throttled inside auth while editors beside it hold their latency.</p>
-        </div>
-        <div class="metric">
-          <div class="metric-readout">≥ 1,000,000</div>
-          <div class="metric-label">Full load bar</div>
-          <p class="metric-note">Standing bar for anything serving traffic; misses fail and get investigated, not re-run till green.</p>
-        </div>
-        <div class="metric">
-          <div class="metric-readout">400 s</div>
-          <div class="metric-label">Disaster restore drill</div>
-          <p class="metric-note">Encrypted capture to serving on clean infrastructure — rehearsed for real, not documented in hope.</p>
-        </div>
-        <div class="metric">
-          <div class="metric-readout">10,000 records</div>
-          <div class="metric-label">Import at true scale</div>
-          <p class="metric-note">A real import, not a loop over a tiny sample labelled “scale”.</p>
-        </div>
-        <div class="metric">
-          <div class="metric-readout">59 / 59</div>
-          <div class="metric-label">Hidden-test Rust exam</div>
-          <p class="metric-note">The AI couldn’t see the questions or run a compiler. Decoys included.</p>
-        </div>
-      </div>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric">
+      <div class="metric-readout">540,063 req</div>
+      <div class="metric-label">Warm baseline, 30 min</div>
+      <p class="metric-note">300/s with zero failures on this machine. Proves steady load; says nothing about your hardware.</p>
+    </div>
+    <div class="metric">
+      <div class="metric-readout">600 refused/s</div>
+      <div class="metric-label">Noisy-agent isolation</div>
+      <p class="metric-note">A token past quota is throttled inside auth while editors beside it hold their latency.</p>
+    </div>
+    <div class="metric">
+      <div class="metric-readout">≥ 1,000,000</div>
+      <div class="metric-label">Full load bar</div>
+      <p class="metric-note">Standing bar for anything serving traffic; misses fail and get investigated, not re-run till green.</p>
+    </div>
+    <div class="metric">
+      <div class="metric-readout">400 s</div>
+      <div class="metric-label">Disaster restore drill</div>
+      <p class="metric-note">Encrypted capture to serving on clean infrastructure — rehearsed for real, not documented in hope.</p>
+    </div>
+    <div class="metric">
+      <div class="metric-readout">10,000 records</div>
+      <div class="metric-label">Import at true scale</div>
+      <p class="metric-note">A real import, not a loop over a tiny sample labelled “scale”.</p>
+    </div>
+    <div class="metric">
+      <div class="metric-readout">59 / 59</div>
+      <div class="metric-label">Hidden-test Rust exam</div>
+      <p class="metric-note">The AI couldn’t see the questions or run a compiler. Decoys included.</p>
     </div>
   </div>
 </section>
 
-<!-- ======================= HOW I WORK (SYSTEM POLICIES GROUPBOX) ======================= -->
+<!-- ======================= HOW THE WORK IS JUDGED ======================= -->
 <section id="how" aria-label="How the work is judged">
-  <fieldset>
-    <legend>How the work is judged</legend>
-    <div class="principles-list">
-      <div class="principle">
-        <h3><span class="win-check" aria-hidden="true">✓</span>Proof over breadth.</h3>
-        <p>A feature counts when its <i>failure</i> behaviour is tested and stored — CI regressions, a real HTTP testbed, and committed load runs.</p>
-      </div>
-      <div class="principle">
-        <h3><span class="win-check" aria-hidden="true">✓</span>Truthful states.</h3>
-        <p><del>“Accepted” presented as “done”</del> is the industry’s favourite bug. Publishes stay <mark>pending</mark> until probed live; unmeasured checks stay <code>uncertain</code>.</p>
-      </div>
-      <div class="principle">
-        <h3><span class="win-check" aria-hidden="true">✓</span>Kill it at any moment.</h3>
-        <p>Crash tests have catalogue numbers (F01–F09). Bugs get a replayable seed: <kbd>colophon-sim --seed N --trace</kbd>.</p>
-      </div>
-      <div class="principle">
-        <h3><span class="win-check" aria-hidden="true">✓</span>Bounded everything.</h3>
-        <p>Every queue, body, page, cache, retry loop and pool has a limit and a deadline — a bound you can’t name is an outage you haven’t met yet.</p>
-      </div>
-      <div class="principle">
-        <h3><span class="win-check" aria-hidden="true">✓</span>No AI hype.</h3>
-        <p>Agents work through the same API and permissions as everyone else — draft-only, budgeted in Postgres, never self-approving.</p>
-      </div>
+  <div class="notion-section-head">
+    <h2>How the work is judged</h2>
+    <span class="notion-section-meta">5 standing rules</span>
+  </div>
+  <div class="principles-list">
+    <div class="principle">
+      <h3><span class="win-check" aria-hidden="true">✓</span>Proof over breadth.</h3>
+      <p>A feature counts when its <i>failure</i> behaviour is tested and stored — CI regressions, a real HTTP testbed, and committed load runs.</p>
     </div>
-  </fieldset>
+    <div class="principle">
+      <h3><span class="win-check" aria-hidden="true">✓</span>Truthful states.</h3>
+      <p><del>“Accepted” presented as “done”</del> is the industry’s favourite bug. Publishes stay <mark>pending</mark> until probed live; unmeasured checks stay <code>uncertain</code>.</p>
+    </div>
+    <div class="principle">
+      <h3><span class="win-check" aria-hidden="true">✓</span>Kill it at any moment.</h3>
+      <p>Crash tests have catalogue numbers (F01–F09). Bugs get a replayable seed: <kbd>colophon-sim --seed N --trace</kbd>.</p>
+    </div>
+    <div class="principle">
+      <h3><span class="win-check" aria-hidden="true">✓</span>Bounded everything.</h3>
+      <p>Every queue, body, page, cache, retry loop and pool has a limit and a deadline — a bound you can’t name is an outage you haven’t met yet.</p>
+    </div>
+    <div class="principle">
+      <h3><span class="win-check" aria-hidden="true">✓</span>No AI hype.</h3>
+      <p>Agents work through the same API and permissions as everyone else — draft-only, budgeted in Postgres, never self-approving.</p>
+    </div>
+  </div>
 </section>
 
-<!-- ======================= FAQ (WINHELP TREEVIEW) ======================= -->
+<!-- ======================= FAQ (NATIVE NOTION TOGGLE LIST) ======================= -->
 <section aria-label="Frequently asked questions">
-  <fieldset>
-    <legend>Asked plainly</legend>
-    <div class="win-well">
-      <details>
-        <summary>Why build in the open, including the mistakes?</summary>
-        <p>Because “proof over breadth” can’t be claimed, only shown. A build log that includes the failures is the difference between <i>saying</i> a system is reliable and letting you check.</p>
-      </details>
-      <details>
-        <summary>Is any of this usable yet?</summary>
-        <p>Colophon is pre-0.1; Service Monitor has an installed release; jsrt’s roadmap and hardened load runs are done; the seven newer projects are still early. Check the <a href="{{ get_url(path='@/progress/_index.md') }}">progress ledger</a> for every project’s exact stage and open items.</p>
-      </details>
-      <details>
-        <summary>Why Rust?</summary>
-        <p>One type system for the error envelope, explicit deadlines on every I/O await, compilers that refuse what production would regret, and deterministic failure simulators.</p>
-      </details>
-      <details>
-        <summary>How minimal is this site, really?</summary>
-        <p>Zola generates it: one stylesheet, one small inline script for the theme toggle and ticker, no tracking, and one self-hosted font. Accordions are native <code>&lt;details&gt;</code>.</p>
-      </details>
-    </div>
-  </fieldset>
+  <div class="notion-section-head">
+    <h2>Asked plainly</h2>
+    <span class="notion-section-meta">Toggle blocks</span>
+  </div>
+  <div class="notion-toggles">
+    <details>
+      <summary>Why build in the open, including the mistakes?</summary>
+      <p>Because “proof over breadth” can’t be claimed, only shown. A build log that includes the failures is the difference between <i>saying</i> a system is reliable and letting you check.</p>
+    </details>
+    <details>
+      <summary>Is any of this usable yet?</summary>
+      <p>Colophon is live in alpha; Service Monitor has an installed release; jsrt’s roadmap and hardened load runs are done; the seven newer projects are still early. Check the <a href="{{ get_url(path='@/progress/_index.md') }}">progress ledger</a> for every project’s exact stage and open items.</p>
+    </details>
+    <details>
+      <summary>Why Rust?</summary>
+      <p>One type system for the error envelope, explicit deadlines on every I/O await, compilers that refuse what production would regret, and deterministic failure simulators.</p>
+    </details>
+    <details>
+      <summary>How minimal is this site, really?</summary>
+      <p>Zola generates it: one stylesheet, one tiny inline script for the theme and font toggles, no tracking, and one self-hosted font. Accordions are native <code>&lt;details&gt;</code>.</p>
+    </details>
+  </div>
 </section>
 
-<!-- ======================= FIND ME (NETWORK SHORTCUTS) ======================= -->
+<!-- ======================= FIND ME ======================= -->
 <section id="find" aria-label="Find me">
   {%- set x = config.extra.x_handle %}
   {%- set gh = config.extra.github %}
   {%- set mail = config.extra.email %}
-  <fieldset>
-    <legend>Find me</legend>
-    <div class="win-shortcuts">
-      {%- if gh %}
-      <a class="btn btn-secondary" href="https://github.com/{{ gh }}">GitHub · github.com/{{ gh }}</a>
-      {%- endif %}
-      {%- if x %}
-      <a class="btn btn-secondary" href="https://x.com/{{ x }}">X · @{{ x }}</a>
-      {%- endif %}
-      {%- if mail %}
-      <a class="btn btn-secondary" href="mailto:{{ mail }}">Email · {{ mail }}</a>
-      {%- endif %}
-      <a class="btn btn-secondary" href="{{ get_url(path='@/posts/_index.md') }}">Knowledge Hub · /posts/</a>
-      <a class="btn btn-secondary" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS · /rss.xml</a>
-    </div>
-  </fieldset>
+  <div class="notion-section-head">
+    <h2>Find me</h2>
+    <span class="notion-section-meta">Links &amp; feeds</span>
+  </div>
+  <div class="win-shortcuts" style="margin-top: 0;">
+    {%- if gh %}
+    <a class="btn btn-secondary" href="https://github.com/{{ gh }}">GitHub · github.com/{{ gh }}</a>
+    {%- endif %}
+    {%- if x %}
+    <a class="btn btn-secondary" href="https://x.com/{{ x }}">X · @{{ x }}</a>
+    {%- endif %}
+    {%- if mail %}
+    <a class="btn btn-secondary" href="mailto:{{ mail }}">Email · {{ mail }}</a>
+    {%- endif %}
+    <a class="btn btn-secondary" href="{{ get_url(path='@/posts/_index.md') }}">Knowledge Hub · /posts/</a>
+    <a class="btn btn-secondary" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">RSS · /rss.xml</a>
+  </div>
 </section>
 {% endblock content %}

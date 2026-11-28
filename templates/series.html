@@ -1,33 +1,28 @@
 {% extends "base.html" %}
 
-{#- A build log: one section whose pages are its entries. Entries are grouped under the
-    milestones listed in the section's `extra.milestones`, oldest first, so it reads in order. #}
-
-{% block ticker %}
-{#- The status ticker: the text is written once in data-ticker; the CSS draws
-    two copies from it and slides the track by half its width. -#}
-<div class="ticker-bar">
-  <span class="ticker-prefix" aria-hidden="true">BUILD LOG</span>
-  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy" data-ticker="status ● {{ section.extra.short_title or section.title }} build log · {{ section.pages | length }} entries{%- if section.extra.status %} &nbsp;●&nbsp; {{ section.extra.status }}{% endif %}{%- if section.extra.up_next %} &nbsp;●&nbsp; next: {{ section.extra.up_next.step }} — {{ section.extra.up_next.title }}{% endif %} &nbsp;●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></span></div></div>
-</div>
-{% endblock ticker %}
-
 {% block content %}
 <article>
   <div class="post-header">
-    <div class="post-meta">
-      <span>build log</span>
-      <span>·</span>
-      <span>{{ section.pages | length }} entries</span>
-      {%- if section.extra.status %}<span>·</span><span class="badge badge-accent">{{ section.extra.status }}</span>{% endif %}
-    </div>
+    <span class="page-icon" aria-hidden="true">☰</span>
     <h1>{{ section.title }}</h1>
     {%- if section.description %}
     <p class="post-lead">{{ section.description }}</p>
     {%- endif %}
+
+    <div class="notion-props" aria-label="Build log properties">
+      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">▤</span>Entries</div>
+      <div class="notion-prop-val">{{ section.pages | length }} logged</div>
+      {%- if section.extra.status %}
+      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">◎</span>Status</div>
+      <div class="notion-prop-val"><span class="badge badge-accent">{{ section.extra.status }}</span></div>
+      {%- endif %}
+      {%- if section.extra.up_next %}
+      <div class="notion-prop-key"><span class="notion-prop-glyph" aria-hidden="true">→</span>Up next</div>
+      <div class="notion-prop-val"><code>{{ section.extra.up_next.step }}</code> {{ section.extra.up_next.title }}</div>
+      {%- endif %}
+    </div>
   </div>
 
-  {#- The whole log at a glance first, inside a Windows 97 panel. #}
   {%- set log = section %}
   {%- set entries = section.pages | reverse %}
   {%- if entries %}
@@ -56,7 +51,6 @@
   {%- for milestone in section.extra.milestones %}
   {%- set entries = [p for p in section.pages if p.extra.milestone == milestone.id] | reverse %}
   {%- set has_next = up_next and up_next.milestone == milestone.id %}
-  {#- What's still ahead: a step leaves the list once it's published or being built. #}
   {%- set planned = [p for p in all_planned if p.milestone == milestone.id and not (p.step and (p.step in published or (has_next and p.step == up_next.step)))] %}
   <section aria-labelledby="{{ milestone.id | lower }}">
     <fieldset>
@@ -100,28 +94,24 @@
   {%- endfor %}
   {%- if section.extra.related_posts is defined and section.extra.related_posts | length > 0 %}
   <section aria-label="Related Knowledge Hub guides">
-    <div class="win-panel">
-      <div class="win-panel-bar">
-        <span>Related guides</span>
-        <span class="win-bar-tag">{{ section.extra.related_posts | length }} articles</span>
-      </div>
-      <div class="win-panel-body">
-        <ul class="row-list" style="margin-bottom: 0;">
-          {%- for post_path in section.extra.related_posts %}
-          {%- set rp = get_page(path=post_path) %}
-          <li class="row-item">
-            <div class="row-main">
-              <a class="row-title" href="{{ rp.permalink }}">{{ rp.title }}</a>
-              {%- if rp.description %}<span class="row-desc">{{ rp.description }}</span>{% endif %}
-            </div>
-            <div class="row-meta">
-              <time datetime="{{ rp.date }}">{{ rp.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
-            </div>
-          </li>
-          {%- endfor %}
-        </ul>
-      </div>
+    <div class="notion-section-head">
+      <h2>Related guides</h2>
+      <span class="notion-section-meta">{{ section.extra.related_posts | length }} articles</span>
     </div>
+    <ul class="row-list" style="margin-bottom: 0;">
+      {%- for post_path in section.extra.related_posts %}
+      {%- set rp = get_page(path=post_path) %}
+      <li class="row-item">
+        <div class="row-main">
+          <a class="row-title" href="{{ rp.permalink }}">{{ rp.title }}</a>
+          {%- if rp.description %}<span class="row-desc">{{ rp.description }}</span>{% endif %}
+        </div>
+        <div class="row-meta">
+          <time datetime="{{ rp.date }}">{{ rp.date | date(format="%Y-%m-%d", timezone="America/New_York") }}</time>
+        </div>
+      </li>
+      {%- endfor %}
+    </ul>
   </section>
   {%- endif %}
 </article>
