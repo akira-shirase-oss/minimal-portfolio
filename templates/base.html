@@ -92,7 +92,7 @@
     // so saved choices never flash.
     (function () {
       var root = document.documentElement;
-      var STYLES = ["notion", "win7", "win97", "macos", "terminal", "swiss"];
+      var STYLES = ["notion", "linear", "vscode", "figma", "obsidian", "arc", "notes", "docs", "macos", "win7", "win97", "terminal", "swiss"];
       try {
         var saved = localStorage.getItem("theme");
         if (saved === "light" || saved === "dark") root.dataset.theme = saved;
@@ -313,13 +313,32 @@
               </button>
               <div id="settings-panel" class="settings-panel" role="dialog" aria-label="Appearance settings" hidden>
                 <div class="settings-group">
-                  <div class="settings-heading">Design system</div>
-                  <div class="style-grid" role="group" aria-label="Design system">
+                  <div class="settings-heading">Workspaces</div>
+                  <div class="style-grid" role="group" aria-label="Workspace design systems">
                     <button class="style-opt" type="button" data-set-style="notion" aria-pressed="true"><span class="style-swatch sw-notion" aria-hidden="true"></span><span>Notion</span></button>
+                    <button class="style-opt" type="button" data-set-style="linear" aria-pressed="false"><span class="style-swatch sw-linear" aria-hidden="true"></span><span>Linear</span></button>
+                    <button class="style-opt" type="button" data-set-style="obsidian" aria-pressed="false"><span class="style-swatch sw-obsidian" aria-hidden="true"></span><span>Obsidian</span></button>
+                    <button class="style-opt" type="button" data-set-style="notes" aria-pressed="false"><span class="style-swatch sw-notes" aria-hidden="true"></span><span>Notes</span></button>
+                  </div>
+                </div>
+
+                <div class="settings-group">
+                  <div class="settings-heading">Dev &amp; Design</div>
+                  <div class="style-grid" role="group" aria-label="Developer and design systems">
+                    <button class="style-opt" type="button" data-set-style="vscode" aria-pressed="false"><span class="style-swatch sw-vscode" aria-hidden="true"></span><span>VS Code</span></button>
+                    <button class="style-opt" type="button" data-set-style="figma" aria-pressed="false"><span class="style-swatch sw-figma" aria-hidden="true"></span><span>Figma</span></button>
+                    <button class="style-opt" type="button" data-set-style="docs" aria-pressed="false"><span class="style-swatch sw-docs" aria-hidden="true"></span><span>Vercel Docs</span></button>
+                    <button class="style-opt" type="button" data-set-style="terminal" aria-pressed="false"><span class="style-swatch sw-terminal" aria-hidden="true"></span><span>Terminal</span></button>
+                  </div>
+                </div>
+
+                <div class="settings-group">
+                  <div class="settings-heading">OS &amp; Editorial</div>
+                  <div class="style-grid" role="group" aria-label="Operating system and editorial styles">
+                    <button class="style-opt" type="button" data-set-style="macos" aria-pressed="false"><span class="style-swatch sw-macos" aria-hidden="true"></span><span>macOS</span></button>
+                    <button class="style-opt" type="button" data-set-style="arc" aria-pressed="false"><span class="style-swatch sw-arc" aria-hidden="true"></span><span>Arc</span></button>
                     <button class="style-opt" type="button" data-set-style="win7" aria-pressed="false"><span class="style-swatch sw-win7" aria-hidden="true"></span><span>Windows 7</span></button>
                     <button class="style-opt" type="button" data-set-style="win97" aria-pressed="false"><span class="style-swatch sw-win97" aria-hidden="true"></span><span>Windows 97</span></button>
-                    <button class="style-opt" type="button" data-set-style="macos" aria-pressed="false"><span class="style-swatch sw-macos" aria-hidden="true"></span><span>macOS</span></button>
-                    <button class="style-opt" type="button" data-set-style="terminal" aria-pressed="false"><span class="style-swatch sw-terminal" aria-hidden="true"></span><span>Terminal</span></button>
                     <button class="style-opt" type="button" data-set-style="swiss" aria-pressed="false"><span class="style-swatch sw-swiss" aria-hidden="true"></span><span>Swiss</span></button>
                   </div>
                 </div>

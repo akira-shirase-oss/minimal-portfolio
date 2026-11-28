@@ -13,7 +13,7 @@
   var DATA;
   try { DATA = JSON.parse(dataEl.textContent); } catch (e) { return; }
 
-  var STYLES = ["notion", "win7", "win97", "macos", "terminal", "swiss"];
+  var STYLES = ["notion", "linear", "vscode", "figma", "obsidian", "arc", "notes", "docs", "macos", "win7", "win97", "terminal", "swiss"];
   var CORE = ["Colophon CMS", "Durable Runner", "Service Monitor", "jsrt", "MiniBTC"];
   var COMMANDS = [
     "help", "whoami", "neofetch", "ls", "projects", "cat",

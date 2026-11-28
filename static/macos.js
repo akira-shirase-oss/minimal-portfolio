@@ -54,6 +54,13 @@
   }
   var styleActions = [
     { group: "Appearance", title: "Switch to Notion", sub: "Default editorial workspace", style: "notion" },
+    { group: "Appearance", title: "Switch to Linear", sub: "Issue tracker & cycle roadmap", style: "linear" },
+    { group: "Appearance", title: "Switch to VS Code", sub: "IDE workbench with file tree & tabs", style: "vscode" },
+    { group: "Appearance", title: "Switch to Figma", sub: "Spatial dot-grid canvas & artboard frames", style: "figma" },
+    { group: "Appearance", title: "Switch to Obsidian", sub: "PKM vault with wikilinks & frontmatter", style: "obsidian" },
+    { group: "Appearance", title: "Switch to Arc", sub: "Tinted Space frame & pinned icon grid", style: "arc" },
+    { group: "Appearance", title: "Switch to Notes", sub: "Warm paper writer's notebook", style: "notes" },
+    { group: "Appearance", title: "Switch to Vercel Docs", sub: "Monochrome hairline technical docs", style: "docs" },
     { group: "Appearance", title: "Switch to Windows 7", sub: "Aero Glass Explorer + Taskbar", style: "win7" },
     { group: "Appearance", title: "Switch to Windows 97", sub: "Classic 3D bevels + Start Taskbar", style: "win97" },
     { group: "Appearance", title: "Switch to Terminal", sub: "Interactive tmux CLI shell", style: "terminal" },

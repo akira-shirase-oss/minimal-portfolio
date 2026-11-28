@@ -9,7 +9,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'none'; script-src 'self' https://static.cloudflareinsights.com 'sha256-w6LR3Q584zsBGbVzQTl4hCRLN2MQ3DSz2A3eX91sWGw='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; script-src 'self' https://static.cloudflareinsights.com 'sha256-wzbPliki9Qwlt8wuJlb3NJwHrP9FXi46s6pHxWwVzv8='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
 
 # The same site also answers on www. and on its pages.dev addresses. Keep
 # those out of search results, so 404human.dev is the one that's indexed
