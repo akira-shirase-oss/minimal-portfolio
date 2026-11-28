@@ -338,6 +338,27 @@
       {% block cover %}{% endblock cover %}
 
       <main>
+        <section class="term-shell" id="term-shell" aria-label="Interactive terminal">
+          <div class="term-bar">
+            <span class="term-bar-title">zsh · 404human@dev:~</span>
+            <span class="term-bar-hint">Tab complete · ↑↓ history · type <code>help</code></span>
+          </div>
+          <div class="term-out" id="term-out" role="log" aria-live="polite"></div>
+          <form class="term-prompt-row" id="term-form" autocomplete="off">
+            <label class="term-prompt" for="term-input">404human@dev:~$</label>
+            <input class="term-input" id="term-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="try: neofetch, projects, cat colophon, style macos">
+          </form>
+          <div class="term-chips" id="term-chips" aria-label="Quick commands">
+            <button type="button" class="term-chip" data-cmd="neofetch">neofetch</button>
+            <button type="button" class="term-chip" data-cmd="whoami">whoami</button>
+            <button type="button" class="term-chip" data-cmd="projects">projects</button>
+            <button type="button" class="term-chip" data-cmd="cat colophon">cat colophon</button>
+            <button type="button" class="term-chip" data-cmd="writing">writing</button>
+            <button type="button" class="term-chip" data-cmd="ls">ls</button>
+            <button type="button" class="term-chip" data-cmd="help">help</button>
+            <button type="button" class="term-chip" data-cmd="clear">clear</button>
+          </div>
+        </section>
         {% block ticker %}{% endblock ticker %}
         {% block content %}{% endblock content %}
       </main>
@@ -374,5 +395,52 @@
       <span class="os-tray-status">404human · zola</span>
     </div>
   </nav>
+  <script type="application/json" id="term-data">
+  {%- set _projects = _home.extra.projects | default(value=[]) %}
+  {
+    "postsCount": {{ _posts.pages | length }},
+    "projectsCount": {{ _projects | length }},
+    "logsCount": {{ _logs | length }},
+    "urls": {
+      "home": {{ get_url(path='@/_index.md') | json_encode | safe }},
+      "projects": {{ (get_url(path='@/_index.md') ~ '#projects') | json_encode | safe }},
+      "posts": {{ get_url(path='@/posts/_index.md') | json_encode | safe }},
+      "logs": {{ get_url(path='@/build-log/_index.md') | json_encode | safe }},
+      "learn": {{ get_url(path='@/learn/_index.md') | json_encode | safe }},
+      "progress": {{ get_url(path='@/progress/_index.md') | json_encode | safe }},
+      "rss": {{ get_url(path='rss.xml', trailing_slash=false) | json_encode | safe }},
+      "llms": {{ get_url(path='llms.txt', trailing_slash=false) | json_encode | safe }},
+      "github": {% if config.extra.github %}{{ ("https://github.com/" ~ config.extra.github) | json_encode | safe }}{% else %}""{% endif %},
+      "x": {% if config.extra.x_handle %}{{ ("https://x.com/" ~ config.extra.x_handle) | json_encode | safe }}{% else %}""{% endif %}
+    },
+    "projects": [
+      {%- for pr in _projects %}
+      {%- set _href = "" %}
+      {%- if pr.link %}{%- if pr.link is starting_with(pat="@/") %}{%- set _href = get_url(path=pr.link) %}{%- else %}{%- set _href = pr.link %}{%- endif %}{%- endif %}
+      {
+        "name": {{ pr.name | json_encode | safe }},
+        "status": {{ pr.status | default(value="") | json_encode | safe }},
+        "about": {{ pr.about | default(value="") | json_encode | safe }},
+        "href": {{ _href | json_encode | safe }},
+        "site": {{ pr.site | default(value="") | json_encode | safe }}
+      }{% if not loop.last %},{% endif %}
+      {%- endfor %}
+    ],
+    "posts": [
+      {%- for p in _posts.pages %}
+        {%- if loop.index0 < 10 %}
+        {
+          "title": {{ p.title | json_encode | safe }},
+          "date": {{ p.date | date(format="%Y-%m-%d", timezone="America/New_York") | json_encode | safe }},
+          "kind": {{ p.extra.kind | default(value="") | json_encode | safe }},
+          "time": {{ p.reading_time }},
+          "href": {{ p.permalink | json_encode | safe }}
+        }{% if not loop.last and loop.index0 < 9 %},{% endif %}
+        {%- endif %}
+      {%- endfor %}
+    ]
+  }
+  </script>
+  <script src="{{ get_url(path='term.js', cachebust=true) }}" defer></script>
 </body>
 </html>

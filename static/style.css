@@ -535,7 +535,8 @@ body {
 
 /* Hidden by default (Notion & Swiss stay pure); activated per OS design system */
 .win-controls,
-.os-bar {
+.os-bar,
+.term-shell {
   display: none;
 }
 
@@ -2940,6 +2941,177 @@ html[data-style="terminal"] .site-footer {
   max-width: 1120px;
   padding: 16px 32px 26px;
 }
+
+/* Interactive Terminal Shell Box (Option A Hybrid) */
+html[data-style="terminal"] .term-shell {
+  display: block;
+  margin: 0 0 28px;
+  border: 1px solid var(--border-strong);
+  background: var(--card);
+  box-shadow: 4px 4px 0 light-dark(rgba(18, 33, 22, 0.1), rgba(57, 229, 140, 0.1));
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+html[data-style="terminal"] .term-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--muted);
+  font-size: 0.75rem;
+}
+
+html[data-style="terminal"] .term-bar-title {
+  font-weight: 700;
+  color: var(--link);
+}
+
+html[data-style="terminal"] .term-bar-hint {
+  color: var(--muted-foreground);
+}
+
+html[data-style="terminal"] .term-out {
+  padding: 12px 14px 6px;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+html[data-style="terminal"] .term-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+html[data-style="terminal"] .term-echo {
+  margin-top: 6px;
+}
+
+html[data-style="terminal"] .term-accent { color: var(--link); font-weight: 700; }
+html[data-style="terminal"] .term-cmd    { color: var(--foreground); font-weight: 700; }
+html[data-style="terminal"] .term-dim    { color: var(--muted-foreground); }
+html[data-style="terminal"] .term-tag    { color: var(--link); }
+html[data-style="terminal"] .term-err    { color: light-dark(#b42318, #ff7b72); }
+
+html[data-style="terminal"] .term-key {
+  display: inline-block;
+  min-width: 132px;
+  color: var(--link);
+  font-weight: 700;
+}
+
+html[data-style="terminal"] .term-neofetch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 14px 24px;
+  margin: 4px 0 6px;
+  padding: 10px 12px;
+  border: 1px dashed var(--border-strong);
+  background: var(--background);
+}
+
+html[data-style="terminal"] .term-ascii {
+  margin: 0;
+  color: var(--link);
+  font-size: 0.78rem;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+html[data-style="terminal"] .term-nf-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.8rem;
+}
+
+html[data-style="terminal"] .term-prompt-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 10px;
+  border-top: 1px dashed var(--border);
+  background: var(--background);
+}
+
+html[data-style="terminal"] .term-prompt {
+  color: var(--link);
+  font-weight: 700;
+  white-space: nowrap;
+  user-select: none;
+}
+
+html[data-style="terminal"] .term-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--foreground);
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  caret-color: var(--link);
+}
+
+html[data-style="terminal"] .term-input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.72;
+}
+
+html[data-style="terminal"] .term-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--card);
+}
+
+html[data-style="terminal"] .term-chip {
+  padding: 2px 8px;
+  border: 1px solid var(--border-strong);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  cursor: pointer;
+}
+
+html[data-style="terminal"] .term-chip::before {
+  content: "$ ";
+  color: var(--link);
+}
+
+html[data-style="terminal"] .term-chip:hover {
+  border-color: var(--link);
+  color: var(--link);
+  background: var(--accent-soft-bg);
+}
+
+/* Frame page sections below the shell as authentic CLI command outputs */
+html[data-style="terminal"] .hero::before,
+html[data-style="terminal"] #projects::before,
+html[data-style="terminal"] section[aria-label="Latest writing"]::before,
+html[data-style="terminal"] section[aria-label="Notes and principles"]::before {
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--link);
+}
+
+html[data-style="terminal"] .hero::before { content: "$ cat ~/README.md"; }
+html[data-style="terminal"] #projects::before { content: "$ ls -la ~/projects/"; }
+html[data-style="terminal"] section[aria-label="Latest writing"]::before { content: "$ ls -lt ~/writing/ | head -n 6"; }
+html[data-style="terminal"] section[aria-label="Notes and principles"]::before { content: "$ cat ~/NOTES.md"; }
 
 /* Single-Column Stacked TUI Directory List instead of 2-Col Cards */
 html[data-style="terminal"] .notion-gallery {
